@@ -1,0 +1,96 @@
+#pragma once
+
+#include <linux/if.h>
+#include <linux/if_packet.h>
+#include <net/ethernet.h>
+#include <netinet/in.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+
+#include <functional>
+#include <string>
+
+namespace net
+{
+
+class IFaceBase
+{
+  public:
+    explicit IFaceBase(const std::string& name);
+    virtual ~IFaceBase() = default;
+
+    /** @brief Get the index of the network interface corresponding
+     * to this object.
+     */
+    int get_index() const;
+
+    /** @brief Set interface flags using provided socket.
+     *
+     *  @param[in] sockfd - Socket to use for SIOCSIFFLAGS ioctl call.
+     *  @param[in] flags - Flags to set.
+     */
+    int set_sock_flags(int sockfd, short flags) const;
+
+    /** @brief Clear interface flags using provided socket.
+     *
+     *  @param[in] sockfd - Socket to use for SIOCSIFFLAGS/SIOCGIFFLAGS
+     *      ioctl call.
+     *  @param[in] flags - Flags to clear.
+     */
+    int clear_sock_flags(int sockfd, short flags) const;
+
+    /** @brief Bind given socket to this interface. Similar to bind
+     *     syscall, except that it fills in sll_ifindex field
+     *     of struct sockaddr_ll with the index of this interface.
+     */
+    virtual int bind_sock(int sockfd, struct sockaddr_ll* saddr) const = 0;
+
+  protected:
+    std::string name_;
+
+  private:
+    /** @brief Similar to ioctl syscall, but the socket is created inside
+     *      the function and the interface name in struct ifreq is
+     *      properly populated with the index of this interface.
+     */
+    virtual int ioctl(int request, struct ifreq* ifr) const = 0;
+
+    /** @brief Similar to ioctl syscall. The interface index in
+     *      struct ifreq is
+     *      properly populated with the index of this interface.
+     */
+    virtual int ioctl_sock(int sockfd, int request,
+                           struct ifreq* ifr) const = 0;
+
+    /** @brief Modify interface flags, using the given socket for
+     *      ioctl call.
+     */
+    int mod_sock_flags(int sockfd, short flags, bool set) const;
+};
+
+class IFace : public IFaceBase
+{
+  public:
+    explicit IFace(const std::string& name) : IFaceBase(name)
+    {}
+
+    /** @brief Bind given socket to this interface. Similar to bind
+     *     syscall, except that it fills in sll_ifindex field
+     *     of struct sockaddr_ll with the index of this interface.
+     */
+    int bind_sock(int sockfd, struct sockaddr_ll* saddr) const override;
+
+  private:
+    /** @brief Similar to ioctl syscall, but the socket is created inside
+     *      the function and the interface name in struct ifreq is
+     *      properly populated with the index of this interface.
+     */
+    int ioctl(int request, struct ifreq* ifr) const override;
+    /** @brief Similar to ioctl syscall. The interface index in
+     *      struct ifreq is
+     *      properly populated with the index of this interface.
+     */
+    int ioctl_sock(int sockfd, int request, struct ifreq* ifr) const override;
+};
+
+} // namespace net

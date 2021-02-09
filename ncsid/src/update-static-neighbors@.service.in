@@ -1,0 +1,16 @@
+[Unit]
+Description=Static Neighbor Updater
+Wants=mapper-wait@-xyz-openbmc_project-network-%i.service
+After=mapper-wait@-xyz-openbmc_project-network-%i.service
+Requisite=nic-hostless@%i.target
+After=nic-hostless@%i.target
+BindsTo=nic-hostless@%i.target
+StartLimitIntervalSec=1min
+StartLimitBurst=5
+
+[Service]
+KillMode=mixed
+Restart=on-failure
+ExecStart=@@BIN@ update-static-neighbors %I
+SyslogIdentifier=update-static-neighbors@%I
+SuccessExitStatus=10

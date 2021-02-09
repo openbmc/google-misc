@@ -19,3 +19,5 @@ tests_str = get_option('tests').enabled() ? 'enabled' : 'disabled'
 if get_option('tests').auto()
   tests_str = 'auto'
 endif
+
+subproject('ncsid', default_options: 'tests=' + tests_str)

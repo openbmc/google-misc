@@ -1,0 +1,8 @@
+[Unit]
+Description=Retry neighbor update periodically
+Requisite=nic-hostless@%i.target
+After=nic-hostless@%i.target
+BindsTo=nic-hostless@%i.target
+
+[Timer]
+OnUnitInactiveSec=1min

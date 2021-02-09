@@ -1,0 +1,38 @@
+digraph {
+	node [shape="box"];
+	subgraph {
+		node [shape=plaintext];
+
+		ncsid [label=<
+			<table>
+				<tr><td port="sockio" bgcolor="lightblue">net::SockIO</td><td bgcolor="lightblue" colspan="2" port="config">net::ConfigBase</td></tr>
+				<tr><td bgcolor="lightblue" colspan="3">ncsi::StateMachine</td></tr>
+				<tr>
+					<td bgcolor="black"><font color="white">L2 FSM</font></td>
+					<td bgcolor="black"><font color="white">L3/4 FSM</font></td>
+					<td bgcolor="black"><font color="white">Test FSM</font></td>
+				</tr>
+			</table>
+		>];
+	}
+
+	subgraph notes {
+		node [shape="note" style="filled"];
+		core [label="NC-SId Core" fillcolor="lightblue"];
+		ec [label="EC" fillcolor="black" fontcolor="white"];
+		mock [label="Mocks" fillcolor="beige"];
+	}
+
+	p_config [label="MockConfig" style="filled" fillcolor="beige"];
+
+	ncsi_sockio [style="filled" fillcolor="beige" label=<
+		<table border="0">
+			<tr><td align="left">NICConnection</td></tr>
+			<tr><td border="1">mock::NIC</td></tr>
+		</table>
+	>];
+
+	ncsi_sockio -> ncsid:sockio [arrowhead="diamond"];
+
+	p_config -> ncsid:config [arrowhead="diamond"];
+}

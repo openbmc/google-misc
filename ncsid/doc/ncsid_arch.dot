@@ -1,0 +1,60 @@
+digraph {
+	node [shape="box"];
+	subgraph {
+		node [shape=plaintext];
+
+		ncsid [label=<
+			<table>
+				<tr>
+					<td bgcolor="lightblue" colspan="2" port="config">net::ConfigBase</td>
+					<td port="sockio" bgcolor="lightblue">net::SockIO</td>
+				</tr>
+				<tr><td bgcolor="lightblue" colspan="3">ncsi::StateMachine</td></tr>
+				<tr>
+					<td bgcolor="black"><font color="white">L2 FSM</font></td>
+					<td bgcolor="black"><font color="white">L3/4 FSM</font></td>
+					<td bgcolor="black"><font color="white">Test FSM</font></td>
+				</tr>
+			</table>
+		>];
+	}
+
+	subgraph notes {
+		node [shape="note" style="filled"];
+		core [label="NC-SId Core" fillcolor="lightblue"];
+		hardware [label="Hardware" fillcolor="limegreen"];
+		external [label="External Components" color="magenta" fillcolor="white"];
+		ec [label="EC" fillcolor="black" fontcolor="white"];
+	} -> NIC [style="invis"];
+
+	subgraph external {
+		node [color="magenta"];
+		p_networkd [label="phosphord-networkd"];
+		systemd;
+		d_bus [shape="doublecircle" label="DBus"];
+	}
+
+	subgraph core_comps {
+		node [fillcolor="lightblue" style="filled"];
+		p_config [label="net::PhosphorConfig"];
+		ncsi_sockio [label="ncsi::SockIO"];
+		net_ifacebase [label="net::IFaceBase"];
+		net_iface [label="net::IFace"];
+
+		net_iface -> net_ifacebase [arrowhead="diamond"];
+		ncsi_sockio -> net_iface [label="bind"];
+		ncsid;
+	}
+
+	NIC [shape="tab" fillcolor="limegreen" style="filled"];
+
+	ncsi_sockio -> ncsid:sockio [arrowhead="diamond"];
+	NIC -> ncsi_sockio [dir="both" label="NC-SI Cable" color="limegreen"];
+
+	p_config -> ncsid:config [arrowhead="diamond"];
+	p_config -> p_networkd [style="dashed"];
+	p_config -> d_bus;
+	p_networkd -> d_bus [dir="both"];
+	d_bus -> systemd;
+	p_networkd -> systemd [style="dashed"];
+}

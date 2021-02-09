@@ -1,0 +1,12 @@
+[Unit]
+Description=Run Ncsid daemon
+Wants=mapper-wait@-xyz-openbmc_project-network-%i.service
+After=mapper-wait@-xyz-openbmc_project-network-%i.service
+
+[Service]
+Restart=always
+ExecStart=@@BIN@ ncsid %I
+SyslogIdentifier=ncsid@%I
+
+[Install]
+WantedBy=multi-user.target

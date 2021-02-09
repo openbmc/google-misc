@@ -1,0 +1,62 @@
+#!/bin/bash
+source "$(dirname "${BASH_SOURCE[0]}")"/ncsid_lib.sh
+
+DiscoverRouter6() {
+  local netdev="$1"
+
+  local output
+  local st=0
+  output="$(RunInterruptible rdisc6 -1 -r 5 -w 1000 -n "$netdev")" || st=$?
+  if (( st != 0 )); then
+    echo "rdisc6 failed with: " >&2
+    echo "$output" >&2
+    return $st
+  fi
+
+  local ip="$(echo "$output" | grep 'from' | awk '{print $2}')"
+  local mac="$(echo "$output" | grep 'Source link-layer' | ParseMACFromLine)"
+  printf '{"router_ip":"%s","router_mac":"%s"}\n' "$ip" "$mac"
+}
+
+HandleDHCP6() {
+  local op="$1"
+
+  if [ "$op" = "bound" ]; then
+    echo "INTF: $interface" >&2
+    echo "IP: $ipv6/128" >&2
+
+    local disc
+    if ! disc="$(DiscoverRouter6 "$interface")"; then
+      echo "Failed to discover router" >&2
+      return 1
+    fi
+    local vars
+    vars="$(echo "$disc" | JSONToVars)" || return
+    eval "$vars" || return
+    echo "GW: $router_ip" >&2
+    echo "GW_MAC: $router_mac" >&2
+
+    SuppressTerm
+    local service='xyz.openbmc_project.Network'
+    local rc=0
+    UpdateIP "$service" "$interface" "$ipv6" '128' && \
+      UpdateGateway "$service" "$router_ip" && \
+      UpdateNeighbor "$service" "$interface" "$router_ip" "$router_mac" || \
+      rc=$?
+    UnsuppressTerm
+    touch /run/dhcp6.done
+    return $rc
+  fi
+}
+
+Main() {
+  set -o nounset
+  set -o errexit
+  set -o pipefail
+
+  InitTerm
+  HandleDHCP6 "$@"
+}
+
+return 0 2>/dev/null
+Main "$@"
