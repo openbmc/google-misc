@@ -35,6 +35,7 @@ if get_option('tests').auto()
 endif
 
 subproject('acpi-power-state-daemon')
+subproject('hoth-dbus')
 subproject('kcsbridge')
 subproject('ncsid', default_options: 'tests=' + tests_str)
 subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)

@@ -1,0 +1,8 @@
+- name: CommandFailure
+  description: Failed to send the command to Hoth.
+- name: ResponseFailure
+  description: Failed to retrieve response from Hoth.
+- name: FirmwareFailure
+  description: Failed to send firmware update to Hoth.
+- name: InterfaceError
+  description: A system error occured with the Hoth interface.
