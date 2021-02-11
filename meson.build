@@ -21,3 +21,4 @@ if get_option('tests').auto()
 endif
 
 subproject('ncsid', default_options: 'tests=' + tests_str)
+subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)
