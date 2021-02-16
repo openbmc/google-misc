@@ -1,6 +1,7 @@
 /**/build*/
 /**/subprojects/*/
 !/**/subprojects/acpi-power-state-daemon/
+!/**/subprojects/kcsbridge/
 !/**/subprojects/metrics-ipmi-blobs/
 !/**/subprojects/ncsid/
 /**/subprojects/*.wrap
