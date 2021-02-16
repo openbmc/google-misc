@@ -1,0 +1,10 @@
+[Unit]
+Description=Google IPMI KCS Bridge
+
+[Service]
+Restart=on-failure
+Type=notify
+ExecStart=@BIN@ -c '%I'
+
+[Install]
+WantedBy=multi-user.target
