@@ -1,5 +1,4 @@
-#ifndef _UTIL_HPP_
-#define _UTIL_HPP_
+#pragma once
 
 #include <string>
 #include <string_view>
@@ -29,5 +28,3 @@ char controlCharsToSpace(char c);
 std::string trimStringRight(std::string_view s);
 
 } // namespace metric_blob
-
-#endif
