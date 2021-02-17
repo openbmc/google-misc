@@ -27,13 +27,13 @@ std::vector<std::string> MetricBlobHandler::getBlobIds()
 }
 
 // BmcBlobDelete (7) is not supported.
-bool MetricBlobHandler::deleteBlob(const std::string& path)
+bool MetricBlobHandler::deleteBlob(const std::string&)
 {
     return false;
 }
 
 // BmcBlobStat (8) (global stat) is not supported.
-bool MetricBlobHandler::stat(const std::string& path, BlobMeta* meta)
+bool MetricBlobHandler::stat(const std::string&, BlobMeta*)
 {
     return false;
 }
@@ -88,22 +88,20 @@ std::vector<uint8_t> MetricBlobHandler::read(uint16_t session, uint32_t offset,
 }
 
 // BmcBlobWrite(4) is not supported.
-bool MetricBlobHandler::write(uint16_t session, uint32_t offset,
-                              const std::vector<uint8_t>& data)
+bool MetricBlobHandler::write(uint16_t, uint32_t, const std::vector<uint8_t>&)
 {
     return false;
 }
 
 // BmcBlobWriteMeta(10) is not supported.
-bool MetricBlobHandler::writeMeta(uint16_t session, uint32_t offset,
-                                  const std::vector<uint8_t>& data)
+bool MetricBlobHandler::writeMeta(uint16_t, uint32_t,
+                                  const std::vector<uint8_t>&)
 {
     return false;
 }
 
 // BmcBlobCommit(5) is not supported.
-bool MetricBlobHandler::commit(uint16_t session,
-                               const std::vector<uint8_t>& data)
+bool MetricBlobHandler::commit(uint16_t, const std::vector<uint8_t>&)
 {
     return false;
 }
