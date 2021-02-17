@@ -17,42 +17,56 @@ project(
   'cpp',
   version: '0.1',
   default_options: [
+    'warning_level=3',
+    'werror=true',
     'cpp_std=c++17',
+    'tests=' + (meson.is_subproject() ? 'disabled' : 'auto'),
   ],
 )
 
-add_project_arguments(
-  '-Wno-unused-parameter',
-  language:'cpp')
+headers = include_directories('.')
 
-protoc = find_program('protoc', required: true)
+deps = [
+  dependency('phosphor-logging'),
+  dependency('phosphor-ipmi-blobs'),
+  dependency('protobuf'),
+]
 
-gen = generator(protoc,
-  output: [
-    '@BASENAME@.pb.cc', '@BASENAME@.pb.h'
-  ],
-  arguments : ['--proto_path=@CURRENT_SOURCE_DIR@', '--cpp_out=@BUILD_DIR@', '@INPUT@'])
-generated = gen.process(['metricblob.proto'])
-
-shared_library(
-  'metrics',
-  'main.cpp',
+lib = static_library(
+  'metricsblob',
+  'util.cpp',
   'handler.cpp',
   'metric.cpp',
-  'util.cpp',
-  generated,
-  install: true,
-  install_dir: '/usr/lib/blob-ipmid/',
-  dependencies: [
-    dependency('phosphor-logging'),
-    dependency('phosphor-ipmi-blobs'),
-    dependency('protobuf'),
-  ],
-  version: '0',
-)
+  custom_target(
+    'metricblob_proto',
+    command: [
+      find_program('protoc', native: true),
+      '--proto_path=@CURRENT_SOURCE_DIR@',
+      '--cpp_out=@OUTDIR@',
+      '@INPUT@'
+    ],
+    output: [
+      'metricblob.pb.cc',
+      'metricblob.pb.h',
+    ],
+    input: 'metricblob.proto'),
+  include_directories: headers,
+  implicit_include_directories: false,
+  dependencies: deps)
 
-gtest_dep = dependency('gtest')
-text_executable = executable('testprog', [
-    'test/util_test.cpp', 'util.cpp'],
-    dependencies: [ gtest_dep, dependency('phosphor-logging') ])
-test('gtest test', text_executable)
+dep = declare_dependency(
+  dependencies: deps,
+  include_directories: headers,
+  link_with: lib)
+
+shared_module(
+  'metricsblob',
+  'main.cpp',
+  dependencies: dep,
+  implicit_include_directories: false,
+  install: true,
+  install_dir: get_option('libdir') / 'ipmid-providers')
+
+if not get_option('tests').disabled()
+  subdir('test')
+endif
