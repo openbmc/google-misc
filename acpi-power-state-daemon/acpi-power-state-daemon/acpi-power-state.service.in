@@ -1,0 +1,10 @@
+[Unit]
+Description=Receive ACPI power state over IPMI
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=@@BIN@ acpi_power_stated
+
+[Install]
+WantedBy=multi-user.target
