@@ -34,6 +34,6 @@ if get_option('tests').auto()
   tests_str = 'auto'
 endif
 
-subproject('acpi-power-state-daemon', default_options: 'tests=' + tests_str)
+subproject('acpi-power-state-daemon')
 subproject('ncsid', default_options: 'tests=' + tests_str)
 subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)
