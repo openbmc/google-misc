@@ -22,6 +22,30 @@
       "revId": "1285115c16180bd28a3cfe79d9db8d10c84fe2ed",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54a350c_1cdd09be",
+        "filename": ".gitignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-03-18T04:59:02Z",
+      "side": 1,
+      "message": "Unfortunately, yes",
+      "parentUuid": "132601b3_fd3d1134",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "1285115c16180bd28a3cfe79d9db8d10c84fe2ed",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
