@@ -32,29 +32,33 @@ deps = [
   dependency('protobuf'),
 ]
 
+proto = custom_target(
+  'metricblob_proto',
+  command: [
+    find_program('protoc', native: true),
+    '--proto_path=@CURRENT_SOURCE_DIR@',
+    '--cpp_out=@OUTDIR@',
+    '@INPUT@'
+    ],
+  output: [
+    'metricblob.pb.cc',
+    'metricblob.pb.h',
+  ],
+  input: 'metricblob.proto')
+proto_h = proto[1]
+
 lib = static_library(
   'metricsblob',
   'util.cpp',
   'handler.cpp',
   'metric.cpp',
-  custom_target(
-    'metricblob_proto',
-    command: [
-      find_program('protoc', native: true),
-      '--proto_path=@CURRENT_SOURCE_DIR@',
-      '--cpp_out=@OUTDIR@',
-      '@INPUT@'
-    ],
-    output: [
-      'metricblob.pb.cc',
-      'metricblob.pb.h',
-    ],
-    input: 'metricblob.proto'),
+  proto,
   include_directories: headers,
   implicit_include_directories: false,
   dependencies: deps)
 
 dep = declare_dependency(
+  sources: proto_h,
   dependencies: deps,
   include_directories: headers,
   link_with: lib)
