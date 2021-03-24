@@ -46,6 +46,30 @@
       "revId": "b056df698ca4405b7adfa5bbf931f4b8a9431e55",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1df126df_5dbda750",
+        "filename": "subprojects/metrics-ipmi-blobs/meson.build",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2021-03-24T18:13:52Z",
+      "side": 1,
+      "message": "Adding \"message(proto_h.full_path())\" gave the following:\nMessage: (working directory)/metricblob.pb.h",
+      "parentUuid": "d07d9699_fd4f213e",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "b056df698ca4405b7adfa5bbf931f4b8a9431e55",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
