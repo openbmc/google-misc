@@ -34,6 +34,24 @@
       "revId": "4c68ffb8b08fa4484824586ef4a981bcfabd38bb",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee480797_d24b879d",
+        "filename": "subprojects/kcsbridge/src/dbus.hpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-03-24T21:50:40Z",
+      "side": 1,
+      "message": "I meant for all of the code here but realized it\u0027s because they are for templates.",
+      "parentUuid": "8192bcb5_20b8eb6e",
+      "revId": "4c68ffb8b08fa4484824586ef4a981bcfabd38bb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
