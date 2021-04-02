@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa88448_11b7f8ad",
+        "filename": "hoth-dbus/com/google/gbmc/Hoth.interface.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2021-04-02T21:53:53Z",
+      "side": 1,
+      "message": "FWIW, these are supposed to go directly into phosphor-dbus-interfaces these days, even though they\u0027re OEM.  I forget why they changed that.",
+      "revId": "d8be2604adbc9b3c7f7aad5a5c656b48ec82076f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
