@@ -52,6 +52,24 @@
       "revId": "d8be2604adbc9b3c7f7aad5a5c656b48ec82076f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa83ef3_52903e03",
+        "filename": "hoth-dbus/com/google/gbmc/Hoth.interface.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2021-04-02T23:35:31Z",
+      "side": 1,
+      "message": "I don\u0027t really see why not, but that would be a question for Patrick and Brad;\n\nMechanically, now that all the owners junk is sorted it should just be a matter of tossing an OWNERS file in the google folder.",
+      "parentUuid": "6a979b75_30f5880e",
+      "revId": "d8be2604adbc9b3c7f7aad5a5c656b48ec82076f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
