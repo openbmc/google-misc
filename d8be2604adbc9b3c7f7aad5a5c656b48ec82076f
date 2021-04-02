@@ -34,6 +34,24 @@
       "revId": "d8be2604adbc9b3c7f7aad5a5c656b48ec82076f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a979b75_30f5880e",
+        "filename": "hoth-dbus/com/google/gbmc/Hoth.interface.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-04-02T23:32:42Z",
+      "side": 1,
+      "message": "Can we get ownership over our own OEM section? The advantage of having it here is that we own it and can review it with other hoth changes that don\u0027t really affect openbmc.",
+      "parentUuid": "d0957666_cb0c8c6e",
+      "revId": "d8be2604adbc9b3c7f7aad5a5c656b48ec82076f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
