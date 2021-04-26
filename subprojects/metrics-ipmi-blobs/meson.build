@@ -30,6 +30,7 @@ deps = [
   dependency('phosphor-logging'),
   dependency('phosphor-ipmi-blobs'),
   dependency('protobuf'),
+  dependency('sdbusplus'),
 ]
 
 proto = custom_target(

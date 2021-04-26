@@ -269,7 +269,7 @@ void BmcHealthSnapshot::doWork()
     bmcmetrics::metricproto::BmcMetricSnapshot snapshot;
 
     // Memory info
-    std::string meminfoBuffer = readFileIntoString("/proc/meminfo");
+    std::string meminfoBuffer = readFileThenGrepIntoString("/proc/meminfo");
 
     {
         bmcmetrics::metricproto::BmcMemoryMetric m;
@@ -299,18 +299,57 @@ void BmcHealthSnapshot::doWork()
     }
 
     // Uptime
-    std::string uptimeBuffer = readFileIntoString("/proc/uptime");
-    double uptime = 0, idleProcessTime = 0;
-    if (parseProcUptime(uptimeBuffer, uptime, idleProcessTime))
+    std::string uptimeBuffer = readFileThenGrepIntoString("/proc/uptime");
+    double uptime = 0;
+    double idleProcessTime = 0;
+    BootTimesMonotonic btm;
+    if (!parseProcUptime(uptimeBuffer, uptime, idleProcessTime))
+    {
+        log<level::ERR>("Error parsing /proc/uptime");
+    }
+    else if (!getBootTimesMonotonic(btm))
+    {
+        log<level::ERR>("Could not get boot time");
+    }
+    else
     {
         bmcmetrics::metricproto::BmcUptimeMetric m1;
         m1.set_uptime(uptime);
         m1.set_idle_process_time(idleProcessTime);
+        if (btm.firmwareTime == 0 && btm.powerOnSecCounterTime != 0)
+        {
+            m1.set_firmware_boot_time_sec(
+                static_cast<double>(btm.powerOnSecCounterTime) - uptime);
+        }
+        else
+        {
+            m1.set_firmware_boot_time_sec(
+                static_cast<double>(btm.firmwareTime - btm.loaderTime) / 1e6);
+        }
+        m1.set_loader_boot_time_sec(static_cast<double>(btm.loaderTime) / 1e6);
+        // initrf presents
+        if (btm.initrdTime != 0)
+        {
+            m1.set_kernel_boot_time_sec(static_cast<double>(btm.initrdTime) /
+                                        1e6);
+            m1.set_initrd_boot_time_sec(
+                static_cast<double>(btm.userspaceTime - btm.initrdTime) / 1e6);
+            m1.set_userspace_boot_time_sec(
+                static_cast<double>(btm.finishTime - btm.userspaceTime) / 1e6);
+        }
+        else
+        {
+            m1.set_kernel_boot_time_sec(static_cast<double>(btm.userspaceTime) /
+                                        1e6);
+            m1.set_initrd_boot_time_sec(
+                static_cast<double>(btm.unitsLoadStartTime -
+                                    btm.userspaceTime) /
+                1e6);
+            m1.set_userspace_boot_time_sec(
+                static_cast<double>(btm.finishTime - btm.unitsLoadStartTime) /
+                1e6);
+        }
         *(snapshot.mutable_uptime_metric()) = m1;
-    }
-    else
-    {
-        log<level::ERR>("Error parsing /proc/uptime");
     }
 
     // Storage space
