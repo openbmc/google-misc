@@ -27,9 +27,20 @@ struct TcommUtimeStime
     float stime;
 };
 
+struct BootTimesMonotonic
+{
+    uint64_t firmwareTime = 0;
+    uint64_t loaderTime = 0;
+    uint64_t initrdTime = 0;
+    uint64_t userspaceTime = 0;
+    uint64_t finishTime = 0;
+    uint64_t powerOnSecCounterTime = 0;
+};
+
 TcommUtimeStime parseTcommUtimeStimeString(std::string_view content,
                                            long ticksPerSec);
-std::string readFileIntoString(std::string_view fileName);
+std::string readFileThenGrepIntoString(std::string_view fileName,
+                                       std::string_view grepStr = "");
 bool isNumericPath(std::string_view path, int& value);
 TcommUtimeStime getTcommUtimeStime(int pid, long ticksPerSec);
 std::string getCmdLine(int pid);
@@ -37,6 +48,8 @@ bool parseMeminfoValue(std::string_view content, std::string_view keyword,
                        int& value);
 bool parseProcUptime(const std::string_view content, double& uptime,
                      double& idleProcessTime);
+bool readMem(const uint32_t target, uint32_t& memResult);
+bool getBootTimesMonotonic(BootTimesMonotonic& btm);
 long getTicksPerSec();
 char controlCharsToSpace(char c);
 std::string trimStringRight(std::string_view s);

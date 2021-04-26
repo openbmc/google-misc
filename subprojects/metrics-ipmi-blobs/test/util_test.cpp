@@ -35,22 +35,22 @@ TEST(IsNumericPath, validNumericPath)
     EXPECT_EQ(id, 10000);
 }
 
-TEST(ReadFileIntoString, goodFile)
+TEST(ReadFileThenGrepIntoString, goodFile)
 {
     const std::string& fileName = "./test_file";
     std::ofstream ofs(fileName, std::ios::trunc);
     std::string_view content = "This is\ntest\tcontentt\n\n\n\n.\n\n##$#$";
     ofs << content;
     ofs.close();
-    std::string readContent = metric_blob::readFileIntoString(fileName);
+    std::string readContent = metric_blob::readFileThenGrepIntoString(fileName);
     std::filesystem::remove(fileName);
     EXPECT_EQ(readContent, content);
 }
 
-TEST(ReadFileIntoString, inexistentFile)
+TEST(ReadFileThenGrepIntoString, inexistentFile)
 {
     const std::string& fileName = "./inexistent_file";
-    std::string readContent = metric_blob::readFileIntoString(fileName);
+    std::string readContent = metric_blob::readFileThenGrepIntoString(fileName);
     EXPECT_EQ(readContent, "");
 }
 
