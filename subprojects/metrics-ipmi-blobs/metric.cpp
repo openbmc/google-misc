@@ -300,17 +300,26 @@ void BmcHealthSnapshot::doWork()
 
     // Uptime
     std::string uptimeBuffer = readFileIntoString("/proc/uptime");
-    double uptime = 0, idleProcessTime = 0;
-    if (parseProcUptime(uptimeBuffer, uptime, idleProcessTime))
+    std::string boottimeBuffer = readFileIntoString("/etc/boottime");
+    double uptime = 0, idleProcessTime = 0, ubootTime = 0, kernelTime = 0,
+           systemdTime = 0;
+    if (!parseProcUptime(uptimeBuffer, uptime, idleProcessTime))
+    {
+        log<level::ERR>("Error parsing /proc/uptime");
+    }
+    else if (!parseBoottime(boottimeBuffer, ubootTime, kernelTime, systemdTime))
+    {
+        log<level::ERR>("Error parsing /etc/boottime");
+    }
+    else
     {
         bmcmetrics::metricproto::BmcUptimeMetric m1;
         m1.set_uptime(uptime);
         m1.set_idle_process_time(idleProcessTime);
+        m1.set_uboot_boot_time_sec(ubootTime);
+        m1.set_kernel_boot_time_sec(kernelTime);
+        m1.set_systemd_boot_time_sec(systemdTime);
         *(snapshot.mutable_uptime_metric()) = m1;
-    }
-    else
-    {
-        log<level::ERR>("Error parsing /proc/uptime");
     }
 
     // Storage space

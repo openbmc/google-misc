@@ -37,6 +37,8 @@ bool parseMeminfoValue(std::string_view content, std::string_view keyword,
                        int& value);
 bool parseProcUptime(const std::string_view content, double& uptime,
                      double& idleProcessTime);
+bool parseBoottime(const std::string_view content, double& ubootTime,
+                   double& kernelTime, double& systemdTime);
 long getTicksPerSec();
 char controlCharsToSpace(char c);
 std::string trimStringRight(std::string_view s);

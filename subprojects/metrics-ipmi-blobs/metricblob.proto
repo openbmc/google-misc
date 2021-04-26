@@ -23,8 +23,11 @@ message BmcMemoryMetric {
 }
 
 message BmcUptimeMetric {
-  float uptime = 1;             // Uptime (wall clock time)
-  float idle_process_time = 2;  // Idle process time across all cores
+  float uptime = 1;                 // Uptime (wall clock time)
+  float idle_process_time = 2;      // Idle process time across all cores
+  float uboot_boot_time_sec = 3;    // Time (seconds) in uboot process
+  float kernel_boot_time_sec = 4;   // Time (seconds) in kernel process
+  float systemd_boot_time_sec = 5;  // Time (seconds) in systemd process
 }
 
 message BmcDiskSpaceMetric {

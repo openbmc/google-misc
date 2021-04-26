@@ -220,4 +220,19 @@ bool parseProcUptime(const std::string_view content, double& uptime,
     return false;
 }
 
+bool parseBoottime(const std::string_view content, double& ubootTime,
+                   double& kernelTime, double& systemdTime)
+{
+    double ut, kt, st; // Attempts to parse ubootTime & kernelTime & systemdTime
+    int ret = sscanf(content.data(), "%lf %lf %lf", &ut, &kt, &st);
+    if (ret == 3 && std::isfinite(ut) && std::isfinite(kt) && std::isfinite(st))
+    {
+        ubootTime = ut;
+        kernelTime = kt;
+        systemdTime = st;
+        return true;
+    }
+    return false;
+}
+
 } // namespace metric_blob

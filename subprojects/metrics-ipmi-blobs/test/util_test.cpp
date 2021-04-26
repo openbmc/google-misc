@@ -128,13 +128,23 @@ TEST(ParseMeminfoValue, invalidInput)
 TEST(ParseProcUptime, validInput)
 {
     const std::string_view content = "266923.67 512184.95";
+    const std::string_view bootTimeContent = "17.92 6.33 59.75";
+
     const double eps =
         1e-4; // Empirical threshold for floating point number compare
-    double uptime, idleProcessTime;
+    double uptime, idleProcessTime, ubootTime = 0, kernelTime = 0,
+                                    systemdTime = 0;
     EXPECT_EQ(metric_blob::parseProcUptime(content, uptime, idleProcessTime),
               true);
     EXPECT_LT(abs(uptime - 266923.67), eps);
     EXPECT_LT(abs(idleProcessTime - 512184.95), eps);
+
+    EXPECT_EQ(metric_blob::parseBoottime(bootTimeContent, ubootTime, kernelTime,
+                                         systemdTime),
+              true);
+    EXPECT_LT(abs(ubootTime - 17.92), eps);
+    EXPECT_LT(abs(kernelTime - 6.33), eps);
+    EXPECT_LT(abs(systemdTime - 59.75), eps);
 }
 
 TEST(TrimStringRight, nonEmptyResult)
