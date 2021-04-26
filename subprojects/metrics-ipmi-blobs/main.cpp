@@ -17,6 +17,7 @@
 #include <blobs-ipmid/blobs.hpp>
 
 #include <memory>
+#include <phosphor-logging/log.hpp>
 
 // Extern "C" is used due to the usage of dlopen() for loading IPMI handlers
 // and IPMI blob handlers. This happens in two steps:
