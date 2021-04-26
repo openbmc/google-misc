@@ -128,6 +128,7 @@ TEST(ParseMeminfoValue, invalidInput)
 TEST(ParseProcUptime, validInput)
 {
     const std::string_view content = "266923.67 512184.95";
+
     const double eps =
         1e-4; // Empirical threshold for floating point number compare
     double uptime, idleProcessTime;
