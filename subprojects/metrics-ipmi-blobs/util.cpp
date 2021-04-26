@@ -14,9 +14,14 @@
 
 #include "util.hpp"
 
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #include <phosphor-logging/log.hpp>
+#include <sdbusplus/bus.hpp>
+#include <sdbusplus/message.hpp>
 
 #include <cmath>
 #include <cstdlib>
@@ -24,6 +29,10 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <unordered_map>
+#include <utility>
+#include <variant>
+#include <vector>
 
 namespace metric_blob
 {
@@ -45,7 +54,8 @@ long getTicksPerSec()
     return sysconf(_SC_CLK_TCK);
 }
 
-std::string readFileIntoString(const std::string_view fileName)
+std::string readFileThenGrepIntoString(const std::string_view fileName,
+                                       const std::string_view grepStr)
 {
     std::stringstream ss;
     std::ifstream ifs(fileName.data());
@@ -53,7 +63,10 @@ std::string readFileIntoString(const std::string_view fileName)
     {
         std::string line;
         std::getline(ifs, line);
-        ss << line;
+        if (line.find(grepStr) != std::string::npos)
+        {
+            ss << line;
+        }
         if (ifs.good())
             ss << std::endl;
     }
@@ -101,7 +114,7 @@ std::string getCmdLine(const int pid)
     const std::string& cmdlinePath =
         "/proc/" + std::to_string(pid) + "/cmdline";
 
-    std::string cmdline = readFileIntoString(cmdlinePath);
+    std::string cmdline = readFileThenGrepIntoString(cmdlinePath);
     for (size_t i = 0; i < cmdline.size(); ++i)
     {
         cmdline[i] = controlCharsToSpace(cmdline[i]);
@@ -180,7 +193,7 @@ TcommUtimeStime parseTcommUtimeStimeString(std::string_view content,
 TcommUtimeStime getTcommUtimeStime(const int pid, const long ticksPerSec)
 {
     const std::string& statPath = "/proc/" + std::to_string(pid) + "/stat";
-    return parseTcommUtimeStimeString(readFileIntoString(statPath),
+    return parseTcommUtimeStimeString(readFileThenGrepIntoString(statPath),
                                       ticksPerSec);
 }
 
@@ -218,6 +231,124 @@ bool parseProcUptime(const std::string_view content, double& uptime,
         return true;
     }
     return false;
+}
+
+bool readMem(const uint32_t target, uint32_t& memResult)
+{
+    int fd = open("/dev/mem", O_RDONLY | O_SYNC);
+    if (fd < 0)
+    {
+        return false;
+    }
+
+    int pageSize = getpagesize();
+    uint32_t pageOffset = target & ~static_cast<uint32_t>(pageSize - 1);
+    uint32_t offsetInPage = target & static_cast<uint32_t>(pageSize - 1);
+
+    void* mapBase =
+        mmap(NULL, pageSize * 2, PROT_READ, MAP_SHARED, fd, pageOffset);
+    if (mapBase == MAP_FAILED)
+    {
+        close(fd);
+        return false;
+    }
+
+    char* virtAddr = reinterpret_cast<char*>(mapBase) + offsetInPage;
+    memResult = *(reinterpret_cast<uint32_t*>(virtAddr));
+    close(fd);
+    return true;
+}
+
+// clang-format off
+/*
+ *                                                      initrd \               userspace \
+ *  power-on                                           (if initrd present)    (if initrd present)
+ *  counter(start)                 uptime(start)       userspace \            unitsLoadStart \
+ *  firmware(Neg)    loader(Neg)   kernel(always 0)    (if no initrd)         (if no initrd )        finish
+ *  |----------------|-------------|-------------------|----------------------|----------------------|
+ *  |----------------| <--- firmwareTime=firmware-loader
+ *                   |-------------| <--- loaderTime=loader
+ *  |------------------------------| <--- firmwareTime(Actually is firmware+loader)=counter-uptime \
+ *                                        (in this case we can treat this as firmware time \
+ *                                         since firmware consumes most of the time)
+ *                                 |-------------------| <--- kernelTime=initrd (if initrd present)
+ *                                 |-------------------| <--- kernelTime=userspace (if no initrd)
+ *                                                     |----------------------| <--- initrfTime=userspace-initrd (if initrd present)
+ *                                                     |----------------------| <--- initrfTime=unitsLoadStart-userspace (if no initrd)
+ *                                                                            |----------------------| <--- userspaceTime=finish-userspace(if initrd present)
+ *                                                                            |----------------------| <--- userspaceTime=finish-unitsLoadStart(if no initrd)
+ */
+// clang-format on
+bool getBootTimesMonotonic(BootTimesMonotonic& btm)
+{
+    std::vector<std::pair<std::string_view, size_t>> timeMap = {
+        {"FirmwareTimestampMonotonic",
+         offsetof(BootTimesMonotonic, firmwareTime)}, // negative values
+        {"LoaderTimestampMonotonic",
+         offsetof(BootTimesMonotonic, loaderTime)}, // negative values
+        {"InitRDTimestampMonotonic", offsetof(BootTimesMonotonic, initrdTime)},
+        {"UserspaceTimestampMonotonic",
+         offsetof(BootTimesMonotonic, userspaceTime)},
+        {"FinishTimestampMonotonic", offsetof(BootTimesMonotonic, finishTime)},
+        {"UnitsLoadStartTimestampMonotonic",
+         offsetof(BootTimesMonotonic, unitsLoadStartTime)}};
+
+    auto b = sdbusplus::bus::new_default_system();
+    auto m = b.new_method_call("org.freedesktop.systemd1",
+                               "/org/freedesktop/systemd1",
+                               "org.freedesktop.DBus.Properties", "GetAll");
+    m.append("");
+    auto reply = b.call(m);
+    std::vector<std::pair<std::string, std::variant<uint64_t>>> timestamps;
+    reply.read(timestamps);
+
+    // Parse timestamps from dbus result.
+    auto btmPtr = reinterpret_cast<char*>(&btm);
+    unsigned int recordCnt = 0;
+    for (auto& t : timestamps)
+    {
+        for (auto& tm : timeMap)
+        {
+            if (tm.first.compare(t.first) == 0)
+            {
+                auto temp = std::get<uint64_t>(t.second);
+                memcpy(btmPtr + tm.second, reinterpret_cast<char*>(&temp),
+                       sizeof(temp));
+                recordCnt++;
+                break;
+            }
+        }
+        if (recordCnt == timeMap.size())
+        {
+            break;
+        }
+    }
+    if (recordCnt != timeMap.size())
+    {
+        log<level::ERR>("Didn't get desired timestamps");
+        return false;
+    }
+
+    std::string cpuinfo =
+        readFileThenGrepIntoString("/proc/cpuinfo", "Hardware");
+    // Nuvoton NPCM7XX chip has a counter which starts from power-on.
+    if (cpuinfo.find("NPCM7XX") != std::string::npos)
+    {
+        // Get elapsed seconds from SEC_CNT register
+        const uint32_t SEC_CNT_ADDR = 0xf0801068;
+        uint32_t memResult = 0;
+        if (readMem(SEC_CNT_ADDR, memResult))
+        {
+            btm.powerOnSecCounterTime = static_cast<uint64_t>(memResult);
+        }
+        else
+        {
+            log<level::ERR>("Read memory SEC_CNT_ADDR(0xf0801068) failed");
+            return false;
+        }
+    }
+
+    return true;
 }
 
 } // namespace metric_blob
