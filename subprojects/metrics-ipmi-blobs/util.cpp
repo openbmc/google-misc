@@ -14,9 +14,14 @@
 
 #include "util.hpp"
 
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #include <phosphor-logging/log.hpp>
+#include <sdbusplus/bus.hpp>
+#include <sdbusplus/message.hpp>
 
 #include <cmath>
 #include <cstdlib>
@@ -24,6 +29,10 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <unordered_map>
+#include <utility>
+#include <variant>
+#include <vector>
 
 namespace metric_blob
 {
@@ -218,6 +227,91 @@ bool parseProcUptime(const std::string_view content, double& uptime,
         return true;
     }
     return false;
+}
+
+bool readMem(const uint32_t target, uint32_t& memResult)
+{
+    int fd = open("/dev/mem", O_RDONLY | O_SYNC);
+    if (fd < 0)
+    {
+        return false;
+    }
+
+    int pageSize = getpagesize();
+    uint32_t pageOffset = target & ~static_cast<uint32_t>(pageSize - 1);
+    uint32_t offsetInPage = target & static_cast<uint32_t>(pageSize - 1);
+
+    void* mapBase =
+        mmap(NULL, pageSize * 2, PROT_READ, MAP_SHARED, fd, pageOffset);
+    if (mapBase == MAP_FAILED)
+    {
+        return false;
+    }
+
+    char* virtAddr = reinterpret_cast<char*>(mapBase) + offsetInPage;
+    memResult = *(reinterpret_cast<uint32_t*>(virtAddr));
+    return true;
+}
+
+bool getBoottime(double& powerOnCounterTime, double& kernelTime,
+                 double& systemdTime)
+{
+    // kernel time and systemd time are the only 2 timestamp we can obtain.
+    std::unordered_map<std::string_view, uint64_t> timeMap = {
+        {"UserspaceTimestampMonotonic", 0},
+        {"FinishTimestampMonotonic", 0},
+    };
+
+    auto b = sdbusplus::bus::new_default_system();
+    auto m = b.new_method_call("org.freedesktop.systemd1",
+                               "/org/freedesktop/systemd1",
+                               "org.freedesktop.DBus.Properties", "GetAll");
+    m.append("");
+    auto reply = b.call(m);
+    std::vector<std::pair<std::string, std::variant<uint64_t>>> timestamps;
+    reply.read(timestamps);
+
+    // Parse kernel timestamp and systemd timestamp from dbus result.
+    unsigned int recordCnt = 0;
+    for (auto& t : timestamps)
+    {
+        for (auto& tm : timeMap)
+        {
+            if (tm.first.compare(t.first) == 0)
+            {
+                tm.second = std::get<uint64_t>(t.second);
+                recordCnt++;
+                break;
+            }
+        }
+        if (recordCnt == timeMap.size())
+        {
+            break;
+        }
+    }
+    if (recordCnt != timeMap.size())
+    {
+        log<level::ERR>("Didn't get desired timestamps");
+        return false;
+    }
+
+    // Get elapsed seconds from SEC_CNT register
+    const uint32_t SEC_CNT_ADDR = 0xf0801068;
+    uint32_t memResult = 0;
+    if (!readMem(SEC_CNT_ADDR, memResult))
+    {
+        log<level::ERR>("Read memory SEC_CNT_ADDR(0xf0801068) failed");
+        return false;
+    }
+
+    powerOnCounterTime = static_cast<double>(memResult);
+    kernelTime =
+        static_cast<double>(timeMap["UserspaceTimestampMonotonic"]) / 1e6;
+    systemdTime =
+        static_cast<double>(timeMap["FinishTimestampMonotonic"]) / 1e6 -
+        kernelTime;
+
+    return true;
 }
 
 } // namespace metric_blob
