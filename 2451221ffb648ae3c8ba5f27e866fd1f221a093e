@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f219db5a_eff79132",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-05-04T23:17:13Z",
+      "side": 1,
+      "message": "You should just query each of the values from the bus here instead of the two part scripting process.",
+      "revId": "2451221ffb648ae3c8ba5f27e866fd1f221a093e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
