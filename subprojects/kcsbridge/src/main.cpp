@@ -24,10 +24,12 @@
 #include <sdbusplus/bus.hpp>
 #include <sdbusplus/exception.hpp>
 #include <sdbusplus/server/interface.hpp>
+#include <sdbusplus/slot.hpp>
 #include <sdbusplus/vtable.hpp>
 #include <sdeventplus/event.hpp>
 #include <sdeventplus/source/io.hpp>
 #include <sdeventplus/source/signal.hpp>
+#include <stdplus/exception.hpp>
 #include <stdplus/fd/create.hpp>
 #include <stdplus/fd/ops.hpp>
 #include <stdplus/signal.hpp>
@@ -44,6 +46,7 @@ namespace kcsbridge
 
 using sdbusplus::bus::bus;
 using sdbusplus::message::message;
+using sdbusplus::slot::slot;
 using sdeventplus::source::IO;
 using sdeventplus::source::Signal;
 using stdplus::fd::OpenAccess;
@@ -114,7 +117,7 @@ void write(stdplus::Fd& kcs, message&& m)
     stdplus::fd::writeExact(kcs, out);
 }
 
-void read(stdplus::Fd& kcs, bus& bus, ManagedSdBusSlot& slot)
+void read(stdplus::Fd& kcs, bus& bus, sdbusplus::slot::slot& outstanding)
 {
     std::array<uint8_t, 1024> buffer;
     auto in = stdplus::fd::read(kcs, buffer);
@@ -122,10 +125,10 @@ void read(stdplus::Fd& kcs, bus& bus, ManagedSdBusSlot& slot)
     {
         return;
     }
-    if (slot)
+    if (outstanding)
     {
         fmt::print(stderr, "Canceling outstanding request\n");
-        slot.reset();
+        outstanding = slot(nullptr);
     }
     if (in.size() < 2)
     {
@@ -139,10 +142,10 @@ void read(stdplus::Fd& kcs, bus& bus, ManagedSdBusSlot& slot)
     // Based on the IPMI KCS spec Figure 9-1
     uint8_t netfn = in[0] >> 2, lun = in[0] & 3, cmd = in[1];
     m.append(netfn, lun, cmd, in.subspan(2), options);
-    slot = busCallAsync(std::move(m), [&](message&& m) {
-        slot.reset();
+    outstanding = m.call_async(stdplus::exception::ignore([&](message&& m) {
+        outstanding = slot(nullptr);
         write(kcs, std::move(m));
-    });
+    }));
 }
 
 int execute(const char* channel)
@@ -166,7 +169,7 @@ int execute(const char* channel)
     stdplus::ManagedFd kcs = stdplus::fd::open(
         fmt::format("/dev/{}", channel),
         OpenFlags(OpenAccess::ReadWrite).set(OpenFlag::NonBlock));
-    ManagedSdBusSlot slot(std::nullopt);
+    sdbusplus::slot::slot slot(nullptr);
 
     // Add a reader to the bus for handling inbound IPMI
     IO ioSource(event, kcs.get(), EPOLLIN | EPOLLET,
