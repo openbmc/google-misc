@@ -29,9 +29,9 @@ endif
 
 deps = [
   fmt_dep,
-  dependency('stdplus', fallback: ['stdplus', 'stdplus']),
+  dependency('stdplus', fallback: ['stdplus', 'stdplus_dep']),
   dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
-  dependency('sdeventplus', fallback: ['sdeventplus', 'sdeventplus']),
+  dependency('sdeventplus', fallback: ['sdeventplus', 'sdeventplus_dep']),
   dependency('libsystemd'),
 ]
 
