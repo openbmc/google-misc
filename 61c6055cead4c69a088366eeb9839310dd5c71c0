@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "453578e5_2fbbd23d",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2021-05-19T23:45:10Z",
+      "side": 1,
+      "message": "FinishTimestampMonotonic for the systemd1 target is zero on the system I tested, wondering what is the systemd time intended to be?",
+      "range": {
+        "startLine": 311,
+        "startChar": 28,
+        "endLine": 311,
+        "endChar": 64
+      },
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
