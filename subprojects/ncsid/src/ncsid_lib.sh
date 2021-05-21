@@ -265,6 +265,34 @@ GetIP() {
   GetProperties "$service" "$object" 'xyz.openbmc_project.Network.IP'
 }
 
+# Returns the Gateway address for the interface and type
+GetGateways() {
+  local service="$1"
+  local netdev="$2"
+
+  # We fetch both the system properties and the netdev specific properties
+  # as OpenBMC is in the process of transitioning these to the netdev object
+  # but the migration is not yet complete.
+  {
+    GetProperties "$service" '/xyz/openbmc_project/network/config' \
+      'xyz.openbmc_project.Network.SystemConfiguration'
+    GetProperties "$service" "$(EthObjRoot "$netdev")" \
+      'xyz.openbmc_project.Network.EthernetInterface'
+  } | jq -s '
+      . | map(
+        if .DefaultGateway != "" then
+          {DefaultGateway: .DefaultGateway}
+        else
+          {}
+        end +
+        if .DefaultGateway6 != "" then
+          {DefaultGateway6: .DefaultGateway6}
+        else
+          {}
+        end
+      ) | {DefaultGateway: "", DefaultGateway6: ""} + add'
+}
+
 # Adds a static IP to the system network daemon
 AddIP() {
   local service="$1"
@@ -395,4 +423,31 @@ UpdateNeighbor() {
     echo "Adding neighbor: $ip $mac" >&2
     AddNeighbor "$service" "$netdev" "$ip" "$mac" || return $?
   fi
+}
+
+# Determines the ip and mac of the IPv6 router
+DiscoverRouter6() {
+  local netdev="$1"
+  local retries="$2"
+  local timeout="$3"
+  local router="${4-}"
+
+  local output
+  local st=0
+  local args=(-1 -w "$timeout" -n $router "$netdev")
+  if (( retries < 0 )); then
+    args+=(-d)
+  else
+    args+=(-r "$retries")
+  fi
+  output="$(RunInterruptible rdisc6 "${args[@]}")" || st=$?
+  if (( st != 0 )); then
+    echo "rdisc6 failed with: " >&2
+    echo "$output" >&2
+    return $st
+  fi
+
+  local ip="$(echo "$output" | grep 'from' | awk '{print $2}')"
+  local mac="$(echo "$output" | grep 'Source link-layer' | ParseMACFromLine)"
+  printf '{"router_ip":"%s","router_mac":"%s"}\n' "$ip" "$mac"
 }
