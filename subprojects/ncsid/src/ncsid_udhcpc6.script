@@ -1,23 +1,6 @@
 #!/bin/bash
 source "$(dirname "${BASH_SOURCE[0]}")"/ncsid_lib.sh
 
-DiscoverRouter6() {
-  local netdev="$1"
-
-  local output
-  local st=0
-  output="$(RunInterruptible rdisc6 -1 -r 5 -w 1000 -n "$netdev")" || st=$?
-  if (( st != 0 )); then
-    echo "rdisc6 failed with: " >&2
-    echo "$output" >&2
-    return $st
-  fi
-
-  local ip="$(echo "$output" | grep 'from' | awk '{print $2}')"
-  local mac="$(echo "$output" | grep 'Source link-layer' | ParseMACFromLine)"
-  printf '{"router_ip":"%s","router_mac":"%s"}\n' "$ip" "$mac"
-}
-
 HandleDHCP6() {
   local op="$1"
 
@@ -26,7 +9,7 @@ HandleDHCP6() {
     echo "IP: $ipv6/128" >&2
 
     local disc
-    if ! disc="$(DiscoverRouter6 "$interface")"; then
+    if ! disc="$(DiscoverRouter6 "$interface" 5 1000)"; then
       echo "Failed to discover router" >&2
       return 1
     fi

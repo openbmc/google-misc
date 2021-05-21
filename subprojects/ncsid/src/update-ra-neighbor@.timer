@@ -1,0 +1,5 @@
+[Unit]
+Description=Retry neighbor update periodically
+
+[Timer]
+OnUnitInactiveSec=1min

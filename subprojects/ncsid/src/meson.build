@@ -86,6 +86,11 @@ install_data(
   install_dir: get_option('libexecdir'))
 
 install_data(
+  'update_ra_neighbor.sh',
+  install_mode: 'rwxr-xr-x',
+  install_dir: get_option('libexecdir'))
+
+install_data(
   'update_static_neighbors.sh',
   install_mode: 'rwxr-xr-x',
   install_dir: get_option('libexecdir'))
@@ -99,6 +104,13 @@ configure_file(
   configuration: {'BIN': libexecdir / 'ncsid'},
   input: 'ncsid@.service.in',
   output: 'ncsid@.service',
+  install_mode: 'rw-r--r--',
+  install_dir: systemunitdir)
+
+configure_file(
+  configuration: {'BIN': libexecdir / 'update_ra_neighbor.sh'},
+  input: 'update-ra-neighbor@.service.in',
+  output: 'update-ra-neighbor@.service',
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
 
@@ -128,6 +140,7 @@ configure_file(
 install_data(
   'nic-hostful@.target',
   'nic-hostless@.target',
+  'update-ra-neighbor@.timer',
   'update-static-neighbors@.timer',
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
