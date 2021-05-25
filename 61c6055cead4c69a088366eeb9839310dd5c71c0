@@ -46,6 +46,30 @@
       "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b6c7ae_b6150c44",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2021-05-25T02:31:30Z",
+      "side": 1,
+      "message": "Thanks for the explanation! I fixed the systemd units and can see the boot times are working correctly.",
+      "parentUuid": "7312e44d_387745a5",
+      "range": {
+        "startLine": 311,
+        "startChar": 28,
+        "endLine": 311,
+        "endChar": 64
+      },
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
