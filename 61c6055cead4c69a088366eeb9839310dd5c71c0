@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab08248a_fb99b968",
+        "filename": "subprojects/metrics-ipmi-blobs/metricblob.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-05-26T19:40:55Z",
+      "side": 1,
+      "message": "Might want to call this firmware_boot_time since it\u0027s mostly time consumed by the bootblock.",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc814cab_2b5a9f33",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-05-26T19:40:55Z",
+      "side": 1,
+      "message": "You need to close the fd here and below",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ab8ac1_d8406e17",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-05-26T19:40:55Z",
+      "side": 1,
+      "message": "This is nuvoton specific, we need to do some detection logic before we starting reading arbitrary registers.\n\nEventually it deserves a cleanup effort to expose this through a sysfs file.",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a529e8c5_c7163cb7",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-05-26T19:40:55Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this includes u-boot / bootblock time and needs to be subtracted to be consistent with systemdTime.",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "453578e5_2fbbd23d",
         "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
         "patchSetId": 6
@@ -70,6 +138,23 @@
       "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "730fd8cb_39389fd7",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-05-26T19:40:55Z",
+      "side": 1,
+      "message": "You might want to break out initrd time too, .UnitsLoadStartTimestampMonotonic is the time when systemd kicks off the first units for `multi-user.target`. It would be nice to know how long it spent in the initrd. UnitsLoadStartTimestampMonotonic - .UserspaceTimestampMonotonic and probably make more sense to have this value be UnitsLoadFinishTimestampMonotonic - UnitsLoadStartTimestampMonotonic",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
