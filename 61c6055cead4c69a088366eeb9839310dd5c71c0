@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4df925ae_227a12a8",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-05-26T19:43:52Z",
+      "side": 1,
+      "message": "nit: I THINK we prefer to declare / define 1 variable per line.",
+      "range": {
+        "startLine": 303,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 43
+      },
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab08248a_fb99b968",
         "filename": "subprojects/metrics-ipmi-blobs/metricblob.proto",
         "patchSetId": 6
@@ -30,6 +53,29 @@
       "writtenOn": "2021-05-26T19:40:55Z",
       "side": 1,
       "message": "You need to close the fd here and below",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ca00a1_acd0237a",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-05-26T19:43:52Z",
+      "side": 1,
+      "message": "nit: getBootTime",
+      "range": {
+        "startLine": 256,
+        "startChar": 5,
+        "endLine": 256,
+        "endChar": 16
+      },
       "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
@@ -152,6 +198,29 @@
       "writtenOn": "2021-05-26T19:40:55Z",
       "side": 1,
       "message": "You might want to break out initrd time too, .UnitsLoadStartTimestampMonotonic is the time when systemd kicks off the first units for `multi-user.target`. It would be nice to know how long it spent in the initrd. UnitsLoadStartTimestampMonotonic - .UserspaceTimestampMonotonic and probably make more sense to have this value be UnitsLoadFinishTimestampMonotonic - UnitsLoadStartTimestampMonotonic",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213ec29e_17e8d427",
+        "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-05-26T19:43:52Z",
+      "side": 1,
+      "message": "nit: getBootTime",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 16
+      },
       "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
