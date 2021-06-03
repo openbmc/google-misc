@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "317509b1_57c06138",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2021-06-03T02:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4df925ae_227a12a8",
+      "range": {
+        "startLine": 303,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 43
+      },
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab08248a_fb99b968",
         "filename": "subprojects/metrics-ipmi-blobs/metricblob.proto",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "819abc69_926a393f",
+        "filename": "subprojects/metrics-ipmi-blobs/metricblob.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2021-06-03T02:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab08248a_fb99b968",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc814cab_2b5a9f33",
         "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8203a7a_5bc3eb0f",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2021-06-03T02:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc814cab_2b5a9f33",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "29d8caa2_01ea6d3e",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2021-06-03T02:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ca00a1_acd0237a",
+      "range": {
+        "startLine": 256,
+        "startChar": 5,
+        "endLine": 256,
+        "endChar": 16
+      },
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ab8ac1_d8406e17",
         "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
         "patchSetId": 6
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "68fc7b40_b46bf7ba",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2021-06-03T02:04:05Z",
+      "side": 1,
+      "message": "I detect it by checking \"/proc/cpuinfo\".\nThere should be a label in this file for Nuvoton NPCM7XX family.\n\"Hardware\t: NPCM7XX Chip family\"",
+      "parentUuid": "a4ab8ac1_d8406e17",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a529e8c5_c7163cb7",
         "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
         "patchSetId": 6
@@ -113,6 +215,24 @@
       "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46fac132_e457bf24",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2021-06-03T02:04:05Z",
+      "side": 1,
+      "message": "No, monotonic time is start counting right after kernel starts, which means kernel monotonic is always 0.\nSo the time elapsed for kernel process is `userspaceMono-kernelMono \u003d userspaceMono` (if initrdMono is not presented.)`",
+      "parentUuid": "a529e8c5_c7163cb7",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -204,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "06eaa425_0933d2d8",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2021-06-03T02:04:05Z",
+      "side": 1,
+      "message": "Added.\nI also made a graph on top of this function.\nThat describled how I calculate the time.",
+      "parentUuid": "730fd8cb_39389fd7",
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "213ec29e_17e8d427",
         "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
         "patchSetId": 6
@@ -224,6 +362,30 @@
       "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247db185_581157cd",
+        "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2021-06-03T02:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "213ec29e_17e8d427",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "61c6055cead4c69a088366eeb9839310dd5c71c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
