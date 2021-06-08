@@ -4,4 +4,5 @@
 !/**/subprojects/kcsbridge/
 !/**/subprojects/metrics-ipmi-blobs/
 !/**/subprojects/ncsid/
+!/**/subprojects/nemora-postd/
 /**/subprojects/*.wrap
