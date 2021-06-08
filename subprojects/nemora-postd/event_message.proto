@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+// Note: it is important that the application is resilient to 
+// incorrectly encoded protobuf's.
+
+message EventSeries {
+  enum PostCodeProtocol {
+    PROTOCOL_UNSPECIFIED = 0;
+    EIGHT_BIT_WITH_EXTENDED_CODES = 1;
+    NATIVE_32_BIT = 2;
+  }
+  // A fixed integer to confirm the type of this protobuf: 0x890ebd38ec325800
+  optional fixed64 magic = 1;
+  // Firmware version of the device reporting this data.
+  optional int32 fw_version = 2;
+  // Primary MAC address of the server this data is from (in network order).
+  optional bytes mac = 3;
+  // Time message was sent in microseconds.
+  optional int64 sent_time_us = 4;
+  // Zero or more POST codes. Some codes may be missed because the host can
+  // send out codes faster than the EC handles them. While standard values are
+  // only 8-bits, non-standard values above 255 may be used.
+  repeated int32 postcodes = 5;
+  reserved 6 to 13;
+  optional PostCodeProtocol postcodes_protocol = 14;
+}
+
+package platforms.nemora.proto;
