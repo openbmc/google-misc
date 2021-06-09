@@ -16,6 +16,24 @@
       "revId": "8ee79a914ae3aba623e3b61ebb45bd5e0ee627a1",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b192e853_7a01c306",
+        "filename": "subprojects/nemora-postd/MAINTAINERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-06-09T18:04:42Z",
+      "side": 1,
+      "message": "I didn\u0027t see OWNERS file in other subprojects. There\u0027s only MAINTAINERS.\n\nI guess it is the Gerrit OWNERS plugin in https://gerrit.googlesource.com/plugins/code-owners/+/HEAD/resources/Documentation/about.md.\n\nDone, added a OWNERS file in the subdirectory.",
+      "parentUuid": "d4032df2_8414db31",
+      "revId": "8ee79a914ae3aba623e3b61ebb45bd5e0ee627a1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
