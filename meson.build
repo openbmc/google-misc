@@ -34,6 +34,8 @@ if get_option('tests').auto()
   tests_str = 'auto'
 endif
 
+subproject('ec-ipmi-blobs')
+
 subproject('acpi-power-state-daemon')
 subproject('kcsbridge')
 subproject('ncsid', default_options: 'tests=' + tests_str)
