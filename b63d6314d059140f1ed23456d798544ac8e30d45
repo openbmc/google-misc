@@ -1,0 +1,9 @@
+Code-Review+2: William A. Kennington III <wak@google.com>
+Code-Review+1: Brandon Kim <brandonkim@google.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Ok-To-Test+1: Brandon Kim <brandonkim@google.com>
+Submitted-by: <gpgpgp@google.com>
+Submitted-at: Mon, 14 Jun 2021 15:15:04 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/google-misc/+/42615
+Project: openbmc/google-misc
+Branch: refs/heads/master
