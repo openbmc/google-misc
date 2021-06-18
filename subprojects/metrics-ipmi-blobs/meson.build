@@ -70,7 +70,7 @@ shared_module(
   dependencies: dep,
   implicit_include_directories: false,
   install: true,
-  install_dir: get_option('libdir') / 'ipmid-providers')
+  install_dir: get_option('libdir') / 'blob-ipmid')
 
 if not get_option('tests').disabled()
   subdir('test')
