@@ -30,7 +30,7 @@ endif
 ncsid_deps = [
   fmt_dep,
   dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
-  dependency('stdplus', fallback: ['stdplus', 'stdplus']),
+  dependency('stdplus', fallback: ['stdplus', 'stdplus_dep']),
 ]
 
 ncsid_lib = static_library(
