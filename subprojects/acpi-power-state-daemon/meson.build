@@ -31,7 +31,9 @@ systemunitdir = systemd.get_pkgconfig_variable('systemdsystemunitdir')
 deps = [
   systemd,
   dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
-  dependency('phosphor-dbus-interfaces'),
+  dependency(
+    'phosphor-dbus-interfaces',
+    fallback: ['phosphor-dbus-interfaces', 'phosphor_dbus_interfaces_dep']),
 ]
 
 bindir = get_option('prefix') / get_option('bindir')
