@@ -5,4 +5,5 @@
 !/**/subprojects/metrics-ipmi-blobs/
 !/**/subprojects/ncsid/
 !/**/subprojects/nemora-postd/
+!/**/subprojects/postcode-watchdog-kicker/
 /**/subprojects/*.wrap

@@ -1,0 +1,16 @@
+[Unit]
+Description=PoST Code Watchdog daemon
+# We want these objects to exist beforehand, but we don't fail if they don't.
+# This configuration should work based on the behaviour of the mapper wait, but
+# doesn't.  For now, it's disabled.
+#Wants=mapper-wait@-xyz-openbmc_project-state-boot-raw.service
+#After=mapper-wait@-xyz-openbmc_project-state-boot-raw.service
+#Wants=mapper-wait@-xyz-openbmc_project-watchdog-host0.service
+#After=mapper-wait@-xyz-openbmc_project-watchdog-host0.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/postwatchdogd
+
+[Install]
+WantedBy=multi-user.target
