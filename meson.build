@@ -35,7 +35,6 @@ if get_option('tests').auto()
 endif
 
 subproject('acpi-power-state-daemon')
-subproject('kcsbridge')
 subproject('ncsid', default_options: 'tests=' + tests_str)
 subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)
 subproject('nemora-postd')
