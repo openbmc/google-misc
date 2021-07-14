@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c45b76b_08b42f19",
+        "filename": "subprojects/dbus-top/main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2021-07-14T22:00:55Z",
+      "side": 1,
+      "message": "Shall we use spaces only instead of any tabs?",
+      "range": {
+        "startLine": 13,
+        "startChar": 36,
+        "endLine": 13,
+        "endChar": 38
+      },
+      "revId": "c3f689bdf5a703a04b4c3eea70195fcca48fc9e3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
