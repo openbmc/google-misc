@@ -4,6 +4,7 @@ subprojects/*
 !subprojects/metrics-ipmi-blobs/
 !subprojects/ncsid/
 !subprojects/nemora-postd/
+!subprojects/hoth-ipmi-blobs/
 !subprojects/fmt.wrap
 !subprojects/googletest.wrap
 !subprojects/phosphor-dbus-interfaces.wrap
