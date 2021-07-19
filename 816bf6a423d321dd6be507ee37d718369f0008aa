@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33ed630a_475064ce",
+        "filename": "subprojects/dbus-top/main.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-07-19T21:54:21Z",
+      "side": 1,
+      "message": "nit: beginning",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "816bf6a423d321dd6be507ee37d718369f0008aa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71dd2416_14e8c0c1",
+        "filename": "subprojects/dbus-top/main.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-07-19T21:54:21Z",
+      "side": 1,
+      "message": "minor nit: extra new line here",
+      "revId": "816bf6a423d321dd6be507ee37d718369f0008aa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
