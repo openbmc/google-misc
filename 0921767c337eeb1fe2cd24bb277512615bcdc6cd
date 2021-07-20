@@ -22,6 +22,47 @@
       "revId": "0921767c337eeb1fe2cd24bb277512615bcdc6cd",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f50da7_44d9bebd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2021-07-20T00:34:35Z",
+      "side": 1,
+      "message": "Also, add details on what it is and does, with some initial \"how it works\" type stuff.",
+      "parentUuid": "b05575a4_158b13f0",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "0921767c337eeb1fe2cd24bb277512615bcdc6cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1618c847_455a6304",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2021-07-20T00:34:35Z",
+      "side": 1,
+      "message": "Considering this isn\u0027t a google specific tool, or directly for google systems, I wonder if google misc isn\u0027t the best place for this kind of thing.  There is:\n\nhttps://github.com/openbmc/openbmc-tools\n\nThat has been used in the past for similar things.",
+      "revId": "0921767c337eeb1fe2cd24bb277512615bcdc6cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
