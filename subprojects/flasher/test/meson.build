@@ -47,6 +47,7 @@ tests = [
   'device',
   'device/mutated',
   'file',
+  'file/memory',
   'file/simple',
   'mod',
   'util',
