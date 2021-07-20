@@ -63,6 +63,24 @@
       "revId": "0921767c337eeb1fe2cd24bb277512615bcdc6cd",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9843e1c0_1bb08b84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001157
+      },
+      "writtenOn": "2021-07-20T18:28:22Z",
+      "side": 1,
+      "message": "Is it okay to make this changes for this CL here and the next set of CLs will be to the openbmc-tools repo?",
+      "parentUuid": "1618c847_455a6304",
+      "revId": "0921767c337eeb1fe2cd24bb277512615bcdc6cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
