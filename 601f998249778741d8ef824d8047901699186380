@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4eb2b76_1ae795d8",
+        "filename": "subprojects/dbus-top/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2021-07-20T17:07:12Z",
+      "side": 1,
+      "message": "I think you\u0027d probably want a new line between functions, and I wonder if the style checker in your local CI is working properly. Try writing a line over 80 characters and see if the CI complains about it or not.\n\nBTW, I wonder if you should put these views into separate source file(s).",
+      "revId": "601f998249778741d8ef824d8047901699186380",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
