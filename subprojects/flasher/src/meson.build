@@ -25,6 +25,7 @@ flasher_lib = library(
   'args.cpp',
   'convert.cpp',
   'device.cpp',
+  'device/fake.cpp',
   'device/mtd.cpp',
   'device/mutated.cpp',
   'file.cpp',
