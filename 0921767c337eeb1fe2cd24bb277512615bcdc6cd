@@ -81,6 +81,24 @@
       "revId": "0921767c337eeb1fe2cd24bb277512615bcdc6cd",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcec81c_5a214067",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-07-20T19:48:11Z",
+      "side": 1,
+      "message": "If we think it should live in openbmc-tools, it should go there directly so that the reviews can take place there from the start.",
+      "parentUuid": "9843e1c0_1bb08b84",
+      "revId": "0921767c337eeb1fe2cd24bb277512615bcdc6cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
