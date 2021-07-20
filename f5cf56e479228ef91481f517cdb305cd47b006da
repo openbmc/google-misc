@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2805573_e3a2db0f",
+        "filename": "subprojects/dbus-top/main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2021-07-20T20:43:44Z",
+      "side": 1,
+      "message": "Indentation of OpenBMC C++ style should be 4 spaces?",
+      "revId": "f5cf56e479228ef91481f517cdb305cd47b006da",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144c9314_be8da123",
+        "filename": "subprojects/dbus-top/main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2021-07-20T20:43:44Z",
+      "side": 1,
+      "message": "Add an empty line here.",
+      "revId": "f5cf56e479228ef91481f517cdb305cd47b006da",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b550942_bd818c62",
+        "filename": "subprojects/dbus-top/main.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2021-07-20T20:43:44Z",
+      "side": 1,
+      "message": "The content of this file should be either moved to views.h, or renamed into sth like rect.h. I don\u0027t think we should have main.h, or have main.h included by other files other than main.cpp. Also, I don\u0027t find it necessary for this file to include \u003cncurses.h\u003e or \u003cstring\u003e.\n\nPlease also check if OpenBMC C++ header file should be .hpp or .h.",
+      "revId": "f5cf56e479228ef91481f517cdb305cd47b006da",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
