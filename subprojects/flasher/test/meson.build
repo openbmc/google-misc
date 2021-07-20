@@ -46,6 +46,7 @@ tests = [
   'convert',
   'device',
   'file',
+  'file/memory',
   'mod',
   'util',
 ]
