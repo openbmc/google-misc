@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13be79e9_5bc6abad",
+        "filename": "subprojects/dbus-top/views.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2021-07-20T21:54:28Z",
+      "side": 1,
+      "message": "Can we use \"#pragma once\" instead of \"ifndef/define/endif\"?",
+      "revId": "62831bb8f3978b2a2f6dee18ac2de1f5f7f06ba3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
