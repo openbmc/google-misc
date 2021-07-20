@@ -27,6 +27,7 @@ flasher_lib = library(
   'device.cpp',
   'device/mtd.cpp',
   'file.cpp',
+  'file/memory.cpp',
   'file/simple.cpp',
   'logging.cpp',
   'mod.cpp',
