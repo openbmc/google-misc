@@ -9,6 +9,16 @@ namespace flasher
 namespace file
 {
 
+size_t Memory::getSize() const
+{
+    return data.size();
+}
+
+void Memory::truncate(size_t new_size)
+{
+   data.resize(new_size);
+}
+
 stdplus::span<std::byte> Memory::readAt(stdplus::span<std::byte> buf, size_t offset)
 {
     if (offset == data.size()) throw stdplus::exception::Eof("readAt");

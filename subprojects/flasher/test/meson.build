@@ -45,6 +45,7 @@ tests = [
   'args',
   'convert',
   'device',
+  'device/fake',
   'file',
   'file/memory',
   'mod',

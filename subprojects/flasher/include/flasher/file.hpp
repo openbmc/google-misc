@@ -13,6 +13,8 @@ class File
   public:
     virtual ~File() = default;
 
+    virtual size_t getSize() const = 0;
+    virtual void truncate(size_t new_size) = 0;
     virtual stdplus::span<std::byte> readAt(stdplus::span<std::byte> buf, size_t offset) = 0;
     virtual stdplus::span<const std::byte>
         writeAt(stdplus::span<const std::byte> data, size_t offset) = 0;

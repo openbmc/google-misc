@@ -3,6 +3,7 @@
 #include <flasher/util.hpp>
 #include <stdplus/fd/create.hpp>
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 
@@ -11,8 +12,20 @@ namespace flasher
 namespace file
 {
 
-Simple::Simple(stdplus::ManagedFd&& fd) : fd(std::move(fd)), offset(this->fd.lseek(0, stdplus::fd::Whence::Cur))
+Simple::Simple(stdplus::ManagedFd&& fd) : fd(std::move(fd)), size(this->fd.lseek(0, stdplus::fd::Whence::End)), offset(this->fd.lseek(0, stdplus::fd::Whence::Cur))
 {}
+
+size_t Simple::getSize() const
+{
+     return size;
+}
+
+
+void Simple::truncate(size_t new_size)
+{
+    fd.truncate(new_size);
+    size = new_size;
+}
 
 stdplus::span<std::byte> Simple::readAt(stdplus::span<std::byte> buf, size_t offset)
 {
@@ -22,7 +35,9 @@ stdplus::span<std::byte> Simple::readAt(stdplus::span<std::byte> buf, size_t off
 stdplus::span<const std::byte>
     Simple::writeAt(stdplus::span<const std::byte> data, size_t offset)
 {
-    return opAt(&stdplus::Fd::write, fd, this->offset, data, offset);
+    auto ret = opAt(&stdplus::Fd::write, fd, this->offset, data, offset);
+    size = std::max(size, offset + ret.size());
+    return ret;
 }
 
 class SimpleType : public FileType
