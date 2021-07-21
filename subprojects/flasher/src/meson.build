@@ -30,6 +30,8 @@ flasher_lib = library(
   'file/simple.cpp',
   'logging.cpp',
   'mod.cpp',
+  'mutate.cpp',
+  'mutate/rot128.cpp',
   'ops.cpp',
   implicit_include_directories: false,
   include_directories: flasher_internal_includes,
