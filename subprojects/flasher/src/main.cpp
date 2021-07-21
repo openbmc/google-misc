@@ -16,6 +16,7 @@
 #include <flasher/device.hpp>
 #include <flasher/file.hpp>
 #include <flasher/logging.hpp>
+#include <flasher/mutate.hpp>
 #include <flasher/ops.hpp>
 #include <stdplus/util/cexec.hpp>
 
@@ -24,6 +25,16 @@
 
 namespace flasher
 {
+
+NestedMutate makeNestedMutate(stdplus::span<const ModArgs> mutations_args)
+{
+    NestedMutate ret;
+    for (const auto& args : mutations_args)
+    {
+        ret.mutations.push_back(openMutate(args));
+    }
+    return ret;
+}
 
 void main_wrapped(int argc, char* argv[])
 {
@@ -40,12 +51,13 @@ void main_wrapped(int argc, char* argv[])
         {
             auto dev = openDevice(*args.dev);
             auto file = openFile(*args.file, OpenFlags(OpenAccess::ReadOnly));
+            auto mutate = makeNestedMutate(args.mutate);
             ops::automatic(*dev, args.dev_offset, *file, args.file_offset,
-                           args.max_size, args.stride, args.noread);
+                           mutate, args.max_size, args.stride, args.noread);
             if (args.verify)
             {
                 ops::verify(*dev, args.dev_offset, *file, args.file_offset,
-                            args.max_size, args.stride);
+                            mutate, args.max_size, args.stride);
             }
         }
         break;
@@ -55,7 +67,8 @@ void main_wrapped(int argc, char* argv[])
             auto file = openFile(*args.file, OpenFlags(OpenAccess::WriteOnly)
                                                  .set(OpenFlag::Create)
                                                  .set(OpenFlag::Trunc));
-            ops::read(*dev, args.dev_offset, *file, args.file_offset,
+            auto mutate = makeNestedMutate(args.mutate);
+            ops::read(*dev, args.dev_offset, *file, args.file_offset, mutate,
                       args.max_size, args.stride);
         }
         break;
@@ -63,12 +76,13 @@ void main_wrapped(int argc, char* argv[])
         {
             auto dev = openDevice(*args.dev);
             auto file = openFile(*args.file, OpenFlags(OpenAccess::ReadOnly));
-            ops::write(*dev, args.dev_offset, *file, args.file_offset,
+            auto mutate = makeNestedMutate(args.mutate);
+            ops::write(*dev, args.dev_offset, *file, args.file_offset, mutate,
                        args.max_size, args.stride, args.noread);
             if (args.verify)
             {
                 ops::verify(*dev, args.dev_offset, *file, args.file_offset,
-                            args.max_size, args.stride);
+                            mutate, args.max_size, args.stride);
             }
         }
         break;
@@ -87,7 +101,8 @@ void main_wrapped(int argc, char* argv[])
         {
             auto dev = openDevice(*args.dev);
             auto file = openFile(*args.file, OpenFlags(OpenAccess::ReadOnly));
-            ops::verify(*dev, args.dev_offset, *file, args.file_offset,
+            auto mutate = makeNestedMutate(args.mutate);
+            ops::verify(*dev, args.dev_offset, *file, args.file_offset, mutate,
                         args.max_size, args.stride);
         }
         break;

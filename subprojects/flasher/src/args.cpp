@@ -19,6 +19,7 @@
 #include <flasher/convert.hpp>
 #include <flasher/device.hpp>
 #include <flasher/file.hpp>
+#include <flasher/mutate.hpp>
 
 #include <map>
 #include <stdexcept>
@@ -36,8 +37,9 @@ const std::map<std::string_view, Args::Op> string_to_op = {
 
 Args::Args(int argc, char* argv[])
 {
-    static const char opts[] = ":no:O:rs:S:v";
+    static const char opts[] = ":m:no:O:rs:S:v";
     static const struct option longopts[] = {
+        {"mutate", required_argument, nullptr, 'm'},
         {"and-verify", no_argument, nullptr, 'n'},
         {"dev-offset", required_argument, nullptr, 'o'},
         {"file-offset", required_argument, nullptr, 'O'},
@@ -53,6 +55,9 @@ Args::Args(int argc, char* argv[])
     {
         switch (c)
         {
+            case 'm':
+                mutate.emplace_back(optarg);
+                break;
             case 'n':
                 verify = true;
                 break;
@@ -135,6 +140,10 @@ void Args::printHelp(const char* arg0)
     fmt::print(stderr, "   or: {} [OPTION]... verify FILE DEV\n", arg0);
     fmt::print(stderr, "\n");
     fmt::print(stderr, "Optional Arguments:\n");
+    fmt::print(
+        stderr,
+        "  -m, --mutate[=MUTATE_OPTS]   Applies another mutation from the file"
+        "contents during operation\n");
     fmt::print(stderr, "  -n, --and-verify             Verifies the flash "
                        "contents during operation\n");
     fmt::print(
@@ -158,6 +167,13 @@ void Args::printHelp(const char* arg0)
     fmt::print(stderr,
                "FILE options (separated by ,) (simple is the default):\n");
     for (const auto& [_, type] : fileTypes)
+    {
+        type->printHelp();
+    }
+    fmt::print(stderr, "\n");
+
+    fmt::print(stderr, "MUTATION options (separated by ,)\n");
+    for (const auto& [_, type] : mutateTypes)
     {
         type->printHelp();
     }
