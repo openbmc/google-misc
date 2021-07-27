@@ -1,0 +1,3 @@
+option('tests', type: 'feature', description: 'Build tests')
+option('allow_prod_to_dev_downgrade', type: 'boolean', value: false)
+option('is_production_mode', type: 'boolean', value: true)
