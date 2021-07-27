@@ -36,5 +36,6 @@ endif
 
 subproject('acpi-power-state-daemon')
 subproject('ncsid', default_options: 'tests=' + tests_str)
-subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)
+#subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)
 subproject('nemora-postd')
+subproject('bios-validator', default_options: 'tests=' + tests_str)
