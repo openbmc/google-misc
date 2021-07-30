@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "720d31ff_361a1b6f",
+        "filename": "subprojects/hoth-ipmi-blobs/dbus.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-07-30T09:58:47Z",
+      "side": 1,
+      "message": "We should really be using a google namespace for google specific things (we kinda just dropped ourselves into the openbmc namespace). My initial thought is `com.google.gbmc.Hoth`\n\nOnly putting this here since it\u0027s the first CL attacking the hoth changes.\n\nSame goes for the other references below.",
+      "revId": "148c40ab62be798f3818cc2430501d82dd44fa7b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
