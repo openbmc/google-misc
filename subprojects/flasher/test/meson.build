@@ -49,6 +49,7 @@ tests = [
   'file',
   'file/memory',
   'mod',
+  'ops',
   'util',
 ]
 
