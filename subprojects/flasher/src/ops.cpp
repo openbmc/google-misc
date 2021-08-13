@@ -41,9 +41,61 @@ void write(Device&, size_t, File&, size_t, Mutate&, size_t,
     throw std::runtime_error("Not implemented");
 }
 
-void erase(Device&, size_t, size_t, std::optional<size_t>, bool)
+void erase(Device& dev, size_t dev_offset, size_t max_size,
+           std::optional<size_t> stride_size, bool noread)
 {
-    throw std::runtime_error("Not implemented");
+    const auto erase_size = dev.getEraseSize();
+    if (erase_size == 0)
+    {
+        throw std::invalid_argument("Cannot erase device with erase_size 0");
+    }
+    if (dev_offset % erase_size != 0)
+    {
+        throw std::invalid_argument(
+            fmt::format("Device offset not divisible by erase, {} % {} != 0",
+                        dev_offset, erase_size));
+    }
+    size_t stride = stride_size ? *stride_size : dev.recommendedStride();
+    if (stride == 0)
+    {
+        throw std::invalid_argument("Stride cannot be 0");
+    }
+    if (stride % erase_size != 0)
+    {
+        throw std::invalid_argument(fmt::format(
+            "Stride not divisible by erase, {} % {} != 0", stride, erase_size));
+    }
+    if (dev_offset > dev.getSize())
+    {
+        throw std::invalid_argument(fmt::format(
+            "Device smaller than offset, {} < {}", dev.getSize(), dev_offset));
+    }
+    max_size = std::min(max_size, dev.getSize() - dev_offset);
+    if (max_size % erase_size != 0)
+    {
+        throw std::invalid_argument(fmt::format(
+            "Size not divisible by erase, {} % {} != 0", max_size, erase_size));
+    }
+    std::vector<std::byte> buf_v(stride), erased_v(stride);
+    dev.mockErase(erased_v);
+    const stdplus::span<std::byte> buf(buf_v), erased(erased_v);
+    for (size_t i = dev_offset; i < max_size + dev_offset; i += stride)
+    {
+        const size_t bytes = std::min(stride, max_size + dev_offset - i);
+        if (!noread)
+        {
+            dev.readAtExact(buf.subspan(0, bytes), i);
+            log(LogLevel::Info, " RD@{}#{}", i, bytes);
+            if (!dev.needsErase(buf.subspan(0, bytes),
+                                erased.subspan(0, bytes)))
+            {
+                continue;
+            }
+        }
+        dev.eraseBlocks(i / erase_size, bytes / erase_size);
+        log(LogLevel::Info, " ED@{}#{}", i, bytes);
+    }
+    log(LogLevel::Info, "\n");
 }
 
 void verify(Device& dev, size_t dev_offset, File& file, size_t file_offset,

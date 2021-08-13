@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <flasher/device/fake.hpp>
+#include <flasher/device/mock.hpp>
 #include <flasher/file/memory.hpp>
 #include <flasher/mutate/asymmetric.hpp>
 #include <flasher/ops.hpp>
@@ -28,6 +29,9 @@ namespace flasher
 {
 namespace ops
 {
+
+using testing::_;
+using testing::Return;
 
 void fillBuffer(std::vector<std::byte>& buf, size_t off, size_t size)
 {
@@ -120,6 +124,65 @@ TEST_F(VerifyTest, MutateApplied)
     m.forward(df.data, 0);
     verify(d, /*dev_offset=*/1, f, /*file_offset=*/1, m, /*max_size=*/4,
            /*stride_size=*/std::nullopt);
+}
+
+class EraseTest : public testing::Test
+{
+  protected:
+    EraseTest() : d(Device::Type::Nor, 12, 4)
+    {}
+    testing::StrictMock<device::Mock> d;
+};
+
+TEST_F(EraseTest, ArgumentValidation)
+{
+    EXPECT_THROW(erase(d, /*dev_offset=*/0, /*max_size=*/0, /*stride_size=*/0,
+                       /*noread=*/false),
+                 std::invalid_argument);
+    EXPECT_THROW(erase(d, /*dev_offset=*/0, /*max_size=*/0, /*stride_size=*/2,
+                       /*noread=*/false),
+                 std::invalid_argument);
+    EXPECT_THROW(erase(d, /*dev_offset=*/16, /*max_size=*/0, /*stride_size=*/4,
+                       /*noread=*/false),
+                 std::invalid_argument);
+    EXPECT_THROW(erase(d, /*dev_offset=*/1, /*max_size=*/0, /*stride_size=*/4,
+                       /*noread=*/false),
+                 std::invalid_argument);
+    EXPECT_THROW(erase(d, /*dev_offset=*/0, /*max_size=*/11, /*stride_size=*/4,
+                       /*noread=*/false),
+                 std::invalid_argument);
+    erase(d, /*dev_offset=*/0, /*max_size=*/0, /*stride_size=*/4,
+          /*noread=*/false);
+
+    EXPECT_CALL(d, recommendedStride()).WillOnce(Return(0));
+    EXPECT_THROW(erase(d, /*dev_offset=*/0, /*max_size=*/0,
+                       /*stride_size=*/std::nullopt, /*noread=*/false),
+                 std::invalid_argument);
+}
+
+TEST_F(EraseTest, NoRead)
+{
+    EXPECT_CALL(d, eraseBlocks(1, 2));
+    erase(d, /*dev_offset=*/4, /*max_size=*/9, /*stride_size=*/8,
+          /*noread=*/true);
+}
+
+TEST_F(EraseTest, WithRead)
+{
+    testing::InSequence seq;
+    EXPECT_CALL(d, readAt(_, 0))
+        .WillOnce([](stdplus::span<std::byte> buf, size_t) {
+            memset(buf.data(), 0xff, buf.size());
+            return buf;
+        });
+    EXPECT_CALL(d, readAt(_, 4))
+        .WillOnce([](stdplus::span<std::byte> buf, size_t) {
+            memset(buf.data(), 0, buf.size());
+            return buf;
+        });
+    EXPECT_CALL(d, eraseBlocks(1, 1));
+    erase(d, /*dev_offset=*/0, /*max_size=*/8, /*stride_size=*/4,
+          /*noread=*/false);
 }
 
 } // namespace ops
