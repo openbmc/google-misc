@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06406748_163bcec1",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-07T23:59:54Z",
+      "side": 1,
+      "message": "Is 3 broken?",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8f6bc5_449995d0",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-07T23:59:54Z",
+      "side": 1,
+      "message": "You can drop the array brackets and put each source on it\u0027s own line. All varargs are implied to be sources after the library name.",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4413f380_6a1d6251",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-07T23:59:54Z",
+      "side": 1,
+      "message": "nit: inconsistent formatting with other endings being lisp style.",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f3b0b7_70062ee8",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-07T23:59:54Z",
+      "side": 1,
+      "message": "libcr51sign_dep",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af944e1_60256f47",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-07T23:59:54Z",
+      "side": 1,
+      "message": "You should make the library the first positional argument, specifying `libraries:` is deprecated.",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997b3018_6d5e8938",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-07T23:59:54Z",
+      "side": 1,
+      "message": "This should include the openssl dependency as it would be required if this was built statically.",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182a0b45_f861be26",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-07T23:59:54Z",
+      "side": 1,
+      "message": "Put this on a new line.",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
