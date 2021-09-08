@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9465bcb6_83de2b6e",
+        "filename": "meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-08T00:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a8df421_3e83bcce",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06406748_163bcec1",
         "filename": "subprojects/libcr51sign/meson.build",
         "patchSetId": 7
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5bd2f647_a321ffda",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-08T00:29:51Z",
+      "side": 1,
+      "message": "Yes, 3 won\u0027t build.",
+      "parentUuid": "8107b227_e892b724",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf8f6bc5_449995d0",
         "filename": "subprojects/libcr51sign/meson.build",
         "patchSetId": 7
@@ -68,6 +104,24 @@
       "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cf0e71_b0f455ef",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-08T00:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf8f6bc5_449995d0",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "e1eb7b99_b63e9ddb",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-08T00:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4413f380_6a1d6251",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98f3b0b7_70062ee8",
         "filename": "subprojects/libcr51sign/meson.build",
         "patchSetId": 7
@@ -102,6 +174,24 @@
       "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedd3819_b5ecc36f",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-08T00:29:51Z",
+      "side": 1,
+      "message": "This is actually not needed anymore.",
+      "parentUuid": "98f3b0b7_70062ee8",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "8bb0b668_2ae7af3f",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-08T00:29:51Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2af944e1_60256f47",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "997b3018_6d5e8938",
         "filename": "subprojects/libcr51sign/meson.build",
         "patchSetId": 7
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "c01d093a_8df0c1f9",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-08T00:29:51Z",
+      "side": 1,
+      "message": "Done. Referenced libcr51sign_lib directly which has openssl in its dependencies.",
+      "parentUuid": "997b3018_6d5e8938",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "182a0b45_f861be26",
         "filename": "subprojects/libcr51sign/meson.build",
         "patchSetId": 7
@@ -153,6 +279,24 @@
       "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa8978f_c2ac7e02",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-08T00:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "182a0b45_f861be26",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
