@@ -22,6 +22,30 @@
       "revId": "0467f06ff571d01a2b2f1fd7c44b8a6c15b8225e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15a2b48_049e3e4b",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-09T17:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4300d888_7847d9b8",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "0467f06ff571d01a2b2f1fd7c44b8a6c15b8225e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
