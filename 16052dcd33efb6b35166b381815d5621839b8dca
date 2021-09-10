@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "8e97ab28_5f8fd07d",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2021-09-10T22:34:41Z",
+      "side": 1,
+      "message": "That\u0027s more subtle than I thought. Added to \"requires\" should solve the problem, right?",
+      "parentUuid": "669fb94e_35f8ef6f",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "182a0b45_f861be26",
         "filename": "subprojects/libcr51sign/meson.build",
         "patchSetId": 7
