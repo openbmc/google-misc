@@ -301,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "de65869f_d7369fae",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-11T21:20:53Z",
+      "side": 1,
+      "message": "Yeah, I meant requires not dependencies.",
+      "parentUuid": "8e97ab28_5f8fd07d",
+      "revId": "16052dcd33efb6b35166b381815d5621839b8dca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "182a0b45_f861be26",
         "filename": "subprojects/libcr51sign/meson.build",
         "patchSetId": 7
