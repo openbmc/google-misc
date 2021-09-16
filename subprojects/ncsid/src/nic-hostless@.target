@@ -1,6 +1,8 @@
 [Unit]
 Description=Target when nic enters mode without host
 Conflicts=nic-hostful@%i.target
+BindsTo=ncsid@%i.service
+After=ncsid@%i.service
 Wants=dhcp4@%i.service
 Wants=dhcp6@%i.service
 Wants=update-static-neighbors@%i.service

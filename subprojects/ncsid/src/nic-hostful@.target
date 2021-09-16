@@ -1,3 +1,5 @@
 [Unit]
 Description=Target when nic enters mode with host
 Conflicts=nic-hostless@%i.target
+BindsTo=ncsid@%i.service
+After=ncsid@%i.service
