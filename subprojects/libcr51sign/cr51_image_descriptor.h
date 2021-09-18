@@ -56,6 +56,10 @@
 #define IMAGE_REGION_PERSISTENT (1 << 4)
 #define IMAGE_REGION_PERSISTENT_RELOCATABLE (1 << 5)
 #define IMAGE_REGION_PERSISTENT_EXPANDABLE (1 << 6)
+#define IMAGE_REGION_OVERRIDE (1 << 7)
+#define IMAGE_REGION_OVERRIDE_ON_TRANSITION (1 << 8)
+#define IMAGE_REGION_MAILBOX (1 << 9)
+#define IMAGE_REGION_SKIP_BOOT_VALIDATION (1 << 10)
 
 /* Little endian on flash. */
 #define DESCRIPTOR_MAGIC 0x5f435344474d495f // "_IMGDSC_"
@@ -68,11 +72,12 @@
 /* Indicates the type of the image. The type of the image also indicates the
  * family of key that was used to sign the image.
  *
- * Note: if the image type is IMAGE_SELF, the signature_scheme has to be of type
+ * Note: if the image type is IMAGE_UNSIGNED_INTEGRITY, the signature_scheme has
+ * to be of type
  * *_NO_SIGNATURE. Also, all other image types cannot transition to an image of
- * type IMAGE_SELF.
+ * type IMAGE_UNSIGNED_INTEGRITY.
  *
- * The way to verify an image of type IMAGE_SELF differs from
+ * The way to verify an image of type IMAGE_UNSIGNED_INTEGRITY differs from
  * other types of images as it is not signed with an asymmetric key. Instead,
  * one can verify the integrity by computing the shasum over the descriptor.
  */
@@ -82,7 +87,7 @@ enum image_type
     IMAGE_PROD = 1,
     IMAGE_BREAKOUT = 2,
     IMAGE_TEST = 3,
-    IMAGE_SELF = 4
+    IMAGE_UNSIGNED_INTEGRITY = 4
 };
 
 enum hash_type
@@ -98,8 +103,8 @@ enum hash_type
     HASH_SHA3_512 = 8
 };
 
-/* Note: If the image is of type IMAGE_SELF, the signature_scheme has to be of
- * type *_ONLY_NO_SIGNATURE.
+/* Note: If the image is of type IMAGE_UNSIGNED_INTEGRITY, the signature_scheme
+ * has to be of type *_ONLY_NO_SIGNATURE.
  */
 enum signature_scheme
 {
@@ -196,7 +201,7 @@ struct image_descriptor
     /* Seconds since epoch. */
     uint64_t build_timestamp;
 
-    /* image_type enum { DEV, PROD, BREAKOUT, SELF} */
+    /* image_type enum { DEV, PROD, BREAKOUT, UNSIGNED_INTEGRITY} */
     uint8_t image_type;
     /* 0: no denylist struct, 1: watermark only, >1: watermark + denylist */
     uint8_t denylist_size;

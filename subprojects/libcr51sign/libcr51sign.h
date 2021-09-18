@@ -26,11 +26,13 @@ extern "C"
 {
 #endif
 
-#define SHA256_DIGEST_SIZE 32
-#define SHA512_DIGEST_SIZE 64
+#define LIBCR51SIGN_SHA256_DIGEST_SIZE 32
+#define LIBCR51SIGN_SHA512_DIGEST_SIZE 64
+
+#define LIBCR51SIGN_MAX_REGION_COUNT 16
 
 // Currently RSA4096 (in bytes).
-#define MAX_SIGNATURE_SIZE 512
+#define LIBCR51SIGN_MAX_SIGNATURE_SIZE 512
 
     // List of common error codes that can be returned
     enum libcr51sign_validation_failure_reason
@@ -59,6 +61,9 @@ extern "C"
         LIBCR51SIGN_ERROR_INVALID_INTERFACE = 14,
         LIBCR51SIGN_ERROR_INVALID_SIG_SCHEME = 15,
         LIBCR51SIGN_ERROR_MAX = 16,
+        // Invalid image region
+        LIBCR51SIGN_ERROR_INVALID_REGION_INPUT = 17,
+        LIBCR51SIGN_ERROR_INVALID_REGION_SIZE = 18,
     };
 
     struct libcr51sign_ctx
@@ -164,6 +169,12 @@ extern "C"
         bool (*is_production_mode)();
     };
 
+    struct libcr51sign_validated_regions
+    {
+        uint32_t region_count;
+        struct image_region image_regions[LIBCR51SIGN_MAX_REGION_COUNT];
+    };
+
     // Check whether the signature on the image is valid.
     // Validates the authenticity of an EEPROM image. Scans for & validates the
     // signature on the image descriptor. If the descriptor validates, hashes
@@ -174,12 +185,14 @@ extern "C"
     //                  data for the user of the library
     // @param[in] intf - function pointers which interface to the current system
     //                   and environment
+    // @param[out] image_regions - image_region pointer to an array for the
+    // output
     //
     // @return nonzero on error, zero on success
 
-    enum libcr51sign_validation_failure_reason
-        libcr51sign_validate(const struct libcr51sign_ctx* ctx,
-                             struct libcr51sign_intf* intf);
+    enum libcr51sign_validation_failure_reason libcr51sign_validate(
+        const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+        struct libcr51sign_validated_regions* image_regions);
 
     // Function to convert error code to string format
     // @param[in] ec - error code

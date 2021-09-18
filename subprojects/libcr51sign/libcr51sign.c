@@ -37,8 +37,6 @@ extern "C"
 // Maximum version supported. Major revisions are not backwards compatible.
 #define MAX_MAJOR_VERSION 1
 
-#define MAX_REGION_COUNT 16
-
 // Descriptor alignment on the external EEPROM.
 #define DESCRIPTOR_ALIGNMENT (64 * 1024)
 
@@ -125,10 +123,10 @@ extern "C"
         switch (type)
         {
             case HASH_SHA2_256:
-                *size = SHA256_DIGEST_SIZE;
+                *size = LIBCR51SIGN_SHA256_DIGEST_SIZE;
                 return LIBCR51SIGN_SUCCESS;
             case HASH_SHA2_512:
-                *size = SHA512_DIGEST_SIZE;
+                *size = LIBCR51SIGN_SHA512_DIGEST_SIZE;
                 return LIBCR51SIGN_SUCCESS;
             default:
                 return LIBCR51SIGN_ERROR_INVALID_HASH_TYPE;
@@ -183,7 +181,10 @@ extern "C"
                           SIGNATURE_OFFSET));
 
         // Read up to the modulus.
-        const uint32_t read_len = SIGNATURE_OFFSET;
+        enum
+        {
+            read_len = SIGNATURE_OFFSET
+        };
         uint8_t buffer[read_len];
         // "modulus" & "signature" will not be indexed.
         struct signature_rsa4096_pkcs15* sig_data = (void*)&buffer;
@@ -282,19 +283,24 @@ extern "C"
     // If the array is consistent, proceeds to hash the static regions and
     // validates the hash. d_offset is the absolute image descriptor offset
 
-    static failure_reason
-        validate_payload_regions(const struct libcr51sign_ctx* ctx,
-                                 struct libcr51sign_intf* intf,
-                                 uint32_t d_offset)
+    static failure_reason validate_payload_regions(
+        const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+        uint32_t d_offset, struct libcr51sign_validated_regions* image_regions)
     {
         // Allocate buffer to accomodate largest supported hash-type(SHA512)
         uint8_t magic_and_digest[MEMBER_SIZE(struct hash_sha512, hash_magic) +
-                                 SHA512_DIGEST_SIZE];
-        uint8_t dcrypto_digest[SHA512_DIGEST_SIZE];
-        struct image_region regions[MAX_REGION_COUNT];
+                                 LIBCR51SIGN_SHA512_DIGEST_SIZE];
+        uint8_t dcrypto_digest[LIBCR51SIGN_SHA512_DIGEST_SIZE];
         uint32_t byte_count, region_count, image_size, hash_offset, digest_size;
         uint8_t d_region_num = 0;
         int i, rv;
+        struct image_region const* region;
+
+        if (image_regions == NULL)
+        {
+            CPRINTS(ctx, "Missing image region input");
+            return LIBCR51SIGN_ERROR_INVALID_REGION_INPUT;
+        }
 
         BUILD_ASSERT((MEMBER_SIZE(struct hash_sha256, hash_magic) ==
                       MEMBER_SIZE(struct hash_sha512, hash_magic)));
@@ -303,9 +309,22 @@ extern "C"
         hash_offset = d_offset + sizeof(struct image_descriptor) +
                       region_count * sizeof(struct image_region);
         // Read the image_region array.
+
+        if (region_count > ARRAY_SIZE(image_regions->image_regions))
+        {
+            CPRINTS(ctx, "validate_payload_regions: "
+                         "ctx->descriptor.region_count is greater "
+                         "than LIBCR51SIGN_MAX_REGION_COUNT");
+            return LIBCR51SIGN_ERROR_INVALID_REGION_SIZE;
+        }
+
         rv = intf->read(
             ctx, d_offset + offsetof(struct image_descriptor, image_regions),
-            region_count * sizeof(struct image_region), (uint8_t*)&regions);
+            region_count * sizeof(struct image_region),
+            (uint8_t*)&image_regions->image_regions);
+
+        image_regions->region_count = region_count;
+
         if (rv != LIBCR51SIGN_SUCCESS)
         {
             CPRINTS(ctx,
@@ -316,27 +335,29 @@ extern "C"
         // Validate that the regions are contiguous & exhaustive.
         for (i = 0, byte_count = 0; i < region_count; i++)
         {
+            region = image_regions->image_regions + i;
+
             CPRINTS(ctx,
                     "validate_payload_regions: region #%d \"%s\" (%x - %x)", i,
-                    regions[i].region_name, regions[i].region_offset,
-                    regions[i].region_offset + regions[i].region_size);
-            if ((regions[i].region_offset % IMAGE_REGION_ALIGNMENT) != 0 ||
-                (regions[i].region_size % IMAGE_REGION_ALIGNMENT) != 0)
+                    region->region_name, region->region_offset,
+                    region->region_offset + region->region_size);
+            if ((region->region_offset % IMAGE_REGION_ALIGNMENT) != 0 ||
+                (region->region_size % IMAGE_REGION_ALIGNMENT) != 0)
             {
                 CPRINTS(
                     ctx,
                     "validate_payload_regions: regions must be sector aligned");
                 return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
             }
-            if (regions[i].region_offset != byte_count ||
-                regions[i].region_size > image_size - byte_count)
+            if (region->region_offset != byte_count ||
+                region->region_size > image_size - byte_count)
             {
                 CPRINTS(ctx, "validate_payload_regions: invalid region array");
                 return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
             }
-            byte_count += regions[i].region_size;
+            byte_count += region->region_size;
             // The image descriptor must be part of a static region.
-            if (d_offset >= regions[i].region_offset && d_offset < byte_count)
+            if (d_offset >= region->region_offset && d_offset < byte_count)
             {
                 d_region_num = i;
                 CPRINTS(
@@ -345,7 +366,7 @@ extern "C"
                     i);
                 // The descriptor can't span regions.
                 if (ctx->descriptor.descriptor_area_size > byte_count ||
-                    !(regions[i].region_attributes & IMAGE_REGION_STATIC))
+                    !(region->region_attributes & IMAGE_REGION_STATIC))
                 {
                     CPRINTS(
                         ctx,
@@ -391,12 +412,14 @@ extern "C"
         for (i = 0; i < region_count; i++)
         {
             uint32_t hash_start, hash_size;
-            if (!(regions[i].region_attributes & IMAGE_REGION_STATIC))
+            region = image_regions->image_regions + i;
+
+            if (!(region->region_attributes & IMAGE_REGION_STATIC))
             {
                 continue;
             }
-            hash_start = regions[i].region_offset;
-            hash_size = regions[i].region_size;
+            hash_start = region->region_offset;
+            hash_size = region->region_size;
 
             // Skip the descriptor.
             do
@@ -409,11 +432,11 @@ extern "C"
                 if (!hash_size)
                 {
                     hash_start += ctx->descriptor.descriptor_area_size;
-                    hash_size = (regions[i].region_offset +
-                                 regions[i].region_size - hash_start);
+                    hash_size = (region->region_offset + region->region_size -
+                                 hash_start);
                 }
                 CPRINTS("validate_payload_regions: hashing %s (%x - %x)",
-                        regions[i].region_name, hash_start,
+                        region->region_name, hash_start,
                         hash_start + hash_size);
                 // Read the image_region array.
                 rv = read_and_hash_update(ctx, intf, hash_start, hash_size);
@@ -422,8 +445,7 @@ extern "C"
                     return rv;
                 }
                 hash_start += hash_size;
-            } while (hash_start !=
-                     regions[i].region_offset + regions[i].region_size);
+            } while (hash_start != region->region_offset + region->region_size);
         }
         rv = intf->hash_final((void*)ctx, (uint8_t*)dcrypto_digest);
 
@@ -441,6 +463,35 @@ extern "C"
         }
         // Image is valid.
         return LIBCR51SIGN_SUCCESS;
+    }
+
+    // Create empty image_regions to pass to validate_payload_regions
+    // Support validate_payload_regions_helper to remove image_regions as a
+    // required input.
+
+    static failure_reason
+        allocate_and_validate_payload_regions(const struct libcr51sign_ctx* ctx,
+                                              struct libcr51sign_intf* intf,
+                                              uint32_t d_offset)
+    {
+        struct libcr51sign_validated_regions image_regions;
+        return validate_payload_regions(ctx, intf, d_offset, &image_regions);
+    }
+
+    // Wrapper around validate_payload_regions to allow nullptr for
+    // image_regions. Calls allocate_and_validate_payload_regions when
+    // image_regions is nullptr to create placer holder image_regions.
+
+    static failure_reason validate_payload_regions_helper(
+        const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+        uint32_t d_offset, struct libcr51sign_validated_regions* image_regions)
+    {
+        if (image_regions)
+        {
+            return validate_payload_regions(ctx, intf, d_offset, image_regions);
+        }
+
+        return allocate_and_validate_payload_regions(ctx, intf, d_offset);
     }
 
     // Check if the given signature_scheme is supported.
@@ -514,10 +565,10 @@ extern "C"
         uint32_t data_offset, uint32_t data_size, enum signature_scheme scheme,
         uint32_t raw_signature_offset)
     {
-        uint8_t signature[MAX_SIGNATURE_SIZE];
+        uint8_t signature[LIBCR51SIGN_MAX_SIGNATURE_SIZE];
         uint16_t key_size;
         uint32_t digest_size;
-        uint8_t dcrypto_digest[SHA512_DIGEST_SIZE];
+        uint8_t dcrypto_digest[LIBCR51SIGN_SHA512_DIGEST_SIZE];
         int rv;
         enum hash_type hash_type;
 
@@ -646,7 +697,7 @@ extern "C"
             ctx->descriptor.image_type != IMAGE_PROD &&
             ctx->descriptor.image_type != IMAGE_BREAKOUT &&
             ctx->descriptor.image_type != IMAGE_TEST &&
-            ctx->descriptor.image_type != IMAGE_SELF)
+            ctx->descriptor.image_type != IMAGE_UNSIGNED_INTEGRITY)
         {
             CPRINTS(ctx, "validate_descriptor: bad image type");
             return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
@@ -669,7 +720,7 @@ extern "C"
             return rv;
         }
         if (ctx->descriptor.descriptor_major > MAX_MAJOR_VERSION ||
-            ctx->descriptor.region_count > MAX_REGION_COUNT)
+            ctx->descriptor.region_count > LIBCR51SIGN_MAX_REGION_COUNT)
         {
             CPRINTS(ctx, "validate_descriptor: unsupported descriptor");
             return LIBCR51SIGN_ERROR_UNSUPPORTED_DESCRIPTOR;
@@ -804,11 +855,14 @@ extern "C"
     //                 data for the user of the library
     // @param[in] intf - function pointers which interface to the current system
     //                  and environment
+    // @param[out] image_regions - image_region pointer to an array for the
+    // output
     //
     // @return nonzero on error, zero on success
 
-    failure_reason libcr51sign_validate(const struct libcr51sign_ctx* ctx,
-                                        struct libcr51sign_intf* intf)
+    failure_reason libcr51sign_validate(
+        const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+        struct libcr51sign_validated_regions* image_regions)
     {
         uint32_t image_limit = 0;
         int rv, rv_first_desc = LIBCR51SIGN_SUCCESS;
@@ -846,7 +900,8 @@ extern "C"
 
             if (rv == LIBCR51SIGN_SUCCESS)
             {
-                rv = validate_payload_regions(ctx, intf, descriptor_offset);
+                rv = validate_payload_regions_helper(
+                    ctx, intf, descriptor_offset, image_regions);
                 if (rv == LIBCR51SIGN_SUCCESS)
                 {
                     CPRINTS(ctx, "validate: success!");
@@ -916,6 +971,10 @@ extern "C"
                 return "Invalid interface";
             case LIBCR51SIGN_ERROR_INVALID_SIG_SCHEME:
                 return "Invalid signature scheme";
+            case LIBCR51SIGN_ERROR_INVALID_REGION_INPUT:
+                return "Invalid image region input";
+            case LIBCR51SIGN_ERROR_INVALID_REGION_SIZE:
+                return "Invalid image region size";
             default:
                 return "Unknown error";
         }
