@@ -16,6 +16,24 @@
       "revId": "18c97f6dc582da01335f5958c32f979d3638ace4",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eec8c1e_bf3e76af",
+        "filename": "subprojects/bios-key/meson.build",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-09-27T22:24:47Z",
+      "side": 1,
+      "message": "yeah, I guess I just wanted to have google specific stuff in one place.\n\nShould we revert this and just move the keys to https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/47265/ as a file?",
+      "parentUuid": "18dc17e6_1062e300",
+      "revId": "18c97f6dc582da01335f5958c32f979d3638ace4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
