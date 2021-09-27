@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18dc17e6_1062e300",
+        "filename": "subprojects/bios-key/meson.build",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-27T22:03:05Z",
+      "side": 1,
+      "message": "Would be nice if this was in a dir like `/usr/share/bios-key` right now it\u0027s just in `/usr/share` so it\u0027s ambiguous what these keys are for.",
+      "revId": "18c97f6dc582da01335f5958c32f979d3638ace4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
