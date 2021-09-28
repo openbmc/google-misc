@@ -34,6 +34,24 @@
       "revId": "18c97f6dc582da01335f5958c32f979d3638ace4",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244960f6_ad6dd642",
+        "filename": "subprojects/bios-key/meson.build",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-28T08:35:21Z",
+      "side": 1,
+      "message": "I think you meant this as a reply to the other comment. Yeah, I\u0027d rather see trivial stuff go directly in there.",
+      "parentUuid": "0eec8c1e_bf3e76af",
+      "revId": "18c97f6dc582da01335f5958c32f979d3638ace4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
