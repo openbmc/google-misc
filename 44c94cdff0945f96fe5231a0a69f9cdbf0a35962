@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "041845aa_88f3fe20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-09-30T15:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48896bd3_bd2a3c0c",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0de8d1bb_f545bb1a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298828d2_333d7d2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-09-30T15:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0de8d1bb_f545bb1a",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 84
+      },
+      "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e6d3d8d5_ad260f1b",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-09-30T15:36:00Z",
+      "side": 1,
+      "message": "yeah, this can be any firmware that is signed with cr51 descriptor. I have changed it to firmwareFileBuf.",
+      "parentUuid": "b3db4f31_4401d0d9",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8da06c66_84fa546d",
         "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2f4841_74fdcbc1",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-09-30T15:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8da06c66_84fa546d",
+      "range": {
+        "startLine": 87,
+        "startChar": 46,
+        "endLine": 87,
+        "endChar": 57
+      },
+      "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
