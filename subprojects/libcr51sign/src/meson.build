@@ -12,8 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+fmt_dep = dependency('fmt', required: false)
+if not fmt_dep.found()
+  fmt_opt = import('cmake').subproject_options()
+  fmt_opt.append_compile_args(
+    'c++',
+    ['-DCMAKE_POSITION_INDEPENDENT_CODE=ON',
+      '-DMASTER_PROJECT=OFF'])
+  fmt_proj = cmake.subproject('fmt', options: fmt_opt, required: false)
+  assert(fmt_proj.found(), 'fmtlib is required')
+  fmt_dep = fmt_proj.dependency('fmt')
+endif
+
 libcr51sign_deps = [
   dependency('libcrypto'),
+  fmt_dep,
 ]
 
 libcr51sign_cflags = [
@@ -29,6 +42,7 @@ libcr51sign_lib = library(
   'cr51sign',
   'libcr51sign.c',
   'libcr51sign_support.c',
+  'cr51sign_validator.cpp',
   dependencies: libcr51sign_pre,
   c_args: [
     # Temporarily ignore until updates land
