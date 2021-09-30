@@ -14,13 +14,14 @@
 
 project(
   'libcr51sign',
-  'c',
+  ['c', 'cpp'],
   version: '0.1',
   meson_version: '>=0.57.0',
   default_options: [
     'warning_level=3',
     'werror=true',
     'c_std=c18',
+    'cpp_std=c++20',
   ])
 
 subdir('include')
