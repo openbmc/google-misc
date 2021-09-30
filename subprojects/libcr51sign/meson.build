@@ -21,6 +21,7 @@ project(
     'warning_level=3',
     'werror=true',
     'c_std=c18',
+    'cpp_std=c++20',
   ])
 
 subdir('include')
