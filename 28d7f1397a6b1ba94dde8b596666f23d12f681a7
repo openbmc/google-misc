@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd6f74e2_a5e67aee",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-30T21:29:36Z",
+      "side": 1,
+      "message": "We should avoid storing extra copies of the firmware in memory where possible. AFAIK you should be able to read regions of the file as needed to do the hashing required to verify the descriptor.\n\nAlso, even if you do opt to store the firmware in memory we shouldn\u0027t store it in a global variable like this. It should be something you can pass around where it is used and only live as long as needed.",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c110072f_f3d3c34d",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-30T21:29:36Z",
+      "side": 1,
+      "message": "You might consider leveraging the flasher library for this, then you can translate the file / device strings directly into a readable unit. I can provide a common class for reading contents.\n\nAlso, you shouldn\u0027t use a string_view for nul-terminated strings. You would have to use a const char * in this case.",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be83edf_2aed1dce",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-30T21:29:36Z",
+      "side": 1,
+      "message": "I think you need to read the descriptor to figure out which type of hash was used.",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a33d0c_67a8c975",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-30T21:29:36Z",
+      "side": 1,
+      "message": "If you are validating an image you need to make sure it is also verifying the non-static regions too to guarantee the image is pristine. I don\u0027t think the regular verify routine does this.",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc52e37_e807015e",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-30T21:29:36Z",
+      "side": 1,
+      "message": "These should be configuration changes, not build time code changes.",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e590d407_1ac1d0fd",
+        "filename": "subprojects/ncsid/src/update_ra_neighbor.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-09-30T21:29:36Z",
+      "side": 1,
+      "message": "Can we drop this from the change, I\u0027ll go fix it separately since I added it.",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
