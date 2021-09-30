@@ -45,6 +45,52 @@
       "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3db4f31_4401d0d9",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-09-30T03:19:35Z",
+      "side": 1,
+      "message": "This COULD technically be for non BIOS things right? Wondering if this variable could be more generic.",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da06c66_84fa546d",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-09-30T03:19:35Z",
+      "side": 1,
+      "message": "If we change the biosFileBuf name, we should also change this description.",
+      "range": {
+        "startLine": 87,
+        "startChar": 46,
+        "endLine": 87,
+        "endChar": 57
+      },
+      "revId": "44c94cdff0945f96fe5231a0a69f9cdbf0a35962",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
