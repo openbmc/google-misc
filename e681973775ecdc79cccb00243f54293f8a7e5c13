@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cda1b80_68097cd9",
+        "filename": "subprojects/flasher/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-09-30T19:02:15Z",
+      "side": 1,
+      "message": "Can we add a feature for read to read a a offset?\n\n```\nvoid read(Device\u0026 dev, File\u0026 file, Mutate\u0026 mutate, size_t dev_offset,\n          std::optional\u003csize_t\u003e max_size, std::optional\u003csize_t\u003e stride_size,\n          bool enableFileOffset \u003d false);\n```\n\nThen.\n```\nif (enableFileOffset)\n        file.lseek(dev_offset, Whence::Set);\n```\n\nIt will use the Device offset and write to the same location in the file that it is reading to.\n\nThis is help read the a regions of the image and just inject it to the file.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "e681973775ecdc79cccb00243f54293f8a7e5c13",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
