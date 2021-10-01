@@ -289,4 +289,48 @@ TEST_F(OperationTest, InjectPersistentPass)
     ops::injectPersistent(args);
 }
 
+TEST_F(OperationTest, HashDescriptorInvalidImage)
+{
+    Args args;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _)).WillOnce(Return(false));
+
+    EXPECT_THROW(
+        try { ops::hashDescriptor(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(
+                e.what(),
+                fmt::format("failed to validate the CR51 descriptor for {}",
+                            testBin)
+                    .c_str());
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, HashDescriptorPass)
+{
+    Args args;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    std::string expectedHashStr =
+        "000100000000000000000c000000000000000000000000000000000000003000";
+    std::vector<uint8_t> expectedHash(32);
+    expectedHash[1] = 1;
+    expectedHash[10] = 12;
+    expectedHash[30] = 48;
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _)).WillOnce(Return(true));
+    EXPECT_CALL(cr51MockHelper, descriptorHash())
+        .WillOnce(Return(expectedHash));
+
+    EXPECT_EQ(ops::hashDescriptor(args), expectedHashStr);
+}
+
 } // namespace flashupdate

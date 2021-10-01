@@ -35,7 +35,8 @@ namespace cr51
 class Cr51
 {
   public:
-    Cr51() : hash(std::vector<uint8_t>(SHA256_DIGEST_LENGTH)){};
+    Cr51() : hash(std::vector<uint8_t>(SHA256_DIGEST_LENGTH))
+    {}
     virtual ~Cr51() = default;
 
     /** @brief Validate CR51 image of a image
