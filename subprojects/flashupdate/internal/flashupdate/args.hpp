@@ -15,6 +15,7 @@
 #pragma once
 
 #include <flasher/mod.hpp>
+#include <flashupdate/config.hpp>
 
 #include <cstdint>
 #include <functional>
@@ -32,13 +33,13 @@ class Args
   public:
     enum class Op
     {
-        Empty,
         HashDescriptor,
         Info,
         InjectPersistent,
         Read,
         UpdateStagedVersion,
         UpdateState,
+        ValidateConfig,
         Write,
     };
     Op op;
@@ -57,6 +58,11 @@ class Args
     bool checkStageState = false;
     bool otherInfo = false;
     bool cleanOutput = false;
+
+    // Json Config File
+    std::optional<std::string> configFile;
+
+    Config config;
 
     Args(int argc, char* argv[]);
 
