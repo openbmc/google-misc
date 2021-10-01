@@ -39,6 +39,7 @@ struct Mock : public Cr51
     MOCK_METHOD(std::vector<struct image_region>, persistentRegions, (),
                 (override));
     MOCK_METHOD(bool, verify, (bool), (override));
+    MOCK_METHOD(std::vector<uint8_t>, descriptorHash, (), (override));
 };
 
 } // namespace cr51

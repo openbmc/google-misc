@@ -35,7 +35,8 @@ namespace cr51
 class Cr51
 {
   public:
-    Cr51() : hash(std::vector<uint8_t>(SHA256_DIGEST_LENGTH)){};
+    Cr51() : hash(std::vector<uint8_t>(SHA256_DIGEST_LENGTH))
+    {}
     virtual ~Cr51() = default;
 
     /** @brief Validate CR51 image of a image
@@ -70,6 +71,15 @@ class Cr51
      */
     virtual bool verify(bool prod) = 0;
 
+    /** @brief SHA256 of the CR51 descriptor
+     *
+     * @return the HASH of the CR51 descriptor
+     */
+    virtual std::vector<uint8_t> descriptorHash()
+    {
+        return hash;
+    }
+
     /** @brief The BIOS image is prod signed
      *
      * @return true if the BIOS image is prod signed
@@ -77,15 +87,6 @@ class Cr51
     bool prodImage()
     {
         return prod;
-    }
-
-    /** @brief SHA256 of the CR51 descriptor
-     *
-     * @return the HASH of the CR51 descriptor
-     */
-    std::vector<uint8_t> descriptorHash()
-    {
-        return hash;
     }
 
   protected:
