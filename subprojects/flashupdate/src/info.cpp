@@ -34,9 +34,11 @@ namespace info
  * @param[in] prefix    Debug message prefix
  * @param[in] message   Main message
  * @param[in] output    Print the message as std output with no debug message
+ *
+ * @return string copy of the message
  */
-static void print(std::string_view prefix, std::string_view message,
-                  bool output)
+static std::string print(std::string_view prefix, std::string_view message,
+                         bool output)
 {
     if (output)
     {
@@ -44,8 +46,10 @@ static void print(std::string_view prefix, std::string_view message,
     }
     else
     {
-        log(LogLevel::Notice, "{}: {}\n", prefix, message);
+        message = fmt::format("{}: {}\n", prefix, message);
+        log(LogLevel::Notice, message);
     }
+    return message.data();
 }
 
 std::string hashToString(const std::vector<uint8_t>& hash)
@@ -71,23 +75,23 @@ std::string listStates()
     return list;
 }
 
-void printUpdateInfo(const Args& args, struct UpdateInfo info)
+std::string printUpdateInfo(const Args& args, struct UpdateInfo info)
 {
-
+    std::string message;
     if (args.checkStageVersion)
     {
-        print("Stage Version",
-              fmt::format("{}.{}.{}.0", info.stage.major, info.stage.minor,
-                          info.stage.point),
-              args.cleanOutput);
+        message += print("Stage Version",
+                         fmt::format("{}.{}.{}.0", info.stage.major,
+                                     info.stage.minor, info.stage.point),
+                         args.cleanOutput);
     }
 
     if (args.checkActiveVersion)
     {
-        print("Active Version",
-              fmt::format("{}.{}.{}.0", info.active.major, info.active.minor,
-                          info.active.point),
-              args.cleanOutput);
+        message += print("Active Version",
+                         fmt::format("{}.{}.{}.0", info.active.major,
+                                     info.active.minor, info.active.point),
+                         args.cleanOutput);
     }
 
     if (args.checkStageState)
@@ -98,20 +102,22 @@ void printUpdateInfo(const Args& args, struct UpdateInfo info)
         {
             state = findState->second;
         }
-        print("Status Staged State", state, args.cleanOutput);
+        message += print("Status Staged State", state, args.cleanOutput);
     }
 
     if (args.otherInfo)
     {
-        print("Staging Index", std::to_string(info.stagingIndex),
-              args.cleanOutput);
+        message += print("Staging Index", std::to_string(info.stagingIndex),
+                         args.cleanOutput);
 
-        print("CR51 Descriptor Hash",
-              hashToString(std::vector<uint8_t>(&info.descriptorHash[0],
-                                                &info.descriptorHash[0] +
-                                                    SHA256_DIGEST_LENGTH)),
-              args.cleanOutput);
+        message += print("CR51 Descriptor Hash",
+                         hashToString(std::vector<uint8_t>(
+                             &info.descriptorHash[0],
+                             &info.descriptorHash[0] + SHA256_DIGEST_LENGTH)),
+                         args.cleanOutput);
     }
+
+    return message;
 }
 } // namespace info
 } // namespace flashupdate

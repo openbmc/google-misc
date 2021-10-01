@@ -65,6 +65,7 @@ class Args
     Config config;
 
     Args(int argc, char* argv[]);
+    Args(){};
 
     static std::function<void(const char* arg0)> printHelp;
     static Args argsOrHelp(int argc, char* argv[]);

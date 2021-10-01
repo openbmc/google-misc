@@ -28,8 +28,10 @@ namespace ops
 /** @brief Operation for info command
  *
  * @param[in] args  User input argument
+ *
+ * @return string copy of the UpdateInfo
  */
-void info(const Args& args);
+std::string info(const Args& args);
 
 /** @brief Operation for inject_persistent command
  *
