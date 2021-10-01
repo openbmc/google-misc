@@ -54,16 +54,18 @@ void read(const Args& args);
 /** @brief Operation for update_staged_version command
  *
  * @param[in] args  User input argument
+ *
+ * @return string copy of the UpdateInfo after the update
  */
-void updateStagedVersion(const Args& args);
+std::string updateStagedVersion(const Args& args);
 
 /** @brief Operation for update_state command
  *
  * @param[in] args  User input argument
- * 
+ *
  * @return string copy of the UpdateInfo after the update
  */
-std::string  updateState(const Args& args);
+std::string updateState(const Args& args);
 
 /** @brief Operation for write command
  *

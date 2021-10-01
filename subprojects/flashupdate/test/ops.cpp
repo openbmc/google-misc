@@ -14,6 +14,7 @@
 
 #include <fmt/format.h>
 
+#include <flashupdate/cr51/mock.hpp>
 #include <flashupdate/info.hpp>
 #include <flashupdate/ops.hpp>
 
@@ -22,6 +23,9 @@
 #include <string>
 
 #include <gtest/gtest.h>
+
+using ::testing::_;
+using ::testing::Return;
 
 namespace flashupdate
 {
@@ -107,7 +111,7 @@ TEST_F(OperationTest, InfoPass)
     EXPECT_EQ(ops::info(args), expectedOutput);
 }
 
-TEST(OperationTest, UpdateStateInvalidState)
+TEST_F(OperationTest, UpdateStateInvalidState)
 {
     Args args;
 
@@ -138,6 +142,27 @@ TEST_F(OperationTest, UpdateStatePass)
 
     EXPECT_EQ(ops::updateState(args),
               fmt::format("Status Staged State: {}\n", "STAGED"));
+}
+
+TEST_F(OperationTest, UpdateStagedVersion)
+{
+    std::string filename = "update_staged_version_eeprom";
+    resetInfo();
+    createFakeEeprom(filename);
+
+    Args args;
+    args.config.eeprom.path = filename;
+    args.checkStageVersion = true;
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    EXPECT_CALL(cr51MockHelper, imageVersion())
+        .WillOnce(Return(activeVersion.data()));
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _)).WillOnce(Return(true));
+
+    EXPECT_EQ(ops::updateStagedVersion(args),
+              fmt::format("Stage Version: {}\n", activeVersion));
 }
 
 } // namespace flashupdate

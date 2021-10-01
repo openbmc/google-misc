@@ -16,9 +16,11 @@
 
 #include <flasher/mod.hpp>
 #include <flashupdate/config.hpp>
+#include <flashupdate/cr51.hpp>
 
 #include <cstdint>
 #include <functional>
+#include <memory>
 #include <optional>
 #include <string_view>
 
@@ -64,8 +66,14 @@ class Args
 
     Config config;
 
+    // CR51 Helper
+    std::unique_ptr<cr51::Cr51Impl> cr51HelperPtr;
+    cr51::Cr51Impl* cr51Helper;
+
+    void setCr51Helper(cr51::Cr51* cr51Helper);
+
     Args(int argc, char* argv[]);
-    Args(){};
+    Args();
 
     static std::function<void(const char* arg0)> printHelp;
     static Args argsOrHelp(int argc, char* argv[]);
