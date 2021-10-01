@@ -1,1 +1,2 @@
 option('tests', type: 'feature', description: 'Build tests')
+option('dev', type: 'boolean', value: 'false',  description: 'Enable Development Workflow')
