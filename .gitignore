@@ -1,6 +1,7 @@
 build*/
 subprojects/*
 !subprojects/acpi-power-state-daemon/
+!subprojects/flashupdate/
 !subprojects/libcr51sign/
 !subprojects/metrics-ipmi-blobs/
 !subprojects/ncsid/
