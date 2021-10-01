@@ -60,8 +60,10 @@ void updateStagedVersion(const Args& args);
 /** @brief Operation for update_state command
  *
  * @param[in] args  User input argument
+ *
+ * @return string copy of the UpdateInfo after the update
  */
-void updateState(const Args& args);
+std::string updateState(const Args& args);
 
 /** @brief Operation for write command
  *
