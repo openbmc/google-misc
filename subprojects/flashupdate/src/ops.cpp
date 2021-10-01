@@ -229,9 +229,39 @@ std::string hashDescriptor(const Args& args)
     return output;
 }
 
-void read(const Args&)
+void read(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    auto& flashHelper = args.flashHelper;
+    flashHelper->setup(args.config, args.keepMux);
+
+    auto flash = flashHelper->getFlash(args.primary);
+    if (!flash)
+    {
+        throw std::runtime_error("failed to find Flash partitions");
+    }
+
+    std::string image = args.file->arr.back();
+    flasher::NestedMutate mutate{};
+
+    auto devMod = ModArgs(fmt::format("{}", flash->first));
+    auto fileMod = *args.file;
+
+    auto dev = flasher::openDevice(devMod);
+    auto file = flasher::openFile(fileMod, OpenFlags(OpenAccess::WriteOnly)
+                                               .set(OpenFlag::Create)
+                                               .set(OpenFlag::Trunc));
+    flasher::ops::read(*dev, 0, *file, 0, mutate,
+                       std::numeric_limits<size_t>::max(), std::nullopt);
+
+    // Validate the image read from the flash
+    std::filesystem::path path(image);
+    size_t size = std::filesystem::file_size(path);
+    auto& helper = args.cr51Helper;
+    if (!helper->validateImage(image, size, args.config.flash.validationKey))
+    {
+        throw std::runtime_error(fmt::format(
+            "failed to validate the CR51 descriptor for {}", image));
+    }
 }
 
 void write(const Args&)
