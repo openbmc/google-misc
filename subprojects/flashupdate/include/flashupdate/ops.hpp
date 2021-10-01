@@ -42,8 +42,10 @@ void injectPersistent(const Args& args);
 /** @brief Operation for hash_descriptor command
  *
  * @param[in] args  User input argument
+ * 
+ * @return string of the CR51 descriptor hash
  */
-void hashDescriptor(const Args& args);
+std::string hashDescriptor(const Args& args);
 
 /** @brief Operation for read command
  *
