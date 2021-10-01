@@ -71,6 +71,8 @@ struct Version
         minor = splitVersionChunk(&version);
         point = std::stoi(version.data());
     }
+
+    Version(){};
 };
 
 /** @struct UpdateInfo
@@ -131,8 +133,10 @@ std::string listStates();
  *
  * @param[in] args    User input argument
  * @param[in] UpdateInfo  BIOS UpdateInfo to print
+ * 
+ * @return string copy of the UpdateInfo
  */
-void printUpdateInfo(const Args& args, struct UpdateInfo UpdateInfo);
+std::string printUpdateInfo(const Args& args, struct UpdateInfo UpdateInfo);
 
 } // namespace info
 } // namespace flashupdate
