@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc6eec02_4ac175c5",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-01T04:21:26Z",
+      "side": 1,
+      "message": "this is done for the readFromBuf to use it in libcr51.\n\nI ran into some issue when trying to remove it from global variable. I\u0027ll try to clean it up again.\n\nI was trying to pub the buffer in a class along with the functions below like readFromBuf().\nI was having trouble converting that in function pointer in \n\n```\nintf.read\n```",
+      "parentUuid": "bd6f74e2_a5e67aee",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c110072f_f3d3c34d",
         "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2021-09-30T21:29:36Z",
       "side": 1,
       "message": "You might consider leveraging the flasher library for this, then you can translate the file / device strings directly into a readable unit. I can provide a common class for reading contents.\n\nAlso, you shouldn\u0027t use a string_view for nul-terminated strings. You would have to use a const char * in this case.",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2083e312_fb8856bb",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-01T04:21:26Z",
+      "side": 1,
+      "message": "I guess we can just delete this function if that\u0027s the cause.\n\nWe can pass in the buffer to here after we read the data in the flasher.\n\nI am afraid that how libcr51 is setup might block it like requiring the buffer to be global and accessible to all functions.",
+      "parentUuid": "c110072f_f3d3c34d",
       "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "434514c9_d09d2b53",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-01T04:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7be83edf_2aed1dce",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a33d0c_67a8c975",
         "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2021-09-30T21:29:36Z",
       "side": 1,
       "message": "If you are validating an image you need to make sure it is also verifying the non-static regions too to guarantee the image is pristine. I don\u0027t think the regular verify routine does this.",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d226ff0_51df933e",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-01T04:21:26Z",
+      "side": 1,
+      "message": "yeah, I think so. Looks like it in\n\nhttps://github.com/openbmc/google-misc/blob/master/subprojects/libcr51sign/libcr51sign.c#L417-L420\n\num... I am not exactly sure how we can validate the non-static regions. In libcr51sign, it got all the static regions and hash them. The hash is used to compare with some expected values.\n\nWith non-static regions, we can\u0027t do that.",
+      "parentUuid": "b6a33d0c_67a8c975",
       "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1041d27a_47eb143f",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-01T04:21:26Z",
+      "side": 1,
+      "message": "I have removed it now.\n\nWe don\u0027t need to do anything here, right? If it should be setup during configuration.",
+      "parentUuid": "2cc52e37_e807015e",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e590d407_1ac1d0fd",
         "filename": "subprojects/ncsid/src/update_ra_neighbor.sh",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ceabf3_09259417",
+        "filename": "subprojects/ncsid/src/update_ra_neighbor.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-01T04:21:26Z",
+      "side": 1,
+      "message": "oops. yeah.\n\nLet me remove this one.",
+      "parentUuid": "e590d407_1ac1d0fd",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
