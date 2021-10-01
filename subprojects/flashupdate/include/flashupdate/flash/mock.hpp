@@ -36,14 +36,13 @@ struct MockHelper : public FlashHelper
 
 struct Mock : public Flash
 {
-    Mock(Config config, bool keepMux) : Flash(config, keepMux)
+    Mock() : Flash()
     {}
 
     MOCK_METHOD((std::optional<std::pair<std::string, uint32_t>>), getFlash,
                 (bool), (override));
     MOCK_METHOD(void, cleanup, (), (override));
 };
-
 
 } // namespace flash
 } // namespace flashupdate

@@ -14,9 +14,7 @@
 
 #pragma once
 
-#include <flashupdate/args.hpp>
 #include <flashupdate/config.hpp>
-#include <flashupdate/logging.hpp>
 
 #include <memory>
 #include <string>
@@ -59,6 +57,17 @@ class Flash
      * @param[in] keepMux   Keep the mux enabled.
      */
     Flash(Config config, bool keepMux);
+
+    /** @brief Setup Flash helper
+     *
+     * @param[in] config    Flashupdate configuration.
+     * @param[in] keepMux   Keep the mux enabled.
+     */
+    void setup(Config config, bool keepMux)
+    {
+        config = config;
+        keepMux = keepMux;
+    }
 
     Flash& operator=(Flash&& other) = default;
     virtual ~Flash();

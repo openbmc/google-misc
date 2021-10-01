@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <fmt/format.h>
+
 #include <flashupdate/flash.hpp>
 #include <flashupdate/flash/mock.hpp>
 

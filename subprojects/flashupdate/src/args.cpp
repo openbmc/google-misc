@@ -19,6 +19,7 @@
 #include <flashupdate/args.hpp>
 #include <flashupdate/config.hpp>
 #include <flashupdate/cr51.hpp>
+#include <flashupdate/flash.hpp>
 #include <flashupdate/info.hpp>
 
 #include <iostream>
@@ -44,13 +45,21 @@ const std::unordered_map<std::string_view, Args::Op> stringToOp = {
 
 void Args::setCr51Helper(cr51::Cr51* cr51Helper)
 {
-    this->cr51Helper = dynamic_cast<cr51::Cr51Impl*>(cr51Helper);
+    this->cr51Helper = reinterpret_cast<cr51::Cr51Impl*>(cr51Helper);
+}
+
+void Args::setFlashHelper(flash::Flash* flashHelper)
+{
+    this->flashHelper = flashHelper;
 }
 
 Args::Args()
 {
     cr51HelperPtr = std::make_unique<cr51::Cr51Impl>();
     cr51Helper = cr51HelperPtr.get();
+
+    flashHelperPtr = std::make_unique<flash::Flash>();
+    flashHelper = flashHelperPtr.get();
 }
 
 Args::Args(int argc, char* argv[]) : Args()

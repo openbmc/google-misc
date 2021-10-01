@@ -22,6 +22,7 @@
 #include <flasher/ops.hpp>
 #include <flashupdate/args.hpp>
 #include <flashupdate/cr51.hpp>
+#include <flashupdate/flash.hpp>
 #include <flashupdate/info.hpp>
 #include <flashupdate/logging.hpp>
 #include <stdplus/exception.hpp>
@@ -158,9 +159,55 @@ void updateStagedVersion(const Args& args)
     writeInfo(args, buffer);
 }
 
-void injectPersistent(const Args&)
+void injectPersistent(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    std::string image = args.file->arr.back();
+    std::filesystem::path path(image);
+    uint32_t size = std::filesystem::file_size(path);
+    auto& helper = args.cr51Helper;
+    if (!helper->validateImage(image, size, args.config.flash.validationKey))
+    {
+        throw std::runtime_error(fmt::format(
+            "failed to validate the CR51 descriptor for {}", image));
+    }
+
+    auto regions = helper->persistentRegions();
+    auto& flashHelper = args.flashHelper;
+
+    flashHelper->setup(args.config, args.keepMux);
+    auto flash = flashHelper->getFlash(true);
+    if (!flash)
+    {
+        throw std::runtime_error("failed to find Flash partitions");
+    }
+
+    log(LogLevel::Notice, "NOTICE: Inject Persistent from {} to {}\n",
+        flash->first, image);
+
+    auto dev = flasher::openDevice(flasher::ModArgs(flash->first));
+
+    auto fileMod = *args.file;
+    auto file = flasher::openFile(fileMod, OpenFlags(OpenAccess::ReadWrite));
+
+    flasher::NestedMutate mutate{};
+
+    for (const auto& region : regions)
+    {
+        log(LogLevel::Notice,
+            "NOTICE: Region: {}, Inject offset: {}, Length: {}\n",
+            region.region_name, region.region_offset, region.region_size);
+        auto dev = flasher::openDevice(flasher::ModArgs(flash->first));
+        flasher::ops::read(*dev, region.region_offset, *file,
+                           region.region_offset, mutate, region.region_size,
+                           std::nullopt);
+    }
+
+    // Validate the image again after injecting the persistent regions
+    if (!helper->verify(helper->prodImage()))
+    {
+        throw std::runtime_error(
+            "invalid image after persistent regions injection");
+    }
 }
 
 void hashDescriptor(const Args&)
