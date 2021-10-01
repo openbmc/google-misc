@@ -185,9 +185,17 @@ void injectPersistent(const Args& args)
     }
 }
 
-void hashDescriptor(const Args&)
+void hashDescriptor(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    std::string image = args.file->arr.back();
+    std::filesystem::path path(image);
+    uint32_t size = std::filesystem::file_size(path);
+    log(LogLevel::Info,
+        "INFO: CR51 Descriptor HASH for BIOS image: {}, size: {}\n", image,
+        size);
+    cr51::Cr51 helper(image, size, args.config.flash.validationKey);
+
+    fmt::print(stdout, info::hashToString(helper.descriptorHash()));
 }
 
 void read(const Args&)
