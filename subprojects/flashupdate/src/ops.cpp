@@ -264,9 +264,172 @@ void read(const Args& args)
     }
 }
 
-void write(const Args&)
+void write(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    auto& helper = args.cr51Helper;
+
+    // Validate the next image befor attemping to flash it
+    std::string image = args.file->arr.back();
+    std::filesystem::path path(image);
+    uint32_t size = std::filesystem::file_size(path);
+    log(LogLevel::Info, "INFO: Validate BIOS image: {}, size: {}\n", image,
+        size);
+    if (!helper->validateImage(image, size, args.config.flash.validationKey))
+    {
+        throw std::runtime_error(fmt::format(
+            "failed to validate the CR51 descriptor for the next image: {}",
+            image));
+    }
+
+    auto& flashHelper = args.flashHelper;
+    flashHelper->setup(args.config, args.keepMux);
+    auto flash = flashHelper->getFlash(args.primary);
+    if (!flash)
+    {
+        throw std::runtime_error("failed to find Flash partition");
+    }
+
+    // Save the informaiton from the next image
+    auto nextDescriptorHash = helper->descriptorHash();
+    auto nextIsProd = helper->prodImage();
+
+    // Validate the image currenlty in the flash.
+    // It can be the primary or secondary flash.
+    std::string flashDev(flash->first);
+    auto devMod = ModArgs(flashDev);
+    flashDev = devMod.arr.back();
+    if (!helper->validateImage(flashDev, flash->second,
+                               args.config.flash.validationKey))
+    {
+        throw std::runtime_error(
+            fmt::format("failed to validate the CR51 descriptor for the image "
+                        "in the flash: {}",
+                        image));
+    }
+
+    // Flash Support only for
+    // Prod <-> Prod
+    // Dev   -> Prod
+    // Dev  <-> Dev
+    if (helper->prodImage() && !nextIsProd)
+    {
+        throw std::logic_error(
+            "Installing from prod to dev image is not allowed.");
+    }
+
+    // Fetch BIOS Staging Information
+    auto info = fetchInfo(args);
+
+    // Check Image Descriptor Hash
+    // Prevent flashing the image to primary partition if the hash of image
+    // descriptor does not match the cached.
+    //
+    // Skip the check if it is RAM based update.
+    if (args.primary &&
+        info.state != static_cast<uint8_t>(info::UpdateInfo::State::RAM))
+    {
+        if (args.stagingIndex != info.stagingIndex)
+        {
+            throw std::logic_error(
+                fmt::format("The Staged Partition is not in the expected "
+                            "partition: want {}, got {}",
+                            info.stagingIndex, args.stagingIndex));
+        }
+
+        std::vector<uint8_t> expectedHash(SHA256_DIGEST_LENGTH);
+
+        memcpy(expectedHash.data(), &(info.descriptorHash[0]),
+               SHA256_DIGEST_LENGTH);
+
+        log(LogLevel::Info, "INFO: Checking HASH for CR51 descriptor between "
+                            "staged partition and cache\n");
+
+        if (nextDescriptorHash != expectedHash)
+        {
+            throw std::logic_error(
+                "SHA256 of the staged image in the cache "
+                "does not match the image in the staged partition");
+        }
+    }
+
+    log(LogLevel::Info, "INFO: finished setting up {} and {}\n", image,
+        flashDev);
+
+    // All checks passed, continue to flash the image
+    flasher::NestedMutate mutate{};
+    auto fileMod = *args.file;
+    auto dev = flasher::openDevice(devMod);
+    auto file = flasher::openFile(fileMod, OpenFlags(OpenAccess::ReadOnly));
+    log(LogLevel::Info, "INFO: Flash image to {}\n", flashDev);
+    flasher::ops::automatic(*dev, 0, *file, 0, mutate,
+                            std::numeric_limits<size_t>::max(), std::nullopt,
+                            false);
+
+    log(LogLevel::Info, "INFO: finished flashing {} to {}\n", image, flashDev);
+    // Validate the flash after writing the image
+    if (!helper->validateImage(flashDev, flash->second,
+                               args.config.flash.validationKey))
+    {
+        throw std::runtime_error(
+            fmt::format("failed to validate the CR51 descriptor for the image "
+                        "in the flash after overwriting it: {}",
+                        image));
+    }
+
+    info::UpdateInfo::State expectedState;
+    // Update the Active Version the and State to UPDATED
+    if (args.primary)
+    {
+        info.active = info::Version(helper->imageVersion());
+        expectedState = info::UpdateInfo::State::UPDATED;
+        info.state = static_cast<uint8_t>(expectedState);
+    }
+    else
+    // Update the Staged version the the State to STAGED.
+    //
+    // Flashing to secondary flash will save the has of CR51 image descriptor
+    // to the EEPROM for the final check when write to primary flash.
+    {
+        info.stage = info::Version(helper->imageVersion());
+        expectedState = info::UpdateInfo::State::STAGED;
+        info.state = static_cast<uint8_t>(expectedState);
+
+        // Update the Staging Index to make sure the it uses the same staged
+        // partition between the stage and active.
+        info.stagingIndex = args.stagingIndex;
+
+        // Save the CR51 descriptor hash.
+        auto descriptorHash = helper->descriptorHash();
+        memcpy(info.descriptorHash, descriptorHash.data(),
+               SHA256_DIGEST_LENGTH);
+    }
+
+    // Convert struct into bytes
+    // The UpdateInfo struct saves the staged/active version of the image and
+    // the stage of the update process. It will also save information like
+    // latest used stage flash index and the expected hash of the CR51
+    // descriptor in the staging flash.
+    auto ptr = reinterpret_cast<std::byte*>(&info);
+    auto buffer = std::vector<std::byte>(ptr, ptr + sizeof(info::UpdateInfo));
+
+    info::printUpdateInfo(args, info);
+
+    auto findState = info::stateToString.find(info.state);
+    if (findState != info::stateToString.end())
+    {
+        log(LogLevel::Info, "INFO: updated the staged BIOS to {}\n",
+            findState->second);
+    }
+    writeInfo(args, buffer);
+
+    // Confirm the Update State is what we expected
+    info = fetchInfo(args);
+    if (info.state != static_cast<uint8_t>(expectedState))
+    {
+        throw std::logic_error(
+            fmt::format("the update state is not what we expected: want {}, got {}",
+                        expectedState, info.state));
+    }
 }
 
 } // namespace ops

@@ -84,7 +84,7 @@ class Cr51
      *
      * @return true if the BIOS image is prod signed
      */
-    bool prodImage()
+    virtual bool prodImage()
     {
         return prod;
     }

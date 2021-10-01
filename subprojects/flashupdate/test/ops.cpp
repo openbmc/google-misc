@@ -56,6 +56,19 @@ class OperationTest : public ::testing::Test
         updateInfo.state = 2;
     }
 
+    void createFakeEeprom(std::string_view filename)
+    {
+        auto ptr = reinterpret_cast<std::byte*>(&updateInfo);
+        auto buffer =
+            std::vector<std::byte>(ptr, ptr + sizeof(info::UpdateInfo));
+        std::ofstream testEeprom;
+
+        testEeprom.open(filename.data(), std::ios::out);
+        testEeprom << buffer.data();
+        testEeprom.flush();
+        testEeprom.close();
+    }
+
     info::UpdateInfo updateInfo;
     std::string_view activeVersion = "10.11.12.13";
     std::string_view stageVersion = "4.3.2.1";
@@ -66,17 +79,10 @@ class OperationTest : public ::testing::Test
 
 TEST_F(OperationTest, InfoPass)
 {
-    auto ptr = reinterpret_cast<std::byte*>(&updateInfo);
-    auto buffer = std::vector<std::byte>(ptr, ptr + sizeof(info::UpdateInfo));
-
-    std::string filename = "test.txt";
-    std::ofstream testfile;
+    std::string filename = "info_test_eeprom";
     std::string expectedOutput = "";
-
-    testfile.open(filename, std::ios::out);
-    testfile << buffer.data();
-    testfile.flush();
-    testfile.close();
+    resetInfo();
+    createFakeEeprom(filename);
 
     Args args;
     args.config.eeprom.path = filename;
@@ -126,46 +132,24 @@ TEST_F(OperationTest, UpdateStateInvalidState)
 
 TEST_F(OperationTest, UpdateStatePass)
 {
-    auto ptr = reinterpret_cast<std::byte*>(&updateInfo);
-    auto buffer = std::vector<std::byte>(ptr, ptr + sizeof(info::UpdateInfo));
-
-    std::string filename = "test.txt";
-    std::ofstream testfile;
-    std::string expectedOutput = "";
-
-    testfile.open(filename, std::ios::out);
-    testfile << buffer.data();
-    testfile.flush();
-    testfile.close();
+    std::string filename = "update_state_eeprom";
+    resetInfo();
+    createFakeEeprom(filename);
 
     Args args;
     args.config.eeprom.path = filename;
-    args.checkActiveVersion = true;
-    args.checkStageVersion = true;
     args.checkStageState = true;
-    args.otherInfo = true;
-    args.cleanOutput = true;
     args.state = "STAGED";
 
     EXPECT_EQ(ops::updateState(args),
-              fmt::format("{}\n{}\n{}\n{}\n{}\n", activeVersion, stageVersion,
-                          "STAGED", "0", "00000000000000000000000"));
+              fmt::format("Status Staged State: {}\n", "STAGED"));
 }
 
 TEST_F(OperationTest, UpdateStagedVersion)
 {
+    std::string filename = "update_staged_version_eeprom";
     resetInfo();
-
-    auto ptr = reinterpret_cast<std::byte*>(&updateInfo);
-    auto buffer = std::vector<std::byte>(ptr, ptr + sizeof(info::UpdateInfo));
-    std::string filename = "test.txt";
-    std::ofstream testfile;
-    std::string expectedOutput = "";
-
-    testfile.open(filename, std::ios::out);
-    testfile << buffer.data();
-    testfile.flush();
-    testfile.close();
+    createFakeEeprom(filename);
 
     Args args;
     args.config.eeprom.path = filename;
@@ -408,6 +392,335 @@ TEST_F(OperationTest, ReadPass)
         .WillOnce(Return(std::make_pair(testDev, inputData.size())));
 
     ops::read(args);
+}
+
+TEST_F(OperationTest, WriteInvalidNextImage)
+{
+    Args args;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _)).WillOnce(Return(false));
+
+    EXPECT_THROW(
+        try { ops::write(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(),
+                         fmt::format("failed to validate the CR51 descriptor "
+                                     "for the next image: {}",
+                                     testBin)
+                             .c_str());
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, WriteInvalidFlash)
+{
+    Args args;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _)).WillOnce(Return(true));
+    EXPECT_CALL(flashMockHelper, getFlash(_)).WillOnce(Return(std::nullopt));
+
+    EXPECT_THROW(
+        try { ops::write(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "failed to find Flash partition");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, WriteInvalidInvalidCurrentImage)
+{
+    Args args;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _))
+        .WillOnce(Return(true))
+        .WillOnce(Return(false));
+
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    EXPECT_THROW(
+        try { ops::write(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(),
+                         fmt::format("failed to validate the CR51 descriptor "
+                                     "in the flash: {}",
+                                     testBin)
+                             .c_str());
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, WriteInvalidDevToPord)
+{
+    Args args;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(cr51MockHelper, prodImage())
+        .WillOnce(Return(false))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    EXPECT_THROW(
+        try { ops::write(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(),
+                         "Installing from prod to dev image is not allowed.");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, WriteSecondaryInvalidImageAfter)
+{
+    std::string filename = "write_secondary_eeprom";
+    resetInfo();
+    createFakeEeprom(filename);
+
+    Args args;
+    args.primary = false;
+    args.config.eeprom.path = filename;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true))
+        .WillOnce(Return(false));
+
+    EXPECT_CALL(cr51MockHelper, descriptorHash())
+        .WillOnce(Return(std::vector<uint8_t>(SHA256_DIGEST_LENGTH)))
+        .WillOnce(Return(std::vector<uint8_t>(SHA256_DIGEST_LENGTH)));
+
+    EXPECT_CALL(cr51MockHelper, prodImage())
+        .WillOnce(Return(false))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    EXPECT_THROW(
+        try { ops::write(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(
+                e.what(),
+                fmt::format(
+                    "failed to validate the CR51 descriptor for the image "
+                    "in the flash after overwriting it: {}",
+                    testBin)
+                    .c_str());
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, WriteRamUpdatePass)
+{
+    std::string filename = "write_secondary_eeprom";
+    resetInfo();
+
+    updateInfo.state = static_cast<uint8_t>(info::UpdateInfo::State::RAM);
+    updateInfo.stagingIndex = 0;
+    createFakeEeprom(filename);
+
+    Args args;
+    args.primary = true;
+    args.config.eeprom.path = filename;
+    args.file = flasher::ModArgs(testBin);
+    // Setting the staging Index to not match the one in eeprom.
+    // If this is not RAM based update, it would throw an error.
+    args.stagingIndex = 1;
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(cr51MockHelper, prodImage())
+        .WillOnce(Return(false))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    ops::write(args);
+}
+
+TEST_F(OperationTest, WritePrimaryInvalidStagingIndex)
+{
+    std::string filename = "write_secondary_eeprom";
+    resetInfo();
+
+    updateInfo.stagingIndex = 0;
+    createFakeEeprom(filename);
+
+    Args args;
+    args.primary = true;
+    args.config.eeprom.path = filename;
+    args.file = flasher::ModArgs(testBin);
+    // Setting the staging Index to not match the one in eeprom.
+    // This would throw an error.
+    args.stagingIndex = 1;
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true));
+
+    // The expected hash is all zero right now,
+    // Setting it to non-zero to trigger an error.
+    EXPECT_CALL(cr51MockHelper, descriptorHash())
+        .WillOnce(Return(std::vector<uint8_t>(SHA256_DIGEST_LENGTH, 1)));
+
+    EXPECT_CALL(cr51MockHelper, prodImage())
+        .WillOnce(Return(false))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    EXPECT_THROW(
+        try { ops::write(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(),
+                         "SHA256 of the staged image in the cache "
+                         "does not match the image in the staged partition");
+            throw;
+        },
+        std::logic_error);
+}
+
+TEST_F(OperationTest, WritePrimaryInvalidImageAfter)
+{
+    std::string filename = "write_secondary_eeprom";
+    resetInfo();
+
+    updateInfo.stagingIndex = 0;
+    createFakeEeprom(filename);
+
+    Args args;
+    args.primary = true;
+    args.config.eeprom.path = filename;
+    args.file = flasher::ModArgs(testBin);
+    // Setting the staging Index to not match the one in eeprom.
+    // This would throw an error.
+    args.stagingIndex = 1;
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true))
+        .WillOnce(Return(false));
+
+    EXPECT_CALL(cr51MockHelper, descriptorHash())
+        .WillOnce(Return(std::vector<uint8_t>(SHA256_DIGEST_LENGTH, 0)));
+
+    EXPECT_CALL(cr51MockHelper, prodImage())
+        .WillOnce(Return(false))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    EXPECT_THROW(
+        try { ops::write(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(
+                e.what(),
+                fmt::format(
+                    "failed to validate the CR51 descriptor for the image "
+                    "in the flash after overwriting it: {}",
+                    testBin)
+                    .c_str());
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, WritePrimaryPass)
+{
+    std::string filename = "write_secondary_eeprom";
+    resetInfo();
+
+    updateInfo.stagingIndex = 0;
+    createFakeEeprom(filename);
+
+    Args args;
+    args.primary = true;
+    args.config.eeprom.path = filename;
+    args.file = flasher::ModArgs(testBin);
+    // Setting the staging Index to not match the one in eeprom.
+    // This would throw an error.
+    args.stagingIndex = 1;
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(cr51MockHelper, descriptorHash())
+        .WillOnce(Return(std::vector<uint8_t>(SHA256_DIGEST_LENGTH, 0)));
+
+    EXPECT_CALL(cr51MockHelper, prodImage())
+        .WillOnce(Return(false))
+        .WillOnce(Return(true));
+
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    ops::write(args);
 }
 
 } // namespace flashupdate

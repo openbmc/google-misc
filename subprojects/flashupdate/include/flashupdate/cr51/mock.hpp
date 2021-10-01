@@ -40,6 +40,7 @@ struct Mock : public Cr51
                 (override));
     MOCK_METHOD(bool, verify, (bool), (override));
     MOCK_METHOD(std::vector<uint8_t>, descriptorHash, (), (override));
+    MOCK_METHOD(bool, prodImage, (), (override));
 };
 
 } // namespace cr51
