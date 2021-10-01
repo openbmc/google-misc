@@ -107,4 +107,37 @@ TEST_F(OperationTest, InfoPass)
     EXPECT_EQ(ops::info(args), expectedOutput);
 }
 
+TEST(OperationTest, UpdateStateInvalidState)
+{
+    Args args;
+
+    args.state = "FAKE_STATE";
+    EXPECT_THROW(
+        try { ops::updateState(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(
+                e.what(),
+                fmt::format(
+                    "{} is not a supported state. Need to be one of\n{}",
+                    args.state)
+                    .c_str());
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, UpdateStatePass)
+{
+    std::string filename = "update_state_eeprom";
+    resetInfo();
+    createFakeEeprom(filename);
+
+    Args args;
+    args.config.eeprom.path = filename;
+    args.checkStageState = true;
+    args.state = "STAGED";
+
+    EXPECT_EQ(ops::updateState(args),
+              fmt::format("Status Staged State: {}\n", "STAGED"));
+}
+
 } // namespace flashupdate
