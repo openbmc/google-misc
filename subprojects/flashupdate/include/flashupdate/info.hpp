@@ -71,6 +71,8 @@ struct Version
         minor = splitVersionChunk(&version);
         point = std::stoi(version.data());
     }
+
+    Version(){};
 };
 
 /** @struct UpdateInfo
