@@ -17,6 +17,7 @@
 
 #include <flasher/device.hpp>
 #include <flashupdate/args.hpp>
+#include <flashupdate/config.hpp>
 #include <flashupdate/info.hpp>
 
 #include <iostream>
@@ -29,13 +30,13 @@ namespace flashupdate
 {
 
 const std::unordered_map<std::string_view, Args::Op> stringToOp = {
-    {"empty", Args::Op::Empty},
     {"hash_descriptor", Args::Op::HashDescriptor},
     {"inject_persistent", Args::Op::InjectPersistent},
     {"info", Args::Op::Info},
     {"read", Args::Op::Read},
     {"update_staged_version", Args::Op::UpdateStagedVersion},
     {"update_state", Args::Op::UpdateState},
+    {"validate_config", Args::Op::ValidateConfig},
     {"write", Args::Op::Write},
 };
 
@@ -45,6 +46,7 @@ Args::Args(int argc, char* argv[])
     static const struct option longopts[] = {
         {"active_version", no_argument, nullptr, 'a'},
         {"clean_output", no_argument, nullptr, 'c'},
+        {"config", required_argument, nullptr, 'j'},
         {"stage_state", no_argument, nullptr, 'S'},
         {"stage_version", no_argument, nullptr, 's'},
         {"staging_index", required_argument, nullptr, 'i'},
@@ -79,6 +81,9 @@ Args::Args(int argc, char* argv[])
                 break;
             case 'i':
                 stagingIndex = std::atoi(optarg);
+                break;
+            case 'j':
+                configFile.emplace(optarg);
                 break;
             case ':':
                 throw std::runtime_error(
@@ -116,7 +121,7 @@ Args::Args(int argc, char* argv[])
     op = it->second;
     switch (op)
     {
-        case Args::Op::Empty:
+        case Args::Op::ValidateConfig:
             break;
         case Args::Op::HashDescriptor:
             printHelp = [this](const char* arg0) {
@@ -203,6 +208,8 @@ Args::Args(int argc, char* argv[])
             printHelp = [this](const char* arg0) { printInfoHelp(arg0); };
             break;
     };
+
+    config = createConfig(configFile, stagingIndex);
 }
 
 void Args::printInjectPersistentHelp(const char* arg0)
@@ -321,6 +328,8 @@ std::function<void(const char* arg0)> Args::printHelp = [](const char* arg0) {
     fmt::print(stderr, "General Optional Arguments:\n");
     fmt::print(stderr, "  -v, --verbose          Increases the verbosity "
                        "level of error message output\n");
+    fmt::print(stderr, "  -j, --config[=JSON]     Path for json config. "
+                       "(default to /usr/share/bios-update/config.json)\n");
     fmt::print(stderr, "\n");
 
     fmt::print(stderr, "Ex: {} inject_persistent image.bin\n", arg0);
