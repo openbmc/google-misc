@@ -42,7 +42,7 @@ void injectPersistent(const Args& args);
 /** @brief Operation for hash_descriptor command
  *
  * @param[in] args  User input argument
- * 
+ *
  * @return string of the CR51 descriptor hash
  */
 std::string hashDescriptor(const Args& args);
@@ -72,6 +72,35 @@ std::string updateState(const Args& args);
 /** @brief Operation for write command
  *
  * @param[in] args  User input argument
+ *
+ * The write command is divided into two different types.
+ *   - Writing to secondary flash
+ *   - Writing to primary flash
+
+ * Writing to secondary flash will do the following:
+ *   - Validate the CR51 for the installing firmware
+ *   - Write to the flash
+ *   - Validate the flash
+ *   - Create the hash of the CR51 descriptor
+ *   - Update the Update Status to the EEPROM
+ *     - Staged Version
+ *     - Update State -> Staged
+ *     - Save the hash of the CR51 descriptor
+ *
+ * Writing to primary flash will do the following:
+ *   - Validate the CR51 for the installing firmware
+ *   - Validate the CR51 for the running firmware
+ *   - Check the signature type of both firmware
+ *     - Block dev to prod updates
+ *   - Fetch the hash of the CR51 descriptor
+ *     - Compare it to the hash of the CR51 descriptor for installing
+ *       firmware. Exit if it does not match.
+ *   - Write to the flash
+ *   - Validate the flash
+ *   - Create the hash of the CR51 descriptor
+ *   - Update the Update Status to the EEPROM
+ *     - Active Version
+ *     - Update State -> UPDATED
  */
 void write(const Args& args);
 
