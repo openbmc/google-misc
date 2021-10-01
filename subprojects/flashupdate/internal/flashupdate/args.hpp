@@ -17,6 +17,7 @@
 #include <flasher/mod.hpp>
 #include <flashupdate/config.hpp>
 #include <flashupdate/cr51.hpp>
+#include <flashupdate/flash.hpp>
 
 #include <cstdint>
 #include <functional>
@@ -71,6 +72,12 @@ class Args
     cr51::Cr51Impl* cr51Helper;
 
     void setCr51Helper(cr51::Cr51* cr51Helper);
+
+    // Flash Helper
+    std::unique_ptr<flash::Flash> flashHelperPtr;
+    flash::Flash* flashHelper;
+
+    void setFlashHelper(flash::Flash* flashHelper);
 
     Args(int argc, char* argv[]);
     Args();
