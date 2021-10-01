@@ -75,15 +75,58 @@ static info::UpdateInfo fetchInfo(const Args& args)
     return *status;
 }
 
+/** @brief Write the UpdateInfo to the EEPROM
+ *
+ * @param[in] args   Arguments containing all configuration infoamtion
+ * @param[in] buffer Data to write to the EEPROM
+ *
+ * @return UpdateInfo that is saved in the eeprom
+ */
+static void writeInfo(const Args& args, const std::vector<std::byte>& buffer)
+{
+    std::filesystem::path path(args.config.eeprom.path);
+    size_t size = std::filesystem::file_size(path);
+    auto devMod = ModArgs(fmt::format("fake,type=nor,erase={},{}", size,
+                                      args.config.eeprom.path));
+    auto fileMod = flasher::ModArgs("/tmp/temp-eeprom");
+
+    flasher::NestedMutate mutate{};
+    auto dev = flasher::openDevice(devMod);
+    auto file = flasher::openFile(fileMod, OpenFlags(OpenAccess::ReadWrite)
+                                               .set(OpenFlag::Create)
+                                               .set(OpenFlag::Trunc));
+    file->writeAtExact(buffer, 0);
+    flasher::ops::automatic(
+        *dev, args.config.eeprom.offset, *file, args.config.eeprom.offset,
+        mutate, std::numeric_limits<size_t>::max(), std::nullopt, false);
+}
+
 // Operation Definitions
 void info(const Args& args)
 {
     info::printUpdateInfo(args, fetchInfo(args));
 }
 
-void updateState(const Args&)
+void updateState(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    auto findState = info::stringToState.find(args.state);
+    if (findState == info::stringToState.end())
+    {
+        throw std::runtime_error(fmt::format(
+            "{} is not a supported state. Need to be one of\n{}", args.state));
+    }
+
+    auto info = fetchInfo(args);
+    info::printUpdateInfo(args, info);
+
+    info.state = static_cast<uint8_t>(findState->second);
+
+    // Convert struct into bytes
+    auto ptr = reinterpret_cast<std::byte*>(&info);
+    auto buffer = std::vector<std::byte>(ptr, ptr + sizeof(info::UpdateInfo));
+    info::printUpdateInfo(args, info);
+
+    writeInfo(args, buffer);
 }
 
 void updateStagedVersion(const Args&)
