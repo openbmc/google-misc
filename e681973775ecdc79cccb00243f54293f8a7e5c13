@@ -46,6 +46,30 @@
       "revId": "e681973775ecdc79cccb00243f54293f8a7e5c13",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62325a91_fd791754",
+        "filename": "subprojects/flasher/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-01T04:34:29Z",
+      "side": 1,
+      "message": "ah, yes.\n\nThe compared it to the new function definition and the one I provided was outdated.\n\nNice.\n\nThe use case I needed for it reading from the SPI flash and directly to the file to inject the persistent region of the image. The Reader interface probably not enough for that.\n\nBut new read operation should cover it.",
+      "parentUuid": "e4f06c95_21eb904c",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "e681973775ecdc79cccb00243f54293f8a7e5c13",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
