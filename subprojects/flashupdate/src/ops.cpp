@@ -226,9 +226,127 @@ void read(const Args& args)
     cr51::Cr51 helper(image, size, args.config.flash.validationKey);
 }
 
-void write(const Args&)
+void write(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    // Validate the image
+    std::string image = args.file->arr.back();
+    std::filesystem::path path(image);
+    uint32_t size = std::filesystem::file_size(path);
+    log(LogLevel::Info, "INFO: Validate BIOS image: {}, size: {}\n", image,
+        size);
+    cr51::Cr51 next(image, size, args.config.flash.validationKey);
+    flash::Flash flashHelper(args.config, args.keepMux);
+    auto flash = flashHelper.getFlash(args.primary);
+    if (!flash)
+    {
+        throw std::runtime_error("failed to find BIOS partitionS");
+    }
+
+    flasher::NestedMutate mutate{};
+
+    std::string flashDev(flash->first);
+    auto devMod = ModArgs(flashDev);
+
+    flashDev = devMod.arr.back();
+
+    cr51::Cr51 current(flashDev, flash->second,
+                       args.config.flash.validationKey);
+
+    // Flash Support only for
+    // Prod <-> Prod
+    // Dev   -> Prod
+    // Dev  <-> Dev
+    if (current.prodImage() && !next.prodImage())
+    {
+        throw std::logic_error(
+            "Installing from prod to dev image is not allowed.");
+    }
+
+    // Fetch BIOS Staging Information
+    auto info = fetchInfo(args);
+
+    // Check Image Descriptor Hash
+    // Prevent flashing the image to primary partition if the hash of image
+    // descriptor does not match the cached.
+    //
+    // Skip the check if it is RAM based update.
+    if (args.primary &&
+        info.state != static_cast<uint8_t>(info::Status::BiosState::RAM))
+    {
+        if (args.stagingIndex != info.stagingIndex)
+        {
+            throw std::logic_error(
+                fmt::format("The Staged Partition is not in the expected "
+                            "partition: want {}, got {}",
+                            info.stagingIndex, args.stagingIndex));
+        }
+
+        auto descriptorHash = next.descriptorHash();
+        std::vector<uint8_t> expectedHash(SHA256_DIGEST_LENGTH);
+
+        memcpy(expectedHash.data(), &(info.descriptorHash[0]),
+               SHA256_DIGEST_LENGTH);
+
+        log(LogLevel::Info, "INFO: Checking HASH for CR51 descriptor between "
+                            "staged partition and cache\n");
+
+        if (descriptorHash != expectedHash)
+        {
+            throw std::logic_error(
+                "SHA256 of the staged image in the cache "
+                "does not match the image in the staged partition");
+        }
+    }
+
+    log(LogLevel::Info, "INFO: finished setting up\n", image, flashDev);
+
+    auto fileMod = *args.file;
+    auto dev = flasher::openDevice(devMod);
+    auto file = flasher::openFile(fileMod, OpenFlags(OpenAccess::ReadOnly));
+    log(LogLevel::Info, "INFO: Flash BIOS to {}\n", flashDev);
+    flasher::ops::automatic(*dev, 0, *file, 0, mutate,
+                            std::numeric_limits<size_t>::max(), std::nullopt,
+                            false);
+
+    log(LogLevel::Info, "INFO: finished flashing {} to {}\n", image, flashDev);
+    current =
+        cr51::Cr51(flashDev, flash->second, args.config.flash.validationKey);
+
+    // Update the Stage or Active Version
+    // Update the BIOS staged state.
+    if (args.primary)
+    {
+        info.active = info::Version(current.imageVersion());
+        info.state = static_cast<uint8_t>(info::Status::BiosState::UPDATED);
+    }
+    else
+    {
+        info.stage = info::Version(current.imageVersion());
+        info.state = static_cast<uint8_t>(info::Status::BiosState::STAGED);
+
+        // Update the Staging Index to make sure the it uses the same staged
+        // partition between the stage and active.
+        info.stagingIndex = args.stagingIndex;
+
+        // Save the CR51 descriptor hash.
+        auto descriptorHash = current.descriptorHash();
+        memcpy(info.descriptorHash, descriptorHash.data(),
+               SHA256_DIGEST_LENGTH);
+    }
+
+    // Convert struct into bytes
+    auto ptr = reinterpret_cast<std::byte*>(&info);
+    auto buffer = std::vector<std::byte>(ptr, ptr + sizeof(info::Status));
+
+    info::printStatus(args, info);
+
+    writeInfo(args, buffer);
+    auto findState = info::stateToString.find(info.state);
+    if (findState != info::stateToString.end())
+    {
+        log(LogLevel::Info, "INFO: updated the staged BIOS to {}\n",
+            findState->second);
+    }
 }
 
 } // namespace ops
