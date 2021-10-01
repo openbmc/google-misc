@@ -53,6 +53,7 @@ libflashupdate_lib = library(
   'flashupdate',
   'args.cpp',
   'config.cpp',
+  'cr51.cpp',
   'info.cpp',
   'ops.cpp',
   'logging.cpp',
