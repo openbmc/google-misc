@@ -11,6 +11,11 @@ if not fmt_dep.found()
   fmt_dep = fmt_proj.dependency('fmt')
 endif
 
+# Enable development workflow to skip some parts with hardware dependencies
+if get_option('dev') or not get_option('tests').disabled()
+  add_project_arguments('-DDEV_WORKFLOW', language: 'cpp')
+endif
+
 stdplus_dep = dependency('stdplus', fallback: ['stdplus', 'stdplus_dep'])
 
 flasher_dep = dependency('flasher', required: true)
@@ -49,6 +54,7 @@ libflashupdate_lib = library(
   'args.cpp',
   'config.cpp',
   'cr51.cpp',
+  'flash.cpp',
   'info.cpp',
   'ops.cpp',
   'logging.cpp',
