@@ -111,93 +111,93 @@ TEST_F(ArgsTest, ConfigRequired)
     EXPECT_EQ(vecArgs({"flashupdate", "validate_config"}).configFile, testName);
 }
 
-TEST_F(ArgsTest, InjectPersistentTest)
-{
-    EXPECT_THROW(vecArgs({"flashupdate", "inject_persistent"}),
-                 std::runtime_error);
-    auto args = vecArgs({"flashupdate", "inject_persistent", "file"});
+// TEST_F(ArgsTest, InjectPersistentTest)
+// {
+//     EXPECT_THROW(vecArgs({"flashupdate", "inject_persistent"}),
+//                  std::runtime_error);
+//     auto args = vecArgs({"flashupdate", "inject_persistent", "file"});
 
-    EXPECT_EQ(args.op, Args::Op::InjectPersistent);
-    EXPECT_EQ(args.file, ModArgs("file"));
-}
+//     EXPECT_EQ(args.op, Args::Op::InjectPersistent);
+//     EXPECT_EQ(args.file, ModArgs("file"));
+// }
 
-TEST_F(ArgsTest, HashDescriptor)
-{
-    EXPECT_THROW(vecArgs({"flashupdate", "hash_descriptor"}),
-                 std::runtime_error);
-    auto args = vecArgs({"flashupdate", "hash_descriptor", "file"});
+// TEST_F(ArgsTest, HashDescriptor)
+// {
+//     EXPECT_THROW(vecArgs({"flashupdate", "hash_descriptor"}),
+//                  std::runtime_error);
+//     auto args = vecArgs({"flashupdate", "hash_descriptor", "file"});
 
-    EXPECT_EQ(args.op, Args::Op::HashDescriptor);
-    EXPECT_EQ(args.file, ModArgs("file"));
-}
+//     EXPECT_EQ(args.op, Args::Op::HashDescriptor);
+//     EXPECT_EQ(args.file, ModArgs("file"));
+// }
 
-TEST_F(ArgsTest, ReadTest)
-{
-    EXPECT_THROW(vecArgs({"flashupdate", "read"}), std::runtime_error);
-    EXPECT_THROW(vecArgs({"flashupdate", "read", "primary"}),
-                 std::runtime_error);
-    EXPECT_THROW(vecArgs({"flashupdate", "read", "other", "file"}),
-                 std::runtime_error);
+// TEST_F(ArgsTest, ReadTest)
+// {
+//     EXPECT_THROW(vecArgs({"flashupdate", "read"}), std::runtime_error);
+//     EXPECT_THROW(vecArgs({"flashupdate", "read", "primary"}),
+//                  std::runtime_error);
+//     EXPECT_THROW(vecArgs({"flashupdate", "read", "other", "file"}),
+//                  std::runtime_error);
 
-    auto args = vecArgs({"flashupdate", "read", "primary", "file"});
-    EXPECT_EQ(args.op, Args::Op::Read);
-    EXPECT_EQ(args.file, ModArgs("file"));
-    EXPECT_EQ(args.primary, true);
-    EXPECT_EQ(args.stagingIndex, 0);
+//     auto args = vecArgs({"flashupdate", "read", "primary", "file"});
+//     EXPECT_EQ(args.op, Args::Op::Read);
+//     EXPECT_EQ(args.file, ModArgs("file"));
+//     EXPECT_EQ(args.primary, true);
+//     EXPECT_EQ(args.stagingIndex, 0);
 
-    args = vecArgs({"flashupdate", "read", "secondary", "file"});
-    EXPECT_EQ(args.op, Args::Op::Read);
-    EXPECT_EQ(args.file, ModArgs("file"));
-    EXPECT_EQ(args.primary, false);
-    EXPECT_EQ(args.stagingIndex, 0);
-}
+//     args = vecArgs({"flashupdate", "read", "secondary", "file"});
+//     EXPECT_EQ(args.op, Args::Op::Read);
+//     EXPECT_EQ(args.file, ModArgs("file"));
+//     EXPECT_EQ(args.primary, false);
+//     EXPECT_EQ(args.stagingIndex, 0);
+// }
 
-TEST_F(ArgsTest, WriteTest)
-{
-    EXPECT_THROW(vecArgs({"flashupdate", "write"}), std::runtime_error);
-    EXPECT_THROW(vecArgs({"flashupdate", "write", "file"}), std::runtime_error);
-    EXPECT_THROW(vecArgs({"flashupdate", "write", "file", "other"}),
-                 std::runtime_error);
+// TEST_F(ArgsTest, WriteTest)
+// {
+//     EXPECT_THROW(vecArgs({"flashupdate", "write"}), std::runtime_error);
+//     EXPECT_THROW(vecArgs({"flashupdate", "write", "file"}), std::runtime_error);
+//     EXPECT_THROW(vecArgs({"flashupdate", "write", "file", "other"}),
+//                  std::runtime_error);
 
-    auto args = vecArgs({"flashupdate", "write", "file", "primary"});
-    EXPECT_EQ(args.op, Args::Op::Write);
-    EXPECT_EQ(args.file, ModArgs("file"));
-    EXPECT_EQ(args.primary, true);
-    EXPECT_EQ(args.stagingIndex, 0);
+//     auto args = vecArgs({"flashupdate", "write", "file", "primary"});
+//     EXPECT_EQ(args.op, Args::Op::Write);
+//     EXPECT_EQ(args.file, ModArgs("file"));
+//     EXPECT_EQ(args.primary, true);
+//     EXPECT_EQ(args.stagingIndex, 0);
 
-    args = vecArgs({"flashupdate", "write", "file", "secondary"});
-    EXPECT_EQ(args.op, Args::Op::Write);
-    EXPECT_EQ(args.file, ModArgs("file"));
-    EXPECT_EQ(args.primary, false);
-    EXPECT_EQ(args.stagingIndex, 0);
-}
+//     args = vecArgs({"flashupdate", "write", "file", "secondary"});
+//     EXPECT_EQ(args.op, Args::Op::Write);
+//     EXPECT_EQ(args.file, ModArgs("file"));
+//     EXPECT_EQ(args.primary, false);
+//     EXPECT_EQ(args.stagingIndex, 0);
+// }
 
-TEST_F(ArgsTest, UpdateStateTest)
-{
-    EXPECT_THROW(vecArgs({"flashupdate", "update_state"}), std::runtime_error);
+// TEST_F(ArgsTest, UpdateStateTest)
+// {
+//     EXPECT_THROW(vecArgs({"flashupdate", "update_state"}), std::runtime_error);
 
-    auto args = vecArgs({"flashupdate", "update_state", "state"});
-    EXPECT_EQ(args.op, Args::Op::UpdateState);
-    EXPECT_EQ(args.file, std::nullopt);
-    EXPECT_EQ(args.state, "state");
-}
+//     auto args = vecArgs({"flashupdate", "update_state", "state"});
+//     EXPECT_EQ(args.op, Args::Op::UpdateState);
+//     EXPECT_EQ(args.file, std::nullopt);
+//     EXPECT_EQ(args.state, "state");
+// }
 
-TEST_F(ArgsTest, UpdateStagedVersionTest)
-{
-    EXPECT_THROW(vecArgs({"flashupdate", "update_staged_version"}),
-                 std::runtime_error);
+// TEST_F(ArgsTest, UpdateStagedVersionTest)
+// {
+//     EXPECT_THROW(vecArgs({"flashupdate", "update_staged_version"}),
+//                  std::runtime_error);
 
-    auto args = vecArgs({"flashupdate", "update_staged_version", "file"});
-    EXPECT_EQ(args.op, Args::Op::UpdateStagedVersion);
-    EXPECT_EQ(args.file, ModArgs("file"));
-}
+//     auto args = vecArgs({"flashupdate", "update_staged_version", "file"});
+//     EXPECT_EQ(args.op, Args::Op::UpdateStagedVersion);
+//     EXPECT_EQ(args.file, ModArgs("file"));
+// }
 
-TEST_F(ArgsTest, Verbose)
-{
-    EXPECT_EQ(0, vecArgs({"flashupdate", "validate_config"}).verbose);
-    EXPECT_EQ(
-        4, vecArgs({"flashupdate", "--verbose", "-v", "validate_config", "-vv"})
-               .verbose);
-}
+// TEST_F(ArgsTest, Verbose)
+// {
+//     EXPECT_EQ(0, vecArgs({"flashupdate", "validate_config"}).verbose);
+//     EXPECT_EQ(
+//         4, vecArgs({"flashupdate", "--verbose", "-v", "validate_config", "-vv"})
+//                .verbose);
+// }
 
 } // namespace flashupdate

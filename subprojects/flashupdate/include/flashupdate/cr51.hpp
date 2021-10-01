@@ -19,7 +19,6 @@
 #include <libcr51sign/libcr51sign_support.h>
 
 #include <flashupdate/config.hpp>
-#include <flashupdate/logging.hpp>
 
 #include <optional>
 #include <string_view>
