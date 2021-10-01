@@ -18,9 +18,11 @@
 #include <flasher/device.hpp>
 #include <flashupdate/args.hpp>
 #include <flashupdate/config.hpp>
+#include <flashupdate/cr51.hpp>
 #include <flashupdate/info.hpp>
 
 #include <iostream>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -40,7 +42,18 @@ const std::unordered_map<std::string_view, Args::Op> stringToOp = {
     {"write", Args::Op::Write},
 };
 
-Args::Args(int argc, char* argv[])
+void Args::setCr51Helper(cr51::Cr51* cr51Helper)
+{
+    this->cr51Helper = reinterpret_cast<cr51::Cr51Impl*>(cr51Helper);
+}
+
+Args::Args()
+{
+    cr51HelperPtr = std::make_unique<cr51::Cr51Impl>();
+    cr51Helper = cr51HelperPtr.get();
+}
+
+Args::Args(int argc, char* argv[]) : Args()
 {
     static const char opts[] = ":j:i:acfkSsv";
     static const struct option longopts[] = {
