@@ -198,9 +198,32 @@ void hashDescriptor(const Args& args)
     fmt::print(stdout, info::hashToString(helper.descriptorHash()));
 }
 
-void read(const Args&)
+void read(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    flash::Flash flashHelper(args.config, args.keepMux);
+    auto flash = flashHelper.getFlash(args.primary);
+    if (!flash)
+    {
+        throw std::runtime_error("failed to find BIOS partition");
+    }
+
+    std::string image = args.file->arr.back();
+    flasher::NestedMutate mutate{};
+
+    auto devMod = ModArgs(fmt::format("{}", flash->first));
+    auto fileMod = *args.file;
+
+    auto dev = flasher::openDevice(devMod);
+    auto file = flasher::openFile(fileMod, OpenFlags(OpenAccess::WriteOnly)
+                                               .set(OpenFlag::Create)
+                                               .set(OpenFlag::Trunc));
+    flasher::ops::read(*dev, 0, *file, 0, mutate,
+                       std::numeric_limits<size_t>::max(), std::nullopt);
+
+    // Validate the image read from the flash
+    std::filesystem::path path(image);
+    uint32_t size = std::filesystem::file_size(path);
+    cr51::Cr51 helper(image, size, args.config.flash.validationKey);
 }
 
 void write(const Args&)
