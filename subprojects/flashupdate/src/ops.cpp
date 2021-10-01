@@ -36,10 +36,44 @@ namespace flashupdate
 namespace ops
 {
 
-// Operation Definitions
-void info(const Args&)
+using flasher::ModArgs;
+using stdplus::fd::OpenAccess;
+using stdplus::fd::OpenFlag;
+using stdplus::fd::OpenFlags;
+
+info::Status fetchInfo(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    std::filesystem::path path(args.config.eeprom.path);
+    uint32_t size = std::filesystem::file_size(path);
+
+    auto devMod = ModArgs(fmt::format("fake,type=nor,erase={},{}", size,
+                                      args.config.eeprom.path));
+    auto fileMod = ModArgs("/tmp/temp-eeprom");
+    flasher::NestedMutate mutate{};
+
+    // Copy status from Motherboard EEPROM
+    auto dev = flasher::openDevice(devMod);
+    auto file = flasher::openFile(fileMod, OpenFlags(OpenAccess::WriteOnly)
+                                               .set(OpenFlag::Create)
+                                               .set(OpenFlag::Trunc));
+    flasher::ops::read(*dev, args.config.eeprom.offset, *file,
+                       args.config.eeprom.offset, mutate, sizeof(info::Status),
+                       std::nullopt);
+
+    std::vector<std::byte> fileIn(sizeof(info::Status));
+    auto readFile = flasher::openFile(fileMod, OpenFlags(OpenAccess::ReadOnly));
+    readFile->readAt(fileIn, 0);
+
+    // Convert bytes to struct and update the state
+    auto status = reinterpret_cast<info::Status*>(fileIn.data());
+    return *status;
+}
+
+// Operation Definitions
+void info(const Args& args)
+{
+    auto info = fetchInfo(args);
+    info::printStatus(args, info);
 }
 
 void updateState(const Args&)
