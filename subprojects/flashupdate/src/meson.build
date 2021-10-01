@@ -52,6 +52,7 @@ libflashupdate_deps = [
 libflashupdate_lib = library(
   'flashupdate',
   'args.cpp',
+  'config.cpp',
   'info.cpp',
   'ops.cpp',
   'logging.cpp',

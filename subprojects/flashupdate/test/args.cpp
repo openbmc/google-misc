@@ -1,3 +1,17 @@
+// Copyright 2021 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <flashupdate/args.hpp>
 #include <nlohmann/json.hpp>
 
@@ -17,10 +31,56 @@ class ArgsTest : public ::testing::Test
 {
   protected:
     ArgsTest()
-    {}
+    {
+        createConfig();
+    }
+
+    void createConfig()
+    {
+        std::ofstream testfile;
+        testfile.open(testName, std::ios::out);
+        auto good = R"(
+        {
+            "flash": {
+                "validation_key": {
+                    "prod": "prod.pem",
+                    "dev": "dev.pem"
+                },
+                "primary": {
+                    "name": "primary",
+                    "location": "mtd,/dev/mtd1",
+                    "mux_select": 1
+                },
+                "secondary": [
+                    {
+                        "name": "secondary0",
+                        "location": "mtd,/dev/mtd2",
+                        "mux_select": null
+                    },
+                    {
+                        "name": "secondary3",
+                        "location": "mtd,/dev/mtd3",
+                        "mux_select": 2
+                    }
+                ],
+                "device_id": "device_id",
+                "driver": "/tmp/driver"
+            },
+            "eeprom": {
+                "path": "eeprom",
+                "offset": 0
+            }
+        }
+    )"_json;
+        testfile << good.dump(4);
+        testfile.flush();
+    }
 
     Args vecArgs(std::vector<std::string> args)
     {
+        args.push_back("-j");
+        args.push_back(testName);
+
         std::vector<char*> argv;
         for (auto& arg : args)
             argv.push_back(arg.data());
@@ -28,11 +88,25 @@ class ArgsTest : public ::testing::Test
         argv.push_back(nullptr);
         return Args(args.size(), argv.data());
     }
+
+    std::string testName = "test-config.json";
 };
 
 TEST_F(ArgsTest, OpRequired)
 {
     EXPECT_THROW(vecArgs({"flasheupdate", "-v"}), std::runtime_error);
+}
+
+TEST_F(ArgsTest, ConfigRequired)
+{
+    std::vector<std::string> args = {"flasheupdate", "empty"};
+    std::vector<char*> argv;
+    for (auto& arg : args)
+        argv.push_back(arg.data());
+    argv.push_back(nullptr);
+
+    EXPECT_THROW(Args(args.size(), argv.data()), std::runtime_error);
+    EXPECT_EQ(vecArgs({"flasheupdate", "empty"}).configFile, testName);
 }
 
 TEST_F(ArgsTest, InjectPersistentTest)

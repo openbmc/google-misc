@@ -26,6 +26,15 @@ flasheupdate_args_test = executable(
   dependencies: [libflashupdate, gtest, gmock])
 test('flasheupdate/args', flasheupdate_args_test)
 
+
+flasheupdat_config_test = executable(
+  'flashupdate_config',
+  'config.cpp',
+  build_by_default: false,
+  implicit_include_directories: false,
+  dependencies: [libflashupdate, gtest, gmock])
+test('flasheupdate/config', flasheupdat_config_test)
+
 if get_option('tests').enabled()
   assert(not is_disabler(flasheupdate_args_test),
          'Tests enabled but flasheupdate_args_test cannot build')
