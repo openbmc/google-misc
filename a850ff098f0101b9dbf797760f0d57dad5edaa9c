@@ -140,6 +140,30 @@
       "revId": "a850ff098f0101b9dbf797760f0d57dad5edaa9c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0751f4_86270ac5",
+        "filename": "subprojects/flasher/src/args.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-01T04:28:59Z",
+      "side": 1,
+      "message": "https://github.com/openbmc/docs/blob/master/cpp-style-and-conventions.md#variables\n\nIf we don\u0027t care, then we can just keep it snake_case for variables so you don\u0027t have to go through the code to change it.",
+      "parentUuid": "99df3bc5_af7ae4b6",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "a850ff098f0101b9dbf797760f0d57dad5edaa9c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
