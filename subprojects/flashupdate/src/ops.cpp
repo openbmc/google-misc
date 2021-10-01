@@ -21,6 +21,7 @@
 #include <flasher/mutate.hpp>
 #include <flasher/ops.hpp>
 #include <flashupdate/args.hpp>
+#include <flashupdate/cr51.hpp>
 #include <flashupdate/info.hpp>
 #include <flashupdate/logging.hpp>
 #include <stdplus/exception.hpp>
@@ -129,9 +130,32 @@ std::string updateState(const Args& args)
     return info::printUpdateInfo(args, info);
 }
 
-void updateStagedVersion(const Args&)
+std::string updateStagedVersion(const Args& args)
 {
-    throw std::runtime_error("Not implemented");
+    auto info = fetchInfo(args);
+    info::printUpdateInfo(args, info);
+
+    std::string image = args.file->arr.back();
+    std::filesystem::path path(image);
+    uint32_t size = std::filesystem::file_size(path);
+
+    // Validate the CR51 descriptor for the image
+    // Parse the image to fetch the image version and other informations.
+    auto& helper = args.cr51Helper;
+    if (!helper->validateImage(image, size, args.config.flash.validationKey))
+    {
+        throw std::runtime_error(fmt::format(
+            "failed to validate the CR51 descriptor for {}", image));
+    }
+
+    info.stage = info::Version(helper->imageVersion());
+
+    // Convert struct into bytes
+    auto ptr = reinterpret_cast<std::byte*>(&info);
+    auto buffer = std::vector<std::byte>(ptr, ptr + sizeof(info::UpdateInfo));
+
+    writeInfo(args, buffer);
+    return info::printUpdateInfo(args, info);
 }
 
 void injectPersistent(const Args&)

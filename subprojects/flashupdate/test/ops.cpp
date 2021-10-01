@@ -14,6 +14,7 @@
 
 #include <fmt/format.h>
 
+#include <flashupdate/cr51/mock.hpp>
 #include <flashupdate/info.hpp>
 #include <flashupdate/ops.hpp>
 
@@ -22,6 +23,9 @@
 #include <string>
 
 #include <gtest/gtest.h>
+
+using ::testing::_;
+using ::testing::Return;
 
 namespace flashupdate
 {
@@ -89,7 +93,7 @@ TEST_F(OperationTest, InfoPass)
     EXPECT_EQ(ops::info(args), expectedOutput);
 }
 
-TEST(OperationTest, UpdateStateInvalidState)
+TEST_F(OperationTest, UpdateStateInvalidState)
 {
     Args args;
 
@@ -133,6 +137,36 @@ TEST_F(OperationTest, UpdateStatePass)
     EXPECT_EQ(ops::updateState(args),
               fmt::format("{}\n{}\n{}\n{}\n{}\n", activeVersion, stageVersion,
                           "STAGED", "0", "00000000000000000000000"));
+}
+
+TEST_F(OperationTest, UpdateStagedVersion)
+{
+    resetInfo();
+
+    auto ptr = reinterpret_cast<std::byte*>(&updateInfo);
+    auto buffer = std::vector<std::byte>(ptr, ptr + sizeof(info::UpdateInfo));
+    std::string filename = "test.txt";
+    std::ofstream testfile;
+    std::string expectedOutput = "";
+
+    testfile.open(filename, std::ios::out);
+    testfile << buffer.data();
+    testfile.flush();
+    testfile.close();
+
+    Args args;
+    args.config.eeprom.path = filename;
+    args.checkStageVersion = true;
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    EXPECT_CALL(cr51MockHelper, imageVersion())
+        .WillOnce(Return(activeVersion.data()));
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _)).WillOnce(Return(true));
+
+    EXPECT_EQ(ops::updateStagedVersion(args),
+              fmt::format("Stage Version: {}\n", activeVersion));
 }
 
 } // namespace flashupdate
