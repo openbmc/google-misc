@@ -29,10 +29,10 @@ void main_wrapped(int argc, char* argv[])
     reinterpret_cast<uint8_t&>(logLevel) += args.verbose;
     switch (args.op)
     {
-        case Args::Op::Empty:
+        case Args::Op::ValidateConfig:
         {
             log(LogLevel::Notice,
-                "NOTICE: empty command to check json config.\n");
+                "NOTICE: empty command to validate the json config.\n");
         }
         break;
         case Args::Op::InjectPersistent:
