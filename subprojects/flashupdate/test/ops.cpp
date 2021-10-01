@@ -333,4 +333,65 @@ TEST_F(OperationTest, HashDescriptorPass)
     EXPECT_EQ(ops::hashDescriptor(args), expectedHashStr);
 }
 
+TEST_F(OperationTest, ReadInvalidFlash)
+{
+    Args args;
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(flashMockHelper, getFlash(_)).WillOnce(Return(std::nullopt));
+
+    EXPECT_THROW(
+        try { ops::read(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "failed to find Flash partitions");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, ReadInvalidImage)
+{
+    Args args;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _)).WillOnce(Return(false));
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    EXPECT_THROW(
+        try { ops::read(args); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(
+                e.what(),
+                fmt::format("failed to validate the CR51 descriptor for {}",
+                            testBin)
+                    .c_str());
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST_F(OperationTest, ReadPass)
+{
+    Args args;
+    args.file = flasher::ModArgs(testBin);
+
+    cr51::Mock cr51MockHelper;
+    args.setCr51Helper(&cr51MockHelper);
+
+    flash::Mock flashMockHelper;
+    args.setFlashHelper(&flashMockHelper);
+
+    EXPECT_CALL(cr51MockHelper, validateImage(_, _, _)).WillOnce(Return(true));
+    EXPECT_CALL(flashMockHelper, getFlash(_))
+        .WillOnce(Return(std::make_pair(testDev, inputData.size())));
+
+    ops::read(args);
+}
+
 } // namespace flashupdate
