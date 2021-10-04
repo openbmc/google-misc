@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7e69b8_03aa8e10",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T23:43:38Z",
+      "side": 1,
+      "message": "nit: size_t?",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 12
+      },
+      "revId": "5d74308b2d6436e101f0b46ec8e63ce6f7cc2b02",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
