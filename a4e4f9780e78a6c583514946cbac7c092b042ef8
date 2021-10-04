@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f465a4dc_3331ee32",
+        "filename": "subprojects/flashupdate/include/flashupdate/info.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "should this be [in, out] since we\u0027re actually changing the version as well with the substr after the split?",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b373a9_bcefea45",
+        "filename": "subprojects/flashupdate/include/flashupdate/info.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "nit: missing param[in]",
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe512a6_cc95326a",
+        "filename": "subprojects/flashupdate/internal/flashupdate/args.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "nit: Seeing as other members of this class are initialized, should this also be initialzied?",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f479c2_1fbe2107",
+        "filename": "subprojects/flashupdate/internal/flashupdate/args.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "nit: Could we add very short doxygen documentation? I realize the function names are pretty self-explanatory though.",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf316c9_18652662",
+        "filename": "subprojects/flashupdate/internal/flashupdate/logging.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "For my education, why do we need a switch / default here?",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c42d6f41_554dedfb",
+        "filename": "subprojects/flashupdate/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "Neat, since this is part of google-misc subproject, if this is not built as a unit test (in our image), this would set to disabled by default right?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5f6387e_81f295b0",
+        "filename": "subprojects/flashupdate/src/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "unordered map?",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3aa3a9b_3caf3483",
+        "filename": "subprojects/flashupdate/src/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "Any reason why this isn\u0027t in the header (compared to other maps?)",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6678651c_e9f628ac",
+        "filename": "subprojects/flashupdate/src/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "Why do we set all these to true if all are false?\n\nI think this deserves a bit more explanation in the comments",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 31
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de49af7b_c91427bd",
+        "filename": "subprojects/flashupdate/src/info.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "I don\u0027t see this in the header file - is this meant to be a static function?\n\nWanted to look up what \"clean\" was supposed to be for (I guess whether we include the prefix or not?)",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45142ff_b29a4f83",
+        "filename": "subprojects/flashupdate/src/logging.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "Worth a comment? I\u0027m guessing you\u0027ll be setting this differently in other files or at compile time (maybe it\u0027s in a different patch).",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5a05aa_91aee61b",
+        "filename": "subprojects/flashupdate/src/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "Unused lines?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92596123_b9722ed6",
+        "filename": "subprojects/flashupdate/src/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "Oh, I thought meson generate pkgconfig libraries automatically, didn\u0027t realize we had to do this",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab97fef_58d603e1",
+        "filename": "subprojects/flashupdate/test/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "nit: flashupdate not flash\"e\"update?",
+      "range": {
+        "startLine": 35,
+        "startChar": 27,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242622cb_74e7db5d",
+        "filename": "subprojects/flashupdate/test/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 6
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ca9619_b733b472",
+        "filename": "subprojects/flashupdate/test/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-04T20:40:37Z",
+      "side": 1,
+      "message": "technically this is not needed yet right? Seems like we only have the args test.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 66
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
