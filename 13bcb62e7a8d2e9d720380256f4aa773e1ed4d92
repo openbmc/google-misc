@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24da054_46549d89",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "signature type? firmware type/",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365d9173_47a03b11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "Could we capture this highlevel summary in the code itself? (maybe in the doxygen?).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51372af_3fe5e798",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "nit: 72 chars",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 89
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329471f8_cf93c396",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "nit: Let\u0027s add \"next\" image for clarification.",
+      "range": {
+        "startLine": 231,
+        "startChar": 20,
+        "endLine": 231,
+        "endChar": 25
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df3f751_18d47fa3",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "nit: I think this could live further down before it\u0027s actually used.",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 35
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e244bd4_d21a405f",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "Add a comment here saying, // Validate the current image to mirror above\n\nLooks like this is actually the \"current\" image in the secondary storage?",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 56
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38fe23ab_e4d564c7",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "You can concatenate this comment with the one above:\n\nUpdate the Stage or Active Version and the BIOS staged state.",
+      "range": {
+        "startLine": 315,
+        "startChar": 41,
+        "endLine": 316,
+        "endChar": 14
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c988e30_2a495685",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "maybe clarify what struct this is and that this is the new one to be saved",
+      "range": {
+        "startLine": 337,
+        "startChar": 15,
+        "endLine": 337,
+        "endChar": 21
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefb7ed5_2e2128ad",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-05T00:14:16Z",
+      "side": 1,
+      "message": "Maybe we should save the new state we expect this to be and compare to make sure they are correct? Since the state is very important for the workflow - maybe we should throw if it\u0027s not the same",
+      "range": {
+        "startLine": 345,
+        "startChar": 3,
+        "endLine": 349,
+        "endChar": 5
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
