@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23fb0c4a_df0e21a9",
+        "filename": "subprojects/flashupdate/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:16:58Z",
+      "side": 1,
+      "message": "The libcr51sign uses flexiable array member, so I have to decrease the warning level.\n\n```\nd -o src/libflashupdate.so.0.1.p/cr51.cpp.o -c ../src/cr51.cpp\nIn file included from ../src/cr51.cpp:24:\n../include/flashupdate/cr51.hpp:105:28: error: invalid use of ‘struct image_descriptor’ with a flexible array member in ‘class flashupdate::cr51::Cr51’ [-Werror\u003dpedantic]\n  105 |     struct libcr51sign_ctx context;\n      |                            ^~~~~~~\nIn file included from ../src/cr51.cpp:17:\n/usr/local/include/libcr51sign/cr51_image_descriptor.h:229:25: note: array member ‘image_region image_descriptor::image_regions []’ declared here\n  229 |     struct image_region image_regions[];\n      |                         ^~~~~~~~~~~~~\n```",
+      "parentUuid": "3d9b1858_162c8daa",
+      "range": {
+        "startLine": 4,
+        "startChar": 18,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "e0af2103d0391566088cee2eaf610ee55b7d0618",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b53932c_586c60ed",
         "filename": "subprojects/flashupdate/src/cr51.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e0af2103d0391566088cee2eaf610ee55b7d0618",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43c6166_b0aa95be",
+        "filename": "subprojects/flashupdate/src/cr51.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b53932c_586c60ed",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "e0af2103d0391566088cee2eaf610ee55b7d0618",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
