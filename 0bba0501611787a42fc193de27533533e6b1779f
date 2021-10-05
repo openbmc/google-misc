@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f33eb0e_8b1882eb",
+        "filename": "subprojects/flashupdate/include/flashupdate/config.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "I thought about having a constructor but decided that I don\u0027t need it.\n\nremoved.",
+      "parentUuid": "bb94b74b_7c8e4f2b",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aef11a5f_4d835fc6",
         "filename": "subprojects/flashupdate/src/config.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2021-10-04T21:02:35Z",
       "side": 1,
       "message": "Can\u0027t we just do get_to(config.flash.primary.muxSelect) like we do above?",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 24
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7362bf_ae2aa281",
+        "filename": "subprojects/flashupdate/src/config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "it is optional and doesn\u0027t work directly.\n\nI have tried \n\n```\nmuxSelect.get_to(*config.flash.primary.muxSelect);\n```\n\nbefore and it populated the values.\n\nHowever, the config.flash.primary.muxSelect.has_value() return false.",
+      "parentUuid": "aef11a5f_4d835fc6",
       "range": {
         "startLine": 62,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "14d320fd_7cfaf8e7",
+        "filename": "subprojects/flashupdate/src/config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e1a5557_e04c4178",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 45
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "599e8003_c7c95af5",
         "filename": "subprojects/flashupdate/src/config.cpp",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "0bba0501611787a42fc193de27533533e6b1779f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100a47f4_1dfefea8",
+        "filename": "subprojects/flashupdate/src/config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "see above.",
+      "parentUuid": "599e8003_c7c95af5",
+      "range": {
+        "startLine": 77,
+        "startChar": 29,
+        "endLine": 77,
+        "endChar": 32
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d84c5316_895f7ff6",
+        "filename": "subprojects/flashupdate/test/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "The indent spacing. https://nlohmann.github.io/json/doxygen/classnlohmann_1_1basic__json_a476756fb08e7f2416aad116d137977f4.html\n\nBut we don\u0027t need it. I have removed it.",
+      "parentUuid": "c476d374_11a6668d",
+      "range": {
+        "startLine": 75,
+        "startChar": 30,
+        "endLine": 75,
+        "endChar": 31
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59192cff_7028c219",
         "filename": "subprojects/flashupdate/test/args.cpp",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "0bba0501611787a42fc193de27533533e6b1779f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e2d805_40a6170c",
+        "filename": "subprojects/flashupdate/test/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59192cff_7028c219",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "3c6c015b_c8a35136",
+        "filename": "subprojects/flashupdate/test/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b19bbfc_000f6afd",
+      "range": {
+        "startLine": 102,
+        "startChar": 38,
+        "endLine": 102,
+        "endChar": 50
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c9be5a3_04ccc2b6",
+        "filename": "subprojects/flashupdate/test/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "This should just be an empty command to validate the json config. I\u0027ll change it to `validate_config` instead.",
+      "parentUuid": "fc6d8f3d_c8195576",
+      "range": {
+        "startLine": 102,
+        "startChar": 54,
+        "endLine": 102,
+        "endChar": 59
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c93eff85_8f6404b1",
         "filename": "subprojects/flashupdate/test/config.cpp",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "0bba0501611787a42fc193de27533533e6b1779f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d402c01_d6fb8747",
+        "filename": "subprojects/flashupdate/test/config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c93eff85_8f6404b1",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "7b2a081d_b565bd7c",
+        "filename": "subprojects/flashupdate/test/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8de1b0b1_7fe2be5c",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ec9df5_15127ca9",
         "filename": "subprojects/flashupdate/test/meson.build",
         "patchSetId": 1
@@ -252,6 +492,30 @@
       "revId": "0bba0501611787a42fc193de27533533e6b1779f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fc9210_c861d11e",
+        "filename": "subprojects/flashupdate/test/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ec9df5_15127ca9",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 39
+      },
+      "revId": "0bba0501611787a42fc193de27533533e6b1779f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
