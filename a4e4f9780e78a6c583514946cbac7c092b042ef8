@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4fae7d34_07f56135",
+        "filename": "subprojects/flashupdate/include/flashupdate/info.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f465a4dc_3331ee32",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46b373a9_bcefea45",
         "filename": "subprojects/flashupdate/include/flashupdate/info.hpp",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23530434_faf67cea",
+        "filename": "subprojects/flashupdate/include/flashupdate/info.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46b373a9_bcefea45",
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "085f6e15_77a23fe1",
+        "filename": "subprojects/flashupdate/internal/flashupdate/args.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fe512a6_cc95326a",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60f479c2_1fbe2107",
         "filename": "subprojects/flashupdate/internal/flashupdate/args.hpp",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d5bd99_b23866d3",
+        "filename": "subprojects/flashupdate/internal/flashupdate/args.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f479c2_1fbe2107",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "4553a03f_36ef6a9e",
+        "filename": "subprojects/flashupdate/internal/flashupdate/logging.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "I am not sure myself.\n\nI got it from https://gerrit.openbmc-project.xyz/c/openbmc/google-misc/+/47326/4/subprojects/flasher/internal/flasher/logging.hpp\n\nI needed this since the one in flasher is internal.\n\nMaybe it was originally used for the level or some optimization.",
+      "parentUuid": "bbf316c9_18652662",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c42d6f41_554dedfb",
         "filename": "subprojects/flashupdate/meson.build",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2021-10-04T20:40:37Z",
       "side": 1,
       "message": "Neat, since this is part of google-misc subproject, if this is not built as a unit test (in our image), this would set to disabled by default right?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1da16559_ed4e2ea1",
+        "filename": "subprojects/flashupdate/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "actually, we probably should flip this. So that it will be `auto` in the unit test and disabled when targeting it directly.",
+      "parentUuid": "c42d6f41_554dedfb",
       "range": {
         "startLine": 7,
         "startChar": 0,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "6c27d84a_d0bb2977",
+        "filename": "subprojects/flashupdate/src/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5f6387e_81f295b0",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3aa3a9b_3caf3483",
         "filename": "subprojects/flashupdate/src/args.cpp",
         "patchSetId": 1
@@ -177,6 +339,30 @@
       "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246ffd7b_de387d50",
+        "filename": "subprojects/flashupdate/src/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "This is only used in this function to compare the command input to the operation.",
+      "parentUuid": "e3aa3a9b_3caf3483",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "c0b9b099_d9ab8c72",
+        "filename": "subprojects/flashupdate/src/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6678651c_e9f628ac",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 31
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de49af7b_c91427bd",
         "filename": "subprojects/flashupdate/src/info.cpp",
         "patchSetId": 1
@@ -223,6 +433,30 @@
       "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91194005_1c924bf7",
+        "filename": "subprojects/flashupdate/src/info.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "I have added some documentation in here. It is for whether we want to print the message as std::cout + removing extra debug message or just std::cerr.\n\nI have renamed it to `output` to be more clear.",
+      "parentUuid": "de49af7b_c91427bd",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "eadff1c9_386ca7e5",
+        "filename": "subprojects/flashupdate/src/logging.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done.\n\nThe logLevel is increased with `-v` at run time. Increasing the verbose will show more logs.",
+      "parentUuid": "c45142ff_b29a4f83",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a5a05aa_91aee61b",
         "filename": "subprojects/flashupdate/src/meson.build",
         "patchSetId": 1
@@ -269,6 +527,30 @@
       "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50420e8_e3a4c1a3",
+        "filename": "subprojects/flashupdate/src/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done. I will use this later. I have deleted this for now.",
+      "parentUuid": "7a5a05aa_91aee61b",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -315,6 +597,30 @@
       "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c33f42_e8e87414",
+        "filename": "subprojects/flashupdate/test/args.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-05T03:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab97fef_58d603e1",
+      "range": {
+        "startLine": 35,
+        "startChar": 27,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
