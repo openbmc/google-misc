@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13b9c320_f9bb2538",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T23:56:43Z",
+      "side": 1,
+      "message": "these are private only to ops.cpp. SO I guess not. I am testing it with updateInfo().",
+      "parentUuid": "22edef51_dc2c1a54",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 70
+      },
+      "revId": "7dd310481a1be7680a72bcba4cb4e39936ea199b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "488fa162_a736f85a",
         "filename": "subprojects/flashupdate/src/ops.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7dd310481a1be7680a72bcba4cb4e39936ea199b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedd3dc0_e2de9c3b",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T23:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "488fa162_a736f85a",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 35
+      },
+      "revId": "7dd310481a1be7680a72bcba4cb4e39936ea199b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "41c4213a_28bf0572",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T23:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71594169_48a4921f",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 12
+      },
+      "revId": "7dd310481a1be7680a72bcba4cb4e39936ea199b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64526c68_1605e2b0",
         "filename": "subprojects/flashupdate/src/ops.cpp",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2021-10-04T23:29:52Z",
       "side": 1,
       "message": "nit: this seems to be boilerplate code (especially devMod and fileMod) - if we have more of these (I guess I\u0027ll see in the next reviews), consider factoring it out",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 43
+      },
+      "revId": "7dd310481a1be7680a72bcba4cb4e39936ea199b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a3e36c_75722adc",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T23:56:43Z",
+      "side": 1,
+      "message": "you need to open this everytime, since it needs to restart from the beginning. Also, they are opening different files, but not sure how I can refactor it. I\u0027ll take a look at it again after everything is here.",
+      "parentUuid": "64526c68_1605e2b0",
       "range": {
         "startLine": 74,
         "startChar": 0,
