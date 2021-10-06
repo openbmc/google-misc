@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32a272c7_52d607d8",
+        "filename": "subprojects/flashupdate/include/flashupdate/flash.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T04:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb311dca_dda75a8f",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26e77b22_621430c8",
         "filename": "subprojects/flashupdate/src/flash.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446773b9_b71c2a00",
+        "filename": "subprojects/flashupdate/src/flash.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T04:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e77b22_621430c8",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a1c965aa_8e976bb3",
+        "filename": "subprojects/flashupdate/src/flash.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T04:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0adc406_3a63356a",
+      "range": {
+        "startLine": 57,
+        "startChar": 25,
+        "endLine": 57,
+        "endChar": 35
+      },
+      "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce49f2ba_76a79af9",
         "filename": "subprojects/flashupdate/src/flash.cpp",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04d38f4_3b29815b",
+        "filename": "subprojects/flashupdate/src/flash.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T04:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce49f2ba_76a79af9",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3e2461dd_1fb1be50",
+        "filename": "subprojects/flashupdate/src/flash.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T04:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd04db3f_7e5241c1",
+      "range": {
+        "startLine": 59,
+        "startChar": 71,
+        "endLine": 59,
+        "endChar": 75
+      },
+      "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e86785_c21ce300",
         "filename": "subprojects/flashupdate/src/flash.cpp",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2021-10-04T23:09:00Z",
       "side": 1,
       "message": "Do we still need this?",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 20
+      },
+      "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d162394_3d9470a1",
+        "filename": "subprojects/flashupdate/src/flash.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T04:43:05Z",
+      "side": 1,
+      "message": "yeah, this is needed to skip all of the setup during development. This allow us to run/test in workstation without setting up those gpio paths.",
+      "parentUuid": "45e86785_c21ce300",
       "range": {
         "startLine": 102,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4246457a_04e82145",
+        "filename": "subprojects/flashupdate/src/flash.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T04:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54cfbf8b_11075b0c",
+      "range": {
+        "startLine": 146,
+        "startChar": 31,
+        "endLine": 146,
+        "endChar": 37
+      },
+      "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0c30a55_6d413871",
         "filename": "subprojects/flashupdate/src/flash.cpp",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76901eb7_ec6e5730",
+        "filename": "subprojects/flashupdate/src/flash.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-06T04:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0c30a55_6d413871",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "f8dda1cb5af7f4c68273fa3a86962fdc58ceeabe",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
