@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c1a55a5_576af2b0",
+        "filename": "subprojects/flashupdate/include/flashupdate/cr51.hpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T18:42:07Z",
+      "side": 1,
+      "message": "nit: Maybe we can have this method be const",
+      "range": {
+        "startLine": 56,
+        "startChar": 40,
+        "endLine": 56,
+        "endChar": 41
+      },
+      "revId": "3febb6bebbf5e5b80e2bac7a76f2aa54cf4ce190",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e879a22_6bb895d8",
+        "filename": "subprojects/flashupdate/include/flashupdate/cr51.hpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T18:42:07Z",
+      "side": 1,
+      "message": "Same with these, seems like simple getters, maybe we can have these be const functions",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 5
+      },
+      "revId": "3febb6bebbf5e5b80e2bac7a76f2aa54cf4ce190",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9c6ff3_a6e1bec6",
+        "filename": "subprojects/flashupdate/include/flashupdate/cr51.hpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T18:42:07Z",
+      "side": 1,
+      "message": "If this is the interface class, does it make sense to just make these pure virtual and move these members down to the implementation class?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 30
+      },
+      "revId": "3febb6bebbf5e5b80e2bac7a76f2aa54cf4ce190",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
