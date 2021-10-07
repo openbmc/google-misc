@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834a2cb3_f6e525e8",
+        "filename": "subprojects/flashupdate/test/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T19:01:26Z",
+      "side": 1,
+      "message": "nit: should this be testing with stageVersion",
+      "range": {
+        "startLine": 161,
+        "startChar": 25,
+        "endLine": 161,
+        "endChar": 38
+      },
+      "revId": "765db747832d053806a68b800a88bbdd735928b7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
