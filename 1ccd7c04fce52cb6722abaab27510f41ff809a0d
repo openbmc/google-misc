@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b53e2ccf_eb3f055f",
+        "filename": "subprojects/flashupdate/include/flashupdate/ops.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T19:14:18Z",
+      "side": 1,
+      "message": "nit: trailing white space",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71bfc479_e9014934",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T19:14:18Z",
+      "side": 1,
+      "message": "nit: attempting",
+      "range": {
+        "startLine": 271,
+        "startChar": 37,
+        "endLine": 271,
+        "endChar": 46
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c3a7ad_7e270448",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T19:14:18Z",
+      "side": 1,
+      "message": "nit: before",
+      "range": {
+        "startLine": 271,
+        "startChar": 31,
+        "endLine": 271,
+        "endChar": 36
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a96af1_f2c2f9bd",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T19:14:18Z",
+      "side": 1,
+      "message": "nit: information",
+      "range": {
+        "startLine": 292,
+        "startChar": 16,
+        "endLine": 292,
+        "endChar": 27
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee62852_8514bb0f",
+        "filename": "subprojects/flashupdate/test/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T19:14:18Z",
+      "side": 1,
+      "message": "nit: prod",
+      "range": {
+        "startLine": 471,
+        "startChar": 22,
+        "endLine": 471,
+        "endChar": 43
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab651518_d298a353",
+        "filename": "subprojects/flashupdate/test/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T19:14:18Z",
+      "side": 1,
+      "message": "Isn\u0027t the first call for \"next is prod\" then the second call for current image?\n\nIf  so, wouldn\u0027t this be prod-\u003edev?",
+      "range": {
+        "startLine": 487,
+        "startChar": 9,
+        "endLine": 488,
+        "endChar": 32
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9acb08aa_87ed9857",
+        "filename": "subprojects/flashupdate/test/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T19:14:18Z",
+      "side": 1,
+      "message": "Here and below - this seems inaccurate since we\u0027re not throwing an error right?",
+      "range": {
+        "startLine": 600,
+        "startChar": 0,
+        "endLine": 600,
+        "endChar": 33
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
