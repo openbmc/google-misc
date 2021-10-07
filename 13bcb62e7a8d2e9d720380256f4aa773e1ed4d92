@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc75fca4_79f4b5a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c24da054_46549d89",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "365d9173_47a03b11",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8deef5b8_8aacd7b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "365d9173_47a03b11",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2f2a065a_773eacdf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e51372af_3fe5e798",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 89
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "329471f8_cf93c396",
         "filename": "subprojects/flashupdate/src/ops.cpp",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0867d545_db8155bf",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "329471f8_cf93c396",
+      "range": {
+        "startLine": 231,
+        "startChar": 20,
+        "endLine": 231,
+        "endChar": 25
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "78de06e6_0b501386",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df3f751_18d47fa3",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 35
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e244bd4_d21a405f",
         "filename": "subprojects/flashupdate/src/ops.cpp",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11fa88a_3eba6a7d",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done.\n\nThe current image could be both in secondary or primary storage. I have some checks at the secondary partition just to have two chances to block it.",
+      "parentUuid": "9e244bd4_d21a405f",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 56
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "380d4ff7_0a56b63a",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38fe23ab_e4d564c7",
+      "range": {
+        "startLine": 315,
+        "startChar": 41,
+        "endLine": 316,
+        "endChar": 14
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c988e30_2a495685",
         "filename": "subprojects/flashupdate/src/ops.cpp",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "d1871c8b_0d377cd4",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c988e30_2a495685",
+      "range": {
+        "startLine": 337,
+        "startChar": 15,
+        "endLine": 337,
+        "endChar": 21
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fefb7ed5_2e2128ad",
         "filename": "subprojects/flashupdate/src/ops.cpp",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea57018_ee789e74",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T16:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fefb7ed5_2e2128ad",
+      "range": {
+        "startLine": 345,
+        "startChar": 3,
+        "endLine": 349,
+        "endChar": 5
+      },
+      "revId": "13bcb62e7a8d2e9d720380256f4aa773e1ed4d92",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
