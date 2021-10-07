@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "dcbeb451_e3eda4a0",
+        "filename": "subprojects/flashupdate/internal/flashupdate/logging.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T18:36:06Z",
+      "side": 1,
+      "message": "Hmmm.. ok.\n\nI guess we can update this if the original one from flasher changes during code review.",
+      "parentUuid": "4553a03f_36ef6a9e",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c42d6f41_554dedfb",
         "filename": "subprojects/flashupdate/meson.build",
         "patchSetId": 1
@@ -269,6 +293,30 @@
       "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b348374f_358adcc5",
+        "filename": "subprojects/flashupdate/meson.build",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-10-07T18:36:06Z",
+      "side": 1,
+      "message": "Do we want to update this?",
+      "parentUuid": "1da16559_ed4e2ea1",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "a4e4f9780e78a6c583514946cbac7c092b042ef8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     },
     {
       "key": {
