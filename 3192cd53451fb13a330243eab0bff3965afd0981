@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7162bb52_0682beb0",
+        "filename": "subprojects/flashupdate/src/cr51.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T21:24:26Z",
+      "side": 1,
+      "message": "This is using https://gerrit.openbmc-project.xyz/c/openbmc/google-misc/+/47332/.\n\nBut it does not gurantee the result size to be SHA256_DIGEST_LENGTH.\n\nCurrently, this assume that the size is SHA256_DIGEST_LENGTH and has a fixed array in the struct saved in the EEPROM. So this might be an issue unless we can gurantee that all image type has the same hash type (probably not).",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 5
+      },
+      "revId": "3192cd53451fb13a330243eab0bff3965afd0981",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
