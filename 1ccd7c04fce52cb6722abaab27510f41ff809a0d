@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10963885_b1c2b157",
+        "filename": "subprojects/flashupdate/include/flashupdate/ops.hpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T20:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b53e2ccf_eb3f055f",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71bfc479_e9014934",
         "filename": "subprojects/flashupdate/src/ops.cpp",
         "patchSetId": 5
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "4d6508b3_dad080fb",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T20:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c3a7ad_7e270448",
+      "range": {
+        "startLine": 271,
+        "startChar": 31,
+        "endLine": 271,
+        "endChar": 36
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e641e9a_86b02fd7",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T20:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71bfc479_e9014934",
+      "range": {
+        "startLine": 271,
+        "startChar": 37,
+        "endLine": 271,
+        "endChar": 46
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52a96af1_f2c2f9bd",
         "filename": "subprojects/flashupdate/src/ops.cpp",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405cd95f_8aafaa66",
+        "filename": "subprojects/flashupdate/src/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T20:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52a96af1_f2c2f9bd",
+      "range": {
+        "startLine": 292,
+        "startChar": 16,
+        "endLine": 292,
+        "endChar": 27
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c18c7083_0bd2584e",
+        "filename": "subprojects/flashupdate/test/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T20:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee62852_8514bb0f",
+      "range": {
+        "startLine": 471,
+        "startChar": 22,
+        "endLine": 471,
+        "endChar": 43
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab651518_d298a353",
         "filename": "subprojects/flashupdate/test/ops.cpp",
         "patchSetId": 5
@@ -128,6 +248,54 @@
       "writtenOn": "2021-10-07T19:14:18Z",
       "side": 1,
       "message": "Isn\u0027t the first call for \"next is prod\" then the second call for current image?\n\nIf  so, wouldn\u0027t this be prod-\u003edev?",
+      "range": {
+        "startLine": 487,
+        "startChar": 9,
+        "endLine": 488,
+        "endChar": 32
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928b1518_3f5ab593",
+        "filename": "subprojects/flashupdate/test/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T20:44:00Z",
+      "side": 1,
+      "message": "oh, yeah. You are right. The test should be call prod to dev.\n\nWe want to see if that will throw a error. All other cases will pass.",
+      "parentUuid": "ab651518_d298a353",
+      "range": {
+        "startLine": 487,
+        "startChar": 9,
+        "endLine": 488,
+        "endChar": 32
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05e2a4a3_313ff8e9",
+        "filename": "subprojects/flashupdate/test/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T20:44:00Z",
+      "side": 1,
+      "message": "oh, yeah. You are right. The test should be call prod to dev.",
+      "parentUuid": "ab651518_d298a353",
       "range": {
         "startLine": 487,
         "startChar": 9,
@@ -160,6 +328,30 @@
       "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4b0544_b89d61d8",
+        "filename": "subprojects/flashupdate/test/ops.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-07T20:44:00Z",
+      "side": 1,
+      "message": "oh yes, you are right. I forgot to clear the error cases for there. Also with the prod-\u003edev issues.\n\nI can\u0027t actually run this test fully since the actual flash read/write function throws an error.\n\nThis is just in place until those are ready to make it easy to finish it up.",
+      "parentUuid": "9acb08aa_87ed9857",
+      "range": {
+        "startLine": 600,
+        "startChar": 0,
+        "endLine": 600,
+        "endChar": 33
+      },
+      "revId": "1ccd7c04fce52cb6722abaab27510f41ff809a0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
