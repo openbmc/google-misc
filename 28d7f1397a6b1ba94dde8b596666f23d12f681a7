@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "ca2bae81_790b8dc8",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-08T21:01:01Z",
+      "side": 1,
+      "message": "Is validating the non-static region just checking to see if the non-static regions are all zero after flashing it? Checking the for regions that doesn\u0027t have IMAGE_REGION_STATIC or PERSISTENT, since the persistent regions won\u0027t be zero.\n\nnon-static regions will be zeroed.\n\npersistent -\u003e stay around during update.\n\nnon-persistent -\u003e don\u0027t care.\n\nstatic -\u003e read only/code logic",
+      "parentUuid": "6d226ff0_51df933e",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cc52e37_e807015e",
         "filename": "subprojects/libcr51sign/meson.build",
         "patchSetId": 10
