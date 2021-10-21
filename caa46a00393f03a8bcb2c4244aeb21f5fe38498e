@@ -22,6 +22,30 @@
       "revId": "caa46a00393f03a8bcb2c4244aeb21f5fe38498e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728273d0_98e1711e",
+        "filename": ".eslintignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2021-10-21T18:26:05Z",
+      "side": 1,
+      "message": "Is this a general problem with eslint and symlinks that we should solve in openbmc-build-scripts?",
+      "parentUuid": "a6346532_6a1a7635",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "caa46a00393f03a8bcb2c4244aeb21f5fe38498e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
