@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "be9d8a72_e3e88bd3",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-21T16:35:36Z",
+      "side": 1,
+      "message": "We will have to do this after the flasher is upstream. Will close this for now.",
+      "parentUuid": "2083e312_fb8856bb",
+      "revId": "28d7f1397a6b1ba94dde8b596666f23d12f681a7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7be83edf_2aed1dce",
         "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
         "patchSetId": 10
