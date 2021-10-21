@@ -16,12 +16,12 @@ project(
   'gbmc-ncsid',
   ['cpp', 'c'],
   version: '0.1',
-  meson_version: '>=0.53.2',
+  meson_version: '>=0.57.0',
   default_options: [
     'warning_level=3',
     'werror=true',
-    'cpp_std=c++17',
-    'c_std=c11',
+    'cpp_std=c++20',
+    'c_std=c18',
     'tests=' + (meson.is_subproject() ? 'disabled' : 'auto'),
   ])
 
