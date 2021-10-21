@@ -46,6 +46,30 @@
       "revId": "caa46a00393f03a8bcb2c4244aeb21f5fe38498e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9489537_16a3c7ea",
+        "filename": ".eslintignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-10-21T20:46:01Z",
+      "side": 1,
+      "message": "I think it\u0027s a problem in eslint itself, it should keep track of the visited directories and not try and re-visit loops. I haven\u0027t looked deeply at the code yet.",
+      "parentUuid": "728273d0_98e1711e",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "caa46a00393f03a8bcb2c4244aeb21f5fe38498e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
