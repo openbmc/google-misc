@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "769e80ab_b11e023b",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-27T04:45:57Z",
+      "side": 1,
+      "message": "this should just take in a std::span\u003cconst uint8_t\u003e and just copy it to a vector. Use the flasher to read the file directly instead of using this.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 72
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d79d2f_ad0a6cca",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-27T04:45:57Z",
+      "side": 1,
+      "message": "return false here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04081ca2_77f5144d",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-27T04:45:57Z",
+      "side": 1,
+      "message": "remove BIOS. could be any image.",
+      "range": {
+        "startLine": 69,
+        "startChar": 47,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81299c9f_bf15eb80",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-27T04:45:57Z",
+      "side": 1,
+      "message": "Tested with this and it seems like this works fine. 🎉",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 13
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "497c63bc_b1d50213",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-27T04:45:57Z",
+      "side": 1,
+      "message": "\"\\n\"",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 52
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
