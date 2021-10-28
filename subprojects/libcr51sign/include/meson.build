@@ -12,16 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project(
-  'libcr51sign',
-  'c',
-  version: '0.1',
-  meson_version: '>=0.57.0',
-  default_options: [
-    'warning_level=3',
-    'werror=false',
-    'c_std=c18',
-  ])
+libcr51sign_includes = include_directories('.')
 
-subdir('include')
-subdir('src')
+install_subdir(
+  'libcr51sign',
+  install_dir: get_option('includedir'),
+  strip_directory: false)
