@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "libcr51sign.h"
+#include <libcr51sign/libcr51sign.h>
 
 #include <assert.h>
 #include <stdio.h>

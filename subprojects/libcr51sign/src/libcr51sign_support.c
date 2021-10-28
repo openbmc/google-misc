@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "libcr51sign_support.h"
+#include <libcr51sign/libcr51sign_support.h>
 
 #include <openssl/evp.h>
 #include <openssl/pem.h>
