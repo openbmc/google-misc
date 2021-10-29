@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 #include <libcr51sign/libcr51sign_support.h>
+#include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
@@ -23,6 +24,10 @@
 #ifdef __cplusplus
 extern "C"
 {
+#endif
+
+#ifndef USER_PRINT
+#define CPRINTS(ctx, ...) fprintf(stderr, __VA_ARGS__)
 #endif
 
     // @func hash_init get ready to compute a hash
@@ -114,30 +119,30 @@ extern "C"
                          const uint8_t* sig, size_t sig_len,
                          const uint8_t* data, size_t data_len)
     {
+        struct libcr51sign_ctx* lctx = (struct libcr51sign_ctx*)ctx;
         // By default returns error.
         int rv = LIBCR51SIGN_ERROR_INVALID_ARGUMENT;
 
-        printf("\n sig_len %zu sig: ", sig_len);
-        for (int i = 0; i < sig_len; i++)
+        CPRINTS(lctx, "\n sig_len %zu sig: ", sig_len);
+        for (size_t i = 0; i < sig_len; i++)
         {
-            printf("%x", sig[i]);
+            CPRINTS(lctx, "%x", sig[i]);
         }
 
-        struct libcr51sign_ctx* lctx = (struct libcr51sign_ctx*)ctx;
         FILE* fp = fopen(lctx->keyring, "r");
         RSA *rsa = NULL, *pub_rsa = NULL;
         EVP_PKEY* pkey = NULL;
         BIO* bio = BIO_new(BIO_s_mem());
         if (!fp)
         {
-            printf("\n fopen failed: ");
+            CPRINTS(lctx, "\n fopen failed: ");
             goto clean_up;
         }
 
         pkey = PEM_read_PUBKEY(fp, 0, 0, 0);
         if (!pkey)
         {
-            printf("\n Read public key failed: ");
+            CPRINTS(lctx, "\n Read public key failed: ");
             goto clean_up;
         }
 
@@ -149,24 +154,24 @@ extern "C"
         pub_rsa = RSAPublicKey_dup(rsa);
         if (!RSA_print(bio, pub_rsa, 2))
         {
-            printf("\n RSA print failed ");
+            CPRINTS(lctx, "\n RSA print failed ");
         }
         if (!pub_rsa)
         {
-            printf("\n no pub rsa: ");
+            CPRINTS(lctx, "\n no pub rsa: ");
             goto clean_up;
         }
-        printf("\n public rsa \n");
+        CPRINTS(lctx, "\n public rsa \n");
         char buffer[1024];
         while (BIO_read(bio, buffer, sizeof(buffer) - 1) > 0)
         {
-            printf(" %s", buffer);
+            CPRINTS(lctx, " %s", buffer);
         }
         enum hash_type hash_type;
         rv = get_hash_type_from_signature(sig_scheme, &hash_type);
         if (rv != LIBCR51SIGN_SUCCESS)
         {
-            printf("\n Invalid hash_type! \n");
+            CPRINTS(lctx, "\n Invalid hash_type! \n");
             goto clean_up;
         }
         int hash_nid = -1;
@@ -188,25 +193,25 @@ extern "C"
         // OpenSSL RSA_verify returns 1 on success and 0 on failure
         if (!ret)
         {
-            printf("\n OPENSSL_ERROR: %s \n",
+            CPRINTS(lctx, "\n OPENSSL_ERROR: %s \n",
                    ERR_error_string(ERR_get_error(), NULL));
             rv = LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
             goto clean_up;
         }
         rv = LIBCR51SIGN_SUCCESS;
-        printf("\n sig: ");
-        for (int i = 0; i < sig_len; i++)
+        CPRINTS(lctx, "\n sig: ");
+        for (size_t i = 0; i < sig_len; i++)
         {
-            printf("%x", sig[i]);
+            CPRINTS(lctx, "%x", sig[i]);
         }
 
-        printf("\n data: ");
-        for (int i = 0; i < data_len; i++)
+        CPRINTS(lctx, "\n data: ");
+        for (size_t i = 0; i < data_len; i++)
         {
-            printf("%x", data[i]);
+            CPRINTS(lctx, "%x", data[i]);
         }
         const unsigned rsa_size = RSA_size(pub_rsa);
-        printf("\n rsa size %d sig_len %d", rsa_size, (uint32_t)sig_len);
+        CPRINTS(lctx, "\n rsa size %d sig_len %d", rsa_size, (uint32_t)sig_len);
 
     clean_up:
         if (fp)
