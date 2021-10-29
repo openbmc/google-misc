@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "960565f9_e7c2d80d",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-29T18:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "769e80ab_b11e023b",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 72
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5d79d2f_ad0a6cca",
         "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
         "patchSetId": 24
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ad66dadd_6f7ef34d",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-29T18:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5d79d2f_ad0a6cca",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04081ca2_77f5144d",
         "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
         "patchSetId": 24
@@ -68,6 +116,30 @@
       "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8065aa_eb5df4bb",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-29T18:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04081ca2_77f5144d",
+      "range": {
+        "startLine": 69,
+        "startChar": 47,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67d4dae_01e4ad26",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-10-29T18:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "497c63bc_b1d50213",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 52
+      },
+      "revId": "28f075aa950336e43209c447d9344e01a8b552ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
