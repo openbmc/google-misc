@@ -18,6 +18,7 @@ libcr51sign_deps = [
 
 libcr51sign_pre = declare_dependency(
   include_directories: libcr51sign_includes,
+  compile_args: '-DOMIT_VARIABLE_ARRAYS',
   dependencies: libcr51sign_deps)
 
 libcr51sign_lib = library(
