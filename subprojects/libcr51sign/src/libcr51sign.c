@@ -25,7 +25,7 @@ extern "C"
 #endif
 
 #ifndef USER_PRINT
-#define CPRINTS(ctx, format, args...) printf(format, ##args)
+#define CPRINTS(ctx, ...) fprintf(stderr, __VA_ARGS__)
 #endif
 
 #define MEMBER_SIZE(type, field) sizeof(((type*)0)->field)
@@ -291,8 +291,9 @@ extern "C"
                                  LIBCR51SIGN_SHA512_DIGEST_SIZE];
         uint8_t dcrypto_digest[LIBCR51SIGN_SHA512_DIGEST_SIZE];
         uint32_t byte_count, region_count, image_size, hash_offset, digest_size;
+        uint32_t i;
         uint8_t d_region_num = 0;
-        int i, rv;
+        int rv;
         struct image_region const* region;
 
         if (image_regions == NULL)
@@ -317,10 +318,9 @@ extern "C"
             return LIBCR51SIGN_ERROR_INVALID_REGION_SIZE;
         }
 
-        rv = intf->read(
-            ctx, d_offset + offsetof(struct image_descriptor, image_regions),
-            region_count * sizeof(struct image_region),
-            (uint8_t*)&image_regions->image_regions);
+        rv = intf->read(ctx, d_offset + sizeof(struct image_descriptor),
+                        region_count * sizeof(struct image_region),
+                        (uint8_t*)&image_regions->image_regions);
 
         image_regions->region_count = region_count;
 
@@ -338,7 +338,7 @@ extern "C"
 
             CPRINTS(ctx,
                     "validate_payload_regions: region #%d \"%s\" (%x - %x)", i,
-                    region->region_name, region->region_offset,
+                    (const char*)region->region_name, region->region_offset,
                     region->region_offset + region->region_size);
             if ((region->region_offset % IMAGE_REGION_ALIGNMENT) != 0 ||
                 (region->region_size % IMAGE_REGION_ALIGNMENT) != 0)
@@ -435,7 +435,7 @@ extern "C"
                                  hash_start);
                 }
                 CPRINTS("validate_payload_regions: hashing %s (%x - %x)",
-                        region->region_name, hash_start,
+                        (const char*)region->region_name, hash_start,
                         hash_start + hash_size);
                 // Read the image_region array.
                 rv = read_and_hash_update(ctx, intf, hash_start, hash_size);
