@@ -34,8 +34,12 @@ if get_option('tests').auto()
   tests_str = 'auto'
 endif
 
-subproject('acpi-power-state-daemon')
-subproject('ncsid', default_options: 'tests=' + tests_str)
-subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)
-subproject('nemora-postd')
-subproject('libcr51sign')
+# The ordering in this list intentionally lists dependencies higher than
+# dependents to guarantee their tests are enabled
+if not meson.is_subproject()
+  subproject('acpi-power-state-daemon')
+  subproject('ncsid', default_options: 'tests=' + tests_str)
+  subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)
+  subproject('nemora-postd')
+  subproject('libcr51sign')
+endif
