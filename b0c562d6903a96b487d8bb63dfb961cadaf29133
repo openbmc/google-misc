@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9e84145_54973a24",
+        "filename": "subprojects/libcr51sign/src/libcr51sign.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-01T23:57:37Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 860,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 6
+      },
+      "revId": "b0c562d6903a96b487d8bb63dfb961cadaf29133",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089c0351_9091b09f",
+        "filename": "subprojects/libcr51sign/src/meson.build",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-01T23:57:37Z",
+      "side": 1,
+      "message": "um, I don\u0027t know about this one.\n\nWe need this for the image_regions to get the regions types.",
+      "revId": "b0c562d6903a96b487d8bb63dfb961cadaf29133",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
