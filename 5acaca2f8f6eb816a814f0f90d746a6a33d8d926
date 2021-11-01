@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "035198d5_1f1df0fa",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-11-01T23:46:11Z",
+      "side": 1,
+      "message": "noticed that this is different than before - warning_level\u003d2 -\u003e 3 and c18 instead of c++20 \n\nIs this intended?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "5acaca2f8f6eb816a814f0f90d746a6a33d8d926",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
