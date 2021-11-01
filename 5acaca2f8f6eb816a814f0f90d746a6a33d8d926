@@ -22,6 +22,30 @@
       "revId": "5acaca2f8f6eb816a814f0f90d746a6a33d8d926",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8abff6_98575a3d",
+        "filename": "subprojects/libcr51sign/meson.build",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-01T23:54:40Z",
+      "side": 1,
+      "message": "I think this is fine, since werror is still false. I forgot why I we needed to down level before.",
+      "parentUuid": "035198d5_1f1df0fa",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "5acaca2f8f6eb816a814f0f90d746a6a33d8d926",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
