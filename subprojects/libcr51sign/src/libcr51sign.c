@@ -185,8 +185,6 @@ extern "C"
             read_len = SIGNATURE_OFFSET
         };
         uint8_t buffer[read_len];
-        // "modulus" & "signature" will not be indexed.
-        struct signature_rsa4096_pkcs15* sig_data = (void*)&buffer;
         int rv;
         rv = intf->read(ctx, signature_struct_offset, read_len, buffer);
         if (rv != LIBCR51SIGN_SUCCESS)
@@ -195,7 +193,7 @@ extern "C"
                     "validate_transition: failed to read signature struct");
             return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
         }
-        if (sig_data->signature_magic != SIGNATURE_MAGIC)
+        if (*(uint32_t*)buffer != SIGNATURE_MAGIC)
         {
             CPRINTS(ctx, "validate_transition: bad signature magic");
             return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
