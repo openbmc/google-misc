@@ -81,6 +81,24 @@
       "revId": "b0c562d6903a96b487d8bb63dfb961cadaf29133",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5241ab1_f717c4a2",
+        "filename": "subprojects/libcr51sign/src/meson.build",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-02T05:47:46Z",
+      "side": 1,
+      "message": "oh, dang.\n\nThis will remove `image_regions` in\n\nhttps://github.com/openbmc/google-misc/blob/df800488c87dd28b7b6fda3fb6cb860a4f173776/subprojects/libcr51sign/cr51_image_descriptor.h#L229\n\n----\n\nActually, nevermind. I added the new method to get the image regions in https://github.com/openbmc/google-misc/blob/df800488c87dd28b7b6fda3fb6cb860a4f173776/subprojects/libcr51sign/libcr51sign.c#L848-L865.\n\nWe are fine. I don\u0027t think we are using anyway.",
+      "parentUuid": "93dc3414_dbb24353",
+      "revId": "b0c562d6903a96b487d8bb63dfb961cadaf29133",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
