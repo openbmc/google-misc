@@ -46,6 +46,30 @@
       "revId": "1716bfebfca73372294954350b8545a044895e11",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d377ccf8_6e21d8bd",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-11-03T09:05:22Z",
+      "side": 1,
+      "message": "You could probably just look up the hash again.",
+      "parentUuid": "fa21467c_31c498fc",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 79
+      },
+      "revId": "1716bfebfca73372294954350b8545a044895e11",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
