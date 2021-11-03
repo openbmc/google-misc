@@ -16,9 +16,13 @@ libcr51sign_deps = [
   dependency('libcrypto'),
 ]
 
+libcr51sign_cflags = [
+  '-DOMIT_VARIABLE_ARRAYS',
+]
+
 libcr51sign_pre = declare_dependency(
   include_directories: libcr51sign_includes,
-  compile_args: '-DOMIT_VARIABLE_ARRAYS',
+  compile_args: libcr51sign_cflags,
   dependencies: libcr51sign_deps)
 
 libcr51sign_lib = library(
@@ -46,4 +50,5 @@ import('pkgconfig').generate(
   name: 'libcr51sign',
   description: 'CR51 signing verification utilities',
   requires: libcr51sign_reqs,
+  extra_cflags: libcr51sign_cflags,
   version: meson.project_version())
