@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88ac3371_3e4cb41d",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-03T18:51:52Z",
+      "side": 1,
+      "message": "I think the validation method does nto hash the descriptor. It hashes the different image regions. Maybe it includes the descriptor also.\n\nIt is in created in https://github.com/openbmc/google-misc/blob/12e6ad0db531bbdc0b134742798842a25cc929aa/subprojects/libcr51sign/src/libcr51sign.c#L446",
+      "parentUuid": "26caabda_0786887c",
+      "revId": "2503dfb5c80109237d739519611fb1b6a1e3d41e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f491385_465e5ffd",
         "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
         "patchSetId": 26
@@ -30,6 +48,24 @@
       "writtenOn": "2021-11-03T09:05:22Z",
       "side": 1,
       "message": "Why don\u0027t both of these functions just take the file buffer? Then you don\u0027t need to copy it a second time into the class.",
+      "revId": "2503dfb5c80109237d739519611fb1b6a1e3d41e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3389382a_54bcebfe",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-03T18:51:52Z",
+      "side": 1,
+      "message": "I guess we don\u0027t need it. My thinking is that we read once and let the class manage the different commands. However, that might be kind of confusing.\n\nMight be easier for the user to manage. I\u0027ll change it.",
+      "parentUuid": "9f491385_465e5ffd",
       "revId": "2503dfb5c80109237d739519611fb1b6a1e3d41e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4c46c817_16db02cd",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-03T18:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "149fd633_b7503346",
+      "revId": "2503dfb5c80109237d739519611fb1b6a1e3d41e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1539279a_768b0a42",
         "filename": "subprojects/libcr51sign/cr51sign_validator.h",
         "patchSetId": 26
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "99eafca6_839170b7",
+        "filename": "subprojects/libcr51sign/cr51sign_validator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-03T18:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1539279a_768b0a42",
+      "revId": "2503dfb5c80109237d739519611fb1b6a1e3d41e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fba933b0_ee586208",
         "filename": "subprojects/libcr51sign/cr51sign_validator/mock.hpp",
         "patchSetId": 26
@@ -84,6 +156,24 @@
       "revId": "2503dfb5c80109237d739519611fb1b6a1e3d41e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2084f9_856862db",
+        "filename": "subprojects/libcr51sign/cr51sign_validator/mock.hpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-03T18:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fba933b0_ee586208",
+      "revId": "2503dfb5c80109237d739519611fb1b6a1e3d41e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
