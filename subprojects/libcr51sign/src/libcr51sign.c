@@ -209,7 +209,7 @@ extern "C"
             return LIBCR51SIGN_ERROR_INVALID_IMAGE_FAMILY;
         }
 
-        if (!intf->is_production_mode)
+        if (intf->is_production_mode == NULL)
         {
             CPRINTS(ctx, "validate_transition: missing is_production_mode");
             return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
@@ -219,11 +219,10 @@ extern "C"
         {
             CPRINTS(ctx, "validate_transition: checking exemption allowlist");
 
-            if (!intf->prod_to_dev_downgrade_allowed)
-            {
-                return LIBCR51SIGN_SUCCESS;
-            }
-            else if (!intf->prod_to_dev_downgrade_allowed())
+            // If function is NULL or if the function call return false, return
+            // error
+            if (intf->prod_to_dev_downgrade_allowed == NULL ||
+                !intf->prod_to_dev_downgrade_allowed())
             {
                 CPRINTS(ctx, "validate_transition: illegal image type");
                 return LIBCR51SIGN_ERROR_DEV_DOWNGRADE_DISALLOWED;
