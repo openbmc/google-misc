@@ -77,22 +77,15 @@ normalize_mac = executable(
 install_data(
   'ncsid_udhcpc4.script',
   'ncsid_udhcpc6.script',
+  'update_ra_gw.sh',
+  'update_ra_neighbor.sh',
+  'update_static_neighbors.sh',
   install_mode: 'rwxr-xr-x',
   install_dir: get_option('libexecdir'))
 
 install_data(
   'ncsid_lib.sh',
   install_mode: 'rw-r--r--',
-  install_dir: get_option('libexecdir'))
-
-install_data(
-  'update_ra_neighbor.sh',
-  install_mode: 'rwxr-xr-x',
-  install_dir: get_option('libexecdir'))
-
-install_data(
-  'update_static_neighbors.sh',
-  install_mode: 'rwxr-xr-x',
   install_dir: get_option('libexecdir'))
 
 systemd = dependency('systemd')
@@ -104,6 +97,13 @@ configure_file(
   configuration: {'BIN': libexecdir / 'ncsid'},
   input: 'ncsid@.service.in',
   output: 'ncsid@.service',
+  install_mode: 'rw-r--r--',
+  install_dir: systemunitdir)
+
+configure_file(
+  configuration: {'BIN': libexecdir / 'update_ra_gw.sh'},
+  input: 'update-ra-gw@.service.in',
+  output: 'update-ra-gw@.service',
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
 
