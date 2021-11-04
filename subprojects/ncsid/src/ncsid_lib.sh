@@ -449,5 +449,7 @@ DiscoverRouter6() {
 
   local ip="$(echo "$output" | grep 'from' | awk '{print $2}')"
   local mac="$(echo "$output" | grep 'Source link-layer' | ParseMACFromLine)"
-  printf '{"router_ip":"%s","router_mac":"%s"}\n' "$ip" "$mac"
+  local staddr="$(echo "$output" | grep 'Stateful address conf.*Yes')"
+  printf '{"router_ip":"%s","router_mac":"%s","stateful_address":"%s"}\n' \
+    "$ip" "$mac" "$staddr"
 }
