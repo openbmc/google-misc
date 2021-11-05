@@ -349,7 +349,7 @@ UpdateIP() {
 
   local i
   for (( i=0; i<${#delete_objects[@]}; ++i )); do
-    DeleteObject "${delete_services[$i]}" "${delete_objects[$i]}" || return $?
+    DeleteObject "${delete_services[$i]}" "${delete_objects[$i]}" || true
   done
 
   if (( should_add == 0 )); then
@@ -414,7 +414,7 @@ UpdateNeighbor() {
 
   local i
   for (( i=0; i<${#delete_objects[@]}; ++i )); do
-    DeleteObject "${delete_services[$i]}" "${delete_objects[$i]}" || return $?
+    DeleteObject "${delete_services[$i]}" "${delete_objects[$i]}" || true
   done
 
   if (( should_add == 0 )); then
