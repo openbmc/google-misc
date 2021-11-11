@@ -16,6 +16,24 @@
       "revId": "cdf3f9f7dc6c5ac4ff71a63e46d32e71f487573f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71d286e3_e508e817",
+        "filename": "subprojects/libcr51sign/src/cr51sign_validator.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2021-11-11T17:26:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "dcee5450_d45bec66",
+      "revId": "cdf3f9f7dc6c5ac4ff71a63e46d32e71f487573f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
