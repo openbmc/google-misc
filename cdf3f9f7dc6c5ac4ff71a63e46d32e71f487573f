@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcee5450_d45bec66",
+        "filename": "subprojects/libcr51sign/src/cr51sign_validator.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-11-11T09:52:12Z",
+      "side": 1,
+      "message": "Would be nice for all of the error cases to produce exceptions, but that can be a follow up.",
+      "revId": "cdf3f9f7dc6c5ac4ff71a63e46d32e71f487573f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    }
+  ]
+}
