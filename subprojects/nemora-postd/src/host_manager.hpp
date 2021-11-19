@@ -16,8 +16,8 @@
 #include "nemora_types.hpp"
 
 #include <sdbusplus/bus.hpp>
+#include <sdbusplus/bus/match.hpp>
 #include <sdbusplus/message.hpp>
-#include <sdbusplus/server.hpp>
 
 #include <mutex>
 #include <queue>
@@ -41,7 +41,7 @@ class HostManager
      *
      * - returns: error code or 0 for success
      */
-    int DbusHandleSignal(sdbusplus::message::message& msg);
+    int DbusHandleSignal(sdbusplus::message_t& msg);
 
     /**
      * Helper to construct match string for callback registration for POST
@@ -72,8 +72,8 @@ class HostManager
     std::vector<uint64_t> postcodes_;
     std::mutex postcodes_lock_;
 
-    sdbusplus::bus::bus bus_;
-    sdbusplus::server::match::match signal_;
+    sdbusplus::bus_t bus_;
+    sdbusplus::bus::match_t signal_;
     std::unique_ptr<std::thread> post_poller_;
     bool post_poller_enabled_;
 };
