@@ -22,6 +22,7 @@
 #include <mutex>
 #include <queue>
 #include <string>
+#include <thread>
 #include <unordered_map>
 #include <vector>
 
