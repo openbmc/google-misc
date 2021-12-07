@@ -61,6 +61,14 @@ message BmcStringTable {
   repeated StringEntry entries = 10;
 }
 
+message HostBootTimeMetric {
+  float bios_boot_time = 1;
+  float linuxboot_kernel_boot_time = 2;
+  float linuxboot_userspace_boot_time = 3;
+  float linuxboot_netboot_boot_time = 4;
+  float linuxboot_dhcp_boot_time = 5;
+}
+
 message BmcMetricSnapshot {
   BmcStringTable string_table = 1;
   BmcMemoryMetric memory_metric = 2;
@@ -68,4 +76,5 @@ message BmcMetricSnapshot {
   BmcDiskSpaceMetric storage_space_metric = 4;
   BmcProcStatMetric procstat_metric = 5;
   BmcFdStatMetric fdstat_metric = 6;
+  HostBootTimeMetric host_boot_time_metric = 7;
 }

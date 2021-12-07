@@ -31,6 +31,7 @@ deps = [
   dependency('phosphor-ipmi-blobs'),
   dependency('protobuf'),
   dependency('sdbusplus'),
+  dependency('nlohmann-json'),
 ]
 
 proto = custom_target(

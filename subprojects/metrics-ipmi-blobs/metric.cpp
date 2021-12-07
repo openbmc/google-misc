@@ -21,7 +21,7 @@
 #include <sys/statvfs.h>
 
 #include <phosphor-logging/log.hpp>
-
+#include <nlohmann/json.hpp>
 #include <cstdint>
 #include <filesystem>
 #include <sstream>
@@ -396,6 +396,73 @@ void BmcHealthSnapshot::doWork()
         *(st.add_entries()) = entry;
     }
     *(snapshot.mutable_string_table()) = st;
+
+    // Host boot time
+    bmcmetrics::metricproto::HostBootTimeMetric hbt;
+    // Component: Linuxboot
+    // Please refer to https://github.com/openbmc/google-ipmi-sys for the definition of this json
+    /*
+        |0x00|Linuxboot kernel
+        |0x01|Linuxboot userspace
+        |0x02|Linuxboot netboot
+        |0x03|Linuxboot DHCP
+    */
+    static constexpr auto LINUXBOOT_LOG = "/run/linuxboot_boot_time.json";
+    nlohmann::json j;
+    std::ifstream fin(LINUXBOOT_LOG);
+    if (fin.good()) {
+        fin >> j;
+        fin.close();
+        // Parse Linuxboot boot time
+        if (j.contains("0")) {
+            hbt.set_linuxboot_kernel_boot_time(static_cast<double>(j["0"]) / 1e6);
+        }
+        if (j.contains("1")) {
+            hbt.set_linuxboot_userspace_boot_time(static_cast<double>(j["1"]) / 1e6);
+        }
+        if (j.contains("2")) {
+            hbt.set_linuxboot_netboot_boot_time(static_cast<double>(j["2"]) / 1e6);
+        }
+        if (j.contains("3")) {
+            hbt.set_linuxboot_dhcp_boot_time(static_cast<double>(j["3"]) / 1e6);
+        }
+    } else {
+        log<level::ERR>("Can't open linuxboot log file under /run/");
+    }
+    // clang-format off
+    // Component: BIOS
+    // Currently we calculate the host BIOS boot time by this:
+    // BIOS boot time = (The time we received linuxboot userspace duration) -
+    //                  (linuxboot kernel duration) -
+    //                  (linuxboot userspace duration) -
+    //                  (The time we received first postcode)
+    // clang-format on
+    if (j.contains("0") && j.contains("1") && j.contains("1_timestamp")) {
+        // We rely on `phosphor-post-code-manager` to get the timestamp of the first postcode.
+        static constexpr auto POSTCODE_SERVICE = "xyz.openbmc_project.State.Boot.PostCode0";
+        static constexpr auto POSTCODE_PATH = "/xyz/openbmc_project/State/Boot/PostCode0";
+        static constexpr auto POSTCODE_INTERFACE = "xyz.openbmc_project.State.Boot.PostCode";
+
+        auto b = sdbusplus::bus::new_default_system();
+        auto m = b.new_method_call(POSTCODE_SERVICE, POSTCODE_PATH, POSTCODE_INTERFACE, "GetPostCodesWithTimeStamp");
+        m.append(static_cast<uint16_t>(1));
+
+        try {
+            auto reply = b.call(m);
+            // a{t(tay)}
+            std::vector<std::pair<std::uint64_t, std::pair<std::uint64_t, std::vector<int8_t>>>> postcode;
+            reply.read(postcode);
+            if (!postcode.empty()) {
+                hbt.set_bios_boot_time(j["1_timestamp"] - j["0"] - j["1"] - postcode[0].first);
+            } else {
+                log<level::ERR>("Postcode manager didn't store any postcode yet.");
+            }
+        }
+        catch (const sdbusplus::exception::SdBusError& ex) {
+            log<level::ERR>("Dbus call failed");
+        }
+    }
+    *(snapshot.mutable_host_boot_time_metric()) = st;
 
     // Save to buffer
     serializeSnapshotToArray(snapshot);
