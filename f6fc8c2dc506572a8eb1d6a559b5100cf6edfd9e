@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163595d5_c1ff0169",
+        "filename": "subprojects/ncsid/src/ncsi_state_machine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-12-10T17:40:29Z",
+      "side": 1,
+      "message": "nit: probably dropped a period here to start a new sentence?",
+      "range": {
+        "startLine": 38,
+        "startChar": 77,
+        "endLine": 39,
+        "endChar": 4
+      },
+      "revId": "f6fc8c2dc506572a8eb1d6a559b5100cf6edfd9e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a109b4_3c2fea9f",
+        "filename": "subprojects/ncsid/src/ncsi_state_machine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-12-10T17:40:29Z",
+      "side": 1,
+      "message": "If these are only used in the do_log function, should they be declared within the function?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 29
+      },
+      "revId": "f6fc8c2dc506572a8eb1d6a559b5100cf6edfd9e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9996f5c5_250ab049",
+        "filename": "subprojects/ncsid/src/ncsi_state_machine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2021-12-10T17:40:29Z",
+      "side": 1,
+      "message": "question: would this be ok during the first execution when last_line_time is not set? Would it always return true (as we expect it to?) when it\u0027s 1 hour + (uninitialized time) \u003c now",
+      "range": {
+        "startLine": 49,
+        "startChar": 29,
+        "endLine": 49,
+        "endChar": 65
+      },
+      "revId": "f6fc8c2dc506572a8eb1d6a559b5100cf6edfd9e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
