@@ -19,6 +19,8 @@
 #include "platforms/nemora/portable/ncsi_fsm.h"
 
 #include <arpa/inet.h>
+#include <fmt/format.h>
+#include <fmt/printf.h>
 #include <netinet/ether.h>
 #include <unistd.h>
 
@@ -27,11 +29,41 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <string>
 #include <thread>
+#include <utility>
 
 #define ETHER_NCSI 0x88f8
 
-#define CPRINTF(...) fprintf(stderr, __VA_ARGS__)
+// Only log messages a single time and drop all duplicates to prevent log spam.
+// Having duplicate messages printed has historically not been helpful in
+// debugging issues with this program.
+static void do_log(std::string&& line)
+{
+    constexpr auto line_dup_time = std::chrono::hours(1);
+    static std::chrono::steady_clock::time_point last_line_time;
+    static size_t line_rep_count = 0;
+    static std::string last_line;
+
+    auto now = std::chrono::steady_clock::now();
+    if (line != last_line || line_dup_time + last_line_time < now)
+    {
+        if (line_rep_count > 0)
+        {
+            fmt::print(stderr, "... Repeated {} times ...\n", line_rep_count);
+        }
+        fmt::print(stderr, "{}", line);
+        last_line = std::move(line);
+        last_line_time = now;
+        line_rep_count = 0;
+    }
+    else
+    {
+        line_rep_count++;
+    }
+}
+
+#define CPRINTF(...) do_log(fmt::sprintf(__VA_ARGS__))
 
 #ifdef NCSID_VERBOSE_LOGGING
 #define DEBUG_PRINTF printf
@@ -97,6 +129,11 @@ StateMachine::StateMachine()
     network_debug_.ncsi.pending_restart = true;
     std::memcpy(network_debug_.ncsi.test.ping.tx, echo_pattern,
                 sizeof(echo_pattern));
+}
+
+StateMachine::~StateMachine()
+{
+    CPRINTF("[NCSI stopping]\n");
 }
 
 size_t StateMachine::poll_l2_config()

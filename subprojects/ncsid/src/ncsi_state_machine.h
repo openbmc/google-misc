@@ -44,6 +44,7 @@ class StateMachine
 {
   public:
     StateMachine();
+    ~StateMachine();
 
     void set_sockio(net::SockIO* sock_io);
 
