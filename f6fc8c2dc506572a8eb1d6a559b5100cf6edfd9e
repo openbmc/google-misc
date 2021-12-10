@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61e2c544_b5a82ff9",
+        "filename": "subprojects/ncsid/src/ncsi_state_machine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-12-10T23:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163595d5_c1ff0169",
+      "range": {
+        "startLine": 38,
+        "startChar": 77,
+        "endLine": 39,
+        "endChar": 4
+      },
+      "revId": "f6fc8c2dc506572a8eb1d6a559b5100cf6edfd9e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86a109b4_3c2fea9f",
         "filename": "subprojects/ncsid/src/ncsi_state_machine.cpp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1eaa43ad_5b1361d1",
+        "filename": "subprojects/ncsid/src/ncsi_state_machine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-12-10T23:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86a109b4_3c2fea9f",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 29
+      },
+      "revId": "f6fc8c2dc506572a8eb1d6a559b5100cf6edfd9e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9996f5c5_250ab049",
         "filename": "subprojects/ncsid/src/ncsi_state_machine.cpp",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "f6fc8c2dc506572a8eb1d6a559b5100cf6edfd9e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e5f470_496fe9ea",
+        "filename": "subprojects/ncsid/src/ncsi_state_machine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2021-12-10T23:29:39Z",
+      "side": 1,
+      "message": "Yeah, it won\u0027t even be compared the first time because `last_line` will be empty and we never want to log empty lines.",
+      "parentUuid": "9996f5c5_250ab049",
+      "range": {
+        "startLine": 49,
+        "startChar": 29,
+        "endLine": 49,
+        "endChar": 65
+      },
+      "revId": "f6fc8c2dc506572a8eb1d6a559b5100cf6edfd9e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
