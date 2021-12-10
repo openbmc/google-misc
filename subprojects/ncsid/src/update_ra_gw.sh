@@ -19,10 +19,12 @@ UpdateRAGW() {
   local netdev="$1"
 
   local reqs=5
-  while true; do
+  while ! ShouldTerm; do
+    local st=0
     local disc
-    if ! disc="$(RunInterruptible DiscoverRouter6 "$1" "$reqs" 360000)"; then
-      echo "Failed to discover router" >&2
+    disc="$(RunInterruptible DiscoverRouter6 "$1" "$reqs" 360000)" || st=$?
+    if (( st != 0 )); then
+      echo "Failed to discover router: $st" >&2
       continue
     fi
     # We don't want to send any requests after the initial finding
