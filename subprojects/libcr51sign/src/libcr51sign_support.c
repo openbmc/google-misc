@@ -122,11 +122,12 @@ extern "C"
         // By default returns error.
         int rv = LIBCR51SIGN_ERROR_INVALID_ARGUMENT;
 
-        CPRINTS(ctx, "\n sig_len %zu sig: ", sig_len);
+        CPRINTS(ctx, "sig_len %zu sig: ", sig_len);
         for (size_t i = 0; i < sig_len; i++)
         {
             CPRINTS(ctx, "%x", sig[i]);
         }
+        CPRINTS(ctx, "\n");
 
         struct libcr51sign_ctx* lctx = (struct libcr51sign_ctx*)ctx;
         FILE* fp = fopen(lctx->keyring, "r");
@@ -135,14 +136,14 @@ extern "C"
         BIO* bio = BIO_new(BIO_s_mem());
         if (!fp)
         {
-            CPRINTS(ctx, "\n fopen failed: ");
+            CPRINTS(ctx, "fopen failed\n");
             goto clean_up;
         }
 
         pkey = PEM_read_PUBKEY(fp, 0, 0, 0);
         if (!pkey)
         {
-            CPRINTS(ctx, "\n Read public key failed: ");
+            CPRINTS(ctx, "Read public key failed\n");
             goto clean_up;
         }
 
@@ -154,14 +155,14 @@ extern "C"
         pub_rsa = RSAPublicKey_dup(rsa);
         if (!RSA_print(bio, pub_rsa, 2))
         {
-            CPRINTS(ctx, "\n RSA print failed ");
+            CPRINTS(ctx, "RSA print failed\n");
         }
         if (!pub_rsa)
         {
-            CPRINTS(ctx, "\n no pub rsa: ");
+            CPRINTS(ctx, "no pub RSA\n");
             goto clean_up;
         }
-        CPRINTS(ctx, "\n public rsa \n");
+        CPRINTS(ctx, "public RSA\n");
         char buffer[1024];
         while (BIO_read(bio, buffer, sizeof(buffer) - 1) > 0)
         {
@@ -171,7 +172,7 @@ extern "C"
         rv = get_hash_type_from_signature(sig_scheme, &hash_type);
         if (rv != LIBCR51SIGN_SUCCESS)
         {
-            CPRINTS(ctx, "\n Invalid hash_type! \n");
+            CPRINTS(ctx, "Invalid hash_type!\n");
             goto clean_up;
         }
         int hash_nid = -1;
@@ -193,25 +194,28 @@ extern "C"
         // OpenSSL RSA_verify returns 1 on success and 0 on failure
         if (!ret)
         {
-            CPRINTS(ctx, "\n OPENSSL_ERROR: %s \n",
+            CPRINTS(ctx, "OPENSSL_ERROR: %s\n",
                     ERR_error_string(ERR_get_error(), NULL));
             rv = LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
             goto clean_up;
         }
         rv = LIBCR51SIGN_SUCCESS;
-        CPRINTS(ctx, "\n sig: ");
+        CPRINTS(ctx, "sig: ");
         for (size_t i = 0; i < sig_len; i++)
         {
             CPRINTS(ctx, "%x", sig[i]);
         }
+        CPRINTS(ctx, "\n");
 
-        CPRINTS(ctx, "\n data: ");
+        CPRINTS(ctx, "data: ");
         for (size_t i = 0; i < data_len; i++)
         {
             CPRINTS(ctx, "%x", data[i]);
         }
+        CPRINTS(ctx, "\n");
+
         const unsigned rsa_size = RSA_size(pub_rsa);
-        CPRINTS(ctx, "\n rsa size %d sig_len %d", rsa_size, (uint32_t)sig_len);
+        CPRINTS(ctx, "rsa size %d sig_len %d\n", rsa_size, (uint32_t)sig_len);
 
     clean_up:
         if (fp)

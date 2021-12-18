@@ -167,6 +167,9 @@ extern "C"
         //         false: if in any non-production mode
 
         bool (*is_production_mode)();
+
+        // @func returns true if the descriptor image size is valid.
+        bool (*image_size_valid)(size_t);
     };
 
     struct libcr51sign_validated_regions
