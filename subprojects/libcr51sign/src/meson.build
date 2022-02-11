@@ -30,6 +30,10 @@ libcr51sign_lib = library(
   'libcr51sign.c',
   'libcr51sign_support.c',
   dependencies: libcr51sign_pre,
+  c_args: [
+    # Temporarily ignore until updates land
+    '-Wno-error=deprecated-declarations',
+  ],
   implicit_include_directories: false,
   version: meson.project_version(),
   install: true)
