@@ -364,10 +364,11 @@ UpdateIP() {
 # set to the current value.
 UpdateGateway() {
   local service="$1"
-  local ip="$2"
+  local netdev="$2"
+  local ip="$3"
 
-  local object='/xyz/openbmc_project/network/config'
-  local interface='xyz.openbmc_project.Network.SystemConfiguration'
+  local object="$(EthObjRoot "$netdev")"
+  local interface='xyz.openbmc_project.Network.EthernetInterface'
   local property='DefaultGateway'
   if ! IsIPv4 "$ip"; then
     property='DefaultGateway6'
