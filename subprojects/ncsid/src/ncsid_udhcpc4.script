@@ -50,7 +50,7 @@ HandleDHCP4() {
     local service='xyz.openbmc_project.Network'
     local rc=0
     UpdateIP "$service" "$interface" "$ip" "$mask" && \
-      UpdateGateway "$service" "$router" && \
+      UpdateGateway "$service" "$interface" "$router" && \
       UpdateNeighbor "$service" "$interface" "$router" "$router_mac" || \
       rc=$?
     UnsuppressTerm
