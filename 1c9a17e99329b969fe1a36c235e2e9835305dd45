@@ -1,0 +1,7 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+2: Brandon Kim <brandonkim@google.com>
+Submitted-by: William A. Kennington III <wak@google.com>
+Submitted-at: Sat, 12 Feb 2022 01:11:45 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/google-misc/+/51164
+Project: openbmc/google-misc
+Branch: refs/heads/master
