@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7538b55b_51755842",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2022-02-12T00:50:34Z",
+      "side": 1,
+      "message": "Would it make sense to explain in comments for the port / socket choice here?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "a6ba7b9d77bf862eaa897b5ac3ad8b5c4dba4dd5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
