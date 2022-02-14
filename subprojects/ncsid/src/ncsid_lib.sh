@@ -454,3 +454,14 @@ DiscoverRouter6() {
   printf '{"router_ip":"%s","router_mac":"%s","stateful_address":"%s"}\n' \
     "$ip" "$mac" "$staddr"
 }
+
+# Sets the network configuration of an interface to be static
+SetStatic() {
+  local service="$1"
+  local netdev="$2"
+
+  echo "Disabling DHCP" >&2
+  busctl set-property "$service" "$(EthObjRoot "$netdev")" \
+    xyz.openbmc_project.Network.EthernetInterface DHCPEnabled \
+    s xyz.openbmc_project.Network.EthernetInterface.DHCPConf.none
+}

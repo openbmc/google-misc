@@ -28,8 +28,10 @@ set_rtr() {
   (( lifetime > 0 )) || return
 
   echo "Setting default router: $rtr at $mac" >&2
-  UpdateGateway xyz.openbmc_project.Network "$NCSI_IF" "$rtr" || return
-  UpdateNeighbor xyz.openbmc_project.Network "$NCSI_IF" "$rtr" "$mac" || return
+  local svc=xyz.openbmc_project.Network
+  SetStatic "$svc" "$NCSI_IF" || return
+  UpdateGateway "$svc" "$NCSI_IF" "$rtr" || return
+  UpdateNeighbor "$svc" "$NCSI_IF" "$rtr" "$mac" || return
 
   retries=-1
   old_mac="$mac"

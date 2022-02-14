@@ -22,7 +22,8 @@ HandleDHCP6() {
     SuppressTerm
     local service='xyz.openbmc_project.Network'
     local rc=0
-    UpdateIP "$service" "$interface" "$ipv6" '128' && \
+    SetStatic "$service" "$interface" && \
+      UpdateIP "$service" "$interface" "$ipv6" '128' && \
       UpdateGateway "$service" "$interface" "$router_ip" && \
       UpdateNeighbor "$service" "$interface" "$router_ip" "$router_mac" || \
       rc=$?
