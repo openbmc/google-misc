@@ -46,6 +46,30 @@
       },
       "revId": "a7af2e087e642083af7efe637e163a1408306ecd",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b884d83_758557bd",
+        "filename": "subprojects/ncsid/src/ncsid_lib.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2022-02-16T20:19:12Z",
+      "side": 1,
+      "message": "We always use a \"static\" configuration in networkd even though we do still have our own DHCP client running. We don\u0027t want to use the built-in systemd-networkd version of DHCP basically.",
+      "parentUuid": "3193ce02_9aac7891",
+      "range": {
+        "startLine": 458,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 1
+      },
+      "revId": "a7af2e087e642083af7efe637e163a1408306ecd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
