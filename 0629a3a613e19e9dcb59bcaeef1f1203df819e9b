@@ -41,6 +41,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ef32cbb_58d730c6",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2022-04-01T16:27:16Z",
+      "side": 1,
+      "message": "It won\u0027t because int\u0027s are always 32bit in c world even for 64bit, but I can change it to be more explicit.",
+      "parentUuid": "b1f5653e_a4b01f79",
+      "range": {
+        "startLine": 282,
+        "startChar": 20,
+        "endLine": 282,
+        "endChar": 21
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecaeda7d_9fef3396",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-04-01T14:39:53Z",
       "side": 1,
       "message": "Per comment below, this is doing a blocking call in an event driven reactor, which in the past, as a design pattern, can deadlock daemons external facing interfaces, is this something we should be using asio for?",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 29
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46a40700_d9bde492",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2022-04-01T16:27:16Z",
+      "side": 1,
+      "message": "The reactor isn\u0027t running yet, and it\u0027s a fixed time duration of calls that only happen during startup. I wasn\u0027t worried about this as making everything async would also require re-entrancy in the DeviceManager. We don\u0027t enumerate so many USB devices that this would ever be a concern anyway as objmgr will only return the USB objects.",
+      "parentUuid": "ecaeda7d_9fef3396",
       "range": {
         "startLine": 283,
         "startChar": 0,
@@ -87,6 +135,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "098e5369_23cadc54",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2022-04-01T16:27:16Z",
+      "side": 1,
+      "message": "It doesn\u0027t really make a difference which bindings I use, I can make async calls / waitpid with sdevent already. I chose not to in order to avoid having to deal with re-entrant synchronization in the DeviceManager object above.",
+      "parentUuid": "6d73450d_1e0bd08a",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 51
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f0af1a4_540e7fbc",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-04-01T14:39:53Z",
       "side": 1,
       "message": "You need more than just interfaces added and interfaces removed to handle all the races properly for an interface being added.  NameOwnerChanged handling I think is missing?  I forget all the possible signals.\n\nAlso, you really should be using a more specific match here.  As written this will fire anytime anything gets added to the system, which is a bit wasteful of startup cycles, and if every daemon took that approach, we\u0027d slow the system considerably.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 61
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f8c4b41_7099e1f9",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2022-04-01T16:27:16Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually care about who owns an object, and properties changed could be handled but isn\u0027t currently needed.\n\nYou can\u0027t make an InterfacesAdded signal more specific to the interesting interfaces and it\u0027s not really that many events (I think on the order of a few thousand).",
+      "parentUuid": "1f0af1a4_540e7fbc",
       "range": {
         "startLine": 327,
         "startChar": 0,
