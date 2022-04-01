@@ -16,6 +16,98 @@
       "message": "This doesn\u0027t really seem google specific.  There are other systems that host a USB network interface.  Does this need a design doc?",
       "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1f5653e_a4b01f79",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-01T14:39:53Z",
+      "side": 1,
+      "message": "this will break on 64 bit systems.  Explicitly declare as an int32_t (either in a static cast or as its own lvalue variable)",
+      "range": {
+        "startLine": 282,
+        "startChar": 20,
+        "endLine": 282,
+        "endChar": 21
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecaeda7d_9fef3396",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-01T14:39:53Z",
+      "side": 1,
+      "message": "Per comment below, this is doing a blocking call in an event driven reactor, which in the past, as a design pattern, can deadlock daemons external facing interfaces, is this something we should be using asio for?",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 29
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d73450d_1e0bd08a",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-01T14:39:53Z",
+      "side": 1,
+      "message": "Is this something we should be using the asio bindings for?  It seems likely we\u0027ll want to do non-trivial non blocking calls in the future, especially considering this is doing IO that could block.",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 51
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f0af1a4_540e7fbc",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-01T14:39:53Z",
+      "side": 1,
+      "message": "You need more than just interfaces added and interfaces removed to handle all the races properly for an interface being added.  NameOwnerChanged handling I think is missing?  I forget all the possible signals.\n\nAlso, you really should be using a more specific match here.  As written this will fire anytime anything gets added to the system, which is a bit wasteful of startup cycles, and if every daemon took that approach, we\u0027d slow the system considerably.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 61
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
