@@ -65,6 +65,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5ce1d85_f3a4a8ec",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-01T17:59:27Z",
+      "side": 1,
+      "message": "Ah, I guess that\u0027s a good point.  I swear we\u0027ve hit that in other contexts, but I must\u0027ve been thinking of stuff getting implicitly cast to size_t.\n\nACK",
+      "parentUuid": "7ef32cbb_58d730c6",
+      "range": {
+        "startLine": 282,
+        "startChar": 20,
+        "endLine": 282,
+        "endChar": 21
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecaeda7d_9fef3396",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "The reactor isn\u0027t running yet, and it\u0027s a fixed time duration of calls that only happen during startup. I wasn\u0027t worried about this as making everything async would also require re-entrancy in the DeviceManager. We don\u0027t enumerate so many USB devices that this would ever be a concern anyway as objmgr will only return the USB objects.",
       "parentUuid": "ecaeda7d_9fef3396",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 29
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daed0b45_113f3dc1",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-01T17:59:27Z",
+      "side": 1,
+      "message": "Sure, I buy that.",
+      "parentUuid": "46a40700_d9bde492",
       "range": {
         "startLine": 283,
         "startChar": 0,
@@ -159,6 +207,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b61e92ab_bd61a757",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-01T17:59:27Z",
+      "side": 1,
+      "message": "I guess we don\u0027t really expect there to ever be more than one device attached to a single bmc, maybe that\u0027s a little overkill.",
+      "parentUuid": "098e5369_23cadc54",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 51
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f0af1a4_540e7fbc",
@@ -196,6 +268,30 @@
       "side": 1,
       "message": "This doesn\u0027t actually care about who owns an object, and properties changed could be handled but isn\u0027t currently needed.\n\nYou can\u0027t make an InterfacesAdded signal more specific to the interesting interfaces and it\u0027s not really that many events (I think on the order of a few thousand).",
       "parentUuid": "1f0af1a4_540e7fbc",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 61
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17a8f38_892fb9eb",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-01T17:59:27Z",
+      "side": 1,
+      "message": "I\u0027m saying if the daemon you\u0027re relying on shuts down or crashes, InterfacesAdded doesn\u0027t always get sent out.  Maybe it\u0027s not important in this context, but it\u0027s been important in other contexts like dbus-sensors, which seemed similar.  It helps to debug crashes without a lot of debugging interfaces on the bmc.",
+      "parentUuid": "2f8c4b41_7099e1f9",
       "range": {
         "startLine": 327,
         "startChar": 0,
