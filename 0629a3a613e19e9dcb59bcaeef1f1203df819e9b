@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a0be688_6184e353",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2022-04-06T00:09:22Z",
+      "side": 1,
+      "message": "This daemon does assume some properties of the USB device that are google specific, and integrates with the google specific usb network setup code.\n\nWe could probably come to an agreement on a more flexible configuration, but right now this adequately extends dynamic configuration of google-usb-network and would allow us to drop in an \"openbmc\" version that operates similarly.",
+      "parentUuid": "d7f268ca_750ba470",
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1f5653e_a4b01f79",
@@ -292,6 +310,30 @@
       "side": 1,
       "message": "I\u0027m saying if the daemon you\u0027re relying on shuts down or crashes, InterfacesAdded doesn\u0027t always get sent out.  Maybe it\u0027s not important in this context, but it\u0027s been important in other contexts like dbus-sensors, which seemed similar.  It helps to debug crashes without a lot of debugging interfaces on the bmc.",
       "parentUuid": "2f8c4b41_7099e1f9",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 61
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8be5ff08_e5f2760c",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2022-04-06T00:09:22Z",
+      "side": 1,
+      "message": "I actually think in this case it\u0027s better to ignore daemon failures, as those would cause an outage in the USB link. When the daemon restarts or another conflicting config gets added, this daemon would replace it if needed.",
+      "parentUuid": "f17a8f38_892fb9eb",
       "range": {
         "startLine": 327,
         "startChar": 0,
