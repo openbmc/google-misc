@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8b5210f_86fe1dc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-06T01:00:05Z",
+      "side": 1,
+      "message": "Lets get a design doc written up, and sent to the other maintainers that have usb links on their BMCs.  Sure, there are some google-specific configuration bits, but those seem like a good design could abstract away into configure time options, and that\u0027s definitely something to discuss.",
+      "parentUuid": "4a0be688_6184e353",
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b1f5653e_a4b01f79",
         "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
         "patchSetId": 2
@@ -334,6 +352,30 @@
       "side": 1,
       "message": "I actually think in this case it\u0027s better to ignore daemon failures, as those would cause an outage in the USB link. When the daemon restarts or another conflicting config gets added, this daemon would replace it if needed.",
       "parentUuid": "f17a8f38_892fb9eb",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 61
+      },
+      "revId": "0629a3a613e19e9dcb59bcaeef1f1203df819e9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d7d521d_b72f3631",
+        "filename": "subprojects/usb-network/google-usb-dynamic.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2022-04-06T01:00:05Z",
+      "side": 1,
+      "message": "\u003e I actually think in this case it\u0027s better to ignore daemon failures, as those would cause an outage in the USB link. When the daemon restarts or another conflicting config gets added, this daemon would replace it if needed.\n\nIn other contexts the \"replace\" operation has caused conflicts (ie, you can\u0027t have two sensors of the same name), but maybe because this is a singleton its\u0027 different?",
+      "parentUuid": "8be5ff08_e5f2760c",
       "range": {
         "startLine": 327,
         "startChar": 0,
