@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a020b1a_c73121be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2022-04-26T05:42:28Z",
+      "side": 1,
+      "message": "Tested again and confirmed that mmap() can complete for many more times",
+      "revId": "288ad31dc6416c51f052632f0e9923343c24cad5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
