@@ -256,6 +256,7 @@ bool readMem(const uint32_t target, uint32_t& memResult)
     char* virtAddr = reinterpret_cast<char*>(mapBase) + offsetInPage;
     memResult = *(reinterpret_cast<uint32_t*>(virtAddr));
     close(fd);
+    munmap(mapBase, pageSize * 2);
     return true;
 }
 
