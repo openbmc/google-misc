@@ -20,10 +20,13 @@
 #include <unistd.h>
 
 #include <sdbusplus/bus.hpp>
+#include <stdplus/fd/create.hpp>
+#include <stdplus/fd/ops.hpp>
 #include <stdplus/util/string.hpp>
 
 #include <cstdio>
 #include <cstring>
+#include <filesystem>
 #include <utility>
 #include <variant>
 
@@ -132,6 +135,28 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
     auto networkd_call = new_networkd_call(&bus, false);
     std::variant<std::string> mac_value(format_mac(mac));
     networkd_call.append(mac_value);
+
+    try
+    {
+        auto netdir = fmt::format("/run/systemd/network/00-bmc-{}.network.d",
+                                  iface_name_);
+        std::filesystem::create_directories(netdir);
+        auto netfile = fmt::format("{}/60-ncsi-mac.conf", netdir);
+        auto fd = stdplus::fd::open(
+            netfile,
+            stdplus::fd::OpenFlags(stdplus::fd::OpenAccess::WriteOnly)
+                .set(stdplus::fd::OpenFlag::Create),
+            0644);
+        auto contents = fmt::format("[Link]\nMACAddress={}\n",
+                                    std::get<std::string>(mac_value));
+        stdplus::fd::writeExact(fd, contents);
+    }
+    catch (const std::exception& ex)
+    {
+        fmt::print(stderr, "Failed to set MAC Addr `{}` writing file: {}\n",
+                   std::get<std::string>(mac_value), ex.what());
+        return -1;
+    }
 
     try
     {
