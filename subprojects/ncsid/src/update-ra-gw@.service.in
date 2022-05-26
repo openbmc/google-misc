@@ -2,7 +2,6 @@
 Description=RA Gateway Updater
 Wants=mapper-wait@-xyz-openbmc_project-network-%i.service
 After=mapper-wait@-xyz-openbmc_project-network-%i.service
-BindsTo=ncsid@%i.service
 After=ncsid@%i.service
 StartLimitIntervalSec=1min
 StartLimitBurst=5
