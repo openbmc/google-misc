@@ -17,7 +17,7 @@
 HandleTerm() {
   GOT_TERM=1
   if ShouldTerm && (( ${#CHILD_PIDS[@]} > 0 )); then
-    kill "${!CHILD_PIDS[@]}"
+    kill -s TERM "${!CHILD_PIDS[@]}"
   fi
 }
 
@@ -91,6 +91,24 @@ WaitInterruptibleBg() {
     done
     return $rc
   fi
+}
+
+# Runs the provided commandline to completion, capturing stdout
+# into a variable
+CaptureInterruptible() {
+  local var="$1"
+  shift
+  if ShouldTerm; then
+    return 143
+  fi
+  coproc "$@" || return
+  local child_pid="$COPROC_PID"
+  CHILD_PIDS["$child_pid"]=1
+  exec {COPROC[1]}>&-
+  read -d $'\0' -ru "${COPROC[0]}" "$var" || true
+  wait "$child_pid" || true
+  unset CHILD_PIDS[$child_pid]
+  wait "$child_pid"
 }
 
 # Determines if an address could be a valid IPv4 address
@@ -441,7 +459,7 @@ DiscoverRouter6() {
   else
     args+=(-r "$retries")
   fi
-  output="$(RunInterruptible rdisc6 "${args[@]}")" || st=$?
+  CaptureInterruptible output rdisc6 "${args[@]}" || st=$?
   if (( st != 0 )); then
     echo "rdisc6 failed with: " >&2
     echo "$output" >&2

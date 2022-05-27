@@ -33,8 +33,10 @@ UpdateRA() {
     return 0
   fi
 
+  local st=0
   local disc
-  if ! disc="$(DiscoverRouter6 "$netdev" -1 360000 "$DefaultGateway6")"; then
+  CaptureInterruptible disc DiscoverRouter6 "$netdev" -1 360000 "$DefaultGateway6" || st=$?
+  if (( st != 0 )); then
     echo "Failed to discover router" >&2
     return 1
   fi
