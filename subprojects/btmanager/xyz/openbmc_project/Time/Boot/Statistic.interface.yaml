@@ -1,0 +1,23 @@
+description: >
+    Host reboot statistics.
+properties:
+    - name: InternalRebootCount
+      type: uint16
+      default: 0
+      description: >
+        The count of internal reboot during a power cycle.
+    - name: PowerCycleType
+      type: enum[self.PowerCycleType]
+      description: >
+        AC power cycle or DC power cycle.
+enumerations:
+    - name: PowerCycleType
+      description: >
+        AC power cycle or DC power cycle.
+      values:
+        - name: ACPowerCycle
+          description: >
+            Last power cycle is AC power.
+        - name: DCPowerCycle
+          description: >
+            Last power cycle is DC power.

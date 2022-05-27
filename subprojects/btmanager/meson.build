@@ -24,6 +24,21 @@ project(
   ],
 )
 
+btmanager_incs = include_directories('gen')
+
+sdbusplus_dep = dependency('sdbusplus', required : false)
+if not sdbusplus_dep.found()
+    sdbusplus_proj = subproject('sdbusplus')
+    sdbusplus_dep = sdbusplus_proj.get_variable('sdbusplus_dep')
+endif
+sdbusplusplus_prog = find_program('sdbus++', native: true)
+sdbuspp_gen_meson_prog = find_program('sdbus++-gen-meson', native: true)
+
+generated_sources = []
+generated_others = []
+subdir('gen')
+subdir('gen/xyz')
+
 subdir('src')
 subdir('service_files')
 

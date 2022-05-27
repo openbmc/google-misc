@@ -1,0 +1,75 @@
+description: >
+    Duration definition of each stage during host reboot process.
+properties:
+    - name: OSUserspaceShutdown
+      type: uint64
+      flags:
+        - const
+      description: >
+        Host OS is shutdowning all the systemd service and all the processes that are owned by userspace.
+    - name: OSKernelShutdown
+      type: uint64
+      flags:
+        - const
+      description: >
+        Host OS kernel is shutdowning all the processes and releasing all the resources that are owned by the kernel.
+    - name: BMCShutdown
+      type: uint64
+      flags:
+        - const
+      description: >
+        Some components’ fw needs to be updated by BMC after itself power off such as BIOS. And their update time will be included in the stage as well.
+    - name: BMC
+      type: uint64
+      flags:
+        - const
+      description: >
+        From BMC power on till BMC releases the host reset, including the BIOS verification time.
+    - name: BIOS
+      type: uint64
+      flags:
+        - const
+      description: >
+        Host BIOS initialization period.
+    - name: NerfKernel
+      type: uint64
+      flags:
+        - const
+      description: >
+        Host Nerf kernel initialization period.
+    - name: NerfUserspace
+      type: uint64
+      flags:
+        - const
+      description: >
+        Host Nerf userspace initialization period.
+    - name: OSKernel
+      type: uint64
+      flags:
+        - const
+      description: >
+        Host OS kernel initialization period.
+    - name: OSUserspace
+      type: uint64
+      flags:
+        - const
+      description: >
+        Host OS userspace initialization period.
+    - name: Unmeasured
+      type: uint64
+      flags:
+        - const
+      description: >
+        It doesn’t show on the diagram because It’s not a specific stage during a power cycle. It’s the sum of all the time frames that cannot be measured.
+    - name: Extra
+      type: array[struct[string,uint64]]
+      flags:
+        - const
+      description: >
+        Extra durations comes from the host.
+    - name: Total
+      type: uint64
+      flags:
+        - const
+      description: >
+        Total time for the whole power cycle process.

@@ -1,3 +1,7 @@
 [wrap-git]
 url = https://github.com/openbmc/sdbusplus
 revision = HEAD
+
+[provide]
+sdbusplus = sdbusplus_dep
+program_names = sdbus++, sdbus++-gen-meson

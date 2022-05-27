@@ -1,0 +1,6 @@
+- name: UnsupportedTimepoint
+  description: >
+      An unsupported stage was sent.
+- name: WrongOrder
+  description: >
+      Setting the timepoint in a wrong order.
