@@ -1,0 +1,11 @@
+[Unit]
+Description=Host boot time manager
+After=xyz.openbmc_project.Chassis.Control.Power.service
+
+[Service]
+Type=oneshot
+Restart=on-failure
+ExecStart=@BIN@
+
+[Install]
+WantedBy=multi-user.target
