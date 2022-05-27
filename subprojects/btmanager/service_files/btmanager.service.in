@@ -1,0 +1,6 @@
+[Unit]
+Description=Host boot time manager
+
+[Service]
+Restart=on-failure
+ExecStart=@BIN@
