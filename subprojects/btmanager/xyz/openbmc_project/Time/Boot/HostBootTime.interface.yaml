@@ -1,0 +1,50 @@
+description: >
+    Implement to manage host boot time.
+methods:
+    - name: Notify
+      description: >
+        Notifies BMC to label current monotonic time as <Timepoint> of a stage.
+      parameters:
+        - name: Timepoint
+          type: byte
+          description: >
+            Current timepoint code.
+      returns:
+        - name: Timestamp
+          type: uint64
+          description: >
+            The timestamp that BMC give to this stage.
+      errors:
+        - xyz.openbmc_project.Time.Boot.HostBootTime.Error.UnsupportedTimepoint
+        - xyz.openbmc_project.Time.Boot.HostBootTime.Error.WrongOrder
+    - name: SetDuration
+      description: >
+        Directly set duration to a stage.
+      parameters:
+        - name: Stage
+          type: string
+          description: >
+            Stage name.
+        - name: DurationMicrosecond
+          type: uint64
+          description: >
+            Duration in microsecond of this stage.
+      returns:
+        - name: State
+          type: enum[self.SetDurationStates]
+          description: >
+            The timestamp that BMC give to this stage.
+enumerations:
+    - name: SetDurationStates
+      description: >
+        Identifies if the SetDuration has encountered an error or not.
+      values:
+        - name: KeyDurationSet
+          description: >
+            Key duration is set successfully.
+        - name: ExtraDurationSet
+          description: >
+            Extra duration is set successfully.
+        - name: DurationNotSettable
+          description: >
+            Failed because this duration is not settable.
