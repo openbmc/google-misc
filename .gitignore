@@ -6,6 +6,7 @@ subprojects/*
 !subprojects/metrics-ipmi-blobs/
 !subprojects/ncsid/
 !subprojects/nemora-postd/
+!subprojects/btmanager/
 !subprojects/fmt.wrap
 !subprojects/googletest.wrap
 !subprojects/phosphor-dbus-interfaces.wrap
@@ -13,3 +14,4 @@ subprojects/*
 !subprojects/sdbusplus.wrap
 !subprojects/sdeventplus.wrap
 !subprojects/stdplus.wrap
+!subprojects/nlohmann.wrap
