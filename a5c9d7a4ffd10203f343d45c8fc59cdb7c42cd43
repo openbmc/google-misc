@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01d0cd3b_ffa149ab",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2022-05-27T23:45:23Z",
+      "side": 1,
+      "message": "I THINK it was discouraged to use auto in OpenBMC?",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 145,
+        "endChar": 12
+      },
+      "revId": "a5c9d7a4ffd10203f343d45c8fc59cdb7c42cd43",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
