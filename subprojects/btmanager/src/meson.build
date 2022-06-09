@@ -43,6 +43,7 @@ executable(
   'utils.cpp',
   'btStateMachine.cpp',
   'btDefinitions.cpp',
+  'dbusHandler.cpp',
   btmanager_files,
   include_directories : btmanager_incs,
   dependencies: deps,
