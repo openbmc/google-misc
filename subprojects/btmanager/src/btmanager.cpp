@@ -1,4 +1,5 @@
 #include "btStateMachine.hpp"
+#include "dbusHandler.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/asio/io_service.hpp>
@@ -11,7 +12,6 @@
 #include <sdbusplus/message.hpp>
 #include <sdbusplus/server.hpp>
 
-#include <future>
 #include <iostream>
 #include <memory>
 
@@ -19,7 +19,6 @@ constexpr const bool debug = true;
 
 int main()
 {
-
     // setup connection to dbus
     boost::asio::io_service io;
     std::shared_ptr<sdbusplus::asio::connection> conn =
@@ -28,6 +27,10 @@ int main()
     sdbusplus::asio::object_server server =
         sdbusplus::asio::object_server(conn);
     sdbusplus::bus::bus& bus = static_cast<sdbusplus::bus::bus&>(*conn);
+
+    // DbusHandler initialization
+    auto dh = std::make_shared<DbusHandler>(
+        bus, "/xyz/openbmc_project/Time/Boot/host0");
 
     // BTStateMachine initialization
     std::string hostState = "Off";
@@ -58,7 +61,8 @@ int main()
     }
 
     auto btsm = std::make_shared<BTStateMachine>(
-        boost::ends_with(hostState, "Running"));
+        boost::ends_with(hostState, "Running"), dh);
+    dh->setStateMachine(btsm);
 
     // Monitor host state change
     std::function<void(sdbusplus::message::message & message)> eventHandler =

@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include "dbusHandler.hpp"
+
 #include <btDefinitions.hpp>
 #include <nlohmann/json.hpp>
 
@@ -22,6 +24,8 @@
 #include <memory>
 #include <mutex>
 #include <unordered_map>
+
+class DbusHandler;
 
 enum class SMErrors
 {
@@ -39,7 +43,7 @@ struct SMResult
 class BTStateMachine
 {
   public:
-    BTStateMachine(bool hostAlreadyOn);
+    BTStateMachine(bool hostAlreadyOn, std::shared_ptr<DbusHandler> dh);
 
     SMResult next(uint8_t nextTimePoint);
     bool setDuration(std::string stage, uint64_t durationMicrosecond,
@@ -51,6 +55,7 @@ class BTStateMachine
 
     std::mutex m;
     nlohmann::json btJson;
+    std::shared_ptr<DbusHandler> _dh;
 
     void calcDurations();
     void initJson(bool isAC = false);
