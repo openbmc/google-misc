@@ -12,7 +12,18 @@ if not sdbusplus_dep.found()
     sdbusplus_proj = subproject('sdbusplus')
     sdbusplus_dep = sdbusplus_proj.get_variable('sdbusplus_dep')
 endif
-sdbusgen_prog = find_program('sdbus++-gendir')
+
+sdbusgendir = 'sdbus++-gendir'
+sdbusgen_prog = find_program(sdbusgendir)
+if not sdbusgen_prog.found()
+  repo_root = run_command(
+      'git',
+      'rev-parse',
+      '--show-toplevel'
+  ).stdout().strip()
+  sdbusgendir = repo_root / 'subprojects/sdbusplus/tools/sdbus++-gendir'
+  message(sdbusgendir)
+endif
 sdbusplusplus_prog = find_program('sdbus++', native: true)
 sdbuspp_gen_meson_prog = find_program('sdbus++-gen-meson', native: true)
 
@@ -26,7 +37,6 @@ btmanager_files = files(
         check: true
     ).stdout().strip().split('\n')
 )
-
 
 deps = [
   thread_dep,
