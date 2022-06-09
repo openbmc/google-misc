@@ -1,0 +1,11 @@
+[Unit]
+Description=Save timestamp right before the BMC gets rebooted
+DefaultDependencies=no
+After=final.target
+
+[Service]
+Type=oneshot
+ExecStart=@BIN@
+
+[Install]
+WantedBy=final.target
