@@ -23,11 +23,13 @@
 
 constexpr const bool debug = true;
 
-BTStateMachine::BTStateMachine(bool hostAlreadyOn)
+BTStateMachine::BTStateMachine(bool hostAlreadyOn,
+                               std::shared_ptr<DbusHandler> dh) :
+    _dh(dh)
 {
     if (loadJson(kFinalJson))
     {
-        // Do nothing
+        _dh->update(btJson);
     }
     else if (loadJson(kResumeJson))
     {
@@ -153,6 +155,7 @@ SMResult BTStateMachine::next(uint8_t nextTimePoint)
                     nextTimePoint;
                 btJson[BTCategory::kTimePoint][kNextTPStr] = *currentTime;
                 calcDurations();
+                _dh->update(btJson);
                 break;
             }
             return {SMErrors::smErrWrongOrder, *currentTime};

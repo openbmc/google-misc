@@ -22,6 +22,7 @@ executable(
   'btmanager.cpp',
   'utils.cpp',
   'btStateMachine.cpp',
+  'dbusHandler.cpp',
   generated_sources,
   include_directories: btmanager_incs,
   dependencies: deps,
