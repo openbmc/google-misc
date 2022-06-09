@@ -1,3 +1,12 @@
+boost_dep = dependency('boost', required : false)
+thread_dep = dependency('threads')
+
+nlohmann_json_dep = dependency('nlohmann_json', required : false)
+if not nlohmann_json_dep.found()
+    nlohmann_json_proj = subproject('nlohmann')
+    nlohmann_json_dep = nlohmann_json_proj.get_variable('nlohmann_json_dep')
+endif
+
 sdbusplus_dep = dependency('sdbusplus', required : false)
 if not sdbusplus_dep.found()
     sdbusplus_proj = subproject('sdbusplus')
@@ -18,7 +27,11 @@ btmanager_files = files(
     ).stdout().strip().split('\n')
 )
 
+
 deps = [
+  thread_dep,
+  boost_dep,
+  nlohmann_json_dep,
   sdbusplus_dep,
 ]
 
@@ -27,7 +40,11 @@ libexecdir = get_option('prefix') / get_option('libexecdir')
 executable(
   'btmanager',
   'btmanager.cpp',
+  'utils.cpp',
+  'btStateMachine.cpp',
+  'btDefinitions.cpp',
   btmanager_files,
+  include_directories : btmanager_incs,
   dependencies: deps,
   install: true,
   install_dir: libexecdir
