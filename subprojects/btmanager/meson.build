@@ -24,5 +24,7 @@ project(
   ],
 )
 
+btmanager_incs = include_directories('include')
+
 subdir('src')
 subdir('service_files')
