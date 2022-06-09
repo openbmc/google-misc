@@ -1,4 +1,5 @@
 #include "btStateMachine.hpp"
+#include "dbusHandler.hpp"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/asio/io_service.hpp>
@@ -54,6 +55,9 @@ int main()
     }
     auto btsm = std::make_shared<BTStateMachine>(
         boost::ends_with(hostState, "Running"));
+
+    // DbusHandler initialization
+    DbusHandler dh(bus, "/xyz/openbmc_project/Time/Boot/host0", btsm);
 
     // Monitor host state change
     std::function<void(sdbusplus::message::message & message)> eventHandler =
