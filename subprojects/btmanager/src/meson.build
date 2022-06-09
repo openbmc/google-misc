@@ -12,21 +12,20 @@ if not sdbusplus_dep.found()
     sdbusplus_proj = subproject('sdbusplus')
     sdbusplus_dep = sdbusplus_proj.get_variable('sdbusplus_dep')
 endif
-sdbusgen_prog = find_program('sdbus++-gendir')
-sdbusplusplus_prog = find_program('sdbus++', native: true)
-sdbuspp_gen_meson_prog = find_program('sdbus++-gen-meson', native: true)
 
-btmanager_buildroot = meson.current_build_dir()
+repo_root = run_command(
+    'git',
+    'rev-parse',
+    '--show-toplevel'
+).stdout().strip()
 btmanager_files = files(
     run_command(
-        sdbusgen_prog,
-        '--tool', sdbusplusplus_prog,
-        '--output', btmanager_buildroot,
-        'xyz/openbmc_project/Time',
-        check: true
+        'find',
+        repo_root / 'subprojects/btmanager/src/gen/xyz/openbmc_project/Time/Boot',
+        '-name',
+        '*pp'
     ).stdout().strip().split('\n')
 )
-
 
 deps = [
   thread_dep,
@@ -45,7 +44,7 @@ executable(
   'btDefinitions.cpp',
   'dbusHandler.cpp',
   btmanager_files,
-  include_directories : btmanager_incs,
+  include_directories : [btmanager_incs, 'gen'],
   dependencies: deps,
   install: true,
   install_dir: libexecdir
