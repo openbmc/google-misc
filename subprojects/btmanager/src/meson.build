@@ -27,6 +27,8 @@ btmanager_files = files(
     ).stdout().strip().split('\n')
 )
 
+subdir('boottimeblob')
+
 deps = [
   thread_dep,
   boost_dep,
