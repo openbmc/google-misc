@@ -45,6 +45,7 @@ subdir('gen/xyz')
 subdir('definition')
 subdir('src')
 subdir('service_files')
+subdir('boottimeblob')
 
 if not get_option('tests').disabled()
   subdir('test')
