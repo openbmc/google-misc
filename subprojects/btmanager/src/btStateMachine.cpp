@@ -197,6 +197,8 @@ SMResult BTStateMachine::next(uint8_t nextTimePoint)
 bool BTStateMachine::setDuration(std::string stage,
                                  uint64_t durationMicrosecond, bool isExtra)
 {
+    // Ensure the `next()` function is atomic.
+    const std::lock_guard<std::mutex> lock(m);
     if (isExtra)
     {
         if (btJson[BTCategory::kDuration].contains(BTDuration::kExtra) &&
@@ -212,6 +214,7 @@ bool BTStateMachine::setDuration(std::string stage,
     {
         btJson[BTCategory::kDuration][stage] = durationMicrosecond;
     }
+    saveJson(kResumeJson);
     return true;
 }
 
