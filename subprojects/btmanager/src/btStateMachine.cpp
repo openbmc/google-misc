@@ -72,22 +72,38 @@ SMResult BTStateMachine::next(uint8_t nextTimePoint)
     const std::string kNextTPStr = std::to_string(nextTimePoint);
     if (nextTimePoint == BTTimePoint::kBIOSStart)
     {
-        if (btJson[BTCategory::kRuntime][BTRuntime::kCurrentTimePoint] ==
-            BTTimePoint::kOSUserEnd)
+        const uint8_t kCurTimePoint =
+            btJson[BTCategory::kRuntime][BTRuntime::kCurrentTimePoint];
+        if (kCurTimePoint == BTTimePoint::kOSUserEnd)
         {
             std::remove(kFinalJson);
             initJson();
         }
         btJson[BTCategory::kRuntime][BTRuntime::kCurrentTimePoint] =
             nextTimePoint;
-        // If btJson doesn't contain `kNextTPStr`, it will create it.
-        // If state machine move to `kBIOSStart` more than
-        // `kMaxInternalRebootCount` times. It will stop pushing the timestamp
-        // into json to avoid exhausting the memory. Instead it will change the
-        // last element.
-        if (btJson[BTCategory::kTimePoint].contains(kNextTPStr) &&
-            btJson[BTCategory::kTimePoint][kNextTPStr].size() >=
-                kMaxInternalRebootCount)
+        btJson[BTCategory::kStatistic][BTStatistic::kInternalRebootCount] =
+            btJson[BTCategory::kStatistic][BTStatistic::kInternalRebootCount]
+                .get<uint16_t>() +
+            1;
+
+        // 1. If there is no any `kBIOSStart` exists, add it.
+        // 2. If host power cycle again during the BIOS stage (which means the
+        // state change is `kBIOSStart` -> `kBIOSStart`), do not push any new
+        // timestamp.
+        // 3. If we already stores more than `kMaxBIOSStartTPCount` timestamps,
+        // then stop pushing any new timestamps. Instead we change the last
+        // timestamp. This can avoid exhausting memory.
+        // 4. Any other case, just push `currentTime` into `kBIOSStart`
+        if (!btJson[BTCategory::kTimePoint].contains(kNextTPStr))
+        {
+            btJson[BTCategory::kTimePoint][kNextTPStr].push_back(*currentTime);
+        }
+        else if (kCurTimePoint == BTTimePoint::kBIOSStart)
+        {
+            // do nothing
+        }
+        else if (btJson[BTCategory::kTimePoint][kNextTPStr].size() >=
+                 kMaxBIOSStartTPCount)
         {
             btJson[BTCategory::kTimePoint][kNextTPStr].back() = *currentTime;
         }
@@ -95,6 +111,7 @@ SMResult BTStateMachine::next(uint8_t nextTimePoint)
         {
             btJson[BTCategory::kTimePoint][kNextTPStr].push_back(*currentTime);
         }
+
         saveJson(kResumeJson);
         return {SMErrors::smErrNone, *currentTime};
     }
@@ -269,8 +286,6 @@ void BTStateMachine::calcDurations()
     {
         auto& el = btJson[BTCategory::kTimePoint][strBIOSStart];
         biosStart = el.back();
-        btJson[BTCategory::kStatistic][BTStatistic::kInternalRebootCount] =
-            el.size();
     }
     if (btJson[BTCategory::kTimePoint].contains(strBIOSEnd))
     {
@@ -362,7 +377,9 @@ void BTStateMachine::initJson(bool isAC)
     btJson = {
         {BTCategory::kDuration, {}},
         {BTCategory::kTimePoint, {{std::to_string(BTTimePoint::kBMCStart), 0}}},
-        {BTCategory::kStatistic, {{BTStatistic::kIsACPowerCycle, isAC}}},
+        {BTCategory::kStatistic,
+         {{BTStatistic::kIsACPowerCycle, isAC},
+          {BTStatistic::kInternalRebootCount, 0}}},
         {BTCategory::kRuntime,
          {{BTRuntime::kCurrentTimePoint, BTTimePoint::kBMCStart}}}};
 }

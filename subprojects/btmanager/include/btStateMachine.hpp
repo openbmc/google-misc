@@ -51,7 +51,7 @@ class BTStateMachine
 
   private:
     const size_t kMaxExtraCnt = 100;
-    const size_t kMaxInternalRebootCount = 1000;
+    const size_t kMaxBIOSStartTPCount = 1000;
 
     std::mutex m;
     nlohmann::json btJson;
