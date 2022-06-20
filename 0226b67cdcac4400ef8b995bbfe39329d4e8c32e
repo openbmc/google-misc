@@ -46,6 +46,30 @@
       },
       "revId": "0226b67cdcac4400ef8b995bbfe39329d4e8c32e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe33032a_1eee25f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2022-06-20T11:36:48Z",
+      "side": 1,
+      "message": "I send you the design doc internally. Please take a look.\nI capture a section that discribe the differences between btmanager and phosphor-watchdog to here.\n\n```\n`phosphor-watchdog` feature monitors whether the host is still alive by receiving the heartbeat signal(it can be a postcode or any other appropriate signal). If the host stops sending heartbeat to BMC for a certain time. Then the watchdog will trigger a predefined action.\nSo the main differences between phosphor-watchdog will be:\n1. phosphor-watchdog doesn’t calculate duration between two signals.\n2. phosphor-watchdog doesn’t handle host state change.\n3. phosphor-watchdog doesn’t export data to blob.\n4. phosphor-watchdog doesn’t allow setting duration.\n5. phosphor-watchdog doesn’t receive ipmi command.\n\n```",
+      "parentUuid": "80dd3b0b_5068c63e",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 55
+      },
+      "revId": "0226b67cdcac4400ef8b995bbfe39329d4e8c32e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
