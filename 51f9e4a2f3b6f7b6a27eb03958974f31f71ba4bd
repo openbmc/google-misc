@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebe24a38_f725c70e",
+        "filename": "subprojects/btmanager/src/dbusHandler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2022-06-20T12:32:39Z",
+      "side": 1,
+      "message": "As discussed offline, BIOS time should be a cumulative duration if the machine is rebooted at BIOS stage. Just put a marker here.",
+      "revId": "51f9e4a2f3b6f7b6a27eb03958974f31f71ba4bd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
