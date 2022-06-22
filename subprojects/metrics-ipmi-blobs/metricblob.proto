@@ -68,4 +68,5 @@ message BmcMetricSnapshot {
   BmcDiskSpaceMetric storage_space_metric = 4;
   BmcProcStatMetric procstat_metric = 5;
   BmcFdStatMetric fdstat_metric = 6;
+  reserved 7;
 }
