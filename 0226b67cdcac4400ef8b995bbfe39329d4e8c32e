@@ -94,6 +94,30 @@
       },
       "revId": "0226b67cdcac4400ef8b995bbfe39329d4e8c32e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83a8c947_2a8c8b7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2022-06-23T04:04:10Z",
+      "side": 1,
+      "message": "I see. I will start to prepare the upstream design doc this week.",
+      "parentUuid": "31aeb9fc_eaed2554",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 55
+      },
+      "revId": "0226b67cdcac4400ef8b995bbfe39329d4e8c32e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
