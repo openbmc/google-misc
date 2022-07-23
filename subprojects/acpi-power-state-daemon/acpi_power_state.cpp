@@ -40,7 +40,7 @@ using ACPIPowerStateInherit = sdbusplus::server::object_t<
     sdbusplus::xyz::openbmc_project::Control::Power::server::ACPIPowerState>;
 
 // Pulled and modified from arcadia-leds/poll_gpio.cpp
-static void startSystemdUnit(sdbusplus::bus::bus& bus, const std::string& unit)
+static void startSystemdUnit(sdbusplus::bus_t& bus, const std::string& unit)
 {
     auto method = bus.new_method_call(systemdBusName, systemdPath,
                                       systemdInterface, "StartUnit");
@@ -51,9 +51,9 @@ static void startSystemdUnit(sdbusplus::bus::bus& bus, const std::string& unit)
 struct ACPIPowerState : ACPIPowerStateInherit
 {
     // Keep track of the bus for starting/stopping systemd units
-    sdbusplus::bus::bus& Bus;
+    sdbusplus::bus_t& Bus;
 
-    ACPIPowerState(sdbusplus::bus::bus& bus, const char* path) :
+    ACPIPowerState(sdbusplus::bus_t& bus, const char* path) :
         ACPIPowerStateInherit(bus, path), Bus(bus)
     {}
 

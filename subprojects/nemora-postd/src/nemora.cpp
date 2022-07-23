@@ -56,7 +56,7 @@ bool Nemora::GetMacAddr(MacAddr* mac, const std::string& iface_path)
         return false;
     }
     auto dbus = sdbusplus::bus::new_default();
-    sdbusplus::message::message reply;
+    sdbusplus::message_t reply;
 
     try
     {

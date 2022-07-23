@@ -39,7 +39,7 @@ HostManager::HostManager() :
     post_poller_ = std::make_unique<std::thread>(post_poller_thread, this);
 }
 
-int HostManager::DbusHandleSignal(sdbusplus::message::message& msg)
+int HostManager::DbusHandleSignal(sdbusplus::message_t& msg)
 {
     log<level::INFO>("Property Changed!");
     std::string msgSensor, busName{POSTCODE_BUSNAME};

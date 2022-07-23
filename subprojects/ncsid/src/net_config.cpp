@@ -75,8 +75,8 @@ PhosphorConfig::PhosphorConfig(const std::string& iface_name) :
     bus(sdbusplus::bus::new_default())
 {}
 
-sdbusplus::message::message
-    PhosphorConfig::new_networkd_call(sdbusplus::bus::bus* dbus, bool get) const
+sdbusplus::message_t PhosphorConfig::new_networkd_call(sdbusplus::bus_t* dbus,
+                                                       bool get) const
 {
     auto networkd_call =
         dbus->new_method_call(NETWORK_SERVICE, iface_path_.c_str(),

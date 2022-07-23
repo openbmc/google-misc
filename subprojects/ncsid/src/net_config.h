@@ -72,8 +72,8 @@ class PhosphorConfig : public ConfigBase
     virtual int set_nic_hostless(bool is_nic_hostless) override;
 
   private:
-    sdbusplus::message::message new_networkd_call(sdbusplus::bus::bus* dbus,
-                                                  bool get = false) const;
+    sdbusplus::message_t new_networkd_call(sdbusplus::bus_t* dbus,
+                                           bool get = false) const;
 
     const std::string iface_name_;
     const std::string iface_path_;
@@ -95,7 +95,7 @@ class PhosphorConfig : public ConfigBase
 
     // Holds a reference to the bus for issuing commands to update network
     // config
-    sdbusplus::bus::bus bus;
+    sdbusplus::bus_t bus;
 };
 
 } // namespace net
