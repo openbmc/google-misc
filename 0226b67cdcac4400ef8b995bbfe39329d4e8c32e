@@ -142,6 +142,30 @@
       },
       "revId": "0226b67cdcac4400ef8b995bbfe39329d4e8c32e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81b05bc1_b0ce46fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000937
+      },
+      "writtenOn": "2022-08-03T04:38:01Z",
+      "side": 1,
+      "message": "Hi Ed,\nCan we start reviewing this CL chain simultaneously instead of waiting for upstream doc(https://gerrit.openbmc.org/c/openbmc/docs/+/54914) being reviewed ?\nBecause I was told to include this feature internally.\nOr will you prefer just keep it in the downstream first?",
+      "parentUuid": "c670920f_77955a3b",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 55
+      },
+      "revId": "0226b67cdcac4400ef8b995bbfe39329d4e8c32e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
