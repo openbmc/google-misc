@@ -60,16 +60,16 @@ int main(int argc, char* argv[])
     CLI::App app("gBMC-side Nemora implementation (POST-code only)");
 
     std::string udp_address_v4_str;
-    auto* ipv4_option = app.add_option(
-        "--udp4", udp_address_v4_str,
-        "Target IPv4 address for UDP communication, i.e., POST streaming.",
-        true);
+    auto* ipv4_option = app.add_option("--udp4", udp_address_v4_str,
+                                       "Target IPv4 address for UDP "
+                                       "communication, i.e., POST streaming.")
+                            ->capture_default_str();
 
     std::string udp_address_v6_str;
-    auto* ipv6_option = app.add_option(
-        "--udp6", udp_address_v6_str,
-        "Target IPv6 address for UDP communication, i.e., POST streaming.",
-        true);
+    auto* ipv6_option = app.add_option("--udp6", udp_address_v6_str,
+                                       "Target IPv6 address for UDP "
+                                       "communication, i.e., POST streaming.")
+                            ->capture_default_str();
 
     // interface is last, and required.
     std::string iface_name;
