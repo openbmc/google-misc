@@ -1,0 +1,9 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Willy Tu <wltu@google.com>
+Code-Review+1: Nan Zhou <nanzhoumails@gmail.com>
+Code-Review+2: Benjamin Fair <benjaminfair@google.com>
+Submitted-by: Harvey Wu <Harvey.Wu@quantatw.com>
+Submitted-at: Fri, 14 Oct 2022 01:29:53 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/google-misc/+/57707
+Project: openbmc/google-misc
+Branch: refs/heads/master
