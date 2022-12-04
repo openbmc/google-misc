@@ -1,0 +1,8 @@
+subprojects/ncsid/src/ncsid_lib.sh
+subprojects/ncsid/src/ncsid_udhcpc4.script
+subprojects/ncsid/src/ncsid_udhcpc6.script
+subprojects/ncsid/src/update_ra_gw.sh
+subprojects/ncsid/src/update_ra_neighbor.sh
+subprojects/ncsid/src/update_static_neighbors.sh
+subprojects/ncsid/test/normalize_ip_test.sh
+subprojects/ncsid/test/normalize_mac_test.sh
