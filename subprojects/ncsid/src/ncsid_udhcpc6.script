@@ -1,45 +1,45 @@
 #!/bin/bash
 source "$(dirname "${BASH_SOURCE[0]}")"/ncsid_lib.sh
 
-HandleDHCP6() {
-  local op="$1"
+function HandleDHCP6() {
+    local op="$1"
 
-  if [ "$op" = "bound" ]; then
-    echo "INTF: $interface" >&2
-    echo "IP: $ipv6/128" >&2
+    if [ "$op" = "bound" ]; then
+        echo "INTF: $interface" >&2
+        echo "IP: $ipv6/128" >&2
 
-    local disc
-    if ! disc="$(DiscoverRouter6 "$interface" 5 1000)"; then
-      echo "Failed to discover router" >&2
-      return 1
+        local disc
+        if ! disc="$(DiscoverRouter6 "$interface" 5 1000)"; then
+            echo "Failed to discover router" >&2
+            return 1
+        fi
+        local vars
+        vars="$(echo "$disc" | JSONToVars)" || return
+        eval "$vars" || return
+        echo "GW: $router_ip" >&2
+        echo "GW_MAC: $router_mac" >&2
+
+        SuppressTerm
+        local service='xyz.openbmc_project.Network'
+        local rc=0
+        SetStatic "$service" "$interface" && \
+            UpdateIP "$service" "$interface" "$ipv6" '128' && \
+            UpdateGateway "$service" "$interface" "$router_ip" && \
+            UpdateNeighbor "$service" "$interface" "$router_ip" "$router_mac" || \
+            rc=$?
+        UnsuppressTerm
+        touch /run/dhcp6.done
+        return $rc
     fi
-    local vars
-    vars="$(echo "$disc" | JSONToVars)" || return
-    eval "$vars" || return
-    echo "GW: $router_ip" >&2
-    echo "GW_MAC: $router_mac" >&2
-
-    SuppressTerm
-    local service='xyz.openbmc_project.Network'
-    local rc=0
-    SetStatic "$service" "$interface" && \
-      UpdateIP "$service" "$interface" "$ipv6" '128' && \
-      UpdateGateway "$service" "$interface" "$router_ip" && \
-      UpdateNeighbor "$service" "$interface" "$router_ip" "$router_mac" || \
-      rc=$?
-    UnsuppressTerm
-    touch /run/dhcp6.done
-    return $rc
-  fi
 }
 
-Main() {
-  set -o nounset
-  set -o errexit
-  set -o pipefail
+function Main() {
+    set -o nounset
+    set -o errexit
+    set -o pipefail
 
-  InitTerm
-  HandleDHCP6 "$@"
+    InitTerm
+    HandleDHCP6 "$@"
 }
 
 return 0 2>/dev/null

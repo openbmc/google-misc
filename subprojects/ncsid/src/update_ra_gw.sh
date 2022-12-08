@@ -20,52 +20,52 @@ NCSI_IF="$1"
 old_rtr=
 old_mac=
 
-set_rtr() {
-  [ -n "$rtr" -a -n "$lifetime" ] || return
-  [ "$rtr" != "$old_rtr" -a "$mac" != "$old_mac" ] || return
-  # Only valid default routers can be considered, 0 lifetime implies
-  # a non-default router
-  (( lifetime > 0 )) || return
+function set_rtr() {
+    [ -n "$rtr" -a -n "$lifetime" ] || return
+    [ "$rtr" != "$old_rtr" -a "$mac" != "$old_mac" ] || return
+    # Only valid default routers can be considered, 0 lifetime implies
+    # a non-default router
+    (( lifetime > 0 )) || return
 
-  echo "Setting default router: $rtr at $mac" >&2
-  local svc=xyz.openbmc_project.Network
-  SetStatic "$svc" "$NCSI_IF" || return
-  UpdateGateway "$svc" "$NCSI_IF" "$rtr" || return
-  UpdateNeighbor "$svc" "$NCSI_IF" "$rtr" "$mac" || return
+    echo "Setting default router: $rtr at $mac" >&2
+    local svc=xyz.openbmc_project.Network
+    SetStatic "$svc" "$NCSI_IF" || return
+    UpdateGateway "$svc" "$NCSI_IF" "$rtr" || return
+    UpdateNeighbor "$svc" "$NCSI_IF" "$rtr" "$mac" || return
 
-  retries=-1
-  old_mac="$mac"
-  old_rtr="$rtr"
+    retries=-1
+    old_mac="$mac"
+    old_rtr="$rtr"
 }
 
 retries=1
 w=60
 while true; do
-  start=$SECONDS
-  args=(-m "$NCSI_IF" -w $(( w * 1000 )))
-  if (( retries > 0 )); then
-    args+=(-r "$retries")
-  else
-    args+=(-d)
-  fi
-  while read line; do
-    if [ -z "$line" ]; then
-      lifetime=
-      mac=
-    elif [[ "$line" =~ ^Router' 'lifetime' '*:' '*([0-9]*) ]]; then
-      lifetime="${BASH_REMATCH[1]}"
-    elif [[ "$line" =~ ^Source' 'link-layer' 'address' '*:' '*([a-fA-F0-9:]*)$ ]]; then
-      mac="${BASH_REMATCH[1]}"
-    elif [[ "$line" =~ ^from' '(.*)$ ]]; then
-      rtr="${BASH_REMATCH[1]}"
-      set_rtr || true
-      lifetime=
-      mac=
-      rtr=
+    start=$SECONDS
+    args=(-m "$NCSI_IF" -w $(( w * 1000 )))
+    if (( retries > 0 )); then
+        args+=(-r "$retries")
+    else
+        args+=(-d)
     fi
-  done < <(exec rdisc6 "${args[@]}" 2>/dev/null)
-  # If rdisc6 exits early we still want to wait the full `w` time before
-  # starting again.
-  (( timeout = start + w - SECONDS ))
-  sleep $(( timeout < 0 ? 0 : timeout ))
+    while read line; do
+        if [ -z "$line" ]; then
+            lifetime=
+            mac=
+        elif [[ "$line" =~ ^Router' 'lifetime' '*:' '*([0-9]*) ]]; then
+            lifetime="${BASH_REMATCH[1]}"
+        elif [[ "$line" =~ ^Source' 'link-layer' 'address' '*:' '*([a-fA-F0-9:]*)$ ]]; then
+            mac="${BASH_REMATCH[1]}"
+        elif [[ "$line" =~ ^from' '(.*)$ ]]; then
+            rtr="${BASH_REMATCH[1]}"
+            set_rtr || true
+            lifetime=
+            mac=
+            rtr=
+        fi
+    done < <(exec rdisc6 "${args[@]}" 2>/dev/null)
+    # If rdisc6 exits early we still want to wait the full `w` time before
+    # starting again.
+    (( timeout = start + w - SECONDS ))
+    sleep $(( timeout < 0 ? 0 : timeout ))
 done
