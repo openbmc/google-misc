@@ -2,7 +2,8 @@ IPMI BLOBs handler to export BMC metrics snapshot
 
 This BLOB handler registers one blob with the name "/metric/snapshot".
 
-The contents of the BLOB is a protocol buffer containing an instantaneous snapshot of the BMC's health metrics, which includes the following categories:
+The contents of the BLOB is a protocol buffer containing an instantaneous
+snapshot of the BMC's health metrics, which includes the following categories:
 
 1. BMC memory metric: mem_available, slab, kernel_stack
 2. Uptime: uptime in wall clock time, idle process across all cores

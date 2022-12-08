@@ -1,6 +1,6 @@
 # NC-SId Internals
 
-__NOTE__: This documents describes the internal architecture of NC-SId daemon.
+**NOTE**: This documents describes the internal architecture of NC-SId daemon.
 However, it is meant to be used as a guide for understanding the code, not on
 its own. Some details are intentionally omitted.
 
@@ -8,14 +8,14 @@ its own. Some details are intentionally omitted.
 
 In the diagram above the components are split into four groups:
 
-* __NC-SId Core__. These are new components implemented in NC-SId.
+- **NC-SId Core**. These are new components implemented in NC-SId.
 
-* __Hardware__. External hardware components, in this case, the NIC.
+- **Hardware**. External hardware components, in this case, the NIC.
 
-* __EC__. This is the code borrowed from EC. The three state machines are
-  pretty much copied from EC code.
+- **EC**. This is the code borrowed from EC. The three state machines are pretty
+  much copied from EC code.
 
-* __External Components__. These are external services/daemons NC-SIs interacts
+- **External Components**. These are external services/daemons NC-SIs interacts
   with.
 
 Let's look into their details.
@@ -23,8 +23,8 @@ Let's look into their details.
 ## NIC
 
 In the NIC — NC-SId interactions, NIC acts as a server, replying to NC-SId
-requests and NC-SId itself acts as a client, sending those requests.  Thus,
-there is no state in NIC (server), but there is a state in NC-SId (client).
+requests and NC-SId itself acts as a client, sending those requests. Thus, there
+is no state in NIC (server), but there is a state in NC-SId (client).
 
 ## EC State Machines
 
@@ -54,12 +54,12 @@ reconfigured.
 In addition to the buffer there are parameters that provide information which is
 not a part of EC state machines' state:
 
-* State Parameters. These structures are allocated outside of EC State Machines,
+- State Parameters. These structures are allocated outside of EC State Machines,
   but their content is fully managed by EC State Machines.
-* MAC Address. For L2 FSM this parameter is _OUT_.
-* IP Address (only for L3/4 FSM and Test FSM) for setting up and verifying
+- MAC Address. For L2 FSM this parameter is _OUT_.
+- IP Address (only for L3/4 FSM and Test FSM) for setting up and verifying
   filteres. If set to zero, the NIC filter won't check for IP address.
-* TCP Port (only for L3/4 FSM and Test FSM) for setting up and verifying
+- TCP Port (only for L3/4 FSM and Test FSM) for setting up and verifying
   filters.
 
 In the initial state the command buffer (reply from the NIC) is empty. When
