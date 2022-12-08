@@ -2,7 +2,7 @@
 
 ### Package `libcr51sign`
 
-*   Status: **Ready**
+- Status: **Ready**
 
 Libcr51sign is a library to verify images signed in the Cr51 format which can be
 shared between all systems requiring this functionality. Given an absolute start
@@ -41,4 +41,3 @@ is same as the length of the key
 Note: libcr51sign will also provide a companion library with default SW
 implementations of common functions like hash_init/final,
 read_and_hash_update().
-
