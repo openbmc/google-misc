@@ -1,0 +1,9 @@
+[Unit]
+Description=BMC Metric Collection
+
+[Service]
+ExecStart=@bindir@/metric-collector
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
