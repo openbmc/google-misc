@@ -1,0 +1,11 @@
+[Unit]
+Description=BMC Metric Collection
+
+[Service]
+ExecStart=@bindir@/metric-collector
+Type=dbus
+BusName=xyz.openbmc_project.MetricCollector
+SyslogIdentifier=phosphor-metric-collector
+
+[Install]
+WantedBy=multi-user.target
