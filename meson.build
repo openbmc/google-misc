@@ -40,6 +40,7 @@ if not meson.is_subproject()
   subproject('acpi-power-state-daemon')
   subproject('ncsid', default_options: 'tests=' + tests_str)
   subproject('metrics-ipmi-blobs', default_options: 'tests=' + tests_str)
+  subproject('metric-collection-daemon')
   subproject('nemora-postd')
   subproject('libcr51sign')
 endif
