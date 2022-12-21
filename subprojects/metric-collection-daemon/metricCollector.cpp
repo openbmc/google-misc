@@ -1,6 +1,9 @@
 #include "metricCollector.hpp"
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include <syslog.h>
 
 #include <boost/asio/deadline_timer.hpp>
 #include <sdbusplus/asio/connection.hpp>
@@ -22,25 +25,22 @@ extern "C"
 #include <sys/sysinfo.h>
 }
 
-#define TIMER_INTERVAL 1
+#define TIMER_INTERVAL 10
 
 void metricCollectCallback(std::shared_ptr<boost::asio::deadline_timer> timer,
                            sdbusplus::bus_t& bus, MetricCollector& metricCol)
 {
     timer->expires_from_now(boost::posix_time::seconds(TIMER_INTERVAL));
-    timer->async_wait([timer, &bus, &metricCol](const boost::system::error_code& ec) {
-        if (ec == boost::asio::error::operation_aborted)
-        {
-            printf("sensorRecreateTimer aborted");
-            return;
-        }
-
-        printf("Callback");
-
-        metricCol.updateBootCount();
-
-        metricCollectCallback(timer, bus, metricCol);
-    });
+    timer->async_wait(
+        [timer, &bus, &metricCol](const boost::system::error_code& ec) {
+            if (ec == boost::asio::error::operation_aborted)
+            {
+                printf("sensorRecreateTimer aborted");
+                return;
+            }
+            metricCol.update();
+            metricCollectCallback(timer, bus, metricCol);
+        });
 }
 
 /**
@@ -48,15 +48,13 @@ void metricCollectCallback(std::shared_ptr<boost::asio::deadline_timer> timer,
  */
 int main()
 {
-    printf("Start\n");
-
     // The io_context is needed for the timer
     boost::asio::io_context io;
 
     // DBus connection
     auto conn = std::make_shared<sdbusplus::asio::connection>(io);
 
-    conn->request_name(interfaceName.c_str());
+    conn->request_name(serviceName.c_str());
 
     // Get a default event loop
     auto event = sdeventplus::Event::get_default();
@@ -70,14 +68,12 @@ int main()
 
     auto metricCollectTimer = std::make_shared<boost::asio::deadline_timer>(io);
 
-    printf("Setup\n");
-
-    // // Start the timer
-    // // io.post([conn, &metricCollectTimer, &metricCol]() {
-    // //     metricCollectCallback(metricCollectTimer, *conn, *metricCol);
-    // // });
+    // Start the timer
+    io.post([conn, &metricCollectTimer, &metricCol]() {
+        metricCollectCallback(metricCollectTimer, *conn, *metricCol);
+    });
 
     io.run();
-
+    
     return 0;
 }
