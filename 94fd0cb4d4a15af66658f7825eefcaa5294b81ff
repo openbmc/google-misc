@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d56f5971_559ea09c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "Need symbolic link to a folder at the top of the repo like in https://gerrit.openbmc.org/c/openbmc/google-misc/+/45306/11/libcr51sign + including it in the top meson.build.\n\nRight now this repo is not included in the CI build.",
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f5ee51a_665c0796",
+        "filename": "subprojects/metric-collection-daemon/.clang-format",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "No need for this one. It should use the one that in the top of this project. Same with .gitignore.",
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2c35a60_0215d27d",
         "filename": "subprojects/metric-collection-daemon/LICENSE",
         "patchSetId": 3
@@ -37,6 +71,494 @@
       "writtenOn": "2022-12-22T19:11:35Z",
       "side": 1,
       "message": "Fix",
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e82543b_4ad28783",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "rename this to `conn` to be more clear on what it is.",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 28,
+        "endChar": 73
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07a7d27d_367b152f",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "no `_` for member variables. OpenBMC repos does not follow Google C++ styles.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91a2ffd7_f1894fb8",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "prefer to use `fmt::format(\"{}/{}\", bmcPath, pid)`\n\n```\n#include \u003cfmt/format.h\u003e\n```\n\nmeson change required like in https://github.com/openbmc/google-misc/blob/379b061ffdd797d00c07acf0b5cb81e1f6513bca/subprojects/ncsid/src/meson.build#L17-L28",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 56
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7955a560_c012599d",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "no need the extra \u0027()\u0027 and also use fmt::format.",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 68
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d43cb1b_e4b3aafe",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "can this be async? \n\nIf so,\n\nHere is an example of what it can be instead, (Assuming bus -\u003e conn and is share pointer of connection)\n```\nsdbusplus::asio::getProperty\u003cuint64_t\u003e(\n        *conn, \"org.freedesktop.systemd1, daemonObjectPath_.c_str(),\n        \"org.freedesktop.systemd1.Unit\", \"Id\",\n        [\u0026daemonId](const boost::system::error_code ec, const std::string\u0026 id) {\n            if (ec)\n            {\n                return;\n            }\n            daemonId \u003d id;\n        });\n```\n\nSame with everything else.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 25
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db380067_abae2545",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "just `std::string_view` if this is read only.",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b68338c3_8879c571",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "Need to error out here.\n\nAlso prefer to use\n\n```\nfmt::print(stderr, \"Ticks/Sec is \u003c 0\\n\")\n```",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 9
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85c34841_0c163847",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "um, I don\u0027t really like that we need to parse the string like this. I am also not seeing a great way to read the `/proc` data programmatically right now...",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "337ad7ec_a97292b3",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "explicitly declare the value type like `uint32_t` in this case.",
+      "range": {
+        "startLine": 84,
+        "startChar": 19,
+        "endLine": 84,
+        "endChar": 23
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93039758_e5906d8a",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "I see why you are doing this... due to how `strtok` works. Maybe we want to have some split function like and just access by index at that point.\n\n```\nstd::vector\u003cstd::string\u003e split(std::string_view input, char delim)\n{\n    std::vector\u003cstd::string\u003e ret;\n    for (size_t start \u003d 0, pos \u003d 0; pos !\u003d std::string_view::npos; start \u003d pos)\n    {\n        pos \u003d input.find_first_of(delim, start);\n        std::string_view token \u003d input.substr(start, pos - start);\n        if (!token.empty())\n        {\n            ret.emplace_back(std::string(token));\n        }\n\n        pos \u003d input.find_first_not_of(delim, pos);\n        if (pos \u003d\u003d std::string_view::npos)\n        {\n            break;\n        }\n    }\n    return ret;\n}\n```",
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19f4c241_9bb314ce",
+        "filename": "subprojects/metric-collection-daemon/meson.build",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "it should be 0.63 now",
+      "range": {
+        "startLine": 8,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37987dc0_5e96dd54",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "prefer `fmt::print(stderr...)",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 54
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "067b8ec1_d84c985d",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "not used?",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a609e9e_1c87a7a7",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "Just pass the share pointer instead of by reference.",
+      "range": {
+        "startLine": 65,
+        "startChar": 59,
+        "endLine": 65,
+        "endChar": 64
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "035b0e97_3559e6d6",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "Move all of the code implementation to the cpp file.",
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19c4a5ed_6d221ccc",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "Can just call getNumPorts inline.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6c02249_395a8ea0",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "combine.",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6323c40_73d6b3d4",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "`const auto\u0026` for all of these.",
+      "range": {
+        "startLine": 85,
+        "startChar": 13,
+        "endLine": 85,
+        "endChar": 18
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cec8f531_e71c04c3",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "also convert this to async.",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 26
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "816b97f1_5a4e4b5c",
+        "filename": "subprojects/metric-collection-daemon/oe-logs",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "rm",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 91
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "561e1801_66435b19",
+        "filename": "subprojects/metric-collection-daemon/port.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "Create port.cpp and move all the actual code implmentation there.",
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc366b21_e655188e",
+        "filename": "subprojects/metric-collection-daemon/port.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2022-12-26T19:13:02Z",
+      "side": 1,
+      "message": "just uint8_t is fine?",
+      "range": {
+        "startLine": 35,
+        "startChar": 27,
+        "endLine": 35,
+        "endChar": 33
+      },
       "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
