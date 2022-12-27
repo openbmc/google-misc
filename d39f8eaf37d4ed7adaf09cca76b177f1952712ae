@@ -16,6 +16,24 @@
       "message": "Presubmit seems to fail because fmt dosent work",
       "revId": "d39f8eaf37d4ed7adaf09cca76b177f1952712ae",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01815b28_882d1728",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2022-12-27T22:19:00Z",
+      "side": 1,
+      "message": "Looks like it\u0027s because you\u0027re trying to redirect to a relative path perhaps `wrap-redirect /data0/jenkins/workspace/ci-repository/openbmc/google-misc/subprojects/metric-collection-daemon/subprojects/stdplus/subprojects/fmt.wrap filename does not exist`\n\nI usually do the full fmt.wrap instead (like https://github.com/openbmc/stdplus/blob/master/subprojects/fmt.wrap which this is trying to use).",
+      "parentUuid": "f335bfd2_42c4b76f",
+      "revId": "d39f8eaf37d4ed7adaf09cca76b177f1952712ae",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
