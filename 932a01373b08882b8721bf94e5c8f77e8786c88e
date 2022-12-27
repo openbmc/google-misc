@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc2bc081_ca4b4b15",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2022-12-27T23:54:33Z",
+      "side": 1,
+      "message": "Intentionally did not put const on these as unregister() should be changing the object",
+      "revId": "932a01373b08882b8721bf94e5c8f77e8786c88e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
