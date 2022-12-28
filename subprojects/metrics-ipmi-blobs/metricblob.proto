@@ -42,6 +42,8 @@ message BmcProcStatMetric {
     int32 sidx_cmdline = 1;  // complete command line
     float utime = 2;         // Time (seconds) in user mode
     float stime = 3;         // Time (seconds) in kernel mode
+    int32 rss = 4;          // Resident Set Size in Bytes
+    float cpu_util = 5;    // CPU Utilization in Percentage
   }
   repeated BmcProcStat stats = 10;
 }
@@ -52,6 +54,15 @@ message BmcFdStatMetric {
     int32 fd_count = 2;      // count of open FD's
   }
   repeated BmcFdStat stats = 10;
+}
+
+message BmcDaemonStatMetric {
+  message BmcDaemonStat {
+    int32 sidx_daemon_name = 1;  // daemon name
+    int32 restart_count = 2;     // Number of times the service has restarted
+    float uptime = 3;            // Time (seconds) the service has been running
+  }
+  repeated BmcDaemonStat stats = 10;
 }
 
 message BmcStringTable {
@@ -68,4 +79,5 @@ message BmcMetricSnapshot {
   BmcDiskSpaceMetric storage_space_metric = 4;
   BmcProcStatMetric procstat_metric = 5;
   BmcFdStatMetric fdstat_metric = 6;
+  BmcDaemonStatMetric daemonstat_metric = 7;
 }

@@ -71,6 +71,7 @@ class BmcHealthSnapshot
     // have to be member functions.
     bmcmetrics::metricproto::BmcProcStatMetric getProcStatList();
     bmcmetrics::metricproto::BmcFdStatMetric getFdStatList();
+    bmcmetrics::metricproto::BmcDaemonStatMetric getDaemonStatList();
 
     int getStringID(const std::string_view s);
     std::atomic<bool> done;

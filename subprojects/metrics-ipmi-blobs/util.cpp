@@ -26,6 +26,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <fstream>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -128,10 +129,10 @@ std::string getCmdLine(const int pid)
 
 // strtok is used in this function in order to avoid usage of <sstream>.
 // However, that would require us to create a temporary std::string.
-TcommUtimeStime parseTcommUtimeStimeString(std::string_view content,
-                                           const long ticksPerSec)
+ProcStatInfo parseProcessStatsString(std::string_view content,
+                                     const long ticksPerSec)
 {
-    TcommUtimeStime ret;
+    ProcStatInfo ret;
     ret.tcomm = "";
     ret.utime = ret.stime = 0;
 
@@ -145,11 +146,12 @@ TcommUtimeStime parseTcommUtimeStimeString(std::string_view content,
 
     if (pCol != nullptr)
     {
-        const int fields[] = {1, 13, 14}; // tcomm, utime, stime
+        const int fields[] = {1, 13, 14, 22,
+                              23}; // tcomm, utime, stime, starttime, rss
         int fieldIdx = 0;
-        for (int colIdx = 0; colIdx < 15; ++colIdx)
+        for (int colIdx = 0; colIdx < 24; ++colIdx)
         {
-            if (fieldIdx < 3 && colIdx == fields[fieldIdx])
+            if (fieldIdx < 5 && colIdx == fields[fieldIdx])
             {
                 switch (fieldIdx)
                 {
@@ -175,6 +177,27 @@ TcommUtimeStime parseTcommUtimeStimeString(std::string_view content,
                         }
                         break;
                     }
+                    case 3:
+                    {
+                        unsigned long long starttime = std::stoull(pCol);
+                        double sysUptime, idleProcessTime;
+                        parseProcUptime(
+                            readFileThenGrepIntoString("/proc/uptime"),
+                            sysUptime, idleProcessTime);
+                        float procUptime =
+                            sysUptime -
+                            (starttime / static_cast<float>(ticksPerSec));
+                        float procCpuTime = (ret.utime + ret.stime) /
+                                            static_cast<float>(ticksPerSec);
+                        ret.uptime = procUptime;
+                        ret.cpu_util = 100 * (procCpuTime / procUptime);
+                        break;
+                    }
+                    case 4:
+                    {
+                        ret.rss = static_cast<uint32_t>(std::atoi(pCol));
+                        break;
+                    }
                 }
                 ++fieldIdx;
             }
@@ -190,11 +213,11 @@ TcommUtimeStime parseTcommUtimeStimeString(std::string_view content,
     return ret;
 }
 
-TcommUtimeStime getTcommUtimeStime(const int pid, const long ticksPerSec)
+ProcStatInfo getProcessStats(const int pid, const long ticksPerSec)
 {
     const std::string& statPath = "/proc/" + std::to_string(pid) + "/stat";
-    return parseTcommUtimeStimeString(readFileThenGrepIntoString(statPath),
-                                      ticksPerSec);
+    return parseProcessStatsString(readFileThenGrepIntoString(statPath),
+                                   ticksPerSec);
 }
 
 // Returns true if successfully parsed and false otherwise. If parsing was
@@ -346,6 +369,68 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm)
     }
 
     return true;
+}
+
+std::optional<std::string> getDaemonObjectPathFromPid(const int pid)
+{
+    try
+    {
+        auto conn = sdbusplus::bus::new_default_system();
+        auto m = conn.new_method_call(
+            "org.freedesktop.systemd1", "/org/freedesktop/systemd1",
+            "org.freedesktop.systemd1.Manager", "GetUnitByPID");
+        m.append(static_cast<uint32_t>(pid));
+
+        auto reply = conn.call(m);
+
+        sdbusplus::message::object_path objectPathVariant;
+        reply.read(objectPathVariant);
+
+        return objectPathVariant.str;
+    }
+    catch (const std::exception& e)
+    {
+        return std::nullopt;
+    }
+}
+
+std::string getDaemonNameFromObjectPath(const std::string daemonObjectPath)
+{
+    auto conn = sdbusplus::bus::new_default_system();
+
+    auto m = conn.new_method_call("org.freedesktop.systemd1",
+                                  daemonObjectPath.c_str(),
+                                  "org.freedesktop.DBus.Properties", "Get");
+    m.append("org.freedesktop.systemd1.Unit", "Id");
+
+    auto reply = conn.call(m);
+
+    std::string daemonId;
+    reply.read(daemonId);
+    return daemonId;
+}
+
+int32_t getDaemonRestartCountFromObjectPath(const std::string daemonObjectPath)
+{
+    auto conn = sdbusplus::bus::new_default_system();
+
+    auto m = conn.new_method_call("org.freedesktop.systemd1",
+                                  daemonObjectPath.c_str(),
+                                  "org.freedesktop.DBus.Properties", "Get");
+    m.append("org.freedesktop.systemd1.Service", "NRestarts");
+
+    auto reply = conn.call(m);
+
+    uint32_t restartCount;
+    reply.read(restartCount);
+
+    return static_cast<int32_t>(restartCount);
+}
+
+float getDaemonUptimeFromPid(const int pid, const long ticksPerSec)
+{
+    ProcStatInfo info = getProcessStats(pid, ticksPerSec);
+    return info.uptime;
 }
 
 } // namespace metric_blob

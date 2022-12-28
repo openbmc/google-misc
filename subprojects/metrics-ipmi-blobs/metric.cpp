@@ -24,6 +24,7 @@
 
 #include <cstdint>
 #include <filesystem>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -45,6 +46,8 @@ struct ProcStatEntry
     std::string tcomm;
     float utime;
     float stime;
+    uint32_t rss;
+    float cpu_util;
 
     // Processes with the longest utime + stime are ranked first.
     // Tie breaking is done with cmdline then tcomm.
@@ -75,10 +78,12 @@ bmcmetrics::metricproto::BmcProcStatMetric BmcHealthSnapshot::getProcStatList()
             try
             {
                 entry.cmdline = getCmdLine(pid);
-                TcommUtimeStime t = getTcommUtimeStime(pid, ticksPerSec);
+                ProcStatInfo t = getProcessStats(pid, ticksPerSec);
                 entry.tcomm = t.tcomm;
                 entry.utime = t.utime;
                 entry.stime = t.stime;
+                entry.rss = t.rss;
+                entry.cpu_util = t.cpu_util;
 
                 entries.push_back(entry);
             }
@@ -119,6 +124,8 @@ bmcmetrics::metricproto::BmcProcStatMetric BmcHealthSnapshot::getProcStatList()
         {
             others.utime += entry.utime;
             others.stime += entry.stime;
+            others.rss += entry.rss;
+            others.cpu_util += entry.cpu_util;
         }
         else
         {
@@ -131,6 +138,8 @@ bmcmetrics::metricproto::BmcProcStatMetric BmcHealthSnapshot::getProcStatList()
             s.set_sidx_cmdline(getStringID(fullCmdline));
             s.set_utime(entry.utime);
             s.set_stime(entry.stime);
+            s.set_rss(entry.rss);
+            s.set_cpu_util(entry.cpu_util);
             *(ret.add_stats()) = s;
         }
     }
@@ -141,6 +150,8 @@ bmcmetrics::metricproto::BmcProcStatMetric BmcHealthSnapshot::getProcStatList()
         s.set_sidx_cmdline(getStringID(others.cmdline));
         s.set_utime(others.utime);
         s.set_stime(others.stime);
+        s.set_rss(others.rss);
+        s.set_cpu_util(others.cpu_util);
         *(ret.add_stats()) = s;
     }
 
@@ -189,7 +200,7 @@ bmcmetrics::metricproto::BmcFdStatMetric BmcHealthSnapshot::getFdStatList()
             try
             {
                 entry.fdCount = getFdCount(pid);
-                TcommUtimeStime t = getTcommUtimeStime(pid, ticksPerSec);
+                ProcStatInfo t = getProcessStats(pid, ticksPerSec);
                 entry.cmdline = getCmdLine(pid);
                 entry.tcomm = t.tcomm;
                 entries.push_back(entry);
@@ -244,6 +255,65 @@ bmcmetrics::metricproto::BmcFdStatMetric BmcHealthSnapshot::getFdStatList()
         bmcmetrics::metricproto::BmcFdStatMetric::BmcFdStat s;
         s.set_sidx_cmdline(getStringID(others.cmdline));
         s.set_fd_count(others.fdCount);
+        *(ret.add_stats()) = s;
+    }
+
+    return ret;
+}
+
+struct DaemonStatEntry
+{
+    std::string daemon_name;
+    int32_t restart_count;
+    float uptime;
+
+    // Daemons with the longest uptime are ranked first.
+    bool operator<(const DaemonStatEntry& other) const
+    {
+        return uptime < other.uptime;
+    }
+};
+
+bmcmetrics::metricproto::BmcDaemonStatMetric
+    BmcHealthSnapshot::getDaemonStatList()
+{
+    constexpr std::string_view procPath = "/proc/";
+
+    bmcmetrics::metricproto::BmcDaemonStatMetric ret;
+    std::vector<DaemonStatEntry> entries;
+
+    for (const auto& procEntry : std::filesystem::directory_iterator(procPath))
+    {
+        const std::string& path = procEntry.path();
+        int pid = -1;
+        if (isNumericPath(path, pid) && pid != 1)
+        {
+            std::optional<std::string> daemonObjectPath =
+                getDaemonObjectPathFromPid(pid);
+
+            if (!daemonObjectPath.has_value())
+            {
+                continue;
+            }
+
+            DaemonStatEntry entry;
+            entry.daemon_name = getDaemonNameFromObjectPath(*daemonObjectPath);
+            entry.restart_count =
+                getDaemonRestartCountFromObjectPath(*daemonObjectPath);
+            entry.uptime = getDaemonUptimeFromPid(pid, ticksPerSec);
+        }
+    }
+
+    std::sort(entries.begin(), entries.end());
+
+    for (size_t i = 0; i < entries.size(); ++i)
+    {
+        const DaemonStatEntry& entry = entries[i];
+        bmcmetrics::metricproto::BmcDaemonStatMetric::BmcDaemonStat s;
+        std::string daemon_name = entry.daemon_name;
+        s.set_sidx_daemon_name(getStringID(daemon_name));
+        s.set_restart_count(entry.restart_count);
+        s.set_uptime(entry.uptime);
         *(ret.add_stats()) = s;
     }
 
@@ -380,6 +450,9 @@ void BmcHealthSnapshot::doWork()
 
     // Proc stat
     *(snapshot.mutable_procstat_metric()) = getProcStatList();
+    
+    // Daemon stat
+    *(snapshot.mutable_daemonstat_metric()) = getDaemonStatList();
 
     // String table
     std::vector<std::string_view> strings(stringTable.size());

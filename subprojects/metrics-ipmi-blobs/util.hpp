@@ -14,17 +14,21 @@
 
 #pragma once
 
+#include <optional>
 #include <string>
 #include <string_view>
 
 namespace metric_blob
 {
 
-struct TcommUtimeStime
+struct ProcStatInfo
 {
     std::string tcomm;
     float utime;
     float stime;
+    uint32_t rss;
+    float uptime;
+    float cpu_util;
 };
 
 struct BootTimesMonotonic
@@ -37,12 +41,12 @@ struct BootTimesMonotonic
     uint64_t powerOnSecCounterTime = 0;
 };
 
-TcommUtimeStime parseTcommUtimeStimeString(std::string_view content,
-                                           long ticksPerSec);
+ProcStatInfo parseProcessStatsString(std::string_view content,
+                                     long ticksPerSec);
 std::string readFileThenGrepIntoString(std::string_view fileName,
                                        std::string_view grepStr = "");
 bool isNumericPath(std::string_view path, int& value);
-TcommUtimeStime getTcommUtimeStime(int pid, long ticksPerSec);
+ProcStatInfo getProcessStats(int pid, long ticksPerSec);
 std::string getCmdLine(int pid);
 bool parseMeminfoValue(std::string_view content, std::string_view keyword,
                        int& value);
@@ -53,5 +57,10 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm);
 long getTicksPerSec();
 char controlCharsToSpace(char c);
 std::string trimStringRight(std::string_view s);
+
+std::optional<std::string> getDaemonObjectPathFromPid(const int pid);
+std::string getDaemonNameFromObjectPath(const std::string daemonObjectPath);
+int32_t getDaemonRestartCountFromObjectPath(const std::string daemonObjectPath);
+float getDaemonUptimeFromPid(const int pid, const long ticksPerSec);
 
 } // namespace metric_blob
