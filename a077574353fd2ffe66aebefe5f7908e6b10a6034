@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1168e26_6c47f37a",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2022-12-29T06:45:38Z",
+      "side": 1,
+      "message": "Nit: Is this needed? The code still compiles without the `extern \"C\"`.\nI think this is usually used to get rid of name mangling so CXX code gets easier to access from outside.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76728e82_13efd234",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2022-12-29T06:45:38Z",
+      "side": 1,
+      "message": "Nit: It would be nice if this interval is configurable.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1e458eb_5f788269",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2022-12-29T06:45:38Z",
+      "side": 1,
+      "message": "I guess if you want to optimize, one possible way is to just update the difference, that will cause less DBus signals to be emitted.",
+      "range": {
+        "startLine": 168,
+        "startChar": 22,
+        "endLine": 168,
+        "endChar": 30
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0ab7bbf_232fcf64",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2022-12-29T06:45:38Z",
+      "side": 1,
+      "message": "Maybe remove or print to log?",
+      "range": {
+        "startLine": 187,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 35
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca7be70_15f172cf",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2022-12-29T06:45:38Z",
+      "side": 1,
+      "message": "I guess it would be good to print an error message if this file does not exist?",
+      "range": {
+        "startLine": 214,
+        "startChar": 43,
+        "endLine": 214,
+        "endChar": 65
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed100a20_7d57104a",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2022-12-29T06:45:38Z",
+      "side": 1,
+      "message": "Nit: could move closer to the usage of the variable",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 14
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed0b9956_fe74b497",
+        "filename": "subprojects/metric-collection-daemon/utils.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2022-12-29T06:45:38Z",
+      "side": 1,
+      "message": "Are both versions of this function needed?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
