@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "543b3a37_0ebab18c",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2022-12-29T18:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1168e26_6c47f37a",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "76728e82_13efd234",
         "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
         "patchSetId": 14
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-29T06:45:38Z",
       "side": 1,
       "message": "Nit: It would be nice if this interval is configurable.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa6e8407_30120085",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2022-12-29T18:14:46Z",
+      "side": 1,
+      "message": "This is a good idea. I think for upstream, we can have configurable timers for each metric, then we can change up the implementation to make it configurable. Added a TODO",
+      "parentUuid": "76728e82_13efd234",
       "range": {
         "startLine": 31,
         "startChar": 0,
@@ -83,6 +131,30 @@
       "writtenOn": "2022-12-29T06:45:38Z",
       "side": 1,
       "message": "Maybe remove or print to log?",
+      "range": {
+        "startLine": 187,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 35
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fc3bbaf_de6400e7",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2022-12-29T18:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0ab7bbf_232fcf64",
       "range": {
         "startLine": 187,
         "startChar": 12,
@@ -166,6 +238,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3ba7fc6c_6f53d4eb",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2022-12-29T18:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79c018f_1b2f844f",
+      "range": {
+        "startLine": 214,
+        "startChar": 43,
+        "endLine": 214,
+        "endChar": 65
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ed100a20_7d57104a",
         "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
         "patchSetId": 14
@@ -200,6 +296,30 @@
       "writtenOn": "2022-12-29T06:45:38Z",
       "side": 1,
       "message": "Are both versions of this function needed?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "a077574353fd2ffe66aebefe5f7908e6b10a6034",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb00f23a_eb6bac3c",
+        "filename": "subprojects/metric-collection-daemon/utils.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2022-12-29T18:14:46Z",
+      "side": 1,
+      "message": "Got rid of std::string_view one",
+      "parentUuid": "ed0b9956_fe74b497",
       "range": {
         "startLine": 104,
         "startChar": 0,
