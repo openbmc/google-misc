@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ed0d97e_5e5ae123",
+        "filename": "subprojects/metric-collection-daemon/daemon.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "I think we might not be able to it as static info if we don\u0027t want to unregister/register.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b05782b_20f322f9",
+        "filename": "subprojects/metric-collection-daemon/daemon.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "Does\n\n```\nreply.read(daemonId);\n```\n\nnot work?\n\nI thought that if the variable is `std::string` it will try to do std::get automatically.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5c3938c_c5b5d732",
+        "filename": "subprojects/metric-collection-daemon/meson.build",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "Just\n\n```\nexecutable(\n    \u0027metric-collector\u0027,\n    \u0027metricCollector.cpp\u0027,\n    \u0027daemon.cpp\u0027,\n    \u0027port.cpp\u0027,\n    \u0027utils.cpp\u0027,\n    ...\n```\n\nis fine.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 6
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b1d5af2_e395bc4f",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "for this, I think clearing the vector should be enough and we just need to call\n\n```\nobjServer.remove_interface(metrics);\n```\n\nin the port/daemon\u0027s destructor.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 1
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "267418db_f0706bc0",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "for this, I feel like there is too much overhead on this operation.\n\nInstead of unregister all ports/daemons, we should try to see what ports/daemons are unchanged and don\u0027t remove/add them when we don\u0027t need to.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 1
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb3142ae_46719763",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "this won\u0027t work if the goal is to upstream to OpenBMC\u0027s new repo.",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 0
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "945b6a8b_36f1ef1c",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "nullptr.\n\nSame with all the NULL",
+      "range": {
+        "startLine": 235,
+        "startChar": 29,
+        "endLine": 235,
+        "endChar": 33
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "291dc001_c246f0bf",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "add the ec in the error message.",
+      "range": {
+        "startLine": 261,
+        "startChar": 14,
+        "endLine": 261,
+        "endChar": 66
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "150bd876_7452a402",
+        "filename": "subprojects/metric-collection-daemon/utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "also google specific and won\u0027t work in upstream.\n\nNot sure how we can implement boot info upstream.",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 61
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}

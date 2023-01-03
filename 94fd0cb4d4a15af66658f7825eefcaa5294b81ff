@@ -388,6 +388,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bae4063_3252c28c",
+        "filename": "subprojects/metric-collection-daemon/daemon.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf4f37f2_6bbaff1c",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 25
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db380067_abae2545",
@@ -742,6 +766,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "067b8ec1_d84c985d",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cbbe5ad_6416f233",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-01-03T19:35:13Z",
+      "side": 1,
+      "message": "still an issue?",
+      "parentUuid": "7e05110b_6bbd9761",
       "range": {
         "startLine": 60,
         "startChar": 3,
