@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80d1f637_f57ea05b",
+        "filename": "subprojects/metric-collection-daemon/daemon.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed0d97e_5e5ae123",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b05782b_20f322f9",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-01-03T19:35:13Z",
       "side": 1,
       "message": "Does\n\n```\nreply.read(daemonId);\n```\n\nnot work?\n\nI thought that if the variable is `std::string` it will try to do std::get automatically.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "640a14f1_046ad86b",
+        "filename": "subprojects/metric-collection-daemon/daemon.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Yeah it dosent, i checked the message signature type and its a variant type, so I have to turn it in to a variant first before I get it.",
+      "parentUuid": "1b05782b_20f322f9",
       "range": {
         "startLine": 61,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8fa862c_24b1ae35",
+        "filename": "subprojects/metric-collection-daemon/meson.build",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c3938c_c5b5d732",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 6
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b1d5af2_e395bc4f",
@@ -93,6 +165,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28c471b7_872c9b07",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b1d5af2_e395bc4f",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 1
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "267418db_f0706bc0",
@@ -106,6 +202,30 @@
       "writtenOn": "2023-01-03T19:35:13Z",
       "side": 1,
       "message": "for this, I feel like there is too much overhead on this operation.\n\nInstead of unregister all ports/daemons, we should try to see what ports/daemons are unchanged and don\u0027t remove/add them when we don\u0027t need to.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 1
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2c35642_f22289a6",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "267418db_f0706bc0",
       "range": {
         "startLine": 165,
         "startChar": 0,
@@ -141,6 +261,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "046a2866_d52cf88e",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Yeah this will have to be changed either into patches or another filename.",
+      "parentUuid": "fb3142ae_46719763",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 0
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "945b6a8b_36f1ef1c",
         "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
         "patchSetId": 15
@@ -152,6 +296,30 @@
       "writtenOn": "2023-01-03T19:35:13Z",
       "side": 1,
       "message": "nullptr.\n\nSame with all the NULL",
+      "range": {
+        "startLine": 235,
+        "startChar": 29,
+        "endLine": 235,
+        "endChar": 33
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d211db5_536597fb",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "945b6a8b_36f1ef1c",
       "range": {
         "startLine": 235,
         "startChar": 29,
@@ -185,6 +353,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26d2cca2_262e2940",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "291dc001_c246f0bf",
+      "range": {
+        "startLine": 261,
+        "startChar": 14,
+        "endLine": 261,
+        "endChar": 66
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "150bd876_7452a402",
@@ -198,6 +390,30 @@
       "writtenOn": "2023-01-03T19:35:13Z",
       "side": 1,
       "message": "also google specific and won\u0027t work in upstream.\n\nNot sure how we can implement boot info upstream.",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 61
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfcf74a0_30e56d20",
+        "filename": "subprojects/metric-collection-daemon/utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Yeah this will have to be some persistent data region that is universal",
+      "parentUuid": "150bd876_7452a402",
       "range": {
         "startLine": 120,
         "startChar": 4,

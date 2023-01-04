@@ -800,6 +800,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfca30b8_ce926ae2",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-04T18:47:06Z",
+      "side": 1,
+      "message": "Got rid of it",
+      "parentUuid": "1cbbe5ad_6416f233",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "94fd0cb4d4a15af66658f7825eefcaa5294b81ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a609e9e_1c87a7a7",
