@@ -86,6 +86,30 @@
       },
       "revId": "70ffb8e5d9698a3f3fa0543418d4f6b08f55ba2b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff4575d8_e6347be4",
+        "filename": "subprojects/metric-collection-daemon/port.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2023-01-05T19:22:14Z",
+      "side": 1,
+      "message": "Correction: BMC\u0027s eth0 is at 100 Mbps not MBps",
+      "parentUuid": "2fb9ba4f_e2e6c540",
+      "range": {
+        "startLine": 124,
+        "startChar": 27,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "70ffb8e5d9698a3f3fa0543418d4f6b08f55ba2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
