@@ -236,6 +236,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0493a234_cdab731b",
+        "filename": "subprojects/metric-collection-daemon/metricCollector.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2023-01-05T19:15:37Z",
+      "side": 1,
+      "message": "According to measurements by PCAP, the number of messages emitted by the daemon dropped from ~1600 to ~600 per update interval, this means the optimization here is really nice, and overall, this makes the daemon\u0027s activity more in-line with others (such as ipmid and bmcweb)",
+      "parentUuid": "d2c35642_f22289a6",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 1
+      },
+      "revId": "98e8e4b09b349b4725b4724a98142263bbe65e2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb3142ae_46719763",

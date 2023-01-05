@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "285f51b8_a41200e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2023-01-05T19:15:37Z",
+      "side": 1,
+      "message": "Overall looks good, just some small fixes (manually compared some outputs with htop\u0027s)",
+      "revId": "70ffb8e5d9698a3f3fa0543418d4f6b08f55ba2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c898c1bd_1265b67d",
+        "filename": "subprojects/metric-collection-daemon/daemon.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2023-01-05T19:15:37Z",
+      "side": 1,
+      "message": "Multiply by 4 (assuming 4KB pages)\n\nOne can see when the daemon reports a value of 1512, `htop` reports RES \u003d 6048, so that means 1512 4K-pages totalling 6048KB.",
+      "range": {
+        "startLine": 109,
+        "startChar": 18,
+        "endLine": 109,
+        "endChar": 25
+      },
+      "revId": "70ffb8e5d9698a3f3fa0543418d4f6b08f55ba2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fb9ba4f_e2e6c540",
+        "filename": "subprojects/metric-collection-daemon/port.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000500
+      },
+      "writtenOn": "2023-01-05T19:15:37Z",
+      "side": 1,
+      "message": "Nit: Should this be MBits? On BMC, eth0 shows up as 100 (MBps), on a particular workstation 1000. I think hundreds of Gbps is only achievable by cutting-edge SmartNICs",
+      "range": {
+        "startLine": 124,
+        "startChar": 27,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "70ffb8e5d9698a3f3fa0543418d4f6b08f55ba2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
