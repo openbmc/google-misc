@@ -62,6 +62,30 @@
       },
       "revId": "70ffb8e5d9698a3f3fa0543418d4f6b08f55ba2b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0a45dd0_1be0c7b9",
+        "filename": "subprojects/metric-collection-daemon/port.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2023-01-05T19:22:06Z",
+      "side": 1,
+      "message": "In the schema for Redfish it is listed this way.\n\nhttps://github.com/DMTF/Redfish/blob/021fc2b08d54af50aab719baaaebb7c8d1e4f8f7/metadata/Port_v1.xml#L172\n\nDoes this mean I have to convert to GBps?",
+      "parentUuid": "2fb9ba4f_e2e6c540",
+      "range": {
+        "startLine": 124,
+        "startChar": 27,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "70ffb8e5d9698a3f3fa0543418d4f6b08f55ba2b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
