@@ -4,6 +4,7 @@ subprojects/*
 !subprojects/dhcp-done/
 !subprojects/libcr51sign/
 !subprojects/metrics-ipmi-blobs/
+!subprojects/metric-collection-daemon
 !subprojects/ncsid/
 !subprojects/nemora-postd/
 !subprojects/fmt.wrap
