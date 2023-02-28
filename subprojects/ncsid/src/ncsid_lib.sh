@@ -346,7 +346,7 @@ function MatchingAF() {
 function UpdateIP() {
     local service="$1"
     local netdev="$2"
-    local ip="$3"
+    local ip="$(normalize_ip $3)"
     local prefix="$4"
 
     local should_add=1
@@ -356,7 +356,7 @@ function UpdateIP() {
     while read entry; do
         eval "$(echo "$entry" | JSONToVars)" || return $?
         eval "$(GetIP "$service" "$object" | JSONToVars)" || return $?
-        if [ "$(normalize_ip "$Address")" = "$(normalize_ip "$ip")" ] && \
+        if [ "$(normalize_ip "$Address")" = "$ip" ] && \
             [ "$PrefixLength" = "$prefix" ]; then
             should_add=0
         elif MatchingAF "$ip" "$Address"; then
@@ -370,6 +370,11 @@ function UpdateIP() {
     for (( i=0; i<${#delete_objects[@]}; ++i )); do
         DeleteObject "${delete_services[$i]}" "${delete_objects[$i]}" || true
     done
+
+    # The default address is treated as a delete only request
+    if [ "$ip" = :: -o "$ip" = 0.0.0.0 ]; then
+      return
+    fi
 
     if (( should_add == 0 )); then
         echo "Not adding IP: $ip/$prefix" >&2
