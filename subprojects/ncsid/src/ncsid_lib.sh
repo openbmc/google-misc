@@ -359,7 +359,7 @@ function UpdateIP() {
         if [ "$(normalize_ip "$Address")" = "$ip" ] && \
             [ "$PrefixLength" = "$prefix" ]; then
             should_add=0
-        elif MatchingAF "$ip" "$Address"; then
+        elif MatchingAF "$ip" "$Address" && [[ "$Origin" == *.Static ]]; then
             echo "Deleting spurious IP: $Address/$PrefixLength" >&2
             delete_services+=("$service")
             delete_objects+=("$object")
