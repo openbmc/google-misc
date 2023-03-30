@@ -19,9 +19,15 @@
 #include <stdplus/fd/create.hpp>
 #include <stdplus/fd/ops.hpp>
 
+using namespace std::string_view_literals;
+
 // A privileged port that is reserved for querying BMC DHCP completion.
 // This is well known by the clients querying the status.
 constexpr uint16_t kListenPort = 23;
+enum : uint8_t {
+    DONE = 0,
+    POWERCYCLE = 1,
+};
 
 stdplus::ManagedFd createListener()
 {
@@ -37,8 +43,30 @@ stdplus::ManagedFd createListener()
     return sock;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc != 2)
+    {
+        fmt::print(stderr, "Invalid parameter count\n");
+        return 1;
+    }
+
+    std::vector<uint8_t> data;
+
+    if (argv[1] == "POWERCYCLE"sv)
+    {
+        data.push_back(POWERCYCLE);
+    }
+    else if (argv[1] == "DONE"sv)
+    {
+        data.push_back(DONE);
+    }
+    else
+    {
+        fmt::print(stderr, "Invalid parameter\n");
+        return 1;
+    }
+
     try
     {
         auto listener = createListener();
@@ -46,8 +74,10 @@ int main()
         sdeventplus::source::IO do_accept(
             event, listener.get(), EPOLLIN | EPOLLET,
             [&](sdeventplus::source::IO&, int, uint32_t) {
-                while (stdplus::fd::accept(listener))
-                    ;
+                while (auto fd = stdplus::fd::accept(listener))
+                {
+                    stdplus::fd::sendExact(*fd, data, stdplus::fd::SendFlags(0));
+                }
             });
         return event.loop();
     }
