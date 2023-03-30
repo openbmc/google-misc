@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1c6ccf6_09492926",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-03-30T23:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eafa906f_22ff4e00",
+      "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9d0ac2f_3cec9280",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-03-30T22:21:22Z",
       "side": 1,
       "message": "nit: Prefer making the string constants string view literals and `operator\u003d\u003d` will work without strcmp.\n\n`argv[1] \u003d\u003d \"POWERCYCLE\"sv`\n\nRequires `using namespace std::literals::string_view_literals`",
+      "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8753cab7_35abb4b9",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-03-30T23:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d0ac2f_3cec9280",
       "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2023-03-30T22:21:22Z",
       "side": 1,
       "message": "nit: Shouldn\u0027t need `.value()` here",
+      "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "454d5a85_4fb3d4e7",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-03-30T23:26:09Z",
+      "side": 1,
+      "message": "The complier complains about the std:optional type once I remove it:\n\n| ../../../../../../workspace/sources/dhcp-done/subprojects/dhcp-done/dhcp-done.cpp:79:42: note:   cannot convert \u0027fd\u0027 (type \u0027std::optional\u003cstdplus::fd::DupableFd\u003e\u0027) to type \u0027stdplus::fd::Fd\u0026\u0027\n|    79 |                   stdplus::fd::sendExact(fd, data, stdplus::fd::SendFlags(0));",
+      "parentUuid": "c41a7d4e_2f1f9ec2",
       "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
