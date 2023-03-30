@@ -3,4 +3,4 @@ Description=gBMC DHCP Complete
 
 [Service]
 Restart=on-failure
-ExecStart=@@BIN@ dhcp-done
+ExecStart=@@BIN@ dhcp-done %I
