@@ -44,7 +44,7 @@ systemunitdir = systemd.get_pkgconfig_variable('systemdsystemunitdir')
 
 configure_file(
   configuration: {'BIN': libexecdir / 'dhcp-done'},
-  input: 'dhcp-done.service.in',
-  output: 'dhcp-done.service',
+  input: 'dhcp-done@.service.in',
+  output: 'dhcp-done@.service',
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
