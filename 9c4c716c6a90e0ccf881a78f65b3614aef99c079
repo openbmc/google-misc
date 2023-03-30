@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eafa906f_22ff4e00",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2023-03-30T22:21:22Z",
+      "side": 1,
+      "message": "Can we make these explicit values? Even though c / c++ should never change their values.",
+      "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9d0ac2f_3cec9280",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2023-03-30T22:21:22Z",
+      "side": 1,
+      "message": "nit: Prefer making the string constants string view literals and `operator\u003d\u003d` will work without strcmp.\n\n`argv[1] \u003d\u003d \"POWERCYCLE\"sv`\n\nRequires `using namespace std::literals::string_view_literals`",
+      "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "077d98d4_ad983776",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2023-03-30T22:21:22Z",
+      "side": 1,
+      "message": "Clarify with Ankit if it\u0027s helpful to make this the same empty output as before. I\u0027d prefer to do it the way it\u0027s written now, hopefully it\u0027s not hard to do the `or` op in the installer logic.",
+      "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c41a7d4e_2f1f9ec2",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2023-03-30T22:21:22Z",
+      "side": 1,
+      "message": "nit: Shouldn\u0027t need `.value()` here",
+      "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
