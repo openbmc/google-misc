@@ -157,6 +157,24 @@
       "parentUuid": "454d5a85_4fb3d4e7",
       "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41a4d7ea_406134c5",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-03-31T21:01:00Z",
+      "side": 1,
+      "message": "Done, also verified that sending data doesn\u0027t breaks the current installer port connectivity check.",
+      "parentUuid": "4a716c32_c335723b",
+      "revId": "9c4c716c6a90e0ccf881a78f65b3614aef99c079",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
