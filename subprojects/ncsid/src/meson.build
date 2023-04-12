@@ -89,7 +89,7 @@ install_data(
   install_dir: get_option('libexecdir'))
 
 systemd = dependency('systemd')
-systemunitdir = systemd.get_pkgconfig_variable('systemdsystemunitdir')
+systemunitdir = systemd.get_variable('systemdsystemunitdir')
 
 libexecdir = get_option('prefix') / get_option('libexecdir')
 

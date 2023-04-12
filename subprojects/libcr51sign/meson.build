@@ -16,7 +16,7 @@ project(
   'libcr51sign',
   'c',
   version: '0.1',
-  meson_version: '>=0.57.0',
+  meson_version: '>=0.58.0',
   default_options: [
     'warning_level=3',
     'werror=true',

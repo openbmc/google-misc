@@ -16,7 +16,7 @@ project(
   'dhcp-done',
   'cpp',
   version: '0.1',
-  meson_version: '>=0.57.0',
+  meson_version: '>=0.58.0',
   default_options: [
     'warning_level=3',
     'werror=true',
@@ -40,7 +40,7 @@ executable(
   install_dir: libexecdir)
 
 systemd = dependency('systemd')
-systemunitdir = systemd.get_pkgconfig_variable('systemdsystemunitdir')
+systemunitdir = systemd.get_variable('systemdsystemunitdir')
 
 configure_file(
   configuration: {'BIN': libexecdir / 'dhcp-done'},

@@ -26,7 +26,7 @@ project(
 headers = include_directories('.')
 
 systemd = dependency('systemd')
-systemunitdir = systemd.get_pkgconfig_variable('systemdsystemunitdir')
+systemunitdir = systemd.get_variable('systemdsystemunitdir')
 
 deps = [
   systemd,
