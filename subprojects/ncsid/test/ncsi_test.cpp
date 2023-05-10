@@ -172,8 +172,8 @@ class TestNcsi : public testing::Test
     static constexpr int test_num_states = 9;
 
     // Total number of states in all three state machines.
-    static constexpr int total_num_states =
-        l2_num_states + l3l4_num_states + test_num_states;
+    static constexpr int total_num_states = l2_num_states + l3l4_num_states +
+                                            test_num_states;
 };
 
 TEST_F(TestNcsi, TestMACAddrPropagation)

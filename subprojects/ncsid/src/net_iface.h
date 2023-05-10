@@ -87,8 +87,7 @@ class IFaceBase
 class IFace : public IFaceBase
 {
   public:
-    explicit IFace(const std::string& name) : IFaceBase(name)
-    {}
+    explicit IFace(const std::string& name) : IFaceBase(name) {}
 
     /** @brief Bind given socket to this interface. Similar to bind
      *     syscall, except that it fills in sll_ifindex field

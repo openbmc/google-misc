@@ -83,7 +83,6 @@ struct ACPIPowerState : ACPIPowerStateInherit
 
 int main()
 {
-
     auto b = sdbusplus::bus::new_default();
     sdbusplus::server::manager_t m{b, acpiObjPath};
 

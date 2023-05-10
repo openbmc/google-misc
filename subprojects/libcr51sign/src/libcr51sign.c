@@ -291,7 +291,7 @@ extern "C"
         uint32_t i;
         uint8_t d_region_num = 0;
         int rv;
-        struct image_region const* region;
+        const struct image_region* region;
 
         if (image_regions == NULL)
         {
@@ -738,17 +738,17 @@ extern "C"
             CPRINTS(ctx, "validate_descriptor: unsupported descriptor\n");
             return LIBCR51SIGN_ERROR_UNSUPPORTED_DESCRIPTOR;
         }
-        rv =
-            get_signature_struct_size(signature_scheme, &signature_struct_size);
+        rv = get_signature_struct_size(signature_scheme,
+                                       &signature_struct_size);
         if (rv != LIBCR51SIGN_SUCCESS)
         {
             return rv;
         }
 
         // Compute the size of the signed portion of the image descriptor.
-        signed_size =
-            sizeof(struct image_descriptor) +
-            ctx->descriptor.region_count * sizeof(struct image_region);
+        signed_size = sizeof(struct image_descriptor) +
+                      ctx->descriptor.region_count *
+                          sizeof(struct image_region);
         rv = get_hash_struct_size(ctx->descriptor.hash_type, &hash_struct_size);
         if (rv != LIBCR51SIGN_SUCCESS)
         {
@@ -758,8 +758,8 @@ extern "C"
         if (ctx->descriptor.denylist_size)
         {
             signed_size += sizeof(struct denylist);
-            signed_size +=
-                ctx->descriptor.denylist_size * sizeof(struct denylist_record);
+            signed_size += ctx->descriptor.denylist_size *
+                           sizeof(struct denylist_record);
         }
         if (ctx->descriptor.blob_size)
         {

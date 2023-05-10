@@ -50,9 +50,9 @@ constexpr auto PROP_INTERFACE = "org.freedesktop.DBus.Properties";
 
 int parse_mac(const std::string& mac_addr, mac_addr_t* mac)
 {
-    int ret =
-        sscanf(mac_addr.c_str(), MAC_FORMAT, mac->octet, mac->octet + 1,
-               mac->octet + 2, mac->octet + 3, mac->octet + 4, mac->octet + 5);
+    int ret = sscanf(mac_addr.c_str(), MAC_FORMAT, mac->octet, mac->octet + 1,
+                     mac->octet + 2, mac->octet + 3, mac->octet + 4,
+                     mac->octet + 5);
 
     return ret < 6 ? -1 : 0;
 }
