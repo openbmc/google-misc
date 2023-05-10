@@ -25,8 +25,7 @@ class SockIO
 {
   public:
     SockIO() = default;
-    explicit SockIO(int sockfd) : sockfd_{sockfd}
-    {}
+    explicit SockIO(int sockfd) : sockfd_{sockfd} {}
     virtual ~SockIO();
 
     int get_sockfd() const

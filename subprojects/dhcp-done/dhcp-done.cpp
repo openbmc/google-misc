@@ -33,8 +33,8 @@ enum : uint8_t
 stdplus::ManagedFd createListener()
 {
     using namespace stdplus::fd;
-    auto sock =
-        socket(SocketDomain::INet6, SocketType::Stream, SocketProto::TCP);
+    auto sock = socket(SocketDomain::INet6, SocketType::Stream,
+                       SocketProto::TCP);
     setFileFlags(sock, getFileFlags(sock).set(stdplus::fd::FileFlag::NonBlock));
     sockaddr_in6 addr = {};
     addr.sin6_family = AF_INET6;
@@ -75,11 +75,10 @@ int main(int argc, char* argv[])
         sdeventplus::source::IO do_accept(
             event, listener.get(), EPOLLIN | EPOLLET,
             [&](sdeventplus::source::IO&, int, uint32_t) {
-                while (auto fd = stdplus::fd::accept(listener))
-                {
-                    stdplus::fd::sendExact(*fd, data,
-                                           stdplus::fd::SendFlags(0));
-                }
+            while (auto fd = stdplus::fd::accept(listener))
+            {
+                stdplus::fd::sendExact(*fd, data, stdplus::fd::SendFlags(0));
+            }
             });
         return event.loop();
     }

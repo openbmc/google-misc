@@ -32,8 +32,7 @@ class SockIO : public net::SockIO
   public:
     SockIO() = default;
 
-    explicit SockIO(int sockfd) : net::SockIO(sockfd)
-    {}
+    explicit SockIO(int sockfd) : net::SockIO(sockfd) {}
 
     // This function creates a raw socket and initializes sockfd_.
     // If the default constructor for this class was used,

@@ -72,8 +72,8 @@ bool NCSIFrame::parse_ethernet_frame(const ncsi_buf_t& ncsi_buf)
         payload_offset += sizeof(ncsi_oem_extension_header_t);
     }
 
-    packet_raw_ =
-        std::vector<uint8_t>(ncsi_buf.data, ncsi_buf.data + ncsi_buf.len);
+    packet_raw_ = std::vector<uint8_t>(ncsi_buf.data,
+                                       ncsi_buf.data + ncsi_buf.len);
     // TODO: Verify payload length.
 
     return true;
@@ -100,8 +100,8 @@ uint32_t NIC::handle_request(const ncsi_buf_t& request_buf,
              simple_commands_.end())
     {
         // Simple Response
-        response_size =
-            ncsi_build_simple_ack(request_buf.data, response_buf->data);
+        response_size = ncsi_build_simple_ack(request_buf.data,
+                                              response_buf->data);
     }
     else
     {
@@ -185,8 +185,8 @@ uint32_t NIC::handle_oem_request(const ncsi_buf_t& request_buf,
         }
         break;
         case NCSI_OEM_COMMAND_ECHO:
-            response_size =
-                ncsi_build_oem_echo_ack(request_buf.data, response_buf->data);
+            response_size = ncsi_build_oem_echo_ack(request_buf.data,
+                                                    response_buf->data);
             break;
         case NCSI_OEM_COMMAND_GET_FILTER:
         {
@@ -273,13 +273,11 @@ const ncsi_oem_filter_t& NIC::get_filter(uint8_t channel) const
 
 void NIC::set_hostless(bool is_hostless)
 {
-    auto set_flag_op = [](uint8_t lhs, uint8_t rhs) -> auto
-    {
+    auto set_flag_op = [](uint8_t lhs, uint8_t rhs) -> auto {
         return lhs | rhs;
     };
 
-    auto clear_flag_op = [](uint8_t lhs, uint8_t rhs) -> auto
-    {
+    auto clear_flag_op = [](uint8_t lhs, uint8_t rhs) -> auto {
         return lhs & ~rhs;
     };
 
@@ -287,14 +285,14 @@ void NIC::set_hostless(bool is_hostless)
 
     if (channel_count_ > 0)
     {
-        ch0_filter_.flags =
-            flag_op(ch0_filter_.flags, NCSI_OEM_FILTER_FLAGS_HOSTLESS);
+        ch0_filter_.flags = flag_op(ch0_filter_.flags,
+                                    NCSI_OEM_FILTER_FLAGS_HOSTLESS);
     }
 
     if (channel_count_ > 1)
     {
-        ch1_filter_.flags =
-            flag_op(ch1_filter_.flags, NCSI_OEM_FILTER_FLAGS_HOSTLESS);
+        ch1_filter_.flags = flag_op(ch1_filter_.flags,
+                                    NCSI_OEM_FILTER_FLAGS_HOSTLESS);
     }
 }
 
