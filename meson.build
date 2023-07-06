@@ -43,4 +43,5 @@ if not meson.is_subproject()
   subproject('nemora-postd')
   subproject('libcr51sign')
   subproject('dhcp-done')
+  subproject('espi-control')
 endif
