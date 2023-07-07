@@ -63,7 +63,8 @@ std::string Serializer::SerializeEvent(const NemoraEvent* event)
     pb.set_postcodes_protocol(
         platforms::nemora::proto::EventSeries::NATIVE_32_BIT);
 
-    log<level::INFO>(format("NemoraEvent {}", pb.DebugString()).c_str());
+    log<level::INFO>(
+        format("NemoraEvent {}", pb.DebugString().c_str()).c_str());
     pb.SerializeToString(&result);
     return result;
 }
