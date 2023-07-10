@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8e28944_3d327cb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2023-07-10T23:05:51Z",
+      "side": 1,
+      "message": "I guess - would it make sense to rename this to be more generic since other platforms for other usage may be able utilize this to disable espi? (in that case, we should probably take out the service that heavily associates this with bare metal service)",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
