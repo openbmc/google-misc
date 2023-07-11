@@ -167,6 +167,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f0cdfc76_707227d2",
+        "filename": "subprojects/bare-metal-espi/npcm7xx_espi_control.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2023-07-11T00:57:43Z",
+      "side": 1,
+      "message": "I would wrap all of this logic in a sub function so you can wrap all of it in a larger try { } catch { } block for when the fd operations throw.",
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7193ee19_1900f010",
+        "filename": "subprojects/bare-metal-espi/npcm7xx_espi_control.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2023-07-11T00:57:43Z",
+      "side": 1,
+      "message": "Don\u0027t save it as an xvalue reference. Just prefer auto really.",
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bcd0c332_128db366",
         "filename": "subprojects/bare-metal-espi/npcm7xx_espi_control.cpp",
         "patchSetId": 3
