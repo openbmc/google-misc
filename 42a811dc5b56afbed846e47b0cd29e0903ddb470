@@ -46,6 +46,30 @@
       },
       "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c98e971_688e3c9f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2023-07-11T00:00:00Z",
+      "side": 1,
+      "message": "If both are generic executables, could we perhaps consolidate / use them as we see fit in the meta-google layer change instead for the BM case?",
+      "parentUuid": "f05d9f20_e6439f44",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
