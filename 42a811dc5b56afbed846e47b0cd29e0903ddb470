@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c5a2f5e_74ab996a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-07-11T20:10:08Z",
+      "side": 1,
+      "message": "We can probably do that at least for this espi-control executable.\n\nThe other post complete monitor daemon seems more specialized for the bare metal use case, since it\u0027s monitoring when the host is trusted vs. untrusted. I intend for this daemon to stop the bare-metal-active systemd target when the post complete GPIO gets deasserted.\n\nIn summary, these are all the components I need to implement:\n- new IPMI command in google-ipmi-sys, introduced here: https://gerrit.openbmc.org/c/openbmc/google-ipmi-sys/+/64689\n- Create a recipe in meta-google with the bare-metal-active systemd target (this is currently part of the new IPMI command commit, but it might make sense to pull this into a separate recipe, since the post complete monitor also needs this).\n- espi-control executable, introduced in this commit. This commit won\u0027t have a systemd service.\n- Create a new bare-metal-espi recipe in meta-google, which adds a systemd service for espi-control (instead of doing that in this CL).\n- Create a post-complete-monitor daemon, which will live in google-misc, as well. This commit will include a systemd service, since the daemon needs to start at boot. This daemon will stop the bare-metal-active systemd target when post complete is deasserted.\n\nIs this sort of what you have in mind?",
+      "parentUuid": "6c98e971_688e3c9f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da5da08c_39b5dff4",
         "filename": "subprojects/bare-metal-espi/meson.build",
         "patchSetId": 3
