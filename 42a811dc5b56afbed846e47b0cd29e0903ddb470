@@ -143,6 +143,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b825d538_5be55112",
+        "filename": "subprojects/bare-metal-espi/meson.build",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-07-11T23:47:23Z",
+      "side": 1,
+      "message": "Yeah, I chose that version because it\u0027s in the top level build file.",
+      "parentUuid": "c9904c5a_a433bfe0",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 26
+      },
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03958a24_aec19ef7",
@@ -156,6 +180,30 @@
       "writtenOn": "2023-07-11T00:23:57Z",
       "side": 1,
       "message": "`static_cast\u003cuintptr_t\u003e`",
+      "range": {
+        "startLine": 87,
+        "startChar": 23,
+        "endLine": 87,
+        "endChar": 34
+      },
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "585df860_457e7468",
+        "filename": "subprojects/bare-metal-espi/npcm7xx_espi_control.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-07-11T23:47:23Z",
+      "side": 1,
+      "message": "I needed to use reinterpret_cast here, but I changed it.",
+      "parentUuid": "03958a24_aec19ef7",
       "range": {
         "startLine": 87,
         "startChar": 23,
@@ -189,6 +237,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bd9394d_2610cef5",
+        "filename": "subprojects/bare-metal-espi/npcm7xx_espi_control.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-07-11T23:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff9dc188_6f5d640c",
+      "range": {
+        "startLine": 91,
+        "startChar": 11,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0cdfc76_707227d2",
@@ -202,6 +274,24 @@
       "writtenOn": "2023-07-11T00:57:43Z",
       "side": 1,
       "message": "I would wrap all of this logic in a sub function so you can wrap all of it in a larger try { } catch { } block for when the fd operations throw.",
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b44ed264_53a5bffd",
+        "filename": "subprojects/bare-metal-espi/npcm7xx_espi_control.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-07-11T23:47:23Z",
+      "side": 1,
+      "message": "I moved all the register reads and writes into a separate function.",
+      "parentUuid": "f0cdfc76_707227d2",
       "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -223,6 +313,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da45f102_1fc492f8",
+        "filename": "subprojects/bare-metal-espi/npcm7xx_espi_control.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-07-11T23:47:23Z",
+      "side": 1,
+      "message": "Done. I changed it to auto.",
+      "parentUuid": "7193ee19_1900f010",
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcd0c332_128db366",
@@ -236,6 +344,30 @@
       "writtenOn": "2023-07-11T00:23:57Z",
       "side": 1,
       "message": "do we need delays in between setting the registers? Does the sequence always work?",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 194,
+        "endChar": 35
+      },
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "560c40ab_291def31",
+        "filename": "subprojects/bare-metal-espi/npcm7xx_espi_control.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-07-11T23:47:23Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s any timing requirement for a delay. I haven\u0027t had any problems with this sequence.",
+      "parentUuid": "bcd0c332_128db366",
       "range": {
         "startLine": 185,
         "startChar": 12,
