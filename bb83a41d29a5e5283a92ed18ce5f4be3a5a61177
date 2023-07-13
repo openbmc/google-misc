@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f5dba6e_053b9383",
+        "filename": "subprojects/espi-control/meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-07-13T21:42:56Z",
+      "side": 1,
+      "message": "should rebase and update meson to 1.1.1 and cpp_std to c++23 now,",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "bb83a41d29a5e5283a92ed18ce5f4be3a5a61177",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
