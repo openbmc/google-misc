@@ -22,6 +22,29 @@
       },
       "revId": "bb83a41d29a5e5283a92ed18ce5f4be3a5a61177",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12040136_0186e386",
+        "filename": "subprojects/espi-control/npcm7xx_espi_control.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-07-13T21:44:22Z",
+      "side": 1,
+      "message": "if only `fmt::format` is used, then prefer\n\n```\n#include \u003cformat\u003e\n```\n\nand use `std::format` instead.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 18
+      },
+      "revId": "bb83a41d29a5e5283a92ed18ce5f4be3a5a61177",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
