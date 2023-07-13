@@ -96,6 +96,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4ef65ea_90b928e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2023-07-13T17:35:58Z",
+      "side": 1,
+      "message": "Talked offline - we will go with this being generic - and then the post complete monitor daemon having the dependency to google-ipmi-sys",
+      "parentUuid": "9c5a2f5e_74ab996a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "42a811dc5b56afbed846e47b0cd29e0903ddb470",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da5da08c_39b5dff4",
