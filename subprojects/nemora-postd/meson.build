@@ -28,7 +28,6 @@ phosphor_dbus_interfaces = dependency('phosphor-dbus-interfaces')
 sdbusplus = dependency('sdbusplus')
 threads = dependency('threads')
 logging = dependency('phosphor-logging')
-fmt = declare_dependency(compile_args: '-DFMT_STRING_ALIAS=1', dependencies: dependency('fmt'))
 
 protoc = find_program('protoc', native: true)
 
@@ -55,7 +54,7 @@ executable(
   'src/serializer.cpp',
   proto,
   include_directories: include_directories('.'),
-  dependencies: [protobuf, phosphor_dbus_interfaces, sdbusplus, threads, logging, fmt],
+  dependencies: [protobuf, phosphor_dbus_interfaces, sdbusplus, threads, logging],
   install: true
 )
 

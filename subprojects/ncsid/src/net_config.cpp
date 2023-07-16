@@ -14,7 +14,6 @@
 
 #include "net_config.h"
 
-#include <fmt/format.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -27,6 +26,7 @@
 #include <cstdio>
 #include <cstring>
 #include <filesystem>
+#include <format>
 #include <utility>
 #include <variant>
 
@@ -138,16 +138,16 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
 
     try
     {
-        auto netdir = fmt::format("/run/systemd/network/00-bmc-{}.network.d",
+        auto netdir = std::format("/run/systemd/network/00-bmc-{}.network.d",
                                   iface_name_);
         std::filesystem::create_directories(netdir);
-        auto netfile = fmt::format("{}/60-ncsi-mac.conf", netdir);
+        auto netfile = std::format("{}/60-ncsi-mac.conf", netdir);
         auto fd = stdplus::fd::open(
             netfile,
             stdplus::fd::OpenFlags(stdplus::fd::OpenAccess::WriteOnly)
                 .set(stdplus::fd::OpenFlag::Create),
             0644);
-        auto contents = fmt::format("[Link]\nMACAddress={}\n",
+        auto contents = std::format("[Link]\nMACAddress={}\n",
                                     std::get<std::string>(mac_value));
         stdplus::fd::writeExact(fd, contents);
     }

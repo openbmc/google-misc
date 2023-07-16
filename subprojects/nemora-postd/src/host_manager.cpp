@@ -14,17 +14,14 @@
 
 #include "host_manager.hpp"
 
-#include <fmt/format.h>
-
 #include <phosphor-logging/log.hpp>
 #include <sdbusplus/bus.hpp>
 #include <sdbusplus/message.hpp>
 
+#include <format>
 #include <functional>
-#include <iostream>
 #include <variant>
 
-using fmt::format;
 using phosphor::logging::level;
 using phosphor::logging::log;
 
@@ -79,7 +76,7 @@ std::vector<uint64_t> HostManager::DrainPostcodes()
     auto count = postcodes_.size();
     if (count > 0)
     {
-        std::string msg = format("Draining Postcodes. Count: {}.", count);
+        std::string msg = std::format("Draining Postcodes. Count: {}.", count);
         log<level::ERR>(msg.c_str());
     }
 

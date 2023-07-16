@@ -17,15 +17,14 @@
 #include "serializer.hpp"
 
 #include <errno.h>
-#include <fmt/format.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
 #include <phosphor-logging/log.hpp>
 
 #include <cstring>
+#include <format>
 
-using fmt::format;
 using phosphor::logging::level;
 using phosphor::logging::log;
 
@@ -59,10 +58,11 @@ void SocketManager::SendDatagram(const NemoraDatagram* bcast)
                       sizeof(bcast->destination6));
     if (err < 0)
     {
-        log<level::ERR>(format("SocketManager::SendDatagram: Couldn't sendto "
-                               "socket (IPv6): {}",
-                               std::strerror(errno))
-                            .c_str());
+        log<level::ERR>(
+            std::format("SocketManager::SendDatagram: Couldn't sendto "
+                        "socket (IPv6): {}",
+                        std::strerror(errno))
+                .c_str());
     }
 
     // Send serialized data (v4)
@@ -71,10 +71,11 @@ void SocketManager::SendDatagram(const NemoraDatagram* bcast)
                  sizeof(bcast->destination));
     if (err < 0)
     {
-        log<level::ERR>(format("SocketManager::SendDatagram: Couldn't sendto "
-                               "socket (IPv4): {}",
-                               std::strerror(errno))
-                            .c_str());
+        log<level::ERR>(
+            std::format("SocketManager::SendDatagram: Couldn't sendto "
+                        "socket (IPv4): {}",
+                        std::strerror(errno))
+                .c_str());
     }
 
     CloseSocketSafely(fd);

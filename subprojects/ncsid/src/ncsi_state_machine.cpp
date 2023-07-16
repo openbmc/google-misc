@@ -19,7 +19,6 @@
 #include "platforms/nemora/portable/ncsi_fsm.h"
 
 #include <arpa/inet.h>
-#include <fmt/format.h>
 #include <fmt/printf.h>
 #include <netinet/ether.h>
 #include <unistd.h>
@@ -28,7 +27,6 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
-#include <iostream>
 #include <string>
 #include <thread>
 #include <utility>

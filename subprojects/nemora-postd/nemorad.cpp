@@ -18,21 +18,18 @@
 #include "src/nemora.hpp"
 
 #include <arpa/inet.h>
-#include <fmt/format.h>
 
 #include <CLI/CLI.hpp>
 #include <phosphor-logging/log.hpp>
 
 #include <csignal>
 #include <cstdint>
-#include <iostream>
 #include <regex>
 #include <string>
 #include <thread>
 #include <unordered_map>
 #include <vector>
 
-using fmt::format;
 using phosphor::logging::level;
 using phosphor::logging::log;
 

@@ -16,11 +16,10 @@
 
 #include "event_message.pb.h"
 
-#include <fmt/format.h>
-
 #include <phosphor-logging/log.hpp>
 
-using fmt::format;
+#include <format>
+
 using phosphor::logging::level;
 using phosphor::logging::log;
 
@@ -34,9 +33,9 @@ std::string Serializer::Serialize(const NemoraDatagram* dgram)
             break;
         default:
             log<level::ERR>(
-                format("Type with ID {} not supported by "
-                       "Serializer::Serialize(const NemoraDatagram*)",
-                       static_cast<int>(dgram->type))
+                std::format("Type with ID {} not supported by "
+                            "Serializer::Serialize(const NemoraDatagram*)",
+                            static_cast<int>(dgram->type))
                     .c_str());
     }
 
@@ -64,7 +63,7 @@ std::string Serializer::SerializeEvent(const NemoraEvent* event)
         platforms::nemora::proto::EventSeries::NATIVE_32_BIT);
 
     log<level::INFO>(
-        format("NemoraEvent {}", pb.DebugString().c_str()).c_str());
+        std::format("NemoraEvent {}", pb.DebugString().c_str()).c_str());
     pb.SerializeToString(&result);
     return result;
 }
