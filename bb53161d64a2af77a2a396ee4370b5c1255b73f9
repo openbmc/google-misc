@@ -16,6 +16,23 @@
       "message": "Should we get rid of the fmt.wrap file too while we\u0027re at it",
       "revId": "bb53161d64a2af77a2a396ee4370b5c1255b73f9",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a53525d_f116e341",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2023-07-16T21:07:31Z",
+      "side": 1,
+      "message": "Yes, get rid of the dependency",
+      "revId": "bb53161d64a2af77a2a396ee4370b5c1255b73f9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
