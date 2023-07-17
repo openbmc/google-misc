@@ -25,6 +25,7 @@
 
 #include <chrono>
 #include <cstdint>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <string>
@@ -48,9 +49,9 @@ static void do_log(std::string&& line)
     {
         if (line_rep_count > 0)
         {
-            fmt::print(stderr, "... Repeated {} times ...\n", line_rep_count);
+            fprintf(stderr, "... Repeated %zu times ...\n", line_rep_count);
         }
-        fmt::print(stderr, "{}", line);
+        fprintf(stderr, "%s", line.c_str());
         last_line = std::move(line);
         last_line_time = now;
         line_rep_count = 0;
