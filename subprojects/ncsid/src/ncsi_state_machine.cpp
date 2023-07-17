@@ -19,7 +19,7 @@
 #include "platforms/nemora/portable/ncsi_fsm.h"
 
 #include <arpa/inet.h>
-#include <fmt/printf.h>
+#include <format/print.h>
 #include <netinet/ether.h>
 #include <unistd.h>
 
@@ -27,6 +27,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <format>
 #include <string>
 #include <thread>
 #include <utility>
@@ -61,7 +62,7 @@ static void do_log(std::string&& line)
     }
 }
 
-#define CPRINTF(...) do_log(fmt::sprintf(__VA_ARGS__))
+#define CLOGF(...) do_log(std::format(__VA_ARGS__))
 
 #ifdef NCSID_VERBOSE_LOGGING
 #define DEBUG_PRINTF printf
@@ -131,7 +132,7 @@ StateMachine::StateMachine()
 
 StateMachine::~StateMachine()
 {
-    CPRINTF("[NCSI stopping]\n");
+    CLOGF("[NCSI stopping]\n");
 }
 
 size_t StateMachine::poll_l2_config()
@@ -200,7 +201,7 @@ size_t StateMachine::poll_simple(ncsi_simple_poll_f poll_func)
                            NCSI_LINK_STATUS_UP;
         if (!link_up_ || new_link_up != *link_up_)
         {
-            CPRINTF("[NCSI link %s]\n", new_link_up ? "up" : "down");
+            CLOGF("[NCSI link {}]\n", new_link_up ? "up" : "down");
             link_up_ = new_link_up;
         }
     }
@@ -214,8 +215,8 @@ size_t StateMachine::poll_simple(ncsi_simple_poll_f poll_func)
             bool new_hostless = ncsi_fsm_is_nic_hostless(&ncsi_state_);
             if (!hostless_ || new_hostless != *hostless_)
             {
-                CPRINTF("[NCSI nic %s]\n",
-                        new_hostless ? "hostless" : "hostfull");
+                CLOGF("[NCSI nic {}]\n",
+                      new_hostless ? "hostless" : "hostfull");
                 net_config_->set_nic_hostless(new_hostless);
                 hostless_ = new_hostless;
             }
@@ -241,27 +242,26 @@ void StateMachine::report_ncsi_error(ncsi_response_type_t response_type)
             if (!ncsi_buf_.len)
             {
                 network_debug_.ncsi.rx_error.timeout_count++;
-                CPRINTF("[NCSI timeout in state %s]\n", state_string);
+                CLOGF("[NCSI timeout in state {}]\n", state_string);
             }
             else
             {
                 network_debug_.ncsi.rx_error.undersized_count++;
-                CPRINTF("[NCSI undersized response in state %s]\n",
-                        state_string);
+                CLOGF("[NCSI undersized response in state {}]\n", state_string);
             }
             break;
         case NCSI_RESPONSE_NACK:
             network_debug_.ncsi.rx_error.nack_count++;
-            CPRINTF(
-                "[NCSI nack in state %s. Response: 0x%04x Reason: 0x%04x]\n",
+            CLOGF(
+                "[NCSI nack in state {}. Response: {:#04x} Reason: {:#04x}]\n",
                 state_string, ntohs(response->response_code),
                 ntohs(response->reason_code));
             break;
         case NCSI_RESPONSE_UNEXPECTED_TYPE:
             network_debug_.ncsi.rx_error.unexpected_type_count++;
-            CPRINTF("[NCSI unexpected response in state %s. Response type: "
-                    "0x%02x]\n",
-                    state_string, response->hdr.control_packet_type);
+            CLOGF(
+                "[NCSI unexpected response in state {}. Response type: {:#02x}]\n",
+                state_string, response->hdr.control_packet_type);
             break;
         case NCSI_RESPONSE_UNEXPECTED_SIZE:
         {
@@ -281,24 +281,23 @@ void StateMachine::report_ncsi_error(ncsi_response_type_t response_type)
                     response->hdr.control_packet_type & (~NCSI_RESPONSE));
             }
             network_debug_.ncsi.rx_error.unexpected_size_count++;
-            CPRINTF("[NCSI unexpected response size in state %s."
-                    " Expected %d]\n",
-                    state_string, expected_size);
+            CLOGF("[NCSI unexpected response size in state {}. Expected {}]\n",
+                  state_string, expected_size);
         }
         break;
         case NCSI_RESPONSE_OEM_FORMAT_ERROR:
             network_debug_.ncsi.rx_error.unexpected_type_count++;
-            CPRINTF("[NCSI OEM format error]\n");
+            CLOGF("[NCSI OEM format error]\n");
             break;
         case NCSI_RESPONSE_UNEXPECTED_PARAMS:
-            CPRINTF("[NCSI OEM Filter MAC or TCP/IP Config Mismatch]\n");
+            CLOGF("[NCSI OEM Filter MAC or TCP/IP Config Mismatch]\n");
             break;
         default:
             /* NCSI_RESPONSE_ACK and NCSI_RESPONSE_NONE are not errors and need
              * not be handled here, so this branch is just to complete the
              * switch.
              */
-            CPRINTF("[NCSI OK]\n");
+            CLOGF("[NCSI OK]\n");
             break;
     }
 }
@@ -343,10 +342,10 @@ void StateMachine::run(int max_rounds)
 {
     if (!net_config_ || !sock_io_)
     {
-        CPRINTF("StateMachine configuration incomplete: "
-                "net_config_: <%p>, sock_io_: <%p>",
-                reinterpret_cast<void*>(net_config_),
-                reinterpret_cast<void*>(sock_io_));
+        CLOGF("StateMachine configuration incomplete: "
+              "net_config_: <{}>, sock_io_: <{}>",
+              reinterpret_cast<void*>(net_config_),
+              reinterpret_cast<void*>(sock_io_));
         return;
     }
 
