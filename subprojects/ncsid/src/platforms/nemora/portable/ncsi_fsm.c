@@ -16,7 +16,7 @@
 
 #include <string.h>
 
-#include <arpa/inet.h>
+#include <netinet/in.h>
 
 #include "platforms/nemora/portable/ncsi.h"
 #include "platforms/nemora/portable/ncsi_client.h"

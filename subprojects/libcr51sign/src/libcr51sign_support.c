@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+#include <libcr51sign/libcr51sign.h>
 #include <libcr51sign/libcr51sign_support.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
 #include <stdio.h>
-#include <string.h>
 
 #ifdef __cplusplus
 extern "C"

@@ -18,12 +18,11 @@
 
 #include "platforms/nemora/portable/ncsi.h"
 #include "platforms/nemora/portable/ncsi_fsm.h"
-#include "platforms/nemora/portable/ncsi_server.h"
+#include "platforms/nemora/portable/net_types.h"
 
 #include <netinet/in.h>
 
 #include <cstdint>
-#include <cstring>
 #include <vector>
 
 namespace mock

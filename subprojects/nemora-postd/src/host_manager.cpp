@@ -19,7 +19,6 @@
 #include <sdbusplus/message.hpp>
 
 #include <format>
-#include <functional>
 #include <variant>
 
 using phosphor::logging::level;

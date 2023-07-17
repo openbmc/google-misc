@@ -14,6 +14,9 @@
 
 #include "net_iface_mock.h"
 
+#include <memory>
+
+#include "gtest/gtest.h"
 #include <gtest/gtest.h>
 
 TEST(TestIFace, TestGetIndex)

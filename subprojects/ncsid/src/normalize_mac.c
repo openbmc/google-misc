@@ -15,6 +15,7 @@
  */
 
 #include <inttypes.h>
+#include <linux/if_ether.h>
 #include <net/ethernet.h>
 #include <stdio.h>
 
