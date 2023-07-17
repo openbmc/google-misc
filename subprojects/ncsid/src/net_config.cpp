@@ -26,7 +26,6 @@
 #include <cstdio>
 #include <cstring>
 #include <filesystem>
-#include <format>
 #include <utility>
 #include <variant>
 
@@ -91,7 +90,7 @@ int PhosphorConfig::get_mac_addr(mac_addr_t* mac)
 {
     if (mac == nullptr)
     {
-        fmt::print(stderr, "mac is nullptr\n");
+        fprintf(stderr, "mac is nullptr\n");
         return -1;
     }
 
@@ -113,14 +112,14 @@ int PhosphorConfig::get_mac_addr(mac_addr_t* mac)
         }
         catch (const sdbusplus::exception::SdBusError& ex)
         {
-            fmt::print(stderr, "Failed to get MACAddress: {}\n", ex.what());
+            fprintf(stderr, "Failed to get MACAddress: %s\n", ex.what());
             return -1;
         }
 
         if (parse_mac(mac_string, mac) < 0)
         {
-            fmt::print(stderr, "Failed to parse MAC Address `{}`\n",
-                       mac_string);
+            fprintf(stderr, "Failed to parse MAC Address `%s`\n",
+                    mac_string.c_str());
             return -1;
         }
 
@@ -153,8 +152,8 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
     }
     catch (const std::exception& ex)
     {
-        fmt::print(stderr, "Failed to set MAC Addr `{}` writing file: {}\n",
-                   std::get<std::string>(mac_value), ex.what());
+        fprintf(stderr, "Failed to set MAC Addr `%s` writing file: %s\n",
+                std::get<std::string>(mac_value).c_str(), ex.what());
         return -1;
     }
 
@@ -164,8 +163,8 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
     }
     catch (const sdbusplus::exception::SdBusError& ex)
     {
-        fmt::print(stderr, "Failed to set MAC Addr `{}`: {}\n",
-                   std::get<std::string>(mac_value), ex.what());
+        fprintf(stderr, "Failed to set MAC Addr `%s`: %s\n",
+                   std::get<std::string>(mac_value).c_str(), ex.what());
         return -1;
     }
 
@@ -214,7 +213,7 @@ int PhosphorConfig::set_nic_hostless(bool is_nic_hostless)
     }
     catch (const sdbusplus::exception::SdBusError& ex)
     {
-        fmt::print(stderr, "Failed to set systemd nic status: {}\n", ex.what());
+        fprintf(stderr, "Failed to set systemd nic status: %s\n", ex.what());
         return 1;
     }
 }
