@@ -15,7 +15,13 @@
 #include "ncsi_sockio.h"
 #include "net_iface_mock.h"
 
-#include <gmock/gmock.h>
+#include <linux/if.h>
+
+#include <vector>
+
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 TEST(TestSockIO, TestBind)
 {

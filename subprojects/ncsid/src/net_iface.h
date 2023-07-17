@@ -18,12 +18,8 @@
 
 #include <linux/if.h>
 #include <linux/if_packet.h>
-#include <net/ethernet.h>
-#include <netinet/in.h>
-#include <sys/ioctl.h>
 #include <sys/socket.h>
 
-#include <functional>
 #include <string>
 
 namespace net

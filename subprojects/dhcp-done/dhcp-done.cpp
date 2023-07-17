@@ -19,6 +19,8 @@
 #include <stdplus/fd/create.hpp>
 #include <stdplus/fd/ops.hpp>
 
+#include <iostream>
+
 using namespace std::string_view_literals;
 
 // A privileged port that is reserved for querying BMC DHCP completion.

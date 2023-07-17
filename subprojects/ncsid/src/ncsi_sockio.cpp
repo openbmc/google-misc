@@ -18,13 +18,14 @@
 #include "net_iface.h"
 
 #include <linux/filter.h>
+#include <linux/if.h>
+#include <linux/if_ether.h>
 #include <netinet/in.h>
 #include <poll.h>
 #include <sys/socket.h>
-#include <sys/types.h>
 
-#include <cstdio>
 #include <cstring>
+#include <iterator>
 
 namespace ncsi
 {

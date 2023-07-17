@@ -20,6 +20,7 @@
 /* Nemora NC-SI (Finite) State Machine implementation */
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #include "platforms/nemora/portable/ncsi.h"
 #include "platforms/nemora/portable/net_types.h"

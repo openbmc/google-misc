@@ -19,10 +19,9 @@
 #include "net_iface.h"
 #include "net_sockio.h"
 
-#include <sys/socket.h>
+#include <linux/if_packet.h>
 
 #include <cstddef>
-#include <cstring>
 
 namespace ncsi
 {

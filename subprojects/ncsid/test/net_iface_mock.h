@@ -18,6 +18,7 @@
 
 #include <net_iface.h>
 
+#include <string>
 #include <vector>
 
 namespace mock

@@ -15,9 +15,11 @@
 #include "nic_mock.h"
 
 #include "platforms/nemora/portable/ncsi.h"
+#include "platforms/nemora/portable/ncsi_server.h"
 
 #include <algorithm>
 #include <cstddef>
+#include <cstring>
 #include <stdexcept>
 
 namespace mock

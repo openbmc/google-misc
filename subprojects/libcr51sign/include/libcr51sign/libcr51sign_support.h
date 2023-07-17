@@ -16,8 +16,6 @@
 #ifndef PLATFORMS_HAVEN_LIBCR51SIGN_LIBCR51SIGN_SUPPORT_H_
 #define PLATFORMS_HAVEN_LIBCR51SIGN_LIBCR51SIGN_SUPPORT_H_
 
-#include "libcr51sign.h"
-
 #include <openssl/sha.h>
 
 #ifdef __cplusplus

@@ -26,8 +26,6 @@
 
 #include <cstdint>
 #include <cstring>
-#include <functional>
-#include <iostream>
 #include <variant>
 
 using phosphor::logging::level;

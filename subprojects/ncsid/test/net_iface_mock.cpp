@@ -14,6 +14,9 @@
 
 #include "net_iface_mock.h"
 
+#include <linux/if.h>
+#include <sys/ioctl.h>
+
 namespace mock
 {
 
