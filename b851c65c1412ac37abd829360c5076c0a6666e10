@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e9f18ac_9bc27c02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-07-18T06:17:34Z",
+      "side": 1,
+      "message": "oh wait, I thought that was also the case... So it seems like the change in https://gerrit.openbmc.org/c/openbmc/google-misc/+/65058 is not valid?",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "b851c65c1412ac37abd829360c5076c0a6666e10",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
