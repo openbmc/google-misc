@@ -26,6 +26,7 @@
 #include <cstdio>
 #include <cstring>
 #include <filesystem>
+#include <fmt/format.h>
 #include <format>
 #include <utility>
 #include <variant>
