@@ -14,6 +14,7 @@
 
 #include "net_config.h"
 
+#include <fmt/core.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
