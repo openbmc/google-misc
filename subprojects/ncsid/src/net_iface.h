@@ -55,7 +55,7 @@ class IFaceBase
      *     syscall, except that it fills in sll_ifindex field
      *     of struct sockaddr_ll with the index of this interface.
      */
-    virtual int bind_sock(int sockfd, struct sockaddr_ll* saddr) const = 0;
+    virtual int bind_sock(int sockfd) const = 0;
 
   protected:
     std::string name_;
@@ -89,7 +89,7 @@ class IFace : public IFaceBase
      *     syscall, except that it fills in sll_ifindex field
      *     of struct sockaddr_ll with the index of this interface.
      */
-    int bind_sock(int sockfd, struct sockaddr_ll* saddr) const override;
+    int bind_sock(int sockfd) const override;
 
   private:
     /** @brief Similar to ioctl syscall, but the socket is created inside

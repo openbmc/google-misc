@@ -20,7 +20,7 @@
 namespace mock
 {
 
-int IFace::bind_sock(int sockfd, struct sockaddr_ll*) const
+int IFace::bind_sock(int sockfd) const
 {
     bound_socks.push_back(sockfd);
     return 0;
