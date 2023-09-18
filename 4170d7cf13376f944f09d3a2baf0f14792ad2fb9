@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8afd0981_0b2870cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-09-18T22:19:54Z",
+      "side": 1,
+      "message": "how will we support\n\n```\nreturn bind(sockfd, reinterpret_cast\u003cstruct sockaddr*\u003e(saddr),\n                sizeof(*saddr));\n```\nin `bind_sock`?",
+      "parentUuid": "d72cabe3_b0af29f6",
+      "revId": "4170d7cf13376f944f09d3a2baf0f14792ad2fb9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "86814be0_7d8f6ebe",
         "filename": "subprojects/ncsid/src/meson.build",
         "patchSetId": 1
