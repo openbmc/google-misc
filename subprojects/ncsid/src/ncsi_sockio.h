@@ -51,8 +51,8 @@ class SockIO : public net::SockIO
     int recv(void* buf, size_t maxlen) override;
 
   private:
-    struct sockaddr_ll sock_addr_;
     const int kpoll_timeout_ = 10;
+    struct sockaddr_ll sock_addr_;
 };
 
 } // namespace ncsi

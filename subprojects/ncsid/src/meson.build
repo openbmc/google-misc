@@ -33,6 +33,8 @@ ncsid_deps = [
   dependency('stdplus', fallback: ['stdplus', 'stdplus_dep']),
 ]
 
+add_project_arguments('-Wno-pedantic', language : 'cpp')
+
 ncsid_lib = static_library(
   'ncsid',
   [
