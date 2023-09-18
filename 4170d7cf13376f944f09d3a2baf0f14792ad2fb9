@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d72cabe3_b0af29f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2023-09-18T22:07:29Z",
+      "side": 1,
+      "message": "How about we just delete the usage of the sockaddr from the class, it only gets used in one member function.",
+      "revId": "4170d7cf13376f944f09d3a2baf0f14792ad2fb9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "86814be0_7d8f6ebe",
         "filename": "subprojects/ncsid/src/meson.build",
         "patchSetId": 1
