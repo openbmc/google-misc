@@ -14,7 +14,9 @@
 
 #include "net_iface.h"
 
+#include <arpa/inet.h>
 #include <linux/if.h>
+#include <linux/if_ether.h>
 #include <linux/if_packet.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
@@ -99,17 +101,15 @@ int IFace::ioctl_sock(int sockfd, int request, struct ifreq* ifr) const
     return ::ioctl(sockfd, request, ifr);
 }
 
-int IFace::bind_sock(int sockfd, struct sockaddr_ll* saddr) const
+int IFace::bind_sock(int sockfd) const
 {
-    if (saddr == nullptr)
-    {
-        return -1;
-    }
-
-    saddr->sll_ifindex = get_index();
-
-    return bind(sockfd, reinterpret_cast<struct sockaddr*>(saddr),
-                sizeof(*saddr));
+    struct sockaddr_ll saddr;
+    std::memset(&saddr, 0, sizeof(saddr));
+    saddr.sll_family = AF_PACKET;
+    saddr.sll_protocol = htons(ETH_P_ALL);
+    saddr.sll_ifindex = get_index();
+    return bind(sockfd, reinterpret_cast<struct sockaddr*>(&saddr),
+                sizeof(saddr));
 }
 
 int IFace::ioctl(int request, struct ifreq* ifr) const

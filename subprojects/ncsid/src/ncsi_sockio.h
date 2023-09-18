@@ -19,8 +19,6 @@
 #include "net_iface.h"
 #include "net_sockio.h"
 
-#include <linux/if_packet.h>
-
 #include <cstddef>
 
 namespace ncsi
@@ -51,7 +49,6 @@ class SockIO : public net::SockIO
     int recv(void* buf, size_t maxlen) override;
 
   private:
-    struct sockaddr_ll sock_addr_;
     const int kpoll_timeout_ = 10;
 };
 

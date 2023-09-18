@@ -41,12 +41,7 @@ int SockIO::bind_to_iface(const net::IFaceBase& iface)
 {
     iface.set_sock_flags(sockfd_, IFF_PROMISC);
 
-    std::memset(&sock_addr_, 0, sizeof(sock_addr_));
-
-    sock_addr_.sll_family = AF_PACKET;
-    sock_addr_.sll_protocol = htons(ETH_P_ALL);
-
-    RETURN_IF_ERROR(iface.bind_sock(sockfd_, &sock_addr_),
+    RETURN_IF_ERROR(iface.bind_sock(sockfd_),
                     "ncsi::SockIO::bind_to_iface failed");
 
     return 0;
