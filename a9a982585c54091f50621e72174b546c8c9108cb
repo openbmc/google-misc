@@ -1,0 +1,8 @@
+Code-Review+1: Edward Lee <edwarddl@google.com>
+Code-Review+2: Brandon Kim <brandonkim@google.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Willy Tu <wltu@google.com>
+Submitted-at: Tue, 19 Sep 2023 00:28:16 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/google-misc/+/66643
+Project: openbmc/google-misc
+Branch: refs/heads/master
