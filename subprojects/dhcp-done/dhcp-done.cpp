@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
             {
                 stdplus::fd::sendExact(*fd, data, stdplus::fd::SendFlags(0));
             }
-            });
+        });
         return event.loop();
     }
     catch (const std::exception& e)
