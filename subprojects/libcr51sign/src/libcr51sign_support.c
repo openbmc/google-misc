@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#include <libcr51sign/libcr51sign.h>
 #include <libcr51sign/libcr51sign_support.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
 #include <stdio.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -164,7 +164,7 @@ int verify_signature(const void* ctx, enum signature_scheme sig_scheme,
         goto clean_up;
     }
     CPRINTS(ctx, "public RSA\n");
-    char buffer[1024];
+    char buffer[1024] = {};
     while (BIO_read(bio, buffer, sizeof(buffer) - 1) > 0)
     {
         CPRINTS(ctx, " %s", buffer);
