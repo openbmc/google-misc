@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #ifndef PLATFORMS_SECURITY_TITAN_CR51_IMAGE_DESCRIPTOR_H_
 #define PLATFORMS_SECURITY_TITAN_CR51_IMAGE_DESCRIPTOR_H_
 #include <stddef.h>
@@ -24,12 +25,15 @@
 #define _Static_assert static_assert
 #endif
 /* This structure encodes a superset of what we have historically encoded in:
+ *  - FMAP & HMAP
+ *  - BBINFO
+ *  - BIOS signature header
  *
  *  Unless explicitly noted all fields are little-endian & offset/size fields
- *  are in bytes. This struct must reside in a IMAGE_REGION_STATIC region and
- *  must also reside on a 64K boundary. The size of the hashed/signed portion
- *  of the descriptor region can be determined solely by parsing the (fixed)
- *  image_descriptor struct.
+ *  are in bytes. This struct must reside in a IMAGE_REGION_STATIC region.
+ *  In the context of Haven it must also reside on a 64K boundary.
+ *  The size of the hashed/signed portion of the descriptor region can be
+ *  determined solely by parsing the (fixed) image_descriptor struct.
  *
  *  --------------------------------Flash layout--------------------------------
  *  |                     struct image_descriptor (signed)                     |
@@ -45,21 +49,22 @@
  *  ----------------------------------------------------------------------------
  *  |    (optional: signature_scheme) struct signature_* (partially signed)    |
  *  ----------------------------------------------------------------------------
- *  |           (optional) struct key_rotation_records (not signed)            |
- *  ----------------------------------------------------------------------------
  */
 
-#define IMAGE_REGION_STATIC (1 << 0)
-#define IMAGE_REGION_COMPRESSED (1 << 1)
-#define IMAGE_REGION_WRITE_PROTECTED (1 << 2)
-#define IMAGE_REGION_READ_PROTECTED (1 << 3)
-#define IMAGE_REGION_PERSISTENT (1 << 4)
-#define IMAGE_REGION_PERSISTENT_RELOCATABLE (1 << 5)
-#define IMAGE_REGION_PERSISTENT_EXPANDABLE (1 << 6)
-#define IMAGE_REGION_OVERRIDE (1 << 7)
-#define IMAGE_REGION_OVERRIDE_ON_TRANSITION (1 << 8)
-#define IMAGE_REGION_MAILBOX (1 << 9)
-#define IMAGE_REGION_SKIP_BOOT_VALIDATION (1 << 10)
+// clang-format off
+#define IMAGE_REGION_STATIC                     (1 << 0)
+#define IMAGE_REGION_COMPRESSED                 (1 << 1)
+#define IMAGE_REGION_WRITE_PROTECTED            (1 << 2)
+#define IMAGE_REGION_READ_PROTECTED             (1 << 3)
+#define IMAGE_REGION_PERSISTENT                 (1 << 4)
+#define IMAGE_REGION_PERSISTENT_RELOCATABLE     (1 << 5)
+#define IMAGE_REGION_PERSISTENT_EXPANDABLE      (1 << 6)
+#define IMAGE_REGION_OVERRIDE                   (1 << 7)
+#define IMAGE_REGION_OVERRIDE_ON_TRANSITION     (1 << 8)
+#define IMAGE_REGION_MAILBOX                    (1 << 9)
+#define IMAGE_REGION_SKIP_BOOT_VALIDATION       (1 << 10)
+#define IMAGE_REGION_EMPTY                      (1 << 11)
+// clang-format on
 
 /* Little endian on flash. */
 #define DESCRIPTOR_MAGIC 0x5f435344474d495f // "_IMGDSC_"
@@ -67,10 +72,41 @@
 #define DENYLIST_MAGIC 0x4b434c42           // "BLCK"
 #define BLOB_MAGIC 0x424f4c42               // "BLOB"
 #define SIGNATURE_MAGIC 0x4e474953          // "SIGN"
-#define ROTATION_MAGIC 0x5254524b           // "KRTR"
+
+/* Values for 'blob_data.blob_type_magic'. Little-endian on flash. */
+
+/* Indicates that 'blob_data.blob_payload' contains a serialized
+ * platforms.security.titan.DescriptorExtensions protocol buffer message. There
+ * must be zero or one DescriptorExtensions in an image. If more than one is
+ * found, the image descriptor is invalid and the image must be treated as
+ * unsigned.
+ */
+#define BLOB_TYPE_MAGIC_DESCRIPTOR_EXTENSIONS 0x58454250 // "PBEX"
+
+/* Indicates that 'blob_data.blob_payload' contains an image_mauv structure.
+ * There must be zero or one image_mauv
+ * structures in an image. If more than one is found, the image descriptor is
+ * invalid and the image must be treated as unsigned.
+ */
+#define BLOB_TYPE_MAGIC_MAUV 0x5655414D // "MAUV"
+
+/* Indicates that 'blob_data.blob_payload' contains a 32-byte sha256 hash of
+ * all the IMAGE_REGION_STATIC partitions that don't have
+ * IMAGE_REGION_SKIP_BOOT_VALIDATION set.
+ */
+#define BLOB_TYPE_MAGIC_BOOT_HASH_SHA256 0x48534842 // "BHSH"
+
+/* Indicates that 'blob_data.blob_payload' contains a lockdown_control
+ * structure. There must be zero or
+ * one lockdown_status structures in an image. If more than one is found, the
+ * image descriptor is invalid and the image must be treated as unsigned.
+ */
+#define BLOB_TYPE_MAGIC_LOCKDOWN_CONTROL 0x4E444B4C // "LKDN"
 
 /* Indicates the type of the image. The type of the image also indicates the
- * family of key that was used to sign the image.
+ * family of key that was used to sign the image. If the image type is signed
+ * with a key stored in RKM, then a corresponding enumeration should be added to
+ * google3/platforms/security/titan/keyspec.proto.
  *
  * Note: if the image type is IMAGE_UNSIGNED_INTEGRITY, the signature_scheme has
  * to be of type
@@ -116,7 +152,7 @@ enum signature_scheme
     SHA256_ONLY_NO_SIGNATURE = 5
 };
 
-/* Payload image family. */
+/* Payload image family. Distinct from the Haven image family. */
 enum image_family
 {
     IMAGE_FAMILY_ALL = 0,
@@ -175,9 +211,9 @@ struct image_descriptor
      */
     uint32_t descriptor_offset;
     /* Includes this struct as well as the auxiliary structs (hash_*,
-     * signature_*, denylist, blob & key_rotation_records). This many bytes
-     * will be skipped when computing the hash of the region this struct
-     * resides in. Tail padding is allowed but must be all 0xff's.
+     * signature_*, denylist, and blob). This many bytes will be skipped when
+     * computing the hash of the region this struct resides in. Tail padding is
+     * allowed but must be all 0xff's.
      */
     uint32_t descriptor_area_size;
 
@@ -194,6 +230,7 @@ struct image_descriptor
      * See image_family enum above.
      */
     uint32_t image_family;
+    /* Follow the Kibbles versioning scheme. */
     uint32_t image_major;
     uint32_t image_minor;
     uint32_t image_point;
@@ -225,9 +262,7 @@ struct image_descriptor
     /* The list is strictly ordered by region_offset.
      * Must exhaustively describe the image.
      */
-#ifndef OMIT_VARIABLE_ARRAYS
     struct image_region image_regions[];
-#endif
 } __attribute__((__packed__));
 
 /* Hash the static regions (IMAGE_REGION_STATIC) excluding this descriptor
@@ -259,19 +294,18 @@ struct denylist
     /* Deny list. The first entry is the watermark. All subsequent entries must
      * be newer than the watermark.
      */
-#ifndef OMIT_VARIABLE_ARRAYS
     struct denylist_record denylist_record[];
-#endif
 } __attribute__((__packed__));
 
 struct blob
 {
     uint32_t blob_magic; // #define BLOB_MAGIC
-#ifndef OMIT_VARIABLE_ARRAYS
     /* Array of blob_data structures - see blob_data below for details. */
     uint8_t blobs[];
-#endif
 } __attribute__((__packed__));
+
+/* blob data is expected to be aligned to 4 bytes */
+#define BLOB_DATA_ALIGNMENT (4)
 
 /* If blobs[] is non-empty, it is expected to contain one more more instances
  * of this struct. Each blob_data is followed by the minimum number of padding
@@ -300,10 +334,105 @@ struct blob_data
      * blob_size.
      */
     uint32_t blob_payload_size;
-#ifndef OMIT_VARIABLE_ARRAYS
     uint8_t blob_payload[];
-#endif
 } __attribute__((__packed__));
+
+#define IMAGE_MAUV_STRUCT_VERSION 1
+
+struct image_mauv
+{
+    /* Version of the MAUV structure. */
+    uint32_t mauv_struct_version;
+
+    /* padding for 64-bit alignment of payload_security_version
+     * must be set to 0xffffffff */
+    uint32_t reserved_0;
+
+    /* The version of the payload in which this `struct image_mauv` was
+     * embedded. This would be better inside of `struct image_descriptor`, but
+     * that structure doesn't have any spare fields or a reasonable way to grow
+     * the structure. When processing firmware updates, the update will be
+     * aborted if `payload_security_version` of the update payload is less than
+     * the `minimum_acceptable_update_version` in gNVRAM.
+     */
+    uint64_t payload_security_version;
+
+    /* A monotonic counter that should be increased whenever the
+     * `minimum_acceptable_update_version or version_denylist fields are
+     * changed. In order for the image_mauv structure in gNVRAM to be updated
+     * after an payload update, the `mauv_update_timestamp` field in the new
+     * payload must be greater than the `mauv_update_timestamp` field in gNVRAM.
+     *
+     * Although the firmware doesn't assign any semantic meaning to this value,
+     * by convention should be the number of seconds since the unix epoch at the
+     * time the payload was signed.
+     */
+    uint64_t mauv_update_timestamp;
+
+    /* Minimum acceptable update version.  An update to a payload with its
+     * `payload_security_version` field less than this field in gNVRAM is
+     * forbidden. This value is not monotonic.
+     */
+    uint64_t minimum_acceptable_update_version;
+
+    /* padding for 64-bit alignment of version_denylist
+     * must be set to 0xffffffff */
+    uint32_t reserved_1;
+
+    /* Number of entries in the denylist. */
+    uint32_t version_denylist_num_entries;
+
+    /* A version denylist.  Updates to any version in this list will be rejected
+     * by the firmware.
+     */
+    uint64_t version_denylist[];
+} __attribute__((packed));
+
+_Static_assert(offsetof(struct image_mauv, payload_security_version) %
+                       sizeof(uint64_t) ==
+                   0,
+               "bad payload_security_version alignment");
+
+_Static_assert(offsetof(struct image_mauv, version_denylist) %
+                       sizeof(uint64_t) ==
+                   0,
+               "bad denylist alignment");
+
+// When A/B updates are enabled, SPS_EEPROM_LOCKDOWN_IMMUTABLE is invalid.
+enum sps_eeprom_lockdown_status
+{
+    // Unverified or invalid image. All writes allowed.
+    SPS_EEPROM_LOCKDOWN_FAILSAFE = 0,
+    // Valid image. Static regions are write protected. Write-protected
+    // non-static
+    // regions are still writable. In single image mode, can
+    // transition to SPS_EEPROM_LOCKDOWN_IMMUTABLE from this state.
+    SPS_EEPROM_LOCKDOWN_READY = 1,
+    // Entire image is write protected outside of the mailbox image region. Note
+    // that the payload image may be modified through EC Host mailbox
+    // update commands.
+    SPS_EEPROM_LOCKDOWN_IMMUTABLE = 2,
+    // Valid image. Immutable static and write-protected non-static regions. In
+    // single image mode, must reset to update.
+    SPS_EEPROM_LOCKDOWN_ENABLED = 3
+};
+
+#define LOCKDOWN_CONTROL_STRUCT_VERSION 1
+
+struct lockdown_control
+{
+    /* Version of the lockdown_status structure. */
+    uint32_t lockdown_control_struct_version;
+
+    /* The default lockdown status for a valid signed payload image. The value
+     * is identical to `enum sps_eeprom_lockdown_status`. 0 = Failsafe, 1 =
+     * Ready.
+     */
+    uint32_t default_status;
+};
+
+/* RSA4096 is the largest key type currently supported. */
+#define MAX_KEY_SIZE_NBYTES 512
 
 /* Signature of the hash of the image_descriptor structure up to and including
  * this struct but excluding the signature field (optional).
@@ -350,71 +479,4 @@ struct sha256_only_no_signature
     uint8_t digest[32];
 } __attribute__((__packed__));
 
-/* Key rotation record (optional).
- * Enables enforcers to verify images signed with newer (rotated) keys.
- * The hash function, signature & padding schemes are currently pinned
- * by image family. This struct is likely to evolve.
- */
-struct record_rsa2048_pkcs15
-{
-    uint16_t from_index;
-    uint16_t to_index;
-    uint32_t exponent;    // exponent of the new key, little-endian
-    uint8_t modulus[256]; // modulus of the new key, big-endian
-    /* SIGN[K<from_index>](HASH(to_index (LE) | exponent (LE) | modulus (BE)))
-     */
-    uint8_t signature[256]; // big-endian
-} __attribute__((__packed__));
-
-struct record_rsa3072_pkcs15
-{
-    uint16_t from_index;
-    uint16_t to_index;
-    uint32_t exponent;    // exponent of the new key, little-endian
-    uint8_t modulus[384]; // modulus of the new key, big-endian
-    /* SIGN[K<from_index>](HASH(to_index (LE) | exponent (LE) | modulus (BE)))
-     */
-    uint8_t signature[384]; // big-endian
-} __attribute__((__packed__));
-
-struct record_rsa4096_pkcs15
-{
-    uint16_t from_index;
-    uint16_t to_index;
-    uint32_t exponent;    // exponent of the new key, little-endian
-    uint8_t modulus[512]; // modulus of the new key, big-endian
-    /* SIGN[K<from_index>](HASH(to_index (LE) | exponent (LE) | modulus (BE)))
-     */
-    uint8_t signature[512]; // big-endian
-} __attribute__((__packed__));
-
-struct key_rotation_records_rsa2048_pkcs15
-{
-    uint32_t rotation_magic; // #define ROTATION_MAGIC
-    uint16_t record_count;
-    uint16_t reserved_0;
-#ifndef OMIT_VARIABLE_ARRAYS
-    struct record_rsa2048_pkcs15 records[];
-#endif
-} __attribute__((__packed__));
-
-struct key_rotation_records_rsa3072_pkcs15
-{
-    uint32_t rotation_magic; // #define ROTATION_MAGIC
-    uint16_t record_count;
-    uint16_t reserved_0;
-#ifndef OMIT_VARIABLE_ARRAYS
-    struct record_rsa3072_pkcs15 records[];
-#endif
-} __attribute__((__packed__));
-
-struct key_rotation_records_rsa4096_pkcs15
-{
-    uint32_t rotation_magic; // #define ROTATION_MAGIC
-    uint16_t record_count;
-    uint16_t reserved_0;
-#ifndef OMIT_VARIABLE_ARRAYS
-    struct record_rsa3072_pkcs15 records[];
-#endif
-} __attribute__((__packed__));
 #endif // PLATFORMS_SECURITY_TITAN_CR51_IMAGE_DESCRIPTOR_H_

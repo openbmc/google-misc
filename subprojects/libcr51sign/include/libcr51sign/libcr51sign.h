@@ -16,8 +16,7 @@
 #ifndef PLATFORMS_HAVEN_LIBCR51SIGN_LIBCR51SIGN_H_
 #define PLATFORMS_HAVEN_LIBCR51SIGN_LIBCR51SIGN_H_
 
-#include "cr51_image_descriptor.h"
-
+#include <libcr51sign/cr51_image_descriptor.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -33,6 +32,8 @@ extern "C"
 
 // Currently RSA4096 (in bytes).
 #define LIBCR51SIGN_MAX_SIGNATURE_SIZE 512
+
+#define IMAGE_MAUV_DATA_MAX_SIZE (128)
 
 // List of common error codes that can be returned
 enum libcr51sign_validation_failure_reason
@@ -60,10 +61,18 @@ enum libcr51sign_validation_failure_reason
     LIBCR51SIGN_ERROR_INVALID_CONTEXT = 13,
     LIBCR51SIGN_ERROR_INVALID_INTERFACE = 14,
     LIBCR51SIGN_ERROR_INVALID_SIG_SCHEME = 15,
-    LIBCR51SIGN_ERROR_MAX = 16,
     // Invalid image region
-    LIBCR51SIGN_ERROR_INVALID_REGION_INPUT = 17,
-    LIBCR51SIGN_ERROR_INVALID_REGION_SIZE = 18,
+    LIBCR51SIGN_ERROR_INVALID_REGION_INPUT = 16,
+    LIBCR51SIGN_ERROR_INVALID_REGION_SIZE = 17,
+    LIBCR51SIGN_ERROR_INVALID_IMAGE_MAUV_DATA = 18,
+    LIBCR51SIGN_ERROR_RETRIEVING_STORED_IMAGE_MAUV_DATA = 19,
+    LIBCR51SIGN_ERROR_STORING_NEW_IMAGE_MAUV_DATA = 20,
+    LIBCR51SIGN_ERROR_STORED_IMAGE_MAUV_DOES_NOT_ALLOW_UPDATE_TO_PAYLOAD = 21,
+    LIBCR51SIGN_ERROR_VALID_IMAGE_BUT_NEW_IMAGE_MAUV_DATA_NOT_STORED = 22,
+    LIBCR51SIGN_ERROR_STORED_IMAGE_MAUV_EXPECTS_PAYLOAD_IMAGE_MAUV = 23,
+    // Client did not find any stored MAUV in system
+    LIBCR51SIGN_NO_STORED_MAUV_FOUND = 24,
+    LIBCR51SIGN_ERROR_MAX = 25,
 };
 
 struct libcr51sign_ctx
@@ -118,11 +127,11 @@ struct libcr51sign_intf
 
     int (*hash_update)(void*, const uint8_t*, size_t);
 
-    // Note this is a combination of an spi_nor_read() with
-    // spi_transaction() It is the responsibility of the caller to
-    // synchronize with other potential SPI clients / transactions.
-    // Collapsing the SPI stack results in a 2x throughput improvement (~20s
-    // -> ~10s to verify an Indus image with SHA256 HW acceleration).
+    // Note this is a combination of an spi_nor_read() with spi_transaction()
+    // It is the responsibility of the caller to synchronize with other
+    // potential SPI clients / transactions. Collapsing the SPI stack results in
+    // a 2x throughput improvement (~20s -> ~10s to verify an Indus image with
+    // SHA256 HW acceleration).
     //
     // The caller is responsible for calling DCRYPTO_init()/HASH_final().
 
@@ -152,8 +161,8 @@ struct libcr51sign_intf
     int (*verify_signature)(const void*, enum signature_scheme, const uint8_t*,
                             size_t, const uint8_t*, size_t);
 
-    // @func verify check that if the prod to dev downgrade/ hardware
-    // allowlist is allowed
+    // @func verify check that if the prod to dev downgrade/ hardware allowlist
+    // is allowed
     // @return  true: if allowed
     //          false: if not allowed
     // BMC would return always false or pass a NULL pointer
@@ -161,8 +170,7 @@ struct libcr51sign_intf
 
     bool (*prod_to_dev_downgrade_allowed)();
 
-    // @func returns true if the current firmware is running in production
-    // mode.
+    // @func returns true if the current firmware is running in production mode.
     // @return true: if in production mode
     //         false: if in any non-production mode
 
@@ -170,6 +178,38 @@ struct libcr51sign_intf
 
     // @func returns true if the descriptor image size is valid.
     bool (*image_size_valid)(size_t);
+
+    // @func Retrieve MAUV data currently stored in the system
+    // @param[in]  ctx - context struct
+    // @param[out] current_image_mauv - Buffer to store the retrieved MAUV data
+    // @param[out] current_image_mauv_size - Number of bytes retrieved and
+    // stored
+    //                                       in `current_image_mauv`
+    // @param[in]  max_image_mauv_size - Maximum number of bytes to retrieve for
+    //                                   MAUV data
+    //
+    // @return LIBCR51SIGN_SUCCESS: when MAUV is present in the system and
+    //                              retrieved successfully
+    //         LIBCR51SIGN_NO_STORED_MAUV_FOUND: when MAUV is not present in the
+    //                                           system (we are trusting the
+    //                                           client here to return this
+    //                                           value truthfully)
+    //         other non-zero values: any other error scenario (like read
+    //         failure,
+    //                                data corruption, etc.)
+    int (*retrieve_stored_image_mauv_data)(const void*, uint8_t* const,
+                                           uint32_t* const, const uint32_t);
+
+    // @func Store new MAUV data in the system
+    // @param[in]  ctx - context struct
+    // @param[in]  new_image_mauv - Buffer containing new MAUV data to be stored
+    // @param[in]  new_image_mauv_size - Size of MAUV data in `new_image_mauv`
+    //                                   buffer
+    //
+    // @return LIBCR51SIGN_SUCCESS: when new MAUV data is stored successfully.
+    //                              Non-zero value otherwise
+    int (*store_new_image_mauv_data)(const void*, const uint8_t* const,
+                                     const uint32_t);
 };
 
 struct libcr51sign_validated_regions
@@ -180,16 +220,14 @@ struct libcr51sign_validated_regions
 
 // Check whether the signature on the image is valid.
 // Validates the authenticity of an EEPROM image. Scans for & validates the
-// signature on the image descriptor. If the descriptor validates, hashes
-// the rest of the image to verify its integrity.
+// signature on the image descriptor. If the descriptor validates, hashes the
+// rest of the image to verify its integrity.
 //
-// @param[in] ctx - context which describes the image and holds opaque
-// private
+// @param[in] ctx - context which describes the image and holds opaque private
 //                  data for the user of the library
 // @param[in] intf - function pointers which interface to the current system
 //                   and environment
-// @param[out] image_regions - image_region pointer to an array for the
-// output
+// @param[out] image_regions - image_region pointer to an array for the output
 //
 // @return nonzero on error, zero on success
 
