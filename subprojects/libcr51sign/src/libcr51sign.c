@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+#include "stddef.h"
+
+#include <assert.h>
+#include <libcr51sign/cr51_image_descriptor.h>
 #include <libcr51sign/libcr51sign.h>
+#include <libcr51sign/libcr51sign_internal.h>
+#include <libcr51sign/libcr51sign_mauv.h>
+#include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-
-#ifndef USER_PRINT
-#define CPRINTS(ctx, ...) fprintf(stderr, __VA_ARGS__)
-#endif
-
-#define MEMBER_SIZE(type, field) sizeof(((type*)0)->field)
 
 // True of x is a power of two
 #define POWER_OF_TWO(x) ((x) && !((x) & ((x)-1)))
@@ -52,8 +55,6 @@ extern "C"
 #ifndef BUILD_ASSERT
 #define BUILD_ASSERT(cond) ((void)sizeof(char[1 - 2 * !(cond)]))
 #endif
-
-typedef enum libcr51sign_validation_failure_reason failure_reason;
 
 // Returns the bytes size of keys used in the given signature_scheme.
 // Return error if signature_scheme is invalid.
@@ -139,7 +140,7 @@ static failure_reason get_hash_struct_size(enum hash_type type, uint32_t* size)
             *size = sizeof(struct hash_sha256);
             return LIBCR51SIGN_SUCCESS;
         case HASH_SHA2_512:
-            *size = sizeof(struct hash_sha256);
+            *size = sizeof(struct hash_sha512);
             return LIBCR51SIGN_SUCCESS;
         default:
             return LIBCR51SIGN_ERROR_INVALID_HASH_TYPE;
@@ -184,12 +185,12 @@ static failure_reason validate_transition(const struct libcr51sign_ctx* ctx,
     rv = intf->read(ctx, signature_struct_offset, read_len, buffer);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_transition: failed to read signature struct\n");
+        CPRINTS(ctx, "%s: failed to read signature struct\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
     if (*(uint32_t*)buffer != SIGNATURE_MAGIC)
     {
-        CPRINTS(ctx, "validate_transition: bad signature magic\n");
+        CPRINTS(ctx, "%s: bad signature magic\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
     }
 
@@ -197,33 +198,33 @@ static failure_reason validate_transition(const struct libcr51sign_ctx* ctx,
         ctx->descriptor.image_family != IMAGE_FAMILY_ALL &&
         ctx->current_image_family != IMAGE_FAMILY_ALL)
     {
-        CPRINTS(ctx, "validate_transition: invalid image family\n");
+        CPRINTS(ctx, "%s: invalid image family\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_IMAGE_FAMILY;
     }
 
     if (intf->is_production_mode == NULL)
     {
-        CPRINTS(ctx, "validate_transition: missing is_production_mode\n");
+        CPRINTS(ctx, "%s: missing is_production_mode\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
     if (intf->is_production_mode() && (ctx->descriptor.image_type == IMAGE_DEV))
     {
-        CPRINTS(ctx, "validate_transition: checking exemption allowlist\n");
+        CPRINTS(ctx, "%s: checking exemption allowlist\n", __FUNCTION__);
 
         // If function is NULL or if the function call return false, return
         // error
         if (intf->prod_to_dev_downgrade_allowed == NULL ||
             !intf->prod_to_dev_downgrade_allowed())
         {
-            CPRINTS(ctx, "validate_transition: illegal image type\n");
+            CPRINTS(ctx, "%s: illegal image type\n", __FUNCTION__);
             return LIBCR51SIGN_ERROR_DEV_DOWNGRADE_DISALLOWED;
         }
     }
     return LIBCR51SIGN_SUCCESS;
 }
 
-// If caller had provided read_and_hash_update call that, otherwise call
-// read and then update.
+// If caller had provided read_and_hash_update call that, otherwise call read
+// and then update.
 
 static failure_reason read_and_hash_update(const struct libcr51sign_ctx* ctx,
                                            const struct libcr51sign_intf* intf,
@@ -241,7 +242,7 @@ static failure_reason read_and_hash_update(const struct libcr51sign_ctx* ctx,
     {
         if (!intf->hash_update)
         {
-            CPRINTS(ctx, "read_and_hash_update: missing hash_update\n");
+            CPRINTS(ctx, "%s: missing hash_update\n", __FUNCTION__);
             return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
         }
         do
@@ -283,11 +284,11 @@ static failure_reason validate_payload_regions(
     uint32_t i;
     uint8_t d_region_num = 0;
     int rv;
-    const struct image_region* region;
+    struct image_region const* region;
 
     if (image_regions == NULL)
     {
-        CPRINTS(ctx, "Missing image region input\n");
+        CPRINTS(ctx, "%s: Missing image region input\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_REGION_INPUT;
     }
 
@@ -301,9 +302,10 @@ static failure_reason validate_payload_regions(
 
     if (region_count > ARRAY_SIZE(image_regions->image_regions))
     {
-        CPRINTS(ctx, "validate_payload_regions: "
-                     "ctx->descriptor.region_count is greater "
-                     "than LIBCR51SIGN_MAX_REGION_COUNT\n");
+        CPRINTS(ctx,
+                "%s: ctx->descriptor.region_count is greater "
+                "than LIBCR51SIGN_MAX_REGION_COUNT\n",
+                __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_REGION_SIZE;
     }
 
@@ -315,7 +317,7 @@ static failure_reason validate_payload_regions(
 
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_payload_regions: failed to read region array\n");
+        CPRINTS(ctx, "%s: failed to read region array\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
 
@@ -324,20 +326,19 @@ static failure_reason validate_payload_regions(
     {
         region = image_regions->image_regions + i;
 
-        CPRINTS(ctx, "validate_payload_regions: region #%d \"%s\" (%x - %x)\n",
-                i, (const char*)region->region_name, region->region_offset,
+        CPRINTS(ctx, "%s: region #%d \"%s\" (%x - %x)\n", __FUNCTION__, i,
+                (const char*)region->region_name, region->region_offset,
                 region->region_offset + region->region_size);
         if ((region->region_offset % IMAGE_REGION_ALIGNMENT) != 0 ||
             (region->region_size % IMAGE_REGION_ALIGNMENT) != 0)
         {
-            CPRINTS(ctx, "validate_payload_regions: regions must be sector "
-                         "aligned\n");
+            CPRINTS(ctx, "%s: regions must be sector aligned\n", __FUNCTION__);
             return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
         }
         if (region->region_offset != byte_count ||
             region->region_size > image_size - byte_count)
         {
-            CPRINTS(ctx, "validate_payload_regions: invalid region array\n");
+            CPRINTS(ctx, "%s: invalid region array\n", __FUNCTION__);
             return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
         }
         byte_count += region->region_size;
@@ -345,23 +346,24 @@ static failure_reason validate_payload_regions(
         if (d_offset >= region->region_offset && d_offset < byte_count)
         {
             d_region_num = i;
-            CPRINTS(ctx,
-                    "validate_payload_regions: image descriptor in region %d\n",
+            CPRINTS(ctx, "%s: image descriptor in region %d\n", __FUNCTION__,
                     i);
             // The descriptor can't span regions.
-            if (ctx->descriptor.descriptor_area_size > byte_count ||
+            if ((ctx->descriptor.descriptor_area_size >
+                 (byte_count - d_offset)) ||
                 !(region->region_attributes & IMAGE_REGION_STATIC))
             {
                 CPRINTS(ctx,
-                        "validate_payload_regions: descriptor must reside in "
-                        "static region\n");
+                        "%s: descriptor must reside in "
+                        "static region\n",
+                        __FUNCTION__);
                 return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
             }
         }
     }
     if (byte_count != image_size)
     {
-        CPRINTS(ctx, "validate_payload_regions: invalid image size\n");
+        CPRINTS(ctx, "%s: invalid image size\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
     }
 
@@ -376,19 +378,18 @@ static failure_reason validate_payload_regions(
                     magic_and_digest);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx,
-                "validate_payload_regions: failed to read hash from flash\n");
+        CPRINTS(ctx, "%s: failed to read hash from flash\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
     if (*(uint32_t*)magic_and_digest != HASH_MAGIC)
     {
-        CPRINTS(ctx, "validate_payload_regions: bad hash magic\n");
+        CPRINTS(ctx, "%s: bad hash magic\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
     }
     rv = intf->hash_init(ctx, ctx->descriptor.hash_type);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_payload_regions: hash_init failed\n");
+        CPRINTS(ctx, "%s: hash_init failed\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
     for (i = 0; i < region_count; i++)
@@ -409,15 +410,15 @@ static failure_reason validate_payload_regions(
             if (i == d_region_num)
             {
                 hash_size = d_offset - hash_start;
+                if (!hash_size)
+                {
+                    hash_start += ctx->descriptor.descriptor_area_size;
+                    hash_size = (region->region_offset + region->region_size -
+                                 hash_start);
+                }
             }
 
-            if (!hash_size)
-            {
-                hash_start += ctx->descriptor.descriptor_area_size;
-                hash_size =
-                    (region->region_offset + region->region_size - hash_start);
-            }
-            CPRINTS("validate_payload_regions: hashing %s (%x - %x)\n",
+            CPRINTS(ctx, "%s: hashing %s (%x - %x)\n", __FUNCTION__,
                     (const char*)region->region_name, hash_start,
                     hash_start + hash_size);
             // Read the image_region array.
@@ -439,7 +440,7 @@ static failure_reason validate_payload_regions(
     if (memcmp(magic_and_digest + MEMBER_SIZE(struct hash_sha256, hash_magic),
                dcrypto_digest, digest_size))
     {
-        CPRINTS(ctx, "validate_payload_regions: invalid hash\n");
+        CPRINTS(ctx, "%s: invalid hash\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_HASH;
     }
     // Image is valid.
@@ -447,8 +448,8 @@ static failure_reason validate_payload_regions(
 }
 
 // Create empty image_regions to pass to validate_payload_regions
-// Support validate_payload_regions_helper to remove image_regions as a
-// required input.
+// Support validate_payload_regions_helper to remove image_regions as a required
+// input.
 
 static failure_reason
     allocate_and_validate_payload_regions(const struct libcr51sign_ctx* ctx,
@@ -459,9 +460,9 @@ static failure_reason
     return validate_payload_regions(ctx, intf, d_offset, &image_regions);
 }
 
-// Wrapper around validate_payload_regions to allow nullptr for
-// image_regions. Calls allocate_and_validate_payload_regions when
-// image_regions is nullptr to create placer holder image_regions.
+// Wrapper around validate_payload_regions to allow nullptr for image_regions.
+// Calls allocate_and_validate_payload_regions when image_regions is nullptr to
+// create placer holder image_regions.
 
 static failure_reason validate_payload_regions_helper(
     const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
@@ -556,38 +557,36 @@ static failure_reason validate_signature(const struct libcr51sign_ctx* ctx,
 
     if (!intf->hash_init)
     {
-        CPRINTS(ctx, "validate_signature: missing hash_init\n");
+        CPRINTS(ctx, "%s: missing hash_init\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
     rv = get_hash_type_from_signature(scheme, &hash_type);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx,
-                "validate_payload_regions: hash_type from signature failed\n");
+        CPRINTS(ctx, "%s: hash_type from signature failed\n", __FUNCTION__);
         return rv;
     }
     rv = intf->hash_init(ctx, hash_type);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_payload_regions: hash_init failed\n");
+        CPRINTS(ctx, "%s: hash_init failed\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
     rv = read_and_hash_update(ctx, intf, data_offset, data_size);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_signature: hash_update failed\n");
+        CPRINTS(ctx, "%s: hash_update failed\n", __FUNCTION__);
         return rv;
     }
     if (!intf->hash_final)
     {
-        CPRINTS(ctx, "validate_signature: missing hash_final\n");
+        CPRINTS(ctx, "%s: missing hash_final\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
     rv = intf->hash_final((void*)ctx, dcrypto_digest);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_signature: hash_final failed (status = %d)\n",
-                rv);
+        CPRINTS(ctx, "%s: hash_final failed (status = %d)\n", __FUNCTION__, rv);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
     rv = get_key_size(scheme, &key_size);
@@ -599,14 +598,13 @@ static failure_reason validate_signature(const struct libcr51sign_ctx* ctx,
     rv = intf->read(ctx, raw_signature_offset, key_size, signature);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx,
-                "validate_signature: failed to read signature (status = %d)\n",
-                rv);
+        CPRINTS(ctx, "%s: failed to read signature (status = %d)\n",
+                __FUNCTION__, rv);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
     if (!intf->verify_signature)
     {
-        CPRINTS(ctx, "validate_signature: missing verify_signature\n");
+        CPRINTS(ctx, "%s: missing verify_signature\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
     rv = get_hash_digest_size(hash_type, &digest_size);
@@ -618,11 +616,11 @@ static failure_reason validate_signature(const struct libcr51sign_ctx* ctx,
                                 dcrypto_digest, digest_size);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_signature: verification failed (status = %d)\n",
+        CPRINTS(ctx, "%s: verification failed (status = %d)\n", __FUNCTION__,
                 rv);
         return LIBCR51SIGN_ERROR_INVALID_SIGNATURE;
     }
-    CPRINTS(ctx, "validate_signature: verification succeeded\n");
+    CPRINTS(ctx, "%s: verification succeeded\n", __FUNCTION__);
     return LIBCR51SIGN_SUCCESS;
 }
 
@@ -636,13 +634,13 @@ static failure_reason validate_signature(const struct libcr51sign_ctx* ctx,
 //@param offset  Absolute image descriptor flash offset.
 //@param relative_offset  Image descriptor offset relative to image start.
 //@param max_size Maximum size of the flash space in bytes.
-//@param descriptor  Output pointer to an image_descriptor struct
-
-static failure_reason validate_descriptor(const struct libcr51sign_ctx* ctx,
-                                          const struct libcr51sign_intf* intf,
-                                          uint32_t offset,
-                                          uint32_t relative_offset,
-                                          uint32_t max_size)
+//@param[out] payload_blob_offset  Absolute offset of BLOB data in image
+//                                 descriptor (if BLOB data is present)
+static failure_reason
+    validate_descriptor(const struct libcr51sign_ctx* ctx,
+                        const struct libcr51sign_intf* intf, uint32_t offset,
+                        uint32_t relative_offset, uint32_t max_size,
+                        uint32_t* const restrict payload_blob_offset)
 {
     uint32_t max_descriptor_size, signed_size, signature_scheme,
         signature_offset;
@@ -653,7 +651,7 @@ static failure_reason validate_descriptor(const struct libcr51sign_ctx* ctx,
     if (max_size < relative_offset ||
         max_descriptor_size < sizeof(struct image_descriptor))
     {
-        CPRINTS(ctx, "validate_descriptor: invalid arguments\n");
+        CPRINTS(ctx, "%s: invalid arguments\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
     }
 
@@ -661,7 +659,7 @@ static failure_reason validate_descriptor(const struct libcr51sign_ctx* ctx,
                     (uint8_t*)&ctx->descriptor);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_descriptor: failed to read descriptor\n");
+        CPRINTS(ctx, "%s: failed to read descriptor\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
     if (ctx->descriptor.descriptor_magic != DESCRIPTOR_MAGIC ||
@@ -670,22 +668,22 @@ static failure_reason validate_descriptor(const struct libcr51sign_ctx* ctx,
         ctx->descriptor.descriptor_area_size > max_descriptor_size ||
         ctx->descriptor.image_size > max_size)
     {
-        CPRINTS(ctx, "validate_descriptor: invalid descriptor\n");
+        CPRINTS(ctx, "%s: invalid descriptor\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
     }
     if (intf->image_size_valid == NULL)
     {
-        // Preserve original behavior of requiring exact image_size match if
-        // no operator is provided.
+        // Preserve original behavior of requiring exact image_size match if no
+        // operator is provided.
         if (ctx->descriptor.image_size != max_size)
         {
-            CPRINTS(ctx, "validate_descriptor: invalid image size\n");
+            CPRINTS(ctx, "%s: invalid image size\n", __FUNCTION__);
             return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
         }
     }
     else if (!intf->image_size_valid(ctx->descriptor.image_size))
     {
-        CPRINTS(ctx, "validate_descriptor: invalid image size\n");
+        CPRINTS(ctx, "%s: invalid image size\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
     }
     if (ctx->descriptor.image_type != IMAGE_DEV &&
@@ -694,7 +692,7 @@ static failure_reason validate_descriptor(const struct libcr51sign_ctx* ctx,
         ctx->descriptor.image_type != IMAGE_TEST &&
         ctx->descriptor.image_type != IMAGE_UNSIGNED_INTEGRITY)
     {
-        CPRINTS(ctx, "validate_descriptor: bad image type\n");
+        CPRINTS(ctx, "%s: bad image type\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
     }
     // Although the image_descriptor struct supports unauthenticated
@@ -711,13 +709,13 @@ static failure_reason validate_descriptor(const struct libcr51sign_ctx* ctx,
     rv = is_hash_type_supported(ctx->descriptor.hash_type);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate_payload_regions: invalid hash type\n");
+        CPRINTS(ctx, "%s: invalid hash type\n", __FUNCTION__);
         return rv;
     }
     if (ctx->descriptor.descriptor_major > MAX_MAJOR_VERSION ||
         ctx->descriptor.region_count > LIBCR51SIGN_MAX_REGION_COUNT)
     {
-        CPRINTS(ctx, "validate_descriptor: unsupported descriptor\n");
+        CPRINTS(ctx, "%s: unsupported descriptor\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_UNSUPPORTED_DESCRIPTOR;
     }
     rv = get_signature_struct_size(signature_scheme, &signature_struct_size);
@@ -743,12 +741,15 @@ static failure_reason validate_descriptor(const struct libcr51sign_ctx* ctx,
     }
     if (ctx->descriptor.blob_size)
     {
+        *payload_blob_offset = offset + signed_size;
         signed_size += sizeof(struct blob);
         // Previous additions are guaranteed not to overflow.
-        if (ctx->descriptor.blob_size >
-            ctx->descriptor.descriptor_area_size - signed_size)
+        if ((ctx->descriptor.blob_size >
+             ctx->descriptor.descriptor_area_size - signed_size) ||
+            // Sanity check blob size
+            (ctx->descriptor.blob_size < sizeof(struct blob_data)))
         {
-            CPRINTS(ctx, "validate_descriptor: invalid blob size (0x%x)\n",
+            CPRINTS(ctx, "%s: invalid blob size (0x%x)\n", __FUNCTION__,
                     ctx->descriptor.blob_size);
             return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
         }
@@ -758,9 +759,9 @@ static failure_reason validate_descriptor(const struct libcr51sign_ctx* ctx,
         ctx->descriptor.descriptor_area_size - signed_size)
     {
         CPRINTS(ctx,
-                "validate_descriptor: invalid descriptor area size "
+                "%s: invalid descriptor area size "
                 "(expected = 0x%x, actual = 0x%x)\n",
-                ctx->descriptor.descriptor_area_size,
+                __FUNCTION__, ctx->descriptor.descriptor_area_size,
                 signed_size + signature_struct_size);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
     }
@@ -811,7 +812,7 @@ int scan_for_magic_8(const struct libcr51sign_ctx* ctx,
 
     if (!intf->read)
     {
-        CPRINTS(ctx, "scan_for_magic_8: missing intf->read\n");
+        CPRINTS(ctx, "%s: missing intf->read\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
     // Align start_offset to the next valid boundary.
@@ -840,16 +841,16 @@ int scan_for_magic_8(const struct libcr51sign_ctx* ctx,
 
 // Check whether the signature on the image is valid.
 // Validates the authenticity of an EEPROM image. Scans for & validates the
-// signature on the image descriptor. If the descriptor validates, hashes
-// the rest of the image to verify its integrity.
+// signature on the image descriptor. If the descriptor validates, hashes the
+// rest of the image to verify its integrity.
 //
-// @param[in] ctx - context which describes the image and holds opaque
-// private
+// @param[in] ctx - context which describes the image and holds opaque private
 //                 data for the user of the library
 // @param[in] intf - function pointers which interface to the current system
 //                  and environment
-// @param[out] image_regions - image_region pointer to an array for the
-// output
+// @param[out] image_regions - image_region pointer to an array for the output
+//
+// TODO(aranika) return valid key
 //
 // @return nonzero on error, zero on success
 
@@ -858,18 +859,18 @@ failure_reason
                          struct libcr51sign_intf* intf,
                          struct libcr51sign_validated_regions* image_regions)
 {
-    uint32_t image_limit = 0;
     int rv, rv_first_desc = LIBCR51SIGN_SUCCESS;
     uint32_t descriptor_offset;
+    uint32_t payload_blob_offset = 0;
 
     if (!ctx)
     {
-        CPRINTS(ctx, "Missing context\n");
+        CPRINTS(ctx, "%s: Missing context\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_CONTEXT;
     }
     else if (!intf)
     {
-        CPRINTS(ctx, "Missing interface\n");
+        CPRINTS(ctx, "%s: Missing interface\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
 
@@ -878,43 +879,78 @@ failure_reason
                           &descriptor_offset);
     while (rv == LIBCR51SIGN_SUCCESS)
     {
-        CPRINTS(ctx, "validate: potential image descriptor found @%x\n",
+        CPRINTS(ctx, "%s: potential image descriptor found @%x\n", __FUNCTION__,
                 descriptor_offset);
-        // Validation is split into 2 functions to minimize
-        // stack usage.
+        // Validation is split into 3 functions to minimize stack usage.
 
-        rv = validate_descriptor(ctx, intf, descriptor_offset,
-                                 descriptor_offset - ctx->start_offset,
-                                 ctx->end_offset - ctx->start_offset);
+        rv = validate_descriptor(
+            ctx, intf, descriptor_offset, descriptor_offset - ctx->start_offset,
+            ctx->end_offset - ctx->start_offset, &payload_blob_offset);
         if (rv != LIBCR51SIGN_SUCCESS)
         {
-            CPRINTS(ctx, "validate: validate_descriptor() failed ec%d\n", rv);
+            CPRINTS(ctx, "%s: validate_descriptor() failed ec%d\n",
+                    __FUNCTION__, rv);
         }
-
-        if (rv == LIBCR51SIGN_SUCCESS)
+        else
         {
             rv = validate_payload_regions_helper(ctx, intf, descriptor_offset,
                                                  image_regions);
-            if (rv == LIBCR51SIGN_SUCCESS)
+            if (rv != LIBCR51SIGN_SUCCESS)
             {
-                CPRINTS(ctx, "validate: success!\n");
+                CPRINTS(ctx, "%s: validate_payload_regions() failed ec%d\n",
+                        __FUNCTION__, rv);
+            }
+            else if (ctx->descriptor.image_type == IMAGE_PROD)
+            {
+                // Lookup and validate payload Image MAUV against Image MAUV
+                // stored in the system after checking signature to ensure
+                // offsets and sizes are not tampered with. Also, do this after
+                // hash calculation for payload regions to ensure that stored
+                // Image MAUV is updated (if necessary) as close to the end of
+                // payload validation as possible
+                rv = validate_payload_image_mauv(ctx, intf, payload_blob_offset,
+                                                 ctx->descriptor.blob_size);
+                if (rv == LIBCR51SIGN_SUCCESS)
+                {
+                    CPRINTS(ctx,
+                            "%s: Payload Image MAUV validation successful\n",
+                            __FUNCTION__);
+                    return rv;
+                }
+                if (rv == LIBCR51SIGN_ERROR_STORING_NEW_IMAGE_MAUV_DATA)
+                {
+                    CPRINTS(
+                        ctx,
+                        "%s: Payload validation succeeded, but Image MAUV validation "
+                        "failed\n",
+                        __FUNCTION__);
+                    return LIBCR51SIGN_ERROR_VALID_IMAGE_BUT_NEW_IMAGE_MAUV_DATA_NOT_STORED;
+                }
+                CPRINTS(ctx, "%s: Payload Image MAUV validation failed\n",
+                        __FUNCTION__);
+                // In practice, we expect only 1 valid image descriptor in
+                // payload. If Image MAUV check fails for the payload after
+                // validating the image descriptor, do not try validating other
+                // image descriptors
                 return rv;
             }
-            CPRINTS(ctx, "validate: validate_payload_regions() failed ec%d\n",
-                    rv);
+            else
+            {
+                return rv;
+            }
         }
+
         // Store the first desc fail reason if any
         if (rv != LIBCR51SIGN_SUCCESS && rv_first_desc == LIBCR51SIGN_SUCCESS)
             rv_first_desc = rv;
 
         // scan_for_magic_8() will round up to the next aligned boundary.
         descriptor_offset++;
-        image_limit = ctx->end_offset - ctx->start_offset;
         rv = scan_for_magic_8(ctx, intf, DESCRIPTOR_MAGIC, descriptor_offset,
-                              image_limit, DESCRIPTOR_ALIGNMENT,
+                              ctx->end_offset, DESCRIPTOR_ALIGNMENT,
                               &descriptor_offset);
     }
-    CPRINTS(ctx, "validate: failed to validate image ec%d\n", rv);
+    CPRINTS(ctx, "%s: failed to validate image ec%d\n", __FUNCTION__, rv);
     // If desc validation failed for some reason then return that reason
     if (rv_first_desc != LIBCR51SIGN_SUCCESS)
         return rv_first_desc;
@@ -966,6 +1002,23 @@ const char* libcr51sign_errorcode_to_string(failure_reason ec)
             return "Invalid image region input";
         case LIBCR51SIGN_ERROR_INVALID_REGION_SIZE:
             return "Invalid image region size";
+        case LIBCR51SIGN_ERROR_INVALID_IMAGE_MAUV_DATA:
+            return "Invalid Image MAUV data";
+        case LIBCR51SIGN_ERROR_RETRIEVING_STORED_IMAGE_MAUV_DATA:
+            return "Failed to retrieve Image MAUV data stored in system";
+        case LIBCR51SIGN_ERROR_STORING_NEW_IMAGE_MAUV_DATA:
+            return "Failed to store Image MAUV data from payload image into system";
+        case LIBCR51SIGN_ERROR_STORED_IMAGE_MAUV_DOES_NOT_ALLOW_UPDATE_TO_PAYLOAD:
+            return "Image MAUV stored in system does not allow payload "
+                   "update";
+        case LIBCR51SIGN_ERROR_VALID_IMAGE_BUT_NEW_IMAGE_MAUV_DATA_NOT_STORED:
+            return "Payload image is valid for update but failed to store new Image "
+                   "MAUV in system";
+        case LIBCR51SIGN_ERROR_STORED_IMAGE_MAUV_EXPECTS_PAYLOAD_IMAGE_MAUV:
+            return "Image MAUV is expected to be present in payload when stored "
+                   "Image MAUV is present in the system";
+        case LIBCR51SIGN_NO_STORED_MAUV_FOUND:
+            return "Client did not find any MAUV data stored in the system";
         default:
             return "Unknown error";
     }
