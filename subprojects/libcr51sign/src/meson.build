@@ -17,7 +17,8 @@ libcr51sign_deps = [
 ]
 
 libcr51sign_cflags = [
-  '-DOMIT_VARIABLE_ARRAYS',
+  '-Wno-pedantic',
+  '-Wno-implicit-fallthrough'
 ]
 
 libcr51sign_pre = declare_dependency(
@@ -29,6 +30,7 @@ libcr51sign_lib = library(
   'cr51sign',
   'libcr51sign.c',
   'libcr51sign_support.c',
+  'libcr51sign_mauv.c',
   dependencies: libcr51sign_pre,
   c_args: [
     # Temporarily ignore until updates land
