@@ -29,7 +29,7 @@ project(
 executable('hello', 'hello.c')
 
 # Meson has no feature option to str...
-tests_str = get_option('tests').enabled() ? 'enabled' : 'disabled'
+tests_str = get_option('tests').allowed() ? 'enabled' : 'disabled'
 if get_option('tests').auto()
   tests_str = 'auto'
 endif
