@@ -1,0 +1,10 @@
+[Unit]
+Description=gBMC bare-metal GPIO  monitoring
+After=phosphor-ipmi-host.service
+
+[Service]
+Restart=always
+ExecStart=@@BIN@ host_gpio_monitor
+
+[Install]
+WantedBy=multi-user.target
