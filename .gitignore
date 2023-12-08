@@ -7,6 +7,7 @@ subprojects/*
 !subprojects/metrics-ipmi-blobs/
 !subprojects/ncsid/
 !subprojects/nemora-postd/
+!subprojects/bare-metal-host-monitor/
 !subprojects/googletest.wrap
 !subprojects/phosphor-dbus-interfaces.wrap
 !subprojects/phosphor-logging.wrap
