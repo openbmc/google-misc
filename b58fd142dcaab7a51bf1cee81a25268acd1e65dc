@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05c2a353_2117de31",
+        "filename": "subprojects/bare-metal-host-monitor/host-gpio-monitor.service.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-12-13T02:47:15Z",
+      "side": 1,
+      "message": "Should we remove this platform-specific dependency from this upstream service file? We could put an \"After\u003d\" entry in gsz-sysinit.service, to accomplish the same thing.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 26
+      },
+      "revId": "b58fd142dcaab7a51bf1cee81a25268acd1e65dc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "023a8283_668ea02b",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-12-13T02:47:15Z",
+      "side": 1,
+      "message": "IIUC you plan to mask the espi_disable service when we\u0027re not in bare metal mode, right? ...so setting the target won\u0027t have any affect when we\u0027re not in bare metal mode?",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "b58fd142dcaab7a51bf1cee81a25268acd1e65dc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49f879c0_fb130b40",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2023-12-13T02:47:15Z",
+      "side": 1,
+      "message": "I think I originally meant to call checkPostCompleteStartup here. As you can see this doesn\u0027t do anything currently, so you can either remove this, or start using it.",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 42
+      },
+      "revId": "b58fd142dcaab7a51bf1cee81a25268acd1e65dc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
