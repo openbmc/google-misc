@@ -133,6 +133,30 @@
       },
       "revId": "b58fd142dcaab7a51bf1cee81a25268acd1e65dc",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fde6d79_6e0682f5",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-12-13T04:52:28Z",
+      "side": 1,
+      "message": "Sure, will remove this.",
+      "parentUuid": "49f879c0_fb130b40",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 42
+      },
+      "revId": "b58fd142dcaab7a51bf1cee81a25268acd1e65dc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
