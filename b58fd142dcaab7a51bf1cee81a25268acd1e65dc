@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9706bfa9_4e96d378",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-12-13T04:51:15Z",
+      "side": 1,
+      "message": "cc",
+      "revId": "b58fd142dcaab7a51bf1cee81a25268acd1e65dc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05c2a353_2117de31",
@@ -26,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "561e16b8_71bbacf9",
+        "filename": "subprojects/bare-metal-host-monitor/host-gpio-monitor.service.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-12-13T04:51:15Z",
+      "side": 1,
+      "message": "Sure that makes sense. One case is that in non-bm mode this service will be masked, so that service will depend on a masked service. I think that should be fine though (need to test it out).",
+      "parentUuid": "05c2a353_2117de31",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 26
+      },
+      "revId": "b58fd142dcaab7a51bf1cee81a25268acd1e65dc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "023a8283_668ea02b",
         "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
         "patchSetId": 2
@@ -37,6 +78,30 @@
       "writtenOn": "2023-12-13T02:47:15Z",
       "side": 1,
       "message": "IIUC you plan to mask the espi_disable service when we\u0027re not in bare metal mode, right? ...so setting the target won\u0027t have any affect when we\u0027re not in bare metal mode?",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "b58fd142dcaab7a51bf1cee81a25268acd1e65dc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "128bd6ed_a0a652b2",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-12-13T04:51:15Z",
+      "side": 1,
+      "message": "No that service is fine, because it will take action only in bm mode. I was saying to disable this service in the non-bm mode.",
+      "parentUuid": "023a8283_668ea02b",
       "range": {
         "startLine": 55,
         "startChar": 12,
