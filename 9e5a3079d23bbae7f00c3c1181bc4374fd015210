@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a971f64c_fd4a4b0e",
+        "filename": "subprojects/bare-metal-host-monitor/host-gpio-monitor.service.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-12-15T19:01:02Z",
+      "side": 1,
+      "message": "deplicate?",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "9e5a3079d23bbae7f00c3c1181bc4374fd015210",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed99f135_4bedf6e1",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-12-15T19:01:02Z",
+      "side": 1,
+      "message": "const naming convention not consistent.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 49
+      },
+      "revId": "9e5a3079d23bbae7f00c3c1181bc4374fd015210",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97decc22_709234b6",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-12-15T19:01:02Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 57
+      },
+      "revId": "9e5a3079d23bbae7f00c3c1181bc4374fd015210",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c61f514a_0785bebe",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-12-15T19:01:02Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "range": {
+        "startLine": 70,
+        "startChar": 39,
+        "endLine": 70,
+        "endChar": 56
+      },
+      "revId": "9e5a3079d23bbae7f00c3c1181bc4374fd015210",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0508cb47_ee09c875",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-12-15T19:01:02Z",
+      "side": 1,
+      "message": "std::format?",
+      "range": {
+        "startLine": 146,
+        "startChar": 12,
+        "endLine": 148,
+        "endChar": 74
+      },
+      "revId": "9e5a3079d23bbae7f00c3c1181bc4374fd015210",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
