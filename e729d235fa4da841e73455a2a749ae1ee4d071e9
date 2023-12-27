@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27d06a38_bb0e6c91",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-12-27T19:15:46Z",
+      "side": 1,
+      "message": "Any style-guide of prefering function definition style over lambda style? Or I can move it completely inline (directly in the getProperty call with lambda). I personally prefer the completely inline style since we don\u0027t need to jump back and forth while reading.",
+      "parentUuid": "cff62fa1_157220c7",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 6
+      },
+      "revId": "e729d235fa4da841e73455a2a749ae1ee4d071e9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd4c9145_9b8d117b",
         "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
         "patchSetId": 7
