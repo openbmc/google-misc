@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "be5db9cc_0aedc2d3",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-12-27T21:25:15Z",
+      "side": 1,
+      "message": "I don\u0027t think there are specific style guide for this case. It was done in bmcweb and in general its les cramp.",
+      "parentUuid": "27d06a38_bb0e6c91",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 6
+      },
+      "revId": "e729d235fa4da841e73455a2a749ae1ee4d071e9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd4c9145_9b8d117b",
         "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
         "patchSetId": 7
