@@ -119,6 +119,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd0312a0_93671633",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-12-27T21:57:36Z",
+      "side": 1,
+      "message": "I see, thanks. I removed the handler and changed it to completely inline style, which makes it a bit better and it is also a common pattern in bmcweb/openbmc.",
+      "parentUuid": "be5db9cc_0aedc2d3",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 6
+      },
+      "revId": "e729d235fa4da841e73455a2a749ae1ee4d071e9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd4c9145_9b8d117b",
@@ -179,6 +203,30 @@
       "writtenOn": "2023-12-27T18:35:23Z",
       "side": 1,
       "message": "can we define this as a function too for better readability.",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 65
+      },
+      "revId": "e729d235fa4da841e73455a2a749ae1ee4d071e9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af6cf1f7_b5c33698",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2023-12-27T21:57:36Z",
+      "side": 1,
+      "message": "Done, removed the handler as well.",
+      "parentUuid": "d1ad67e7_8a09cbe2",
       "range": {
         "startLine": 108,
         "startChar": 8,
