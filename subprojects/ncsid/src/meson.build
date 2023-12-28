@@ -14,21 +14,7 @@
 
 ncsid_headers = include_directories('.')
 
-fmt_dep = dependency('fmt', required: false)
-if not fmt_dep.found()
-  fmt_proj = import('cmake').subproject(
-    'fmt',
-    cmake_options: [
-      '-DCMAKE_POSITION_INDEPENDENT_CODE=ON',
-      '-DMASTER_PROJECT=OFF'
-    ],
-    required: false)
-  assert(fmt_proj.found(), 'fmtlib is required')
-  fmt_dep = fmt_proj.dependency('fmt')
-endif
-
 ncsid_deps = [
-  fmt_dep,
   dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
   dependency('stdplus', fallback: ['stdplus', 'stdplus_dep']),
 ]

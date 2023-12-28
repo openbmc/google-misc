@@ -14,7 +14,6 @@
 
 #include "net_config.h"
 
-#include <fmt/format.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -22,6 +21,7 @@
 #include <sdbusplus/bus.hpp>
 #include <stdplus/fd/create.hpp>
 #include <stdplus/fd/ops.hpp>
+#include <stdplus/print.hpp>
 #include <stdplus/util/string.hpp>
 
 #include <cstdio>
@@ -92,7 +92,7 @@ int PhosphorConfig::get_mac_addr(mac_addr_t* mac)
 {
     if (mac == nullptr)
     {
-        fmt::print(stderr, "mac is nullptr\n");
+        stdplus::println(stderr, "mac is nullptr");
         return -1;
     }
 
@@ -114,14 +114,14 @@ int PhosphorConfig::get_mac_addr(mac_addr_t* mac)
         }
         catch (const sdbusplus::exception::SdBusError& ex)
         {
-            fmt::print(stderr, "Failed to get MACAddress: {}\n", ex.what());
+            stdplus::println(stderr, "Failed to get MACAddress: {}", ex.what());
             return -1;
         }
 
         if (parse_mac(mac_string, mac) < 0)
         {
-            fmt::print(stderr, "Failed to parse MAC Address `{}`\n",
-                       mac_string);
+            stdplus::println(stderr, "Failed to parse MAC Address `{}`",
+                             mac_string);
             return -1;
         }
 
@@ -154,8 +154,8 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
     }
     catch (const std::exception& ex)
     {
-        fmt::print(stderr, "Failed to set MAC Addr `{}` writing file: {}\n",
-                   std::get<std::string>(mac_value), ex.what());
+        stdplus::println(stderr, "Failed to set MAC Addr `{}` writing file: {}",
+                         std::get<std::string>(mac_value), ex.what());
         return -1;
     }
 
@@ -165,8 +165,8 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
     }
     catch (const sdbusplus::exception::SdBusError& ex)
     {
-        fmt::print(stderr, "Failed to set MAC Addr `{}`: {}\n",
-                   std::get<std::string>(mac_value), ex.what());
+        stdplus::println(stderr, "Failed to set MAC Addr `{}`: {}",
+                         std::get<std::string>(mac_value), ex.what());
         return -1;
     }
 
@@ -215,7 +215,8 @@ int PhosphorConfig::set_nic_hostless(bool is_nic_hostless)
     }
     catch (const sdbusplus::exception::SdBusError& ex)
     {
-        fmt::print(stderr, "Failed to set systemd nic status: {}\n", ex.what());
+        stdplus::println(stderr, "Failed to set systemd nic status: {}",
+                         ex.what());
         return 1;
     }
 }

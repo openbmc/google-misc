@@ -150,7 +150,7 @@ ncsi_response_type_t ncsi_fsm_poll_l2_config(ncsi_state_t* ncsi_state,
       if (1 != get_capabilities_response->channel_count &&
           2 != get_capabilities_response->channel_count) {
         /* TODO: Return Error
-        CPRINTF("[NCSI Unsupported channel count %d]\n",
+        CPRINT("[NCSI Unsupported channel count {}]\n",
                 get_capabilities_response->channel_count);
           */
         ncsi_fsm_fail(ncsi_state, network_debug);
@@ -639,7 +639,7 @@ ncsi_response_type_t ncsi_fsm_poll_test(ncsi_state_t* ncsi_state,
         break;
       }
       // TODO: report this error.
-      // CPRINTF("[NCSI Link Status down 0x%08lx]\n", link_status);
+      // CPRINT("[NCSI Link Status down {:#08x}]\n", link_status);
     }
     if (ncsi_fsm_retry_test(network_debug)) {
       GO_TO_STATE(state_variable, NCSI_STATE_TEST_BEGIN);
