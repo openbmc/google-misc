@@ -19,9 +19,10 @@
 #include "platforms/nemora/portable/ncsi_fsm.h"
 
 #include <arpa/inet.h>
-#include <fmt/printf.h>
 #include <netinet/ether.h>
 #include <unistd.h>
+
+#include <stdplus/print.hpp>
 
 #include <chrono>
 #include <cstdint>
@@ -48,9 +49,10 @@ static void do_log(std::string&& line)
     {
         if (line_rep_count > 0)
         {
-            fmt::print(stderr, "... Repeated {} times ...\n", line_rep_count);
+            stdplus::println(stderr, "... Repeated {} times ...",
+                             line_rep_count);
         }
-        fmt::print(stderr, "{}", line);
+        stdplus::print(stderr, "{}", line);
         last_line = std::move(line);
         last_line_time = now;
         line_rep_count = 0;
@@ -61,7 +63,7 @@ static void do_log(std::string&& line)
     }
 }
 
-#define CPRINTF(...) do_log(fmt::sprintf(__VA_ARGS__))
+#define CPRINTF(...) do_log(std::format(__VA_ARGS__))
 
 #ifdef NCSID_VERBOSE_LOGGING
 #define DEBUG_PRINTF printf
@@ -200,7 +202,7 @@ size_t StateMachine::poll_simple(ncsi_simple_poll_f poll_func)
                            NCSI_LINK_STATUS_UP;
         if (!link_up_ || new_link_up != *link_up_)
         {
-            CPRINTF("[NCSI link %s]\n", new_link_up ? "up" : "down");
+            CPRINTF("[NCSI link {}]\n", new_link_up ? "up" : "down");
             link_up_ = new_link_up;
         }
     }
@@ -214,7 +216,7 @@ size_t StateMachine::poll_simple(ncsi_simple_poll_f poll_func)
             bool new_hostless = ncsi_fsm_is_nic_hostless(&ncsi_state_);
             if (!hostless_ || new_hostless != *hostless_)
             {
-                CPRINTF("[NCSI nic %s]\n",
+                CPRINTF("[NCSI nic {}]\n",
                         new_hostless ? "hostless" : "hostfull");
                 net_config_->set_nic_hostless(new_hostless);
                 hostless_ = new_hostless;
@@ -241,27 +243,27 @@ void StateMachine::report_ncsi_error(ncsi_response_type_t response_type)
             if (!ncsi_buf_.len)
             {
                 network_debug_.ncsi.rx_error.timeout_count++;
-                CPRINTF("[NCSI timeout in state %s]\n", state_string);
+                CPRINTF("[NCSI timeout in state {}]\n", state_string);
             }
             else
             {
                 network_debug_.ncsi.rx_error.undersized_count++;
-                CPRINTF("[NCSI undersized response in state %s]\n",
+                CPRINTF("[NCSI undersized response in state {}]\n",
                         state_string);
             }
             break;
         case NCSI_RESPONSE_NACK:
             network_debug_.ncsi.rx_error.nack_count++;
             CPRINTF(
-                "[NCSI nack in state %s. Response: 0x%04x Reason: 0x%04x]\n",
+                "[NCSI nack in state {}. Response: {:#04x} Reason: {:#04x}]\n",
                 state_string, ntohs(response->response_code),
                 ntohs(response->reason_code));
             break;
         case NCSI_RESPONSE_UNEXPECTED_TYPE:
             network_debug_.ncsi.rx_error.unexpected_type_count++;
-            CPRINTF("[NCSI unexpected response in state %s. Response type: "
-                    "0x%02x]\n",
-                    state_string, response->hdr.control_packet_type);
+            CPRINTF(
+                "[NCSI unexpected response in state {}. Response type: {:#02x}]\n",
+                state_string, response->hdr.control_packet_type);
             break;
         case NCSI_RESPONSE_UNEXPECTED_SIZE:
         {
@@ -281,8 +283,8 @@ void StateMachine::report_ncsi_error(ncsi_response_type_t response_type)
                     response->hdr.control_packet_type & (~NCSI_RESPONSE));
             }
             network_debug_.ncsi.rx_error.unexpected_size_count++;
-            CPRINTF("[NCSI unexpected response size in state %s."
-                    " Expected %d]\n",
+            CPRINTF("[NCSI unexpected response size in state {}."
+                    " Expected {}]\n",
                     state_string, expected_size);
         }
         break;
@@ -344,7 +346,7 @@ void StateMachine::run(int max_rounds)
     if (!net_config_ || !sock_io_)
     {
         CPRINTF("StateMachine configuration incomplete: "
-                "net_config_: <%p>, sock_io_: <%p>",
+                "net_config_: <{}>, sock_io_: <{}>",
                 reinterpret_cast<void*>(net_config_),
                 reinterpret_cast<void*>(sock_io_));
         return;

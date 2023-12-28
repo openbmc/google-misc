@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <fmt/format.h>
-
 #include <sdeventplus/event.hpp>
 #include <sdeventplus/source/io.hpp>
 #include <stdplus/fd/create.hpp>
 #include <stdplus/fd/ops.hpp>
+#include <stdplus/print.hpp>
 
 using namespace std::string_view_literals;
 
@@ -48,7 +47,7 @@ int main(int argc, char* argv[])
 {
     if (argc != 2)
     {
-        fmt::print(stderr, "Invalid parameter count\n");
+        stdplus::println(stderr, "Invalid parameter count");
         return 1;
     }
 
@@ -64,7 +63,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        fmt::print(stderr, "Invalid parameter\n");
+        stdplus::println(stderr, "Invalid parameter");
         return 1;
     }
 
@@ -84,7 +83,7 @@ int main(int argc, char* argv[])
     }
     catch (const std::exception& e)
     {
-        fmt::print(stderr, "Failed: {}\n", e.what());
+        stdplus::println(stderr, "Failed: {}", e.what());
         return 1;
     }
 }
