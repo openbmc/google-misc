@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b102279_0e27a7b5",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-01-02T18:30:30Z",
+      "side": 1,
+      "message": "nit: does it make sense to refactor these 2 since they share most of the same code for the checking, and have something like `checkPostComplete(bus, state, unitStatus)`\n\nthen we can do\n```\nvoid checkPostCompleteStartup(bus)\n{\n    checkPostComplete(bus, OperatingSystemStateStandby,true)\n}\n\nvoid checkPostCompleteEvent(bus)\n{\n    checkPostComplete(bus, OperatingSystemStateInactive,false)\n}\n```\n\norr do the `checkPostComplete(bus, OperatingSystemStateStandby,true)` call directly in main.\n\nJust a suggestion though",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 7
+      },
+      "revId": "7c0370e0139110f407eae776de061d11c04e46b3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bb7dae7_9e595da0",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-01-02T18:30:30Z",
+      "side": 1,
+      "message": "very minor nit: IPMI",
+      "range": {
+        "startLine": 98,
+        "startChar": 17,
+        "endLine": 98,
+        "endChar": 21
+      },
+      "revId": "7c0370e0139110f407eae776de061d11c04e46b3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34c3299f_19011d5b",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-01-02T18:30:30Z",
+      "side": 1,
+      "message": "nit: I think sdbusplus has a different convention for setting these things with internal members",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 110,
+        "endChar": 48
+      },
+      "revId": "7c0370e0139110f407eae776de061d11c04e46b3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8aaa0f12_922233ed",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-01-02T18:30:30Z",
+      "side": 1,
+      "message": "nit: Should this be something like, Stop the bare metal active target if the post complete got deasserted",
+      "range": {
+        "startLine": 139,
+        "startChar": 59,
+        "endLine": 139,
+        "endChar": 62
+      },
+      "revId": "7c0370e0139110f407eae776de061d11c04e46b3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
