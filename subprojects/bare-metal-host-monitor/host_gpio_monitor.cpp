@@ -34,14 +34,13 @@ void setUnitStatus(sdbusplus::asio::connection& bus, bool status)
     bus.call(method);
 }
 
-/* This only gets called once on startup. */
 void checkPostComplete(sdbusplus::asio::connection& bus,
                        const std::string& state, bool action)
 {
     sdbusplus::asio::getProperty<std::string>(
         bus, OperatingSystemService, OperatingSystemPath,
         OperatingSystemStatusInterface, OperatingSystemStateProperty,
-        [&](const boost::system::error_code& ec,
+        [&, state, action](const boost::system::error_code& ec,
             const std::string& postCompleteState) {
         if (ec)
         {
@@ -50,6 +49,7 @@ void checkPostComplete(sdbusplus::asio::connection& bus,
         }
 
         lg2::info("Post Complete state is {STATE}", "STATE", postCompleteState);
+
         /*
          * If state is Standby, enable the bare-metal-active systemd
          * target.
