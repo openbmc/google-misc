@@ -26,7 +26,9 @@ project(
   ])
 
 # Dummy file to make code coverage happy
-executable('hello', 'hello.c')
+if get_option('tests').allowed()
+  test('hello', executable('hello', 'hello.c'))
+endif
 
 # Meson has no feature option to str...
 tests_str = get_option('tests').allowed() ? 'enabled' : 'disabled'

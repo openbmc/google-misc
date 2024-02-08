@@ -14,10 +14,11 @@
 
 #include "metric.hpp"
 
-#include "metricblob.pb.h"
+#include "metricblob.pb.n.h"
 
 #include "util.hpp"
 
+#include <pb_encode.h>
 #include <sys/statvfs.h>
 
 #include <phosphor-logging/log.hpp>
@@ -39,6 +40,45 @@ BmcHealthSnapshot::BmcHealthSnapshot() :
     done(false), stringId(0), ticksPerSec(0)
 {}
 
+template <typename S>
+static constexpr auto pbEncodeStr = [](pb_ostream_t* stream,
+                                       const pb_field_iter_t* field,
+                                       void* const* arg) noexcept {
+    static_assert(sizeof(*std::declval<S>().data()) == sizeof(pb_byte_t));
+    const auto& s = *reinterpret_cast<const S*>(*arg);
+    return pb_encode_tag_for_field(stream, field) &&
+           pb_encode_string(
+               stream, reinterpret_cast<const pb_byte_t*>(s.data()), s.size());
+};
+
+template <typename T>
+static pb_callback_t pbStrEncoder(const T& t) noexcept
+{
+    return {{.encode = pbEncodeStr<T>}, const_cast<T*>(&t)};
+}
+
+template <auto fields, typename T>
+static constexpr auto pbEncodeSubs = [](pb_ostream_t* stream,
+                                        const pb_field_iter_t* field,
+                                        void* const* arg) noexcept {
+    for (const auto& sub : *reinterpret_cast<const std::vector<T>*>(*arg))
+    {
+        if (!pb_encode_tag_for_field(stream, field) ||
+            !pb_encode_submessage(stream, fields, &sub))
+        {
+            return false;
+        }
+    }
+    return true;
+};
+
+template <auto fields, typename T>
+static pb_callback_t pbSubsEncoder(const std::vector<T>& t)
+{
+    return {{.encode = pbEncodeSubs<fields, T>},
+            const_cast<std::vector<T>*>(&t)};
+}
+
 struct ProcStatEntry
 {
     std::string cmdline;
@@ -57,11 +97,17 @@ struct ProcStatEntry
     }
 };
 
-bmcmetrics::metricproto::BmcProcStatMetric BmcHealthSnapshot::getProcStatList()
+static bmcmetrics_metricproto_BmcProcStatMetric getProcStatMetric(
+    BmcHealthSnapshot& obj, long ticksPerSec,
+    std::vector<bmcmetrics_metricproto_BmcProcStatMetric_BmcProcStat>& procs,
+    bool& use) noexcept
 {
+    if (ticksPerSec == 0)
+    {
+        return {};
+    }
     constexpr std::string_view procPath = "/proc/";
 
-    bmcmetrics::metricproto::BmcProcStatMetric ret;
     std::vector<ProcStatEntry> entries;
 
     for (const auto& procEntry : std::filesystem::directory_iterator(procPath))
@@ -113,7 +159,7 @@ bmcmetrics::metricproto::BmcProcStatMetric BmcHealthSnapshot::getProcStatList()
             isOthers = true;
         }
 
-        ProcStatEntry& entry = entries[i];
+        const ProcStatEntry& entry = entries[i];
 
         if (isOthers)
         {
@@ -122,29 +168,36 @@ bmcmetrics::metricproto::BmcProcStatMetric BmcHealthSnapshot::getProcStatList()
         }
         else
         {
-            bmcmetrics::metricproto::BmcProcStatMetric::BmcProcStat s;
             std::string fullCmdline = entry.cmdline;
             if (entry.tcomm.size() > 0)
             {
-                fullCmdline += " " + entry.tcomm;
+                fullCmdline += " ";
+                fullCmdline += entry.tcomm;
             }
-            s.set_sidx_cmdline(getStringID(fullCmdline));
-            s.set_utime(entry.utime);
-            s.set_stime(entry.stime);
-            *(ret.add_stats()) = s;
+            procs.emplace_back(
+                bmcmetrics_metricproto_BmcProcStatMetric_BmcProcStat{
+                    .sidx_cmdline = obj.getStringID(fullCmdline),
+                    .utime = entry.utime,
+                    .stime = entry.stime,
+                });
         }
     }
 
     if (isOthers)
     {
-        bmcmetrics::metricproto::BmcProcStatMetric::BmcProcStat s;
-        s.set_sidx_cmdline(getStringID(others.cmdline));
-        s.set_utime(others.utime);
-        s.set_stime(others.stime);
-        *(ret.add_stats()) = s;
+        procs.emplace_back(bmcmetrics_metricproto_BmcProcStatMetric_BmcProcStat{
+            .sidx_cmdline = obj.getStringID(others.cmdline),
+            .utime = others.utime,
+            .stime = others.stime,
+
+        });
     }
 
-    return ret;
+    use = true;
+    return bmcmetrics_metricproto_BmcProcStatMetric{
+        .stats = pbSubsEncoder<
+            bmcmetrics_metricproto_BmcProcStatMetric_BmcProcStat_fields>(procs),
+    };
 }
 
 int getFdCount(int pid)
@@ -171,9 +224,15 @@ struct FdStatEntry
     }
 };
 
-bmcmetrics::metricproto::BmcFdStatMetric BmcHealthSnapshot::getFdStatList()
+static bmcmetrics_metricproto_BmcFdStatMetric getFdStatMetric(
+    BmcHealthSnapshot& obj, long ticksPerSec,
+    std::vector<bmcmetrics_metricproto_BmcFdStatMetric_BmcFdStat>& fds,
+    bool& use) noexcept
 {
-    bmcmetrics::metricproto::BmcFdStatMetric ret;
+    if (ticksPerSec == 0)
+    {
+        return {};
+    }
 
     // Sort by fd count, no tie-breaking
     std::vector<FdStatEntry> entries;
@@ -227,178 +286,204 @@ bmcmetrics::metricproto::BmcFdStatMetric BmcHealthSnapshot::getFdStatList()
         }
         else
         {
-            bmcmetrics::metricproto::BmcFdStatMetric::BmcFdStat s;
             std::string fullCmdline = entry.cmdline;
             if (entry.tcomm.size() > 0)
             {
-                fullCmdline += " " + entry.tcomm;
+                fullCmdline += " ";
+                fullCmdline += entry.tcomm;
             }
-            s.set_sidx_cmdline(getStringID(fullCmdline));
-            s.set_fd_count(entry.fdCount);
-            *(ret.add_stats()) = s;
+            fds.emplace_back(bmcmetrics_metricproto_BmcFdStatMetric_BmcFdStat{
+                .sidx_cmdline = obj.getStringID(fullCmdline),
+                .fd_count = entry.fdCount,
+            });
         }
     }
 
     if (isOthers)
     {
-        bmcmetrics::metricproto::BmcFdStatMetric::BmcFdStat s;
-        s.set_sidx_cmdline(getStringID(others.cmdline));
-        s.set_fd_count(others.fdCount);
-        *(ret.add_stats()) = s;
+        fds.emplace_back(bmcmetrics_metricproto_BmcFdStatMetric_BmcFdStat{
+            .sidx_cmdline = obj.getStringID(others.cmdline),
+            .fd_count = others.fdCount,
+        });
     }
 
+    use = true;
+    return bmcmetrics_metricproto_BmcFdStatMetric{
+        .stats = pbSubsEncoder<
+            bmcmetrics_metricproto_BmcFdStatMetric_BmcFdStat_fields>(fds),
+    };
+}
+
+static bmcmetrics_metricproto_BmcMemoryMetric getMemMetric() noexcept
+{
+    bmcmetrics_metricproto_BmcMemoryMetric ret = {};
+    auto data = readFileThenGrepIntoString("/proc/meminfo");
+    int value;
+    if (parseMeminfoValue(data, "MemAvailable:", value))
+    {
+        ret.mem_available = value;
+    }
+    if (parseMeminfoValue(data, "Slab:", value))
+    {
+        ret.slab = value;
+    }
+
+    if (parseMeminfoValue(data, "KernelStack:", value))
+    {
+        ret.kernel_stack = value;
+    }
     return ret;
 }
 
-void BmcHealthSnapshot::serializeSnapshotToArray(
-    const bmcmetrics::metricproto::BmcMetricSnapshot& snapshot)
+static bmcmetrics_metricproto_BmcUptimeMetric
+    getUptimeMetric(bool& use) noexcept
 {
-    size_t size = snapshot.ByteSizeLong();
-    if (size > 0)
-    {
-        pbDump.resize(size);
-        if (!snapshot.SerializeToArray(pbDump.data(), size))
-        {
-            log<level::ERR>("Could not serialize protobuf to array");
-        }
-    }
-}
-
-void BmcHealthSnapshot::doWork()
-{
-    bmcmetrics::metricproto::BmcMetricSnapshot snapshot;
-
-    // Memory info
-    std::string meminfoBuffer = readFileThenGrepIntoString("/proc/meminfo");
-
-    {
-        bmcmetrics::metricproto::BmcMemoryMetric m;
-
-        std::string_view sv(meminfoBuffer.data());
-        // MemAvailable
-        int value;
-        bool ok = parseMeminfoValue(sv, "MemAvailable:", value);
-        if (ok)
-        {
-            m.set_mem_available(value);
-        }
-
-        ok = parseMeminfoValue(sv, "Slab:", value);
-        if (ok)
-        {
-            m.set_slab(value);
-        }
-
-        ok = parseMeminfoValue(sv, "KernelStack:", value);
-        if (ok)
-        {
-            m.set_kernel_stack(value);
-        }
-
-        *(snapshot.mutable_memory_metric()) = m;
-    }
-
-    // Uptime
-    std::string uptimeBuffer = readFileThenGrepIntoString("/proc/uptime");
+    bmcmetrics_metricproto_BmcUptimeMetric ret = {};
     double uptime = 0;
-    double idleProcessTime = 0;
-    BootTimesMonotonic btm;
-    if (!parseProcUptime(uptimeBuffer, uptime, idleProcessTime))
     {
-        log<level::ERR>("Error parsing /proc/uptime");
+        auto data = readFileThenGrepIntoString("/proc/uptime");
+        double idleProcessTime = 0;
+        if (parseProcUptime(data, uptime, idleProcessTime))
+        {
+            ret.uptime = uptime;
+            ret.idle_process_time = idleProcessTime;
+        }
+        else
+        {
+            log<level::ERR>("Error parsing /proc/uptime");
+            return ret;
+        }
     }
-    else if (!getBootTimesMonotonic(btm))
+    BootTimesMonotonic btm;
+    if (getBootTimesMonotonic(btm))
     {
-        log<level::ERR>("Could not get boot time");
+        if (btm.firmwareTime == 0 && btm.powerOnSecCounterTime != 0)
+        {
+            ret.firmware_boot_time_sec =
+                static_cast<double>(btm.powerOnSecCounterTime) - uptime;
+        }
+        else
+        {
+            ret.firmware_boot_time_sec =
+                static_cast<double>(btm.firmwareTime - btm.loaderTime) / 1e6;
+        }
+        ret.loader_boot_time_sec = static_cast<double>(btm.loaderTime) / 1e6;
+        if (btm.initrdTime != 0)
+        {
+            ret.kernel_boot_time_sec = static_cast<double>(btm.initrdTime) /
+                                       1e6;
+            ret.initrd_boot_time_sec =
+                static_cast<double>(btm.userspaceTime - btm.initrdTime) / 1e6;
+            ret.userspace_boot_time_sec =
+                static_cast<double>(btm.finishTime - btm.userspaceTime) / 1e6;
+        }
+        else
+        {
+            ret.kernel_boot_time_sec = static_cast<double>(btm.userspaceTime) /
+                                       1e6;
+            ret.initrd_boot_time_sec = 0;
+            ret.userspace_boot_time_sec =
+                static_cast<double>(btm.finishTime - btm.userspaceTime) / 1e6;
+        }
     }
     else
     {
-        bmcmetrics::metricproto::BmcUptimeMetric m1;
-        m1.set_uptime(uptime);
-        m1.set_idle_process_time(idleProcessTime);
-        if (btm.firmwareTime == 0 && btm.powerOnSecCounterTime != 0)
-        {
-            m1.set_firmware_boot_time_sec(
-                static_cast<double>(btm.powerOnSecCounterTime) - uptime);
-        }
-        else
-        {
-            m1.set_firmware_boot_time_sec(
-                static_cast<double>(btm.firmwareTime - btm.loaderTime) / 1e6);
-        }
-        m1.set_loader_boot_time_sec(static_cast<double>(btm.loaderTime) / 1e6);
-        // initrf presents
-        if (btm.initrdTime != 0)
-        {
-            m1.set_kernel_boot_time_sec(static_cast<double>(btm.initrdTime) /
-                                        1e6);
-            m1.set_initrd_boot_time_sec(
-                static_cast<double>(btm.userspaceTime - btm.initrdTime) / 1e6);
-            m1.set_userspace_boot_time_sec(
-                static_cast<double>(btm.finishTime - btm.userspaceTime) / 1e6);
-        }
-        else
-        {
-            m1.set_kernel_boot_time_sec(static_cast<double>(btm.userspaceTime) /
-                                        1e6);
-            m1.set_initrd_boot_time_sec(0);
-            m1.set_userspace_boot_time_sec(
-                static_cast<double>(btm.finishTime - btm.userspaceTime) / 1e6);
-        }
-        *(snapshot.mutable_uptime_metric()) = m1;
+        log<level::ERR>("Could not get boot time");
+        return ret;
     }
+    use = true;
+    return ret;
+}
 
-    // Storage space
+static bmcmetrics_metricproto_BmcDiskSpaceMetric
+    getStorageMetric(bool& use) noexcept
+{
+    bmcmetrics_metricproto_BmcDiskSpaceMetric ret = {};
     struct statvfs fiData;
-    if ((statvfs("/", &fiData)) < 0)
+    if (statvfs("/", &fiData) < 0)
     {
         log<level::ERR>("Could not call statvfs");
     }
     else
     {
-        uint64_t kib = (fiData.f_bsize * fiData.f_bfree) / 1024;
-        bmcmetrics::metricproto::BmcDiskSpaceMetric m2;
-        m2.set_rwfs_kib_available(static_cast<int>(kib));
-        *(snapshot.mutable_storage_space_metric()) = m2;
+        ret.rwfs_kib_available = (fiData.f_bsize * fiData.f_bfree) / 1024;
+        use = true;
     }
+    return ret;
+}
 
+void BmcHealthSnapshot::doWork()
+{
     // The next metrics require a sane ticks_per_sec value, typically 100 on
     // the BMC. In the very rare circumstance when it's 0, exit early and return
     // a partially complete snapshot (no process).
     ticksPerSec = getTicksPerSec();
 
-    // FD stat
-    *(snapshot.mutable_fdstat_metric()) = getFdStatList();
-
-    if (ticksPerSec == 0)
+    static constexpr auto stcb = [](pb_ostream_t* stream,
+                                    const pb_field_t* field,
+                                    void* const* arg) noexcept {
+        auto& self = *reinterpret_cast<BmcHealthSnapshot*>(*arg);
+        std::vector<std::string_view> strs(self.stringTable.size());
+        for (const auto& [str, i] : self.stringTable)
+        {
+            strs[i] = str;
+        }
+        for (auto& str : strs)
+        {
+            bmcmetrics_metricproto_BmcStringTable_StringEntry msg = {
+                .value = pbStrEncoder(str),
+            };
+            if (!pb_encode_tag_for_field(stream, field) ||
+                !pb_encode_submessage(
+                    stream,
+                    bmcmetrics_metricproto_BmcStringTable_StringEntry_fields,
+                    &msg))
+            {
+                return false;
+            }
+        }
+        return true;
+    };
+    std::vector<bmcmetrics_metricproto_BmcProcStatMetric_BmcProcStat> procs;
+    std::vector<bmcmetrics_metricproto_BmcFdStatMetric_BmcFdStat> fds;
+    bmcmetrics_metricproto_BmcMetricSnapshot snapshot = {
+        .has_string_table = true,
+        .string_table =
+            {
+                .entries = {{.encode = stcb}, this},
+            },
+        .has_memory_metric = true,
+        .memory_metric = getMemMetric(),
+        .has_uptime_metric = false,
+        .uptime_metric = getUptimeMetric(snapshot.has_uptime_metric),
+        .has_storage_space_metric = false,
+        .storage_space_metric =
+            getStorageMetric(snapshot.has_storage_space_metric),
+        .has_procstat_metric = false,
+        .procstat_metric = getProcStatMetric(*this, ticksPerSec, procs,
+                                             snapshot.has_procstat_metric),
+        .has_fdstat_metric = false,
+        .fdstat_metric = getFdStatMetric(*this, ticksPerSec, fds,
+                                         snapshot.has_fdstat_metric),
+    };
+    pb_ostream_t nost = {};
+    if (!pb_encode(&nost, bmcmetrics_metricproto_BmcMetricSnapshot_fields,
+                   &snapshot))
     {
-        log<level::ERR>("ticksPerSec is 0, skipping the process list metric");
-        serializeSnapshotToArray(snapshot);
-        done = true;
+        auto msg = std::format("Getting pb size: {}", PB_GET_ERROR(&nost));
+        log<level::ERR>(msg.c_str());
         return;
     }
-
-    // Proc stat
-    *(snapshot.mutable_procstat_metric()) = getProcStatList();
-
-    // String table
-    std::vector<std::string_view> strings(stringTable.size());
-    for (const auto& [s, i] : stringTable)
+    pbDump.resize(nost.bytes_written);
+    auto ost = pb_ostream_from_buffer(
+        reinterpret_cast<pb_byte_t*>(pbDump.data()), pbDump.size());
+    if (!pb_encode(&ost, bmcmetrics_metricproto_BmcMetricSnapshot_fields,
+                   &snapshot))
     {
-        strings[i] = s;
+        auto msg = std::format("Writing pb msg: {}", PB_GET_ERROR(&ost));
+        log<level::ERR>(msg.c_str());
+        return;
     }
-
-    bmcmetrics::metricproto::BmcStringTable st;
-    for (size_t i = 0; i < strings.size(); ++i)
-    {
-        bmcmetrics::metricproto::BmcStringTable::StringEntry entry;
-        entry.set_value(strings[i].data());
-        *(st.add_entries()) = entry;
-    }
-    *(snapshot.mutable_string_table()) = st;
-
-    // Save to buffer
-    serializeSnapshotToArray(snapshot);
     done = true;
 }
 

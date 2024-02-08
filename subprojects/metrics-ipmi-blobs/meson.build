@@ -14,54 +14,88 @@
 
 project(
   'metrics-ipmi-blobs',
-  'cpp',
+  ['cpp', 'c'],
   version: '0.1',
   default_options: [
     'warning_level=3',
     'werror=true',
     'cpp_std=c++23',
+    'c_std=c18',
     'tests=' + (meson.is_subproject() ? 'disabled' : 'auto'),
   ],
 )
 
-headers = include_directories('.')
+nanopb = find_program('nanopb_generator.py', native: true, required: false)
+if not nanopb.found()
+  nanopb_opts = import('cmake').subproject_options()
+  nanopb_opts.add_cmake_defines({'BUILD_SHARED_LIBS': 'ON'})
+  nanopb_proj = import('cmake').subproject('nanopb', options: nanopb_opts)
+  nanopb = find_program(meson.global_source_root() + '/subprojects/nanopb/generator/nanopb_generator.py', native: true)
+  nanopb_dep = nanopb_proj.dependency('protobuf_nanopb')
+else
+  nanopb_dep = meson.get_compiler('cpp').find_library('protobuf-nanopb')
+endif
 
-deps = [
-  dependency('phosphor-logging'),
-  dependency('phosphor-ipmi-blobs'),
-  dependency('protobuf'),
-  dependency('sdbusplus'),
-]
+nanopb_kwargs = {
+  'output': [
+    '@BASENAME@.pb.n.h',
+    '@BASENAME@.pb.n.c',
+  ],
+  'command': [
+    nanopb,
+    '-q',
+    '-s', 'packed_struct:0',
+    '-H.n.h',
+    '-S.n.c',
+    '-I' + import('fs').relative_to(meson.current_source_dir(), meson.global_build_root()),
+    '-D' + import('fs').relative_to(meson.current_build_dir(), meson.global_build_root()),
+    '@INPUT@',
+  ],
+}
 
-proto = custom_target(
-  'metricblob_proto',
-  command: [
-    find_program('protoc', native: true),
-    '--proto_path=@CURRENT_SOURCE_DIR@',
-    '--cpp_out=@OUTDIR@',
-    '@INPUT@'
-  ],
-  output: [
-    'metricblob.pb.cc',
-    'metricblob.pb.h',
-  ],
-  input: 'metricblob.proto')
-proto_h = proto[1]
+tgt = custom_target(
+  'metricblob.pb.n.hc',
+  input: 'metricblob.proto',
+  kwargs: nanopb_kwargs)
+metrics_nanopb_hdr = tgt[0]
+metrics_nanopb_src = tgt[1]
+
+metrics_nanopb_pre = declare_dependency(
+  include_directories: include_directories('.'),
+  sources: metrics_nanopb_hdr,
+  dependencies: [
+    nanopb_dep,
+  ])
+
+metrics_nanopb_lib = static_library(
+  'metrics_nanopb',
+  metrics_nanopb_src,
+  implicit_include_directories: false,
+  dependencies: metrics_nanopb_pre)
+
+metrics_nanopb_dep = declare_dependency(
+  dependencies: metrics_nanopb_pre,
+  link_with: metrics_nanopb_lib)
+
+pre = declare_dependency(
+  include_directories: include_directories('.'),
+  dependencies: [
+    metrics_nanopb_dep,
+    dependency('phosphor-logging'),
+    dependency('phosphor-ipmi-blobs'),
+    dependency('sdbusplus'),
+  ])
 
 lib = static_library(
   'metricsblob',
   'util.cpp',
   'handler.cpp',
   'metric.cpp',
-  proto,
-  include_directories: headers,
   implicit_include_directories: false,
-  dependencies: deps)
+  dependencies: pre)
 
 dep = declare_dependency(
-  sources: proto_h,
-  dependencies: deps,
-  include_directories: headers,
+  dependencies: pre,
   link_with: lib)
 
 shared_module(
