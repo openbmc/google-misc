@@ -9,6 +9,7 @@ subprojects/*
 !subprojects/nemora-postd/
 !subprojects/bare-metal-host-monitor/
 !subprojects/googletest.wrap
+!subprojects/nanopb.wrap
 !subprojects/phosphor-dbus-interfaces.wrap
 !subprojects/phosphor-logging.wrap
 !subprojects/sdbusplus.wrap

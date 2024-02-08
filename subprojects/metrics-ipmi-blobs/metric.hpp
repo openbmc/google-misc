@@ -13,11 +13,6 @@
 // limitations under the License.
 
 #pragma once
-
-#include "metricblob.pb.h"
-
-#include <unistd.h>
-
 #include <blobs-ipmid/blobs.hpp>
 
 #include <atomic>
@@ -60,19 +55,12 @@ class BmcHealthSnapshot
      */
     uint32_t size();
 
-  private:
     /**
-     * Serialize to the pb_dump_ array.
+     * Returns the ID of the provided string
      */
-    void serializeSnapshotToArray(
-        const bmcmetrics::metricproto::BmcMetricSnapshot& snapshot);
-
-    // The two following functions access the snapshot's string table so they
-    // have to be member functions.
-    bmcmetrics::metricproto::BmcProcStatMetric getProcStatList();
-    bmcmetrics::metricproto::BmcFdStatMetric getFdStatList();
-
     int getStringID(const std::string_view s);
+
+  private:
     std::atomic<bool> done;
     std::vector<char> pbDump;
     std::unordered_map<std::string, int> stringTable;
