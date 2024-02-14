@@ -16,6 +16,121 @@
       "message": "Adding a few more folks who are probably more familiar with metrics-blob",
       "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1f68660_9aaaff8b",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-02-14T21:05:03Z",
+      "side": 1,
+      "message": "nit: `T` just for consistency?",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7314f91_ec8c2e6e",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-02-14T21:05:03Z",
+      "side": 1,
+      "message": "was about to say\n\nstd::optional\u003c\u003e instead of using the `use` bool?\n\nbut it seems like `bmcmetrics_metricproto_BmcMetricSnapshot` passes `has_procstat_metric` and use to this.\n\nit seems like that\u0027s the best way to do this given how it is setup.",
+      "range": {
+        "startLine": 310,
+        "startChar": 4,
+        "endLine": 314,
+        "endChar": 6
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5e81cc3_100738a8",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-02-14T21:05:03Z",
+      "side": 1,
+      "message": "do we need to have this {}?",
+      "range": {
+        "startLine": 343,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 5
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca971bf1_4a2874f5",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-02-14T21:05:03Z",
+      "side": 1,
+      "message": "nit:\n\n```\nif (!getBootTimesMonotonic(btm)) {\n   log\u003clevel::ERR\u003e(\"Could not get boot time\");\n   return ret;\n}\n...\n```\n\nTo save horizontal spaces.",
+      "range": {
+        "startLine": 358,
+        "startChar": 4,
+        "endLine": 393,
+        "endChar": 5
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "136b4849_20f02690",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-02-14T21:05:03Z",
+      "side": 1,
+      "message": "is this needed?\n\nWhat happens if you use `self.stringTable` directly for `pbStrEncoder`?",
+      "range": {
+        "startLine": 427,
+        "startChar": 8,
+        "endLine": 430,
+        "endChar": 9
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
