@@ -43,6 +43,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "fa540b9a_f4e3da8d",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-02-14T21:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1f68660_9aaaff8b",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b7314f91_ec8c2e6e",
         "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
         "patchSetId": 5
@@ -54,6 +78,30 @@
       "writtenOn": "2024-02-14T21:05:03Z",
       "side": 1,
       "message": "was about to say\n\nstd::optional\u003c\u003e instead of using the `use` bool?\n\nbut it seems like `bmcmetrics_metricproto_BmcMetricSnapshot` passes `has_procstat_metric` and use to this.\n\nit seems like that\u0027s the best way to do this given how it is setup.",
+      "range": {
+        "startLine": 310,
+        "startChar": 4,
+        "endLine": 314,
+        "endChar": 6
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff825a7b_17c2ae73",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-02-14T21:43:18Z",
+      "side": 1,
+      "message": "Yeah, it was mostly for convenience of filling out the nanopb struct, it\u0027s not a public API of the code so I didn\u0027t care too much that it\u0027s mostly for nanopb convenience.",
+      "parentUuid": "b7314f91_ec8c2e6e",
       "range": {
         "startLine": 310,
         "startChar": 4,
@@ -87,6 +135,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08bdc3a9_04e56824",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-02-14T21:43:18Z",
+      "side": 1,
+      "message": "Nor required, but it scopes the `data` variable to drop it before doing more work.",
+      "parentUuid": "e5e81cc3_100738a8",
+      "range": {
+        "startLine": 343,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 5
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca971bf1_4a2874f5",
@@ -110,6 +182,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18a80d34_daca52b3",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-02-14T21:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca971bf1_4a2874f5",
+      "range": {
+        "startLine": 358,
+        "startChar": 4,
+        "endLine": 393,
+        "endChar": 5
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "136b4849_20f02690",
@@ -123,6 +219,30 @@
       "writtenOn": "2024-02-14T21:05:03Z",
       "side": 1,
       "message": "is this needed?\n\nWhat happens if you use `self.stringTable` directly for `pbStrEncoder`?",
+      "range": {
+        "startLine": 427,
+        "startChar": 8,
+        "endLine": 430,
+        "endChar": 9
+      },
+      "revId": "2550c36131127c191bcce79cdbc187744d4a1e47",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "550dcb87_73b30c7b",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-02-14T21:43:18Z",
+      "side": 1,
+      "message": "Yes, it\u0027s inverting the map to output in index order. The strings in the map would be sorted lexigraphically otherwise.\n\nTechnically I could search for each index I need and not build an intermediate vector, bjut that would be O(n^2) lookups in the map.\n\nI have literally no idea why we built this string table abstraction other than rudimentary compression. I\u0027ve never seen the strings get re-used.",
+      "parentUuid": "136b4849_20f02690",
       "range": {
         "startLine": 427,
         "startChar": 8,
