@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e87ea9d_0eea0408",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2024-02-16T19:41:18Z",
+      "side": 1,
+      "message": "I think Brandon was asking for a \"Tested\" field?",
+      "parentUuid": "0f9e07a0_ca3180b6",
+      "revId": "16067525afc465ee14c2cf5fc0186300788598fc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ae3c3990_ae7be852",
         "filename": "subprojects/espi-control/npcm7xx_espi_control.cpp",
         "patchSetId": 1
@@ -73,6 +91,53 @@
       "side": 1,
       "message": "Here we just mask the first two channel, the last 2 channel is needed for host console.",
       "parentUuid": "ae3c3990_ae7be852",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "16067525afc465ee14c2cf5fc0186300788598fc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c70306c9_e9421fb2",
+        "filename": "subprojects/espi-control/npcm7xx_espi_control.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2024-02-16T19:41:18Z",
+      "side": 1,
+      "message": "nit: maybe add a comment saying you\u0027re only disabling 2 channels",
+      "range": {
+        "startLine": 54,
+        "startChar": 41,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "16067525afc465ee14c2cf5fc0186300788598fc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84b57d52_41e580c0",
+        "filename": "subprojects/espi-control/npcm7xx_espi_control.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2024-02-16T19:41:18Z",
+      "side": 1,
+      "message": "Not sure whether Brandon is aware, but we found that we need some eSPI functionality for the host console, so we can\u0027t completely disable the eSPI bus.",
+      "parentUuid": "e1ca9f4e_5599b52a",
       "range": {
         "startLine": 54,
         "startChar": 0,
