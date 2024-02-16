@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57307655_bceb0399",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-02-16T18:11:29Z",
+      "side": 1,
+      "message": "was this tested?",
+      "revId": "16067525afc465ee14c2cf5fc0186300788598fc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae3c3990_ae7be852",
+        "filename": "subprojects/espi-control/npcm7xx_espi_control.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-02-16T18:11:29Z",
+      "side": 1,
+      "message": "was the mask incorrect? or is this a different mask (and we should have a different const instead)",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "16067525afc465ee14c2cf5fc0186300788598fc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
