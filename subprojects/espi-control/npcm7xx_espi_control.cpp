@@ -51,7 +51,7 @@
  */
 #define ESPICFG_OFFSET 0x4
 #define ESPICFG_HOST_CHANNEL_ENABLE_MASK 0xF0
-#define ESPICFG_CORE_CHANNEL_ENABLE_MASK 0x0F
+#define ESPICFG_CORE_CHANNEL_ENABLE_MASK 0x0C
 /*
  * Offset of the host independence (ESPIHINDP) register and automatic ready bit
  * mask.
