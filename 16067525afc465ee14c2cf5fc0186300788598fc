@@ -146,6 +146,30 @@
       },
       "revId": "16067525afc465ee14c2cf5fc0186300788598fc",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf44cbbf_1888684b",
+        "filename": "subprojects/espi-control/npcm7xx_espi_control.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-02-20T17:17:44Z",
+      "side": 1,
+      "message": "+1 Right, I guess this was the confusion I had in the other comment, which I think adding this comment could fix",
+      "parentUuid": "c70306c9_e9421fb2",
+      "range": {
+        "startLine": 54,
+        "startChar": 41,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "16067525afc465ee14c2cf5fc0186300788598fc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
