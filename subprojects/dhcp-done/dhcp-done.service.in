@@ -1,0 +1,9 @@
+[Unit]
+Description=gBMC DHCP Status Daemon
+
+[Service]
+Restart=on-failure
+ExecStart=@@BIN@ dhcp-done
+
+[Install]
+WantedBy=multi-user.target
