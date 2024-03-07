@@ -1,0 +1,6 @@
+option('tests', type: 'feature', description: 'Build tests')
+
+option('DHCP_STATUS_FILE_PATH', type : 'string',
+        value : '/run/dhcp_status',
+        description : 'Dhcp status file path'
+      )

@@ -1,0 +1,10 @@
+[Unit]
+Description=gBMC DHCP Status Daemon
+
+[Service]
+Restart=on-failure
+ExecStartPre=/usr/bin/update-dhcp-status 'ONGOING' 'starting dhcp status daemon' --create
+ExecStart=@@BIN@ dhcp-done
+
+[Install]
+WantedBy=multi-user.target
