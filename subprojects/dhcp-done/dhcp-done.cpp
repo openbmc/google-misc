@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "file-io.hpp"
+
 #include <sdeventplus/event.hpp>
 #include <sdeventplus/source/io.hpp>
 #include <stdplus/fd/create.hpp>
@@ -23,11 +25,6 @@ using namespace std::string_view_literals;
 // A privileged port that is reserved for querying BMC DHCP completion.
 // This is well known by the clients querying the status.
 constexpr uint16_t kListenPort = 23;
-enum : uint8_t
-{
-    DONE = 0,
-    POWERCYCLE = 1,
-};
 
 stdplus::ManagedFd createListener()
 {
@@ -43,30 +40,8 @@ stdplus::ManagedFd createListener()
     return sock;
 }
 
-int main(int argc, char* argv[])
+int main()
 {
-    if (argc != 2)
-    {
-        stdplus::println(stderr, "Invalid parameter count");
-        return 1;
-    }
-
-    std::vector<uint8_t> data;
-
-    if (argv[1] == "POWERCYCLE"sv)
-    {
-        data.push_back(POWERCYCLE);
-    }
-    else if (argv[1] == "DONE"sv)
-    {
-        data.push_back(DONE);
-    }
-    else
-    {
-        stdplus::println(stderr, "Invalid parameter");
-        return 1;
-    }
-
     try
     {
         auto listener = createListener();
@@ -76,6 +51,20 @@ int main(int argc, char* argv[])
             [&](sdeventplus::source::IO&, int, uint32_t) {
             while (auto fd = stdplus::fd::accept(listener))
             {
+                std::string data;
+                try
+                {
+                    data = fileRead(statusFile);
+                }
+                catch (const std::exception& e)
+                {
+                    // we don't want to fail the upgrade process, set the status
+                    // to ONGOING
+                    data.push_back(2);
+                    data.append("Failed to read status ");
+                    data.append(e.what());
+                }
+
                 stdplus::fd::sendExact(*fd, data, stdplus::fd::SendFlags(0));
             }
         });
