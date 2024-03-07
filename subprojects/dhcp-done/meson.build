@@ -30,21 +30,38 @@ deps = [
 ]
 
 libexecdir = get_option('prefix') / get_option('libexecdir')
+bindir = get_option('prefix') / get_option('bindir')
 
 executable(
   'dhcp-done',
   'dhcp-done.cpp',
+  'file-io.cpp',
   implicit_include_directories: false,
   dependencies: deps,
   install: true,
   install_dir: libexecdir)
+
+executable(
+  'update-dhcp-status',
+  'update-dhcp-status.cpp',
+  'file-io.cpp',
+  implicit_include_directories: false,
+  dependencies: deps,
+  install: true,
+  install_dir: bindir)
 
 systemd = dependency('systemd')
 systemunitdir = systemd.get_variable('systemdsystemunitdir')
 
 configure_file(
   configuration: {'BIN': libexecdir / 'dhcp-done'},
-  input: 'dhcp-done@.service.in',
-  output: 'dhcp-done@.service',
+  input: 'dhcp-done.service.in',
+  output: 'dhcp-done.service',
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
+
+build_tests = get_option('tests')
+
+#if not build_tests.disabled()
+subdir('test')
+#endif
