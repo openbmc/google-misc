@@ -28,10 +28,28 @@ function set_rtr() {
     (( lifetime > 0 )) || return
 
     echo "Setting default router: $rtr at $mac" >&2
-    local svc=xyz.openbmc_project.Network
-    SetStatic "$svc" "$NCSI_IF" || return
-    UpdateGateway "$svc" "$NCSI_IF" "$rtr" || return
-    UpdateNeighbor "$svc" "$NCSI_IF" "$rtr" "$mac" || return
+
+    # Delete and static gateways and neighbors
+    while read entry; do
+        eval "$(echo "$entry" | JSONToVars)" || return
+        echo "Deleting neighbor $object"
+        DeleteObject "$service" "$object" || true
+    done < <(GetNeighborObjects "$netdev" 2>/dev/null)
+
+    busctl set-property xyz.openbmc_project.Network "$(EthObjRoot "$NCSI_IF")" \
+        xyz.openbmc_project.Network.EthernetInterface DefaultGateway6 s "" || true
+
+    # In case we don't have a base network file, make one
+    net_file=/run/systemd/network/00-bmc-$NCSI_IF.network
+    printf '[Match]\nName=%s\n[Network]\nDHCP=false\nIPv6AcceptRA=false\nLinkLocalAddressing=yes' \
+        "$NCSI_IF" >$net_file
+
+    # Override any existing gateway info
+    mkdir -p $net_file.d
+    printf '[Network]\nGateway=%s\n[Neighbor]\nMACAddress=%s\nAddress=%s' \
+        "$rtr" "$mac" "$rtr" >$net_file.d/10-gateway.conf
+
+    networkctl reload && networkctl reconfigure "$NCSI_IF" || true
 
     retries=-1
     old_mac="$mac"
