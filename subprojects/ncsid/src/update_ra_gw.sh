@@ -67,6 +67,8 @@ while true; do
         args+=(-d)
     fi
     while read line; do
+        # `script` terminates all lines with a CRLF, remove it
+        line="${line:0:-1}"
         if [ -z "$line" ]; then
             lifetime=
             mac=
@@ -81,7 +83,7 @@ while true; do
             mac=
             rtr=
         fi
-    done < <(exec rdisc6 "${args[@]}" 2>/dev/null)
+    done < <(exec script -q -c "rdisc6 ${args[*]}" /dev/null 2>/dev/null)
     # If rdisc6 exits early we still want to wait the full `w` time before
     # starting again.
     (( timeout = start + w - SECONDS ))
