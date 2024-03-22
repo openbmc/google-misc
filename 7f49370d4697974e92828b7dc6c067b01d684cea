@@ -1,0 +1,10 @@
+Code-Review+2: Willy Tu <wltu@google.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+2: Brandon Kim <brandonkim@google.com>
+Submitted-by: William A. Kennington III <wak@google.com>
+Submitted-at: Fri, 22 Mar 2024 10:11:56 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/google-misc/+/69388
+Comments-Total: 14
+Comments-Unresolved: 1
+Project: openbmc/google-misc
+Branch: refs/heads/master
