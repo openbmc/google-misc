@@ -229,19 +229,12 @@ function EthObjRoot() {
     echo "/xyz/openbmc_project/network/$netdev"
 }
 
-# Returns the DBus object root for the static neighbors of an intrerface
-function StaticNeighborObjRoot() {
-    local netdev="$1"
-
-    echo "$(EthObjRoot "$netdev")/static_neighbor"
-}
-
 # Returns all of the neighbor { service, object } data for an interface as if
 # a call to GetSubTree() was made
 function GetNeighborObjects() {
     local netdev="$1"
 
-    GetSubTree "$(StaticNeighborObjRoot "$netdev")" 0 \
+    GetSubTree "$(EthObjRoot "$netdev")" 0 \
         'xyz.openbmc_project.Network.Neighbor'
 }
 
