@@ -25,6 +25,9 @@ project(
     'tests=' + (meson.is_subproject() ? 'disabled' : 'auto'),
   ])
 
+run_command('bash', '-c', 'apt list --installed | grep proto')
+run_command('bash', '-c', 'pip list | grep proto')
+
 # Dummy file to make code coverage happy
 if get_option('tests').allowed()
   test('hello', executable('hello', 'hello.c'))
