@@ -43,7 +43,7 @@ nanopb_kwargs = {
   ],
   'command': [
     nanopb,
-    '-q',
+    '--version', '--verbose',
     '-s', 'packed_struct:0',
     '-H.n.h',
     '-S.n.c',

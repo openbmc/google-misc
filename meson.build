@@ -25,6 +25,10 @@ project(
     'tests=' + (meson.is_subproject() ? 'disabled' : 'auto'),
   ])
 
+warning(run_command('bash', '-c', 'apt list --installed | grep proto', capture: true).stdout())
+warning(run_command('bash', '-c', 'pip list | grep proto', capture: true).stdout())
+warning(run_command('python3', 'subprojects/nanopb/generator/proto/_utils.py', capture: true).stdout())
+
 # Dummy file to make code coverage happy
 if get_option('tests').allowed()
   test('hello', executable('hello', 'hello.c'))
