@@ -22,6 +22,30 @@
       },
       "revId": "5034c5664a68b03cd46e7b8557d96c4bc73cf251",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c06d531_6eb92e43",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-03-25T20:45:59Z",
+      "side": 1,
+      "message": "We don\u0027t want phosphor-networkd to keep that info after reboot anymore. This clears out any of the persistent details in the file because they are supposed to be retrieved by RA at every bootup now.\n\nIt\u0027s ultimately redundant as we are overriding the details with the override file.",
+      "parentUuid": "152bdda1_d6f14ad2",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "5034c5664a68b03cd46e7b8557d96c4bc73cf251",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
