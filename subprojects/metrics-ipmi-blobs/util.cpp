@@ -26,6 +26,8 @@
 #include <cmath>
 #include <cstdlib>
 #include <fstream>
+#include <iostream>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -346,6 +348,57 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm)
     }
 
     return true;
+}
+
+std::pair<
+    /*correctable_error_count=*/
+    std::optional<int32_t>,
+    /*uncorrectable_error_count=*/std::optional<int32_t>>
+    getECCErrorCounts()
+{
+    std::vector<
+        std::pair<std::string, std::variant<uint64_t, uint8_t, std::string>>>
+        values;
+
+    try
+    {
+        auto bus = sdbusplus::bus::new_default_system();
+        auto m =
+            bus.new_method_call("xyz.openbmc_project.memory.ECC",
+                                "/xyz/openbmc_project/metrics/memory/BmcECC",
+                                "org.freedesktop.DBus.Properties", "GetAll");
+        m.append("xyz.openbmc_project.Memory.MemoryECC");
+        auto reply = bus.call(m);
+        reply.read(values);
+    }
+    catch (const sdbusplus::exception::SdBusError& ex)
+    {
+        return std::make_pair(std::nullopt, std::nullopt);
+    }
+
+    std::optional<int32_t> correctableCount = std::nullopt;
+    std::optional<int32_t> uncorrectableCount = std::nullopt;
+    for (const auto& [key, value] : values)
+    {
+        if (key == "ceCount")
+        {
+            correctableCount = static_cast<int32_t>(std::get<uint64_t>(value));
+            if (uncorrectableCount.has_value())
+            {
+                break;
+            }
+        }
+        if (key == "ueCount")
+        {
+            uncorrectableCount =
+                static_cast<int32_t>(std::get<uint64_t>(value));
+            if (correctableCount.has_value())
+            {
+                break;
+            }
+        }
+    }
+    return std::make_pair(correctableCount, uncorrectableCount);
 }
 
 } // namespace metric_blob
