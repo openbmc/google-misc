@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "511a77b2_d3d8ef61",
+        "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-04-08T23:51:35Z",
+      "side": 1,
+      "message": "Probably best not to mingle protobuf definitions across these api boundaries. This should be following a similar format to the other functions where it just returns 2 ints or some simple struct defined here.",
+      "revId": "9b1b6815b5ebd578aa6aadcf0eb335b067ccabbc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
