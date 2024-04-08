@@ -314,6 +314,18 @@ static bmcmetrics_metricproto_BmcFdStatMetric getFdStatMetric(
     };
 }
 
+static bmcmetrics_metricproto_BmcECCMetric getECCMetric(bool& use) noexcept
+{
+    std::optional<bmcmetrics_metricproto_BmcECCMetric> metric =
+        getECCErrorCounts();
+    use = metric.has_value();
+    if (use)
+    {
+        return *metric;
+    }
+    return {};
+}
+
 static bmcmetrics_metricproto_BmcMemoryMetric getMemMetric() noexcept
 {
     bmcmetrics_metricproto_BmcMemoryMetric ret = {};
@@ -460,6 +472,8 @@ void BmcHealthSnapshot::doWork()
         .has_fdstat_metric = false,
         .fdstat_metric = getFdStatMetric(*this, ticksPerSec, fds,
                                          snapshot.has_fdstat_metric),
+        .has_ecc_metric = false,
+        .ecc_metric = getECCMetric(snapshot.has_ecc_metric),
     };
     pb_ostream_t nost = {};
     if (!pb_encode(&nost, bmcmetrics_metricproto_BmcMetricSnapshot_fields,

@@ -14,7 +14,10 @@
 
 #pragma once
 
+#include "metricblob.pb.n.h"
+
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <string_view>
 
@@ -54,5 +57,6 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm);
 long getTicksPerSec();
 char controlCharsToSpace(char c);
 std::string trimStringRight(std::string_view s);
+std::optional<bmcmetrics_metricproto_BmcECCMetric> getECCErrorCounts();
 
 } // namespace metric_blob

@@ -14,6 +14,8 @@
 
 #include "util.hpp"
 
+#include "metricblob.pb.n.h"
+
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -26,6 +28,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <fstream>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -346,6 +349,61 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm)
     }
 
     return true;
+}
+
+std::optional<bmcmetrics_metricproto_BmcECCMetric> getECCErrorCounts()
+{
+    std::vector<
+        std::pair<std::string, std::variant<uint64_t, uint8_t, std::string>>>
+        values;
+
+    try
+    {
+        auto bus = sdbusplus::bus::new_default_system();
+        auto m = bus.new_method_call(
+            "xyz.openbmc_project.memory.ECC",
+            "/xyz/openbmc_project/metrics/memory/BmcECC",
+            "xyz.openbmc_project.Memory.MemoryECC", "GetAll");
+        auto reply = bus.call(m);
+        reply.read(values);
+    }
+    catch (const sdbusplus::exception::SdBusError& ex)
+    {
+        return std::nullopt;
+    }
+
+    auto metric = bmcmetrics_metricproto_BmcECCMetric{
+        .has_correctable_error_count = false,
+        .correctable_error_count = 0,
+        .has_uncorrectable_error_count = false,
+        .uncorrectable_error_count = 0,
+    };
+
+    for (const auto& [key, value] : values)
+    {
+        if (key == "ceCount")
+        {
+            metric.correctable_error_count =
+                static_cast<int32_t>(std::get<uint64_t>(value));
+            metric.has_correctable_error_count = true;
+            if (metric.uncorrectable_error_count)
+            {
+                break;
+            }
+        }
+        if (key == "ueCount")
+        {
+            metric.uncorrectable_error_count =
+                static_cast<int32_t>(std::get<uint64_t>(value));
+            metric.has_uncorrectable_error_count = true;
+
+            if (metric.correctable_error_count)
+            {
+                break;
+            }
+        }
+    }
+    return metric;
 }
 
 } // namespace metric_blob
