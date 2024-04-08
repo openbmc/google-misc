@@ -15,8 +15,10 @@
 #pragma once
 
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <string_view>
+#include <utility>
 
 namespace metric_blob
 {
@@ -54,5 +56,13 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm);
 long getTicksPerSec();
 char controlCharsToSpace(char c);
 std::string trimStringRight(std::string_view s);
+
+struct EccCounts
+{
+    std::optional<int32_t> correctableErrCount = 0;
+    std::optional<int32_t> uncorrectableErrCount = 0;
+};
+
+bool getECCErrorCounts(EccCounts& eccCounts);
 
 } // namespace metric_blob
