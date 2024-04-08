@@ -61,6 +61,11 @@ message BmcStringTable {
   repeated StringEntry entries = 10;
 }
 
+message BmcECCMetric {
+  int32 correctable_error_count = 1;
+  int32 uncorrectable_error_count = 2;
+}
+
 message BmcMetricSnapshot {
   BmcStringTable string_table = 1;
   BmcMemoryMetric memory_metric = 2;
@@ -68,4 +73,7 @@ message BmcMetricSnapshot {
   BmcDiskSpaceMetric storage_space_metric = 4;
   BmcProcStatMetric procstat_metric = 5;
   BmcFdStatMetric fdstat_metric = 6;
+  reserved 7;
+  reserved 8;
+  BmcECCMetric ecc_metric = 9;
 }

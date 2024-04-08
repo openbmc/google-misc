@@ -55,4 +55,12 @@ long getTicksPerSec();
 char controlCharsToSpace(char c);
 std::string trimStringRight(std::string_view s);
 
+struct EccCounts
+{
+    int32_t correctableErrCount;
+    int32_t uncorrectableErrCount;
+};
+
+bool getECCErrorCounts(EccCounts& eccCounts);
+
 } // namespace metric_blob
