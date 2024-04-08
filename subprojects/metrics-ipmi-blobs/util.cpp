@@ -26,6 +26,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <fstream>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -346,6 +347,54 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm)
     }
 
     return true;
+}
+
+bool getECCErrorCounts(EccCounts& eccCounts)
+{
+    std::vector<
+        std::pair<std::string, std::variant<uint64_t, uint8_t, std::string>>>
+        values;
+    eccCounts.correctableErrCount = std::nullopt;
+    eccCounts.uncorrectableErrCount = std::nullopt;
+    try
+    {
+        auto bus = sdbusplus::bus::new_default_system();
+        auto m =
+            bus.new_method_call("xyz.openbmc_project.memory.ECC",
+                                "/xyz/openbmc_project/metrics/memory/BmcECC",
+                                "org.freedesktop.DBus.Properties", "GetAll");
+        m.append("xyz.openbmc_project.Memory.MemoryECC");
+        auto reply = bus.call(m);
+        reply.read(values);
+    }
+    catch (const sdbusplus::exception::SdBusError& ex)
+    {
+        return false;
+    }
+
+    for (const auto& [key, value] : values)
+    {
+        if (key == "ceCount")
+        {
+            eccCounts.correctableErrCount =
+                static_cast<int32_t>(std::get<uint64_t>(value));
+            if (eccCounts.uncorrectableErrCount.has_value())
+            {
+                return true;
+            }
+        }
+        if (key == "ueCount")
+        {
+            eccCounts.uncorrectableErrCount =
+                static_cast<int32_t>(std::get<uint64_t>(value));
+            if (eccCounts.correctableErrCount.has_value())
+            {
+                return true;
+            }
+        }
+    }
+    return eccCounts.correctableErrCount.has_value() ||
+           eccCounts.uncorrectableErrCount.has_value();
 }
 
 } // namespace metric_blob
