@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "217c8f09_61952583",
+        "filename": "subprojects/metrics-ipmi-blobs/metricblob.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-04-09T09:00:36Z",
+      "side": 1,
+      "message": "@gpgpgp@google.com\n\nDo you still need to revert 7 and 8 like\n\nhttps://gerrit.openbmc.org/c/openbmc/google-misc/+/54795?\n\nIt seems like they are used internally.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "70785891c06c4c3a2f4581e9cc0c37f88e7f5c2a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
