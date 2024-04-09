@@ -16,6 +16,24 @@
       "message": "Probably best not to mingle protobuf definitions across these api boundaries. This should be following a similar format to the other functions where it just returns 2 ints or some simple struct defined here.",
       "revId": "9b1b6815b5ebd578aa6aadcf0eb335b067ccabbc",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac33b70d_32c839b9",
+        "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-04-09T00:37:00Z",
+      "side": 1,
+      "message": "Updated. I am returning two optional int. Or should we just assume that both will always exists at the same time.",
+      "parentUuid": "511a77b2_d3d8ef61",
+      "revId": "9b1b6815b5ebd578aa6aadcf0eb335b067ccabbc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
