@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9184bbff_361e0150",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-04-11T22:05:46Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "5f262fd2_42cfcd80",
+      "revId": "49a623748ea80f28d717bbcc4146e22e98771b4f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "548ab48b_16a66826",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-04-11T21:51:28Z",
       "side": 1,
       "message": "nit: no need for default values, users should initialize as needed.",
+      "revId": "49a623748ea80f28d717bbcc4146e22e98771b4f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a5ffe7d_f90dbfc5",
+        "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-04-11T22:05:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548ab48b_16a66826",
       "revId": "49a623748ea80f28d717bbcc4146e22e98771b4f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
