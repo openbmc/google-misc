@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f262fd2_42cfcd80",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-04-11T21:50:19Z",
+      "side": 1,
+      "message": "I just looked at the schema again because I was confused why we had the optionals at all. You should just get rid of the optionals from the struct if this returns false when either value is missing. Just keep track of their presence as local variables, it shouldn\u0027t be up to the caller to care about their values if this funciton returns false.",
+      "revId": "49a623748ea80f28d717bbcc4146e22e98771b4f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
