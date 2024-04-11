@@ -16,6 +16,24 @@
       "message": "If you feel like you have to add comments about the names of the values, especially since they have the same type, just make a trivial struct like `BootTimesMonotonic` above or pass them by mutable reference like the other functions here. Mutable argument normally isn\u0027t preferred but it would match some of these other helpers.",
       "revId": "5d07bb5f6776937454c46f18db77eeb79d7dec37",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44914041_c1e67974",
+        "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-04-11T16:17:58Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "1120a8c7_9c4b9de2",
+      "revId": "5d07bb5f6776937454c46f18db77eeb79d7dec37",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }

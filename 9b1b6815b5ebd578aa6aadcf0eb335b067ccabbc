@@ -34,6 +34,24 @@
       "parentUuid": "511a77b2_d3d8ef61",
       "revId": "9b1b6815b5ebd578aa6aadcf0eb335b067ccabbc",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11334820_07063dd1",
+        "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-04-11T16:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac33b70d_32c839b9",
+      "revId": "9b1b6815b5ebd578aa6aadcf0eb335b067ccabbc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
