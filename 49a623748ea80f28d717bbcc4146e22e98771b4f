@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "523e6efc_fe729ac0",
+        "filename": "subprojects/metrics-ipmi-blobs/util.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-04-19T09:45:19Z",
+      "side": 1,
+      "message": "I think the point of the comment was missed here. You don\u0027t need the std::optional\u003c\u003e bits for either object because the dbus schema states that it\u0027s only a valid interface if it has both properties. You don\u0027t need to handle only having one any differently than the interface just being missing.",
+      "parentUuid": "9184bbff_361e0150",
+      "revId": "49a623748ea80f28d717bbcc4146e22e98771b4f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "548ab48b_16a66826",
         "filename": "subprojects/metrics-ipmi-blobs/util.hpp",
         "patchSetId": 8
