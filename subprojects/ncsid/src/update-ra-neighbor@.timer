@@ -1,7 +1,0 @@
-[Unit]
-Description=Retry neighbor update periodically
-BindsTo=ncsid@%i.service
-After=ncsid@%i.service
-
-[Timer]
-OnUnitInactiveSec=1min

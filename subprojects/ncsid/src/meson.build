@@ -61,11 +61,7 @@ normalize_mac = executable(
   install: true)
 
 install_data(
-  'ncsid_udhcpc4.script',
-  'ncsid_udhcpc6.script',
   'update_ra_gw.sh',
-  'update_ra_neighbor.sh',
-  'update_static_neighbors.sh',
   install_mode: 'rwxr-xr-x',
   install_dir: get_option('libexecdir'))
 
@@ -93,40 +89,8 @@ configure_file(
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
 
-configure_file(
-  configuration: {'BIN': libexecdir / 'update_ra_neighbor.sh'},
-  input: 'update-ra-neighbor@.service.in',
-  output: 'update-ra-neighbor@.service',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
-
-configure_file(
-  configuration: {'BIN': libexecdir / 'update_static_neighbors.sh'},
-  input: 'update-static-neighbors@.service.in',
-  output: 'update-static-neighbors@.service',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
-
-configure_file(
-  configuration: {
-    'SCRIPT': libexecdir / 'ncsid_udhcpc4.script'},
-  input: 'dhcp4@.service.in',
-  output: 'dhcp4@.service',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
-
-configure_file(
-  configuration: {
-    'SCRIPT': libexecdir / 'ncsid_udhcpc6.script'},
-  input: 'dhcp6@.service.in',
-  output: 'dhcp6@.service',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
-
 install_data(
   'nic-hostful@.target',
   'nic-hostless@.target',
-  'update-ra-neighbor@.timer',
-  'update-static-neighbors@.timer',
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
