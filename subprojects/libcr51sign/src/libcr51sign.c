@@ -32,7 +32,7 @@ extern "C"
 #endif
 
 // True of x is a power of two
-#define POWER_OF_TWO(x) ((x) && !((x) & ((x)-1)))
+#define POWER_OF_TWO(x) ((x) && !((x) & ((x) - 1)))
 
 // Maximum version supported. Major revisions are not backwards compatible.
 #define MAX_MAJOR_VERSION 1

@@ -102,8 +102,8 @@ Nemora::Nemora()
 
 Nemora::Nemora(const std::string& iface_name, const in_addr ipv4,
                const in6_addr ipv6) :
-    socketManager_(),
-    hostManager_(), iface_path_{std::string(IFACE_ROOT) + iface_name}
+    socketManager_(), hostManager_(),
+    iface_path_{std::string(IFACE_ROOT) + iface_name}
 {
     InitEventData();
     event_data_.destination.sin_addr = ipv4;
