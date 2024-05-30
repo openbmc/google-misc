@@ -22,6 +22,14 @@ old_mac=
 
 function set_rtr() {
     [ -n "$rtr" -a -n "$lifetime" ] || return
+
+    # Reconfigure gateway in case of anything goes wrong
+    if ! ip -6 route show | grep -q '^default'; then
+        echo 'default route missing, reconfiguring...' >&2
+        old_rtr=
+        old_mac=
+    fi
+
     [ "$rtr" != "$old_rtr" -a "$mac" != "$old_mac" ] || return
     # Only valid default routers can be considered, 0 lifetime implies
     # a non-default router
