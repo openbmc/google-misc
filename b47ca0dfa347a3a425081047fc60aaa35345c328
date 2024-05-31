@@ -1,0 +1,9 @@
+Code-Review+2: William A. Kennington III <wak@google.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Yuxiao Zhang <yuxiaozhang@google.com>
+Submitted-at: Fri, 31 May 2024 16:10:18 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/google-misc/+/71701
+Comments-Total: 6
+Comments-Unresolved: 1
+Project: openbmc/google-misc
+Branch: refs/heads/master
