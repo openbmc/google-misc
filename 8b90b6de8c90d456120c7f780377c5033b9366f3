@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88d6df18_2deff685",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-05-31T02:29:21Z",
+      "side": 1,
+      "message": "`grep -q \u0027^default\u0027` to make sure it\u0027s the route destination and not some other field in the route.",
+      "revId": "8b90b6de8c90d456120c7f780377c5033b9366f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61589c80_1aecb430",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-05-31T02:29:21Z",
+      "side": 1,
+      "message": "Oh.... I wonder if the bug is because of something here and the reload following it. This probably very commonly triggers the reload race with phosphor-networkd re-reading the routes around a reload.",
+      "revId": "8b90b6de8c90d456120c7f780377c5033b9366f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
