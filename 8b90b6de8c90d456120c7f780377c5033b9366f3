@@ -87,6 +87,24 @@
       "parentUuid": "1d865a97_33591d42",
       "revId": "8b90b6de8c90d456120c7f780377c5033b9366f3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "489975ad_e92568b7",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-05-31T09:31:19Z",
+      "side": 1,
+      "message": "There is still something badly wrong if the stuff below doesn\u0027t keep the default route around. I can\u0027t see how phosphor-networkd could even override those settings.",
+      "parentUuid": "ce64bf60_39c71076",
+      "revId": "8b90b6de8c90d456120c7f780377c5033b9366f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
