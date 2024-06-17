@@ -17,23 +17,18 @@ source "$(dirname "${BASH_SOURCE[0]}")"/ncsid_lib.sh
 
 NCSI_IF="$1"
 
-old_rtr=
+# We would prefer empty string but it's easier for associative array handling
+# to use invalid
+old_rtr=invalid
 old_mac=
 
 function set_rtr() {
-    [ -n "$rtr" -a -n "$lifetime" ] || return
-
-    # Reconfigure gateway in case of anything goes wrong
     if ! ip -6 route show | grep -q '^default'; then
         echo 'default route missing, reconfiguring...' >&2
-        old_rtr=
+        old_rtr=invalid
         old_mac=
     fi
-
     [ "$rtr" != "$old_rtr" -a "$mac" != "$old_mac" ] || return
-    # Only valid default routers can be considered, 0 lifetime implies
-    # a non-default router
-    (( lifetime > 0 )) || return
 
     echo "Setting default router: $rtr at $mac" >&2
 
@@ -65,10 +60,13 @@ function set_rtr() {
 }
 
 retries=1
-w=60
+min_w=10
+declare -A rtrs
+rtrs=()
 while true; do
-    start=$SECONDS
-    args=(-m "$NCSI_IF" -w $(( w * 1000 )))
+    data=(${rtrs["${old_rtr}"]-})
+    curr_dl="${data[1]-$min_w}"
+    args=(-m "$NCSI_IF" -w $(( (curr_dl - SECONDS) * 1000 )))
     if (( retries > 0 )); then
         args+=(-r "$retries")
     else
@@ -78,7 +76,7 @@ while true; do
         # `script` terminates all lines with a CRLF, remove it
         line="${line:0:-1}"
         if [ -z "$line" ]; then
-            lifetime=
+            lifetime=-1
             mac=
         elif [[ "$line" =~ ^Router' 'lifetime' '*:' '*([0-9]*) ]]; then
             lifetime="${BASH_REMATCH[1]}"
@@ -86,14 +84,42 @@ while true; do
             mac="${BASH_REMATCH[1]}"
         elif [[ "$line" =~ ^from' '(.*)$ ]]; then
             rtr="${BASH_REMATCH[1]}"
-            set_rtr || true
-            lifetime=
+            # Only valid default routers can be considered, 0 lifetime implies
+            # a non-default router
+            if (( lifetime > 0 )); then
+                dl=$((lifetime + SECONDS))
+                rtrs["$rtr"]="$mac $dl"
+                # If we don't have a router, we want to take the first one
+                # to speed up acquisition time on boot
+                if [ -z "$old_rtr" ]; then
+                    set_rtr || true
+                fi
+            fi
+            lifetime=-1
             mac=
-            rtr=
         fi
     done < <(exec script -q -c "rdisc6 ${args[*]}" /dev/null 2>/dev/null)
-    # If rdisc6 exits early we still want to wait the full `w` time before
-    # starting again.
-    (( timeout = start + w - SECONDS ))
+    # Purge any expired routers
+    for rtr in "${!rtrs[@]}"; do
+        data=(${rtrs["$rtr"]})
+        dl=${data[1]}
+        if (( dl <= SECONDS )); then
+            unset rtrs["$rtr"]
+        fi
+    done
+    # Consider changing the gateway if the old one doesn't send RAs for the entire period
+    # This ensures we don't flip flop between multiple defaults if they exist.
+    if [ -z "${rtrs["$old_rtr"]-}" ]; then
+        echo "Old router $old_rtr disappeared" >&2
+        for rtr in "${!rtrs[@]}"; do
+            data=(${rtrs["$rtr"]})
+            mac=${data[0]}
+            dl=${data[1]}
+            set_rtr && break
+        done
+    fi
+
+    # If rdisc6 exits early we still want to wait for the deadline before retrying
+    (( timeout = curr_dl - SECONDS ))
     sleep $(( timeout < 0 ? 0 : timeout ))
 done
