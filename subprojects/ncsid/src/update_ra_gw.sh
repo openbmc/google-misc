@@ -21,9 +21,6 @@ old_rtr=
 old_mac=
 
 function set_rtr() {
-    [ -n "$rtr" -a -n "$lifetime" ] || return
-
-    # Reconfigure gateway in case of anything goes wrong
     if ! ip -6 route show | grep -q '^default'; then
         echo 'default route missing, reconfiguring...' >&2
         old_rtr=
@@ -31,9 +28,6 @@ function set_rtr() {
     fi
 
     [ "$rtr" != "$old_rtr" -a "$mac" != "$old_mac" ] || return
-    # Only valid default routers can be considered, 0 lifetime implies
-    # a non-default router
-    (( lifetime > 0 )) || return
 
     echo "Setting default router: $rtr at $mac" >&2
 
@@ -60,12 +54,17 @@ function set_rtr() {
     networkctl reload && networkctl reconfigure "$NCSI_IF" || true
 
     retries=-1
+    w=$lifetime
+    if (( w < min_w )); then
+        w=$min_w
+    fi
     old_mac="$mac"
     old_rtr="$rtr"
 }
 
 retries=1
-w=60
+min_w=60
+w=$min_w
 while true; do
     start=$SECONDS
     args=(-m "$NCSI_IF" -w $(( w * 1000 )))
@@ -74,11 +73,13 @@ while true; do
     else
         args+=(-d)
     fi
+    declare -A rtrs
+    rtrs=()
     while read line; do
         # `script` terminates all lines with a CRLF, remove it
         line="${line:0:-1}"
         if [ -z "$line" ]; then
-            lifetime=
+            lifetime=-1
             mac=
         elif [[ "$line" =~ ^Router' 'lifetime' '*:' '*([0-9]*) ]]; then
             lifetime="${BASH_REMATCH[1]}"
@@ -86,14 +87,34 @@ while true; do
             mac="${BASH_REMATCH[1]}"
         elif [[ "$line" =~ ^from' '(.*)$ ]]; then
             rtr="${BASH_REMATCH[1]}"
-            set_rtr || true
-            lifetime=
+            # Only valid default routers can be considered, 0 lifetime implies
+            # a non-default router
+            if (( lifetime > 0 )); then
+                rtrs["$rtr"]="$mac $lifetime"
+                # If we don't have a router, we want to take the first one
+                # to speed up acquisition time on boot
+                if [ -z "$old_rtr" ]; then
+                    set_rtr || true
+                fi
+            fi
+            lifetime=-1
             mac=
-            rtr=
         fi
     done < <(exec script -q -c "rdisc6 ${args[*]}" /dev/null 2>/dev/null)
-    # If rdisc6 exits early we still want to wait the full `w` time before
-    # starting again.
-    (( timeout = start + w - SECONDS ))
+    # Consider changing the gateway if the old one doesn't send RAs for the entire period
+    # This ensures we don't flip flop between multiple defaults if they exist.
+    if [ -z "${rtrs["$old_rtr"]-}" ]; then
+        echo "Old router $old_rtr disappeared" >&2
+        for rtr in "${!rtrs[@]}"; do
+            data=(${rtrs["$rtr"]})
+            mac=${data[0]}
+            lifetime=${data[1]}
+            set_rtr || true
+            break
+        done
+    fi
+
+    # If rdisc6 exits early we still want to wait `min_w` time before retrying
+    (( timeout = start + min_w - SECONDS ))
     sleep $(( timeout < 0 ? 0 : timeout ))
 done
