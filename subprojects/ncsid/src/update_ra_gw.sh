@@ -89,9 +89,10 @@ while true; do
             if (( lifetime > 0 )); then
                 dl=$((lifetime + SECONDS))
                 rtrs["$rtr"]="$mac $dl"
-                # If we don't have a router, we want to take the first one
-                # to speed up acquisition time on boot
-                if [ -z "$old_rtr" ]; then
+                # We have some notoriously noisy lab environments with many routers being broadcast
+                # We always prefer "fe80::1" in prod and labs for routing, so prefer that gateway.
+                # We also want to take the first router we find to speed up acquisition on boot.
+                if [ "$rtr" = "fe80::1" -o -z "$old_rtr" ]; then
                     set_rtr || true
                 fi
             fi
