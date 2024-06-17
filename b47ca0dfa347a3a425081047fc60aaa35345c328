@@ -16,6 +16,24 @@
       "message": "Is this still used in old in-band platform?",
       "revId": "b47ca0dfa347a3a425081047fc60aaa35345c328",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "234c774b_a8ba3a28",
+        "filename": "subprojects/ncsid/src/dhcp6@.service.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-06-17T23:42:37Z",
+      "side": 0,
+      "message": "Technically it can be, but the reality is we never really depend on it because we have `gbmc-netconfig`. It almost never actually works because it\u0027s only relevant during the netboot window of an install.",
+      "parentUuid": "aac2819b_e272cd7f",
+      "revId": "b47ca0dfa347a3a425081047fc60aaa35345c328",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
