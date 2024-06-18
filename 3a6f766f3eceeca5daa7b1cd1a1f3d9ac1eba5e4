@@ -22,6 +22,30 @@
       },
       "revId": "3a6f766f3eceeca5daa7b1cd1a1f3d9ac1eba5e4",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f5c1ade_5f81e1e7",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-06-18T23:45:15Z",
+      "side": 1,
+      "message": "True, we need to make sure we waiting enough time for the router to re-advertise. I changed it to wait long enough for the expiry of the current router before deciding to evict stale routers and change the current router. This should give enough time for the router to send a broadcast without re-soliciting.",
+      "parentUuid": "ea24207c_60ad2c5e",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "3a6f766f3eceeca5daa7b1cd1a1f3d9ac1eba5e4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
