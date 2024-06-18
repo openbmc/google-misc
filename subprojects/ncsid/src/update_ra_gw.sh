@@ -52,7 +52,11 @@ function set_rtr() {
     printf '[Network]\nGateway=%s\n[Neighbor]\nMACAddress=%s\nAddress=%s' \
         "$rtr" "$mac" "$rtr" >$net_file.d/10-gateway.conf
 
-    networkctl reload && networkctl reconfigure "$NCSI_IF" || true
+    # Don't force networkd to reload as this can break phosphor-networkd
+    # Fall back to reload only if ip link commands fail
+    (ip -6 route replace default via "$rtr" dev "$NCSI_IF" && \
+        ip -6 neigh replace "$rtr" dev "$NCSI_IF" lladdr "$mac") || \
+        (networkctl reload && networkctl reconfigure "$NCSI_IF") || true
 
     retries=-1
     old_mac="$mac"
