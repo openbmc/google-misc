@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea24207c_60ad2c5e",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-06-18T00:00:09Z",
+      "side": 1,
+      "message": "Do we want to remove this? Because with this change we rely on the RA reply to detect the old gateways. I don\u0027t know what is the RA intervals of the other side?",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "3a6f766f3eceeca5daa7b1cd1a1f3d9ac1eba5e4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
