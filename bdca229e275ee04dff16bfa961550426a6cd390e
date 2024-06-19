@@ -70,6 +70,30 @@
       },
       "revId": "bdca229e275ee04dff16bfa961550426a6cd390e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "777b4f05_8ad19bc8",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-06-19T00:40:44Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "d1b33a1a_8482678a",
+      "range": {
+        "startLine": 65,
+        "startChar": 13,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "bdca229e275ee04dff16bfa961550426a6cd390e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
