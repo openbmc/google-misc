@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68b481e2_6d1926b4",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-06-20T21:54:02Z",
+      "side": 1,
+      "message": "maybe in another patch we move this to outer loop, as the logic gets complicated and we want to ensure that we reconfigure route when default is missing unexpectly",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 6
+      },
+      "revId": "a9b1822b181b7488b248a62313185a2ace66e60c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
