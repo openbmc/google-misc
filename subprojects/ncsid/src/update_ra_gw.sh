@@ -22,12 +22,17 @@ NCSI_IF="$1"
 old_rtr=invalid
 old_mac=
 
+function apply_rtr() {
+    local rtr="$1"
+    local mac="$2"
+    # Don't force networkd to reload as this can break phosphor-networkd
+    # Fall back to reload only if ip link commands fail
+    (ip -6 route replace default via "$rtr" dev "$NCSI_IF" && \
+        ip -6 neigh replace "$rtr" dev "$NCSI_IF" lladdr "$mac") || \
+        (networkctl reload && networkctl reconfigure "$NCSI_IF") || true
+}
+
 function set_rtr() {
-    if ! ip -6 route show | grep -q '^default'; then
-        echo 'default route missing, reconfiguring...' >&2
-        old_rtr=invalid
-        old_mac=
-    fi
     [ "$rtr" != "$old_rtr" -a "$mac" != "$old_mac" ] || return
 
     echo "Setting default router: $rtr at $mac" >&2
@@ -52,15 +57,18 @@ function set_rtr() {
     printf '[Network]\nGateway=%s\n[Neighbor]\nMACAddress=%s\nAddress=%s' \
         "$rtr" "$mac" "$rtr" >$net_file.d/10-gateway.conf
 
-    # Don't force networkd to reload as this can break phosphor-networkd
-    # Fall back to reload only if ip link commands fail
-    (ip -6 route replace default via "$rtr" dev "$NCSI_IF" && \
-        ip -6 neigh replace "$rtr" dev "$NCSI_IF" lladdr "$mac") || \
-        (networkctl reload && networkctl reconfigure "$NCSI_IF") || true
+    apply_rtr "$rtr" "$mac"
 
     retries=-1
     old_mac="$mac"
     old_rtr="$rtr"
+}
+
+fixup_router() {
+    [ -z "$old_mac" ] && return
+    ip -6 route show | grep -q "^default .*dev $NCSI_IF" && return
+    echo 'Default route missing, reconfiguring...' >&2
+    apply_rtr "$old_rtr" "$old_mac"
 }
 
 retries=1
@@ -102,6 +110,9 @@ while true; do
             fi
             lifetime=-1
             mac=
+            # We sometimes lose the router configuration on some of our platforms
+            # Run a fixup whenever we receive a valid RA to ensure it's set correctly
+            fixup_router || true
         fi
     done < <(exec script -q -c "rdisc6 ${args[*]}" /dev/null 2>/dev/null)
     # Purge any expired routers
