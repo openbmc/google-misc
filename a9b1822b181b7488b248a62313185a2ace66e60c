@@ -46,6 +46,30 @@
       },
       "revId": "a9b1822b181b7488b248a62313185a2ace66e60c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd6377ac_36b35fab",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-06-20T22:03:48Z",
+      "side": 1,
+      "message": "not sure if there are any other issues but IMHO it is good to keep this recovery mechanism.",
+      "parentUuid": "36df79f4_bd1b3ca0",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 6
+      },
+      "revId": "a9b1822b181b7488b248a62313185a2ace66e60c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
