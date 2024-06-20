@@ -22,6 +22,30 @@
       },
       "revId": "a9b1822b181b7488b248a62313185a2ace66e60c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36df79f4_bd1b3ca0",
+        "filename": "subprojects/ncsid/src/update_ra_gw.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-06-20T22:01:00Z",
+      "side": 1,
+      "message": "After the networkd reload is removed in the last patch do we even need this anymore?",
+      "parentUuid": "68b481e2_6d1926b4",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 6
+      },
+      "revId": "a9b1822b181b7488b248a62313185a2ace66e60c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
