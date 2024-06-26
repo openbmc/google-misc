@@ -104,7 +104,7 @@ while true; do
                 # We have some notoriously noisy lab environments with many routers being broadcast
                 # We always prefer "fe80::1" in prod and labs for routing, so prefer that gateway.
                 # We also want to take the first router we find to speed up acquisition on boot.
-                if [ "$rtr" = "fe80::1" -o -z "$old_rtr" ]; then
+                if [ "$rtr" = "fe80::1" -o "$old_rtr" = "invalid" ]; then
                     set_rtr || true
                 fi
             fi
