@@ -77,7 +77,7 @@ declare -A rtrs
 rtrs=()
 while true; do
     data=(${rtrs["${old_rtr}"]-})
-    curr_dl="${data[1]-$min_w}"
+    curr_dl="${data[1]-$(( min_w + SECONDS ))}"
     args=(-m "$NCSI_IF" -w $(( (curr_dl - SECONDS) * 1000 )))
     if (( retries > 0 )); then
         args+=(-r "$retries")
