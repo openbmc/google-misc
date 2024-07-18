@@ -65,6 +65,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eba9ea4_09eb2892",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-18T22:56:08Z",
+      "side": 1,
+      "message": "Done, added a comment",
+      "parentUuid": "0430d287_c30eb819",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31481a59_88171b41",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "yeah I can check that, doesn\u0027t know that we have a fd util in stdplus",
       "parentUuid": "31481a59_88171b41",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 55
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fd66fb2_101ad0c5",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-18T22:56:08Z",
+      "side": 1,
+      "message": "Looks like it mainly brings some lifecycle management for file descriptor, here we really just do one time read/write and closed it in this funciton, and do not maintain the fd at all. so I think there is no need to switch to that.",
+      "parentUuid": "ed7d646f_72aabf58",
       "range": {
         "startLine": 14,
         "startChar": 0,
