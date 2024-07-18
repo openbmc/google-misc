@@ -16,6 +16,74 @@
       "message": "Thanks, I\u0027ll let William take a final look before we submit",
       "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18156477_27fc7f20",
+        "filename": "subprojects/dhcp-done/dhcp-done.service.in",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-07-18T23:36:14Z",
+      "side": 1,
+      "message": "It would be better to just drop this requirement of having a file at all. Just have the specific behavior occur when the daemon gets an `ENOENT` to say there is no update happening.\n\nYou probably do want to distinguish \"ONGOING\" from \"NO_UPDATE_IN_PROGRESS\" or whatever name. I guess just the descriptive string is good enough, but it might be nice for automation to have different codes for those.",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e954bec9_f7afe2b0",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-07-18T23:36:14Z",
+      "side": 1,
+      "message": "I would avoid locks entirely here, they can just cause contention between many readers and the writer of the update.\n\nJust use https://github.com/openbmc/stdplus/blob/master/include-fd/stdplus/fd/atomic.hpp for the writer side and you don\u0027t have to worry about any locking on the reader side. It guarantees the file contents get updated atomically by writing to a tempfile and leveraging `rename`.\n\nYou also wouldn\u0027t need to differentiate updating and creating a new file.",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "694a2301_9dee29a2",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-07-18T23:36:14Z",
+      "side": 1,
+      "message": "Why even parse the message here? I would just make the file contents exactly what you want to send in the UDP message so the writer of the file is in charge of setting it up correctly and you don\u0027t need to have more code re-packing.",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d569469d_74e74bf5",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-07-18T23:36:14Z",
+      "side": 1,
+      "message": "This is complicated enough (has arguments) that you should just use `getopt`. You can see `nemorad` for an example.",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
