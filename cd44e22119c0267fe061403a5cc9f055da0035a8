@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0430d287_c30eb819",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-18T22:19:17Z",
+      "side": 1,
+      "message": "I can add a comment here. ONGOING or 2 just means (do nothing and just log) for the remote side. https://docs.google.com/document/d/1__fQaB_TayULT7wknmiYp3CWCM4CM0MJDITehuiBS2c/edit?tab\u003dt.0#heading\u003dh.17wg41voij6q",
+      "parentUuid": "f1920770_8907389d",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31481a59_88171b41",
         "filename": "subprojects/dhcp-done/file-io.cpp",
         "patchSetId": 6
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed7d646f_72aabf58",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-18T22:19:17Z",
+      "side": 1,
+      "message": "yeah I can check that, doesn\u0027t know that we have a fd util in stdplus",
+      "parentUuid": "31481a59_88171b41",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 55
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91b75b61_54478a2d",
         "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
         "patchSetId": 6
@@ -77,6 +125,30 @@
       "writtenOn": "2024-07-18T22:11:07Z",
       "side": 1,
       "message": "It looks like --create isn\u0027t explained in print_usage",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d17c1f5_77c85283",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-18T22:19:17Z",
+      "side": 1,
+      "message": "I do not add it because it is supposed to be an internal usage only by gbmc-br-dhcp. A hook script that wants to add logs should never use -create",
+      "parentUuid": "91b75b61_54478a2d",
       "range": {
         "startLine": 59,
         "startChar": 0,
