@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "362f45d3_dc9364ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-07-18T23:20:15Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll let William take a final look before we submit",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
