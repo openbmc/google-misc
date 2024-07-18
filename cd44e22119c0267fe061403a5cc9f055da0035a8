@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a6d8a04_be525899",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-07-18T22:11:07Z",
+      "side": 1,
+      "message": "Adding Willy and Anh who worked on fd recently",
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1920770_8907389d",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-07-18T22:11:07Z",
+      "side": 1,
+      "message": "Does \"2\" have a special meaning? Does it warrant having a comment explaining the different codes? or are just just unique placeholder so that we can look back later?\n\nEDIT: it looks like it means ONGOING perhaps from reading `subprojects/dhcp-done/update-dhcp-status.cpp`. Should there be an \"error\" status?",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31481a59_88171b41",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-07-18T22:11:07Z",
+      "side": 1,
+      "message": "Should we use managed_fd from stdplus",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 55
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91b75b61_54478a2d",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2024-07-18T22:11:07Z",
+      "side": 1,
+      "message": "It looks like --create isn\u0027t explained in print_usage",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
