@@ -53,6 +53,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "044c6277_6a08443f",
+        "filename": "subprojects/dhcp-done/dhcp-done.service.in",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-19T21:41:32Z",
+      "side": 1,
+      "message": "Removed the file check. Also I sent clear logs when file does not exists. Not adding a new code though since I have to check if the other side supports that, we know that it supports 0,1,2 for now.",
+      "parentUuid": "954ff947_149cc25e",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e954bec9_f7afe2b0",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "atomicwriter seems a perfect fit here, our writers are mostly sequential but reader can interleave, will switch to that.",
       "parentUuid": "1716e7d3_53757d71",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa99cdc6_17dc63e4",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-19T21:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ce7c25_b5efc468",
       "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -172,6 +208,24 @@
       "side": 1,
       "message": "will do",
       "parentUuid": "d569469d_74e74bf5",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be22aa53_4974d39d",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-19T21:41:32Z",
+      "side": 1,
+      "message": "After removing create, it has no argument anymore, usage is just update-dhcp-status.cpp \u003cstatus\u003e \u003cmessage\u003e",
+      "parentUuid": "d16e746d_98b31924",
       "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }

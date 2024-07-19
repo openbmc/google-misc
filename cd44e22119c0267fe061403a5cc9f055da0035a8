@@ -208,6 +208,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b026bc63_d03fe93e",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-19T21:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd52136_c12387d1",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 55
+      },
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3c837de_a62b42a9",
@@ -239,6 +263,24 @@
       "side": 1,
       "message": "ack, will do",
       "parentUuid": "d3c837de_a62b42a9",
+      "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "510f6f95_997c09f6",
+        "filename": "subprojects/dhcp-done/meson.options",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-19T21:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cea62d5_91f076fd",
       "revId": "cd44e22119c0267fe061403a5cc9f055da0035a8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
