@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d623472b_73fa12fe",
+        "filename": "subprojects/dhcp-done/dhcp-done.service.in",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-07-23T02:41:02Z",
+      "side": 1,
+      "message": "I mean, can\u0027t you just leave it as `ONGOING` for ENOENT but just say there is no error in the process.",
+      "parentUuid": "044c6277_6a08443f",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e954bec9_f7afe2b0",
         "filename": "subprojects/dhcp-done/file-io.cpp",
         "patchSetId": 7
@@ -179,6 +197,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2128a3e2_688cd492",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-07-23T02:41:02Z",
+      "side": 1,
+      "message": "Why not just do the parsing only in the tool to dump the message? You already want to translate the code into a string.",
+      "parentUuid": "ee620040_2598c296",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d569469d_74e74bf5",
         "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
         "patchSetId": 7
@@ -226,6 +262,24 @@
       "side": 1,
       "message": "After removing create, it has no argument anymore, usage is just update-dhcp-status.cpp \u003cstatus\u003e \u003cmessage\u003e",
       "parentUuid": "d16e746d_98b31924",
+      "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce73521e_ca0022bd",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-07-23T02:41:02Z",
+      "side": 1,
+      "message": "This works",
+      "parentUuid": "be22aa53_4974d39d",
       "revId": "399e35072d35262cfeeb55ae2f9afbe77ca27a6d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
