@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc30b362_a4e4cc22",
+        "filename": "subprojects/dhcp-done/dhcp-done.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-23T19:56:55Z",
+      "side": 1,
+      "message": "collapsed the error handler",
+      "parentUuid": "1951c627_cc2d1338",
+      "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd8a0788_89f3368a",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-23T02:41:02Z",
       "side": 1,
       "message": "Don\u0027t create an uninitialized fd, just declare and define in one line.",
+      "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6efd6891_3e25dacc",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-23T19:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd8a0788_89f3368a",
       "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -52,6 +88,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28e8bde6_807f487c",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-23T19:56:55Z",
+      "side": 1,
+      "message": "I removed the encoding/decoding, we can just do extra steps when trying to parse the status code from the file for debugging purpose",
+      "parentUuid": "76c655ff_76b0bc10",
+      "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c334378_b51c4eaf",
@@ -65,6 +119,24 @@
       "writtenOn": "2024-07-23T02:41:02Z",
       "side": 1,
       "message": "Just use append and a format string so that you don\u0027t need the intermediate string `out.append(\"{}\\n{}\", status.code, status.message)`",
+      "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a826c7fc_66297dc6",
+        "filename": "subprojects/dhcp-done/file-io.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-23T19:56:55Z",
+      "side": 1,
+      "message": "not needed if no encoding/decoding",
+      "parentUuid": "2c334378_b51c4eaf",
       "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -86,6 +158,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "512130c4_ea6f17b4",
+        "filename": "subprojects/dhcp-done/test/meson.build",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-23T19:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0329b3be_b0c94bc1",
+      "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64cb467c_471da788",
@@ -103,6 +193,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64d40c22_8d523a06",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-23T19:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64cb467c_471da788",
+      "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "793baebb_869c4116",
@@ -116,6 +224,24 @@
       "writtenOn": "2024-07-23T02:41:02Z",
       "side": 1,
       "message": "Catch `const std::exception \u0026` so you can print out the `e.what()` with the error.",
+      "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c0d9c70_1637d066",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-07-23T19:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "793baebb_869c4116",
       "revId": "3e17711f4e71cd9bbd0f34b3354a8aac5e5468c5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
