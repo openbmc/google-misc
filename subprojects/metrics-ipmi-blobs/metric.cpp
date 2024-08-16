@@ -41,15 +41,16 @@ BmcHealthSnapshot::BmcHealthSnapshot() :
 {}
 
 template <typename T>
-static constexpr auto pbEncodeStr = [](pb_ostream_t* stream,
-                                       const pb_field_iter_t* field,
-                                       void* const* arg) noexcept {
-    static_assert(sizeof(*std::declval<T>().data()) == sizeof(pb_byte_t));
-    const auto& s = *reinterpret_cast<const T*>(*arg);
-    return pb_encode_tag_for_field(stream, field) &&
-           pb_encode_string(
-               stream, reinterpret_cast<const pb_byte_t*>(s.data()), s.size());
-};
+static constexpr auto pbEncodeStr =
+    [](pb_ostream_t* stream, const pb_field_iter_t* field,
+       void* const* arg) noexcept {
+        static_assert(sizeof(*std::declval<T>().data()) == sizeof(pb_byte_t));
+        const auto& s = *reinterpret_cast<const T*>(*arg);
+        return pb_encode_tag_for_field(stream, field) &&
+               pb_encode_string(stream,
+                                reinterpret_cast<const pb_byte_t*>(s.data()),
+                                s.size());
+    };
 
 template <typename T>
 static pb_callback_t pbStrEncoder(const T& t) noexcept
@@ -58,19 +59,19 @@ static pb_callback_t pbStrEncoder(const T& t) noexcept
 }
 
 template <auto fields, typename T>
-static constexpr auto pbEncodeSubs = [](pb_ostream_t* stream,
-                                        const pb_field_iter_t* field,
-                                        void* const* arg) noexcept {
-    for (const auto& sub : *reinterpret_cast<const std::vector<T>*>(*arg))
-    {
-        if (!pb_encode_tag_for_field(stream, field) ||
-            !pb_encode_submessage(stream, fields, &sub))
+static constexpr auto pbEncodeSubs =
+    [](pb_ostream_t* stream, const pb_field_iter_t* field,
+       void* const* arg) noexcept {
+        for (const auto& sub : *reinterpret_cast<const std::vector<T>*>(*arg))
         {
-            return false;
+            if (!pb_encode_tag_for_field(stream, field) ||
+                !pb_encode_submessage(stream, fields, &sub))
+            {
+                return false;
+            }
         }
-    }
-    return true;
-};
+        return true;
+    };
 
 template <auto fields, typename T>
 static pb_callback_t pbSubsEncoder(const std::vector<T>& t)

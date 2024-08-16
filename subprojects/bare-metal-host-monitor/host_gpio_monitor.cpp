@@ -42,24 +42,25 @@ void checkPostComplete(sdbusplus::asio::connection& bus,
         OperatingSystemStatusInterface, OperatingSystemStateProperty,
         [&, state, action](const boost::system::error_code& ec,
                            const std::string& postCompleteState) {
-        if (ec)
-        {
-            lg2::error("Error when checking Post Complete GPIO state");
-            return;
-        }
+            if (ec)
+            {
+                lg2::error("Error when checking Post Complete GPIO state");
+                return;
+            }
 
-        lg2::info("Post Complete state is {STATE}", "STATE", postCompleteState);
+            lg2::info("Post Complete state is {STATE}", "STATE",
+                      postCompleteState);
 
-        /*
-         * If state is Standby, enable the bare-metal-active systemd
-         * target.
-         * If state is Inactive, no-op cause IPMI is enabled by default.
-         */
-        if (postCompleteState == state)
-        {
-            setUnitStatus(bus, action);
-        }
-    });
+            /*
+             * If state is Standby, enable the bare-metal-active systemd
+             * target.
+             * If state is Inactive, no-op cause IPMI is enabled by default.
+             */
+            if (postCompleteState == state)
+            {
+                setUnitStatus(bus, action);
+            }
+        });
 }
 
 /* This only gets called once on startup. */
@@ -96,39 +97,40 @@ int main()
                 "/xyz/openbmc_project/state/os',arg0namespace='{}'",
                 OperatingSystemStatusInterface),
             [&](sdbusplus::message_t& message) {
-            if (message.is_method_error())
-            {
-                lg2::error("eventHandler callback method error");
-                return;
-            }
-
-            /*
-             * This implicitly cancels the timer, if it's already pending.
-             * If there's a burst of events within a short period, we want
-             * to handle them all at once. So, we will wait this long for no
-             * more events to occur, before processing them.
-             */
-            filterTimer.expires_from_now(std::chrono::seconds(1));
-
-            filterTimer.async_wait([&](const boost::system::error_code& ec) {
-                if (ec == boost::asio::error::operation_aborted)
+                if (message.is_method_error())
                 {
-                    /* we were canceled */
-                    return;
-                }
-                if (ec)
-                {
-                    lg2::error("timer error");
+                    lg2::error("eventHandler callback method error");
                     return;
                 }
 
                 /*
-                 * Stop the bare metal active target if the post complete got
-                 * deasserted.
+                 * This implicitly cancels the timer, if it's already pending.
+                 * If there's a burst of events within a short period, we want
+                 * to handle them all at once. So, we will wait this long for no
+                 * more events to occur, before processing them.
                  */
-                checkPostCompleteEvent(conn);
+                filterTimer.expires_from_now(std::chrono::seconds(1));
+
+                filterTimer.async_wait(
+                    [&](const boost::system::error_code& ec) {
+                        if (ec == boost::asio::error::operation_aborted)
+                        {
+                            /* we were canceled */
+                            return;
+                        }
+                        if (ec)
+                        {
+                            lg2::error("timer error");
+                            return;
+                        }
+
+                        /*
+                         * Stop the bare metal active target if the post
+                         * complete got deasserted.
+                         */
+                        checkPostCompleteEvent(conn);
+                    });
             });
-        });
 
         io.run();
         return 0;

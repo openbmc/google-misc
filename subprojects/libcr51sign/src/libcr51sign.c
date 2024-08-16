@@ -32,7 +32,7 @@ extern "C"
 #endif
 
 // True of x is a power of two
-#define POWER_OF_TWO(x) ((x) && !((x) & ((x)-1)))
+#define POWER_OF_TWO(x) ((x) && !((x) & ((x) - 1)))
 
 // Maximum version supported. Major revisions are not backwards compatible.
 #define MAX_MAJOR_VERSION 1
@@ -451,10 +451,9 @@ static failure_reason validate_payload_regions(
 // Support validate_payload_regions_helper to remove image_regions as a required
 // input.
 
-static failure_reason
-    allocate_and_validate_payload_regions(const struct libcr51sign_ctx* ctx,
-                                          struct libcr51sign_intf* intf,
-                                          uint32_t d_offset)
+static failure_reason allocate_and_validate_payload_regions(
+    const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+    uint32_t d_offset)
 {
     struct libcr51sign_validated_regions image_regions;
     return validate_payload_regions(ctx, intf, d_offset, &image_regions);
@@ -497,8 +496,8 @@ static failure_reason
 // Returns size of signature struct size in |size|
 // Returns nonzero on error, zero on success
 
-static failure_reason get_signature_struct_size(enum signature_scheme scheme,
-                                                uint32_t* size)
+static failure_reason
+    get_signature_struct_size(enum signature_scheme scheme, uint32_t* size)
 {
     switch (scheme)
     {
@@ -517,8 +516,8 @@ static failure_reason get_signature_struct_size(enum signature_scheme scheme,
     }
 }
 
-static failure_reason get_signature_field_offset(enum signature_scheme scheme,
-                                                 uint32_t* offset)
+static failure_reason
+    get_signature_field_offset(enum signature_scheme scheme, uint32_t* offset)
 {
     switch (scheme)
     {
@@ -541,12 +540,10 @@ static failure_reason get_signature_field_offset(enum signature_scheme scheme,
 //"raw_signature_offset" with "public_key" over a SHA256/SHA512 digest of
 // EEPROM area "data_offset:data_size".
 
-static failure_reason validate_signature(const struct libcr51sign_ctx* ctx,
-                                         const struct libcr51sign_intf* intf,
-                                         uint32_t data_offset,
-                                         uint32_t data_size,
-                                         enum signature_scheme scheme,
-                                         uint32_t raw_signature_offset)
+static failure_reason validate_signature(
+    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    uint32_t data_offset, uint32_t data_size, enum signature_scheme scheme,
+    uint32_t raw_signature_offset)
 {
     uint8_t signature[LIBCR51SIGN_MAX_SIGNATURE_SIZE];
     uint16_t key_size;
@@ -636,11 +633,10 @@ static failure_reason validate_signature(const struct libcr51sign_ctx* ctx,
 //@param max_size Maximum size of the flash space in bytes.
 //@param[out] payload_blob_offset  Absolute offset of BLOB data in image
 //                                 descriptor (if BLOB data is present)
-static failure_reason
-    validate_descriptor(const struct libcr51sign_ctx* ctx,
-                        const struct libcr51sign_intf* intf, uint32_t offset,
-                        uint32_t relative_offset, uint32_t max_size,
-                        uint32_t* const restrict payload_blob_offset)
+static failure_reason validate_descriptor(
+    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    uint32_t offset, uint32_t relative_offset, uint32_t max_size,
+    uint32_t* const restrict payload_blob_offset)
 {
     uint32_t max_descriptor_size, signed_size, signature_scheme,
         signature_offset;
@@ -854,10 +850,9 @@ int scan_for_magic_8(const struct libcr51sign_ctx* ctx,
 //
 // @return nonzero on error, zero on success
 
-failure_reason
-    libcr51sign_validate(const struct libcr51sign_ctx* ctx,
-                         struct libcr51sign_intf* intf,
-                         struct libcr51sign_validated_regions* image_regions)
+failure_reason libcr51sign_validate(
+    const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+    struct libcr51sign_validated_regions* image_regions)
 {
     int rv, rv_first_desc = LIBCR51SIGN_SUCCESS;
     uint32_t descriptor_offset;

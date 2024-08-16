@@ -27,10 +27,9 @@
 namespace ncsi
 {
 
-typedef ncsi_response_type_t (*ncsi_simple_poll_f)(ncsi_state_t*,
-                                                   network_debug_t*,
-                                                   ncsi_buf_t*, mac_addr_t*,
-                                                   uint32_t, uint16_t);
+typedef ncsi_response_type_t (*ncsi_simple_poll_f)(
+    ncsi_state_t*, network_debug_t*, ncsi_buf_t*, mac_addr_t*, uint32_t,
+    uint16_t);
 
 // This class encapsulates three state machines:
 //  * L2 -- performs basic NC-SI setup, reads NIC MAC addr

@@ -139,8 +139,8 @@ static failure_reason find_image_mauv_data_offset_in_payload(
             case BLOB_TYPE_MAGIC_MAUV:
                 if (!found_image_mauv_data)
                 {
-                    *payload_image_mauv_data_offset = current_offset +
-                                                      sizeof(struct blob_data);
+                    *payload_image_mauv_data_offset =
+                        current_offset + sizeof(struct blob_data);
                     *payload_image_mauv_data_size =
                         payload_blob_data.blob_payload_size;
                     found_image_mauv_data = true;
@@ -447,11 +447,10 @@ static failure_reason update_stored_image_mauv_data(
 //                               image descriptor
 //
 // @return `failure_reason`
-failure_reason
-    validate_payload_image_mauv(const struct libcr51sign_ctx* const ctx,
-                                const struct libcr51sign_intf* const intf,
-                                const uint32_t payload_blob_offset,
-                                const uint32_t payload_blob_size)
+failure_reason validate_payload_image_mauv(
+    const struct libcr51sign_ctx* const ctx,
+    const struct libcr51sign_intf* const intf,
+    const uint32_t payload_blob_offset, const uint32_t payload_blob_size)
 {
     uint32_t payload_image_mauv_data_size = 0;
     struct full_mauv payload_image_mauv_data_buffer = {0};

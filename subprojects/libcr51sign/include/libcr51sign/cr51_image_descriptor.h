@@ -393,10 +393,9 @@ _Static_assert(offsetof(struct image_mauv, payload_security_version) %
                    0,
                "bad payload_security_version alignment");
 
-_Static_assert(offsetof(struct image_mauv, version_denylist) %
-                       sizeof(uint64_t) ==
-                   0,
-               "bad denylist alignment");
+_Static_assert(
+    offsetof(struct image_mauv, version_denylist) % sizeof(uint64_t) == 0,
+    "bad denylist alignment");
 
 // When A/B updates are enabled, SPS_EEPROM_LOCKDOWN_IMMUTABLE is invalid.
 enum sps_eeprom_lockdown_status

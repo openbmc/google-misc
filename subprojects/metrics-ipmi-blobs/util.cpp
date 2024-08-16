@@ -111,8 +111,8 @@ std::string trimStringRight(std::string_view s)
 
 std::string getCmdLine(const int pid)
 {
-    const std::string& cmdlinePath = "/proc/" + std::to_string(pid) +
-                                     "/cmdline";
+    const std::string& cmdlinePath =
+        "/proc/" + std::to_string(pid) + "/cmdline";
 
     std::string cmdline = readFileThenGrepIntoString(cmdlinePath);
     for (size_t i = 0; i < cmdline.size(); ++i)
@@ -245,8 +245,8 @@ bool readMem(const uint32_t target, uint32_t& memResult)
     uint32_t pageOffset = target & ~static_cast<uint32_t>(pageSize - 1);
     uint32_t offsetInPage = target & static_cast<uint32_t>(pageSize - 1);
 
-    void* mapBase = mmap(NULL, pageSize * 2, PROT_READ, MAP_SHARED, fd,
-                         pageOffset);
+    void* mapBase =
+        mmap(NULL, pageSize * 2, PROT_READ, MAP_SHARED, fd, pageOffset);
     if (mapBase == MAP_FAILED)
     {
         close(fd);
@@ -326,8 +326,8 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm)
         return false;
     }
 
-    std::string cpuinfo = readFileThenGrepIntoString("/proc/cpuinfo",
-                                                     "Hardware");
+    std::string cpuinfo =
+        readFileThenGrepIntoString("/proc/cpuinfo", "Hardware");
     // Nuvoton NPCM7XX chip has a counter which starts from power-on.
     if (cpuinfo.find("NPCM7XX") != std::string::npos)
     {

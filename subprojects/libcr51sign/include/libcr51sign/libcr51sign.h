@@ -231,10 +231,9 @@ struct libcr51sign_validated_regions
 //
 // @return nonzero on error, zero on success
 
-enum libcr51sign_validation_failure_reason
-    libcr51sign_validate(const struct libcr51sign_ctx* ctx,
-                         struct libcr51sign_intf* intf,
-                         struct libcr51sign_validated_regions* image_regions);
+enum libcr51sign_validation_failure_reason libcr51sign_validate(
+    const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+    struct libcr51sign_validated_regions* image_regions);
 
 // Function to convert error code to string format
 // @param[in] ec - error code
@@ -249,9 +248,8 @@ const char* libcr51sign_errorcode_to_string(
 //
 // @return nonzero on error, zero on success
 
-enum libcr51sign_validation_failure_reason
-    get_hash_type_from_signature(enum signature_scheme scheme,
-                                 enum hash_type* type);
+enum libcr51sign_validation_failure_reason get_hash_type_from_signature(
+    enum signature_scheme scheme, enum hash_type* type);
 
 #ifdef __cplusplus
 } //  extern "C"

@@ -29,8 +29,8 @@ constexpr uint16_t kListenPort = 23;
 stdplus::ManagedFd createListener()
 {
     using namespace stdplus::fd;
-    auto sock = socket(SocketDomain::INet6, SocketType::Stream,
-                       SocketProto::TCP);
+    auto sock =
+        socket(SocketDomain::INet6, SocketType::Stream, SocketProto::TCP);
     setFileFlags(sock, getFileFlags(sock).set(stdplus::fd::FileFlag::NonBlock));
     sockaddr_in6 addr = {};
     addr.sin6_family = AF_INET6;
@@ -49,25 +49,26 @@ int main()
         sdeventplus::source::IO do_accept(
             event, listener.get(), EPOLLIN | EPOLLET,
             [&](sdeventplus::source::IO&, int, uint32_t) {
-            while (auto fd = stdplus::fd::accept(listener))
-            {
-                std::string data;
-                try
+                while (auto fd = stdplus::fd::accept(listener))
                 {
-                    data = fileRead(statusFile);
-                }
-                catch (const std::exception& e)
-                {
-                    // we don't want to fail the upgrade process, set the status
-                    // to ONGOING
-                    data.push_back(2);
-                    data.append("Failed to read status ");
-                    data.append(e.what());
-                }
+                    std::string data;
+                    try
+                    {
+                        data = fileRead(statusFile);
+                    }
+                    catch (const std::exception& e)
+                    {
+                        // we don't want to fail the upgrade process, set the
+                        // status to ONGOING
+                        data.push_back(2);
+                        data.append("Failed to read status ");
+                        data.append(e.what());
+                    }
 
-                stdplus::fd::sendExact(*fd, data, stdplus::fd::SendFlags(0));
-            }
-        });
+                    stdplus::fd::sendExact(*fd, data,
+                                           stdplus::fd::SendFlags(0));
+                }
+            });
         return event.loop();
     }
     catch (const std::exception& e)

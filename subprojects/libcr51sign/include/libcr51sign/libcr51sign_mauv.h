@@ -26,10 +26,9 @@ extern "C"
 {
 #endif
 
-failure_reason validate_payload_image_mauv(const struct libcr51sign_ctx* ctx,
-                                           const struct libcr51sign_intf* intf,
-                                           uint32_t payload_blob_offset,
-                                           uint32_t payload_blob_size);
+failure_reason validate_payload_image_mauv(
+    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    uint32_t payload_blob_offset, uint32_t payload_blob_size);
 
 #ifdef __cplusplus
 } //  extern "C"

@@ -86,8 +86,8 @@ static void usage(char* name)
 static inline volatile uint32_t* getReg(stdplus::fd::MMap& map,
                                         size_t regOffset)
 {
-    uintptr_t regPtr = reinterpret_cast<uintptr_t>(map.get().data()) +
-                       regOffset;
+    uintptr_t regPtr =
+        reinterpret_cast<uintptr_t>(map.get().data()) + regOffset;
     /* Make sure the register pointer is properly aligned. */
     assert((regPtr & ~(REGISTER_WIDTH - 1)) == regPtr);
 
@@ -112,8 +112,8 @@ static void modifyESPIRegisters(bool disable)
     stdplus::fd::MMap pdidMap(fd, mapLength, ProtFlags().set(ProtFlag::Read),
                               MMapFlags(MMapAccess::Shared), pageBase);
 
-    volatile uint32_t* const pdidReg = getReg(pdidMap,
-                                              pageOffset + PDID_OFFSET);
+    volatile uint32_t* const pdidReg =
+        getReg(pdidMap, pageOffset + PDID_OFFSET);
 
     /*
      * Read the PDID register to make sure we're running on a Nuvoton NPCM7xx
@@ -144,8 +144,8 @@ static void modifyESPIRegisters(bool disable)
         MMapFlags(MMapAccess::Shared), pageBase);
 
     /* Read the ESPICFG register. */
-    volatile uint32_t* const espicfgReg = getReg(espiMap,
-                                                 pageOffset + ESPICFG_OFFSET);
+    volatile uint32_t* const espicfgReg =
+        getReg(espiMap, pageOffset + ESPICFG_OFFSET);
     uint32_t espicfgValue = *espicfgReg;
 
     if (disable)
@@ -167,8 +167,8 @@ static void modifyESPIRegisters(bool disable)
              *     channel enable bits to the core channel enable bits.
              *   - Clear the automatic ready bits in ESPIHINDP.
              */
-            uint32_t hostChannelEnableBits = espicfgValue &
-                                             ESPICFG_HOST_CHANNEL_ENABLE_MASK;
+            uint32_t hostChannelEnableBits =
+                espicfgValue & ESPICFG_HOST_CHANNEL_ENABLE_MASK;
             espicfgValue |= (hostChannelEnableBits >> 4);
             *espicfgReg = espicfgValue;
 

@@ -59,10 +59,11 @@ TEST(GetTcommUtimeStime, validInput)
     // ticks_per_sec is usually 100 on the BMC
     const long ticksPerSec = 100;
 
-    const std::string_view content = "2596 (dbus-broker) R 2577 2577 2577 0 -1 "
-                                     "4194560 299 0 1 0 333037 246110 0 0 20 0 "
-                                     "1 0 1545 3411968 530 4294967295 65536 "
-                                     "246512 2930531712 0 0 0 81923 4";
+    const std::string_view content =
+        "2596 (dbus-broker) R 2577 2577 2577 0 -1 "
+        "4194560 299 0 1 0 333037 246110 0 0 20 0 "
+        "1 0 1545 3411968 530 4294967295 65536 "
+        "246512 2930531712 0 0 0 81923 4";
 
     metric_blob::TcommUtimeStime t =
         metric_blob::parseTcommUtimeStimeString(content, ticksPerSec);
@@ -90,13 +91,14 @@ TEST(GetTcommUtimeStime, invalidInput)
 
 TEST(ParseMeminfoValue, validInput)
 {
-    const std::string_view content = "MemTotal:        1027040 kB\n"
-                                     "MemFree:          868144 kB\n"
-                                     "MemAvailable:     919308 kB\n"
-                                     "Buffers:           13008 kB\n"
-                                     "Cached:            82840 kB\n"
-                                     "SwapCached:            0 kB\n"
-                                     "Active:            62076 kB\n";
+    const std::string_view content =
+        "MemTotal:        1027040 kB\n"
+        "MemFree:          868144 kB\n"
+        "MemAvailable:     919308 kB\n"
+        "Buffers:           13008 kB\n"
+        "Cached:            82840 kB\n"
+        "SwapCached:            0 kB\n"
+        "Active:            62076 kB\n";
     int value;
     EXPECT_TRUE(metric_blob::parseMeminfoValue(content, "MemTotal:", value));
     EXPECT_EQ(value, 1027040);
