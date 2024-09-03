@@ -26,10 +26,11 @@ project(
 headers = include_directories('.')
 
 systemd = dependency('systemd')
+libsystemd = dependency('libsystemd')
 systemunitdir = systemd.get_variable('systemdsystemunitdir')
 
 deps = [
-  systemd,
+  libsystemd,
   dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
   dependency(
     'phosphor-dbus-interfaces',
