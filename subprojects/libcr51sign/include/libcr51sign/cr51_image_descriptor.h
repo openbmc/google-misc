@@ -193,13 +193,13 @@ struct image_region
  */
 struct image_descriptor
 {
-    uint64_t descriptor_magic; // #define DESCRIPTOR_MAGIC
+    uint64_t descriptor_magic = 0; // #define DESCRIPTOR_MAGIC
     /* Major revisions of this structure are not backwards compatible. */
-    uint8_t descriptor_major;
+    uint8_t descriptor_major = 0;
     /* Minor revisions of this structure are backwards compatible. */
-    uint8_t descriptor_minor;
+    uint8_t descriptor_minor = 0;
     /* Padding. */
-    uint16_t reserved_0;
+    uint16_t reserved_0 = 0;
 
     /* This field allows us to mitigate a DOS vector if we end up
      * scanning the image to discover the image descriptor. The offset
@@ -209,13 +209,13 @@ struct image_descriptor
      *
      * The offset is relative to the start of the image data.
      */
-    uint32_t descriptor_offset;
+    uint32_t descriptor_offset = 0;
     /* Includes this struct as well as the auxiliary structs (hash_*,
      * signature_*, denylist, and blob). This many bytes will be skipped when
      * computing the hash of the region this struct resides in. Tail padding is
      * allowed but must be all 0xff's.
      */
-    uint32_t descriptor_area_size;
+    uint32_t descriptor_area_size = 0;
 
     /*** Image information. ***/
 
@@ -229,36 +229,36 @@ struct image_descriptor
      * 0 is treated as a wildcard (can upgrade to/from any image family).
      * See image_family enum above.
      */
-    uint32_t image_family;
+    uint32_t image_family = 0;
     /* Follow the Kibbles versioning scheme. */
-    uint32_t image_major;
-    uint32_t image_minor;
-    uint32_t image_point;
-    uint32_t image_subpoint;
+    uint32_t image_major = 0;
+    uint32_t image_minor = 0;
+    uint32_t image_point = 0;
+    uint32_t image_subpoint = 0;
     /* Seconds since epoch. */
-    uint64_t build_timestamp;
+    uint64_t build_timestamp = 0;
 
     /* image_type enum { DEV, PROD, BREAKOUT, UNSIGNED_INTEGRITY} */
-    uint8_t image_type;
+    uint8_t image_type = 0;
     /* 0: no denylist struct, 1: watermark only, >1: watermark + denylist */
-    uint8_t denylist_size;
+    uint8_t denylist_size = 0;
     /* hash_type enum { NONE, SHA2_224, SHA2_256, ...} */
-    uint8_t hash_type;
+    uint8_t hash_type = 0;
     /* signature_scheme enum { NONE, RSA2048_PKCS15, ...}
      * If set, hash_type must be set as well (cannot be NONE).
      */
-    uint8_t signature_scheme;
+    uint8_t signature_scheme = 0;
 
     /* struct image_region array size. */
-    uint8_t region_count;
-    uint8_t reserved_1;
-    uint16_t reserved_2;
+    uint8_t region_count = 0;
+    uint8_t reserved_1 = 0;
+    uint16_t reserved_2 = 0;
     /* The sum of the image_region.region_size fields must add up. */
-    uint32_t image_size;
+    uint32_t image_size = 0;
     /* Authenticated opaque data exposed to system software. Must be a multiple
      * of 4 to maintain alignment. Does not include the blob struct magic.
      */
-    uint32_t blob_size;
+    uint32_t blob_size = 0;
     /* The list is strictly ordered by region_offset.
      * Must exhaustively describe the image.
      */
@@ -270,27 +270,27 @@ struct image_descriptor
  */
 struct hash_sha256
 {
-    uint32_t hash_magic; // #define HASH_MAGIC
+    uint32_t hash_magic = 0; // #define HASH_MAGIC
     uint8_t hash[32];
 } __attribute__((__packed__));
 
 struct hash_sha512
 {
-    uint32_t hash_magic; // #define HASH_MAGIC
+    uint32_t hash_magic = 0; // #define HASH_MAGIC
     uint8_t hash[64];
 } __attribute__((__packed__));
 
 struct denylist_record
 {
-    uint32_t image_major;
-    uint32_t image_minor;
-    uint32_t image_point;
-    uint32_t image_subpoint;
+    uint32_t image_major = 0;
+    uint32_t image_minor = 0;
+    uint32_t image_point = 0;
+    uint32_t image_subpoint = 0;
 } __attribute__((__packed__));
 
 struct denylist
 {
-    uint32_t denylist_magic; // #define DENYLIST_MAGIC
+    uint32_t denylist_magic = 0; // #define DENYLIST_MAGIC
     /* Deny list. The first entry is the watermark. All subsequent entries must
      * be newer than the watermark.
      */
@@ -299,7 +299,7 @@ struct denylist
 
 struct blob
 {
-    uint32_t blob_magic; // #define BLOB_MAGIC
+    uint32_t blob_magic = 0; // #define BLOB_MAGIC
     /* Array of blob_data structures - see blob_data below for details. */
     uint8_t blobs[];
 } __attribute__((__packed__));
@@ -328,12 +328,12 @@ struct blob
 struct blob_data
 {
     /* BLOB_TYPE_MAGIC_* */
-    uint32_t blob_type_magic;
+    uint32_t blob_type_magic = 0;
     /* Size of the data contained in blob_payload. Need not be a multiple of 4
      * bytes. Must have sizeof(struct blob_data) + blob_payload_size <=
      * blob_size.
      */
-    uint32_t blob_payload_size;
+    uint32_t blob_payload_size = 0;
     uint8_t blob_payload[];
 } __attribute__((__packed__));
 
@@ -342,11 +342,11 @@ struct blob_data
 struct image_mauv
 {
     /* Version of the MAUV structure. */
-    uint32_t mauv_struct_version;
+    uint32_t mauv_struct_version = 0;
 
     /* padding for 64-bit alignment of payload_security_version
      * must be set to 0xffffffff */
-    uint32_t reserved_0;
+    uint32_t reserved_0 = 0xffffffff;
 
     /* The version of the payload in which this `struct image_mauv` was
      * embedded. This would be better inside of `struct image_descriptor`, but
@@ -355,7 +355,7 @@ struct image_mauv
      * aborted if `payload_security_version` of the update payload is less than
      * the `minimum_acceptable_update_version` in gNVRAM.
      */
-    uint64_t payload_security_version;
+    uint64_t payload_security_version = 0;
 
     /* A monotonic counter that should be increased whenever the
      * `minimum_acceptable_update_version or version_denylist fields are
@@ -367,20 +367,20 @@ struct image_mauv
      * by convention should be the number of seconds since the unix epoch at the
      * time the payload was signed.
      */
-    uint64_t mauv_update_timestamp;
+    uint64_t mauv_update_timestamp = 0;
 
     /* Minimum acceptable update version.  An update to a payload with its
      * `payload_security_version` field less than this field in gNVRAM is
      * forbidden. This value is not monotonic.
      */
-    uint64_t minimum_acceptable_update_version;
+    uint64_t minimum_acceptable_update_version = 0;
 
     /* padding for 64-bit alignment of version_denylist
      * must be set to 0xffffffff */
-    uint32_t reserved_1;
+    uint32_t reserved_1 = 0xffffffff;
 
     /* Number of entries in the denylist. */
-    uint32_t version_denylist_num_entries;
+    uint32_t version_denylist_num_entries = 0;
 
     /* A version denylist.  Updates to any version in this list will be rejected
      * by the firmware.
@@ -421,13 +421,13 @@ enum sps_eeprom_lockdown_status
 struct lockdown_control
 {
     /* Version of the lockdown_status structure. */
-    uint32_t lockdown_control_struct_version;
+    uint32_t lockdown_control_struct_version = 0;
 
     /* The default lockdown status for a valid signed payload image. The value
      * is identical to `enum sps_eeprom_lockdown_status`. 0 = Failsafe, 1 =
      * Ready.
      */
-    uint32_t default_status;
+    uint32_t default_status = 0;
 };
 
 /* RSA4096 is the largest key type currently supported. */
@@ -438,43 +438,43 @@ struct lockdown_control
  */
 struct signature_rsa2048_pkcs15
 {
-    uint32_t signature_magic; // #define SIGNATURE_MAGIC
+    uint32_t signature_magic = 0; // #define SIGNATURE_MAGIC
     /* Monotonic index of the key used to sign the image (starts at 1). */
-    uint16_t key_index;
+    uint16_t key_index = 0;
     /* Used to revoke keys, persisted by the enforcer. */
-    uint16_t min_key_index;
-    uint32_t exponent;      // little-endian
+    uint16_t min_key_index = 0;
+    uint32_t exponent = 0;  // little-endian
     uint8_t modulus[256];   // big-endian
     uint8_t signature[256]; // big-endian
 } __attribute__((__packed__));
 
 struct signature_rsa3072_pkcs15
 {
-    uint32_t signature_magic; // #define SIGNATURE_MAGIC
+    uint32_t signature_magic = 0; // #define SIGNATURE_MAGIC
     /* Monotonic index of the key used to sign the image (starts at 1). */
-    uint16_t key_index;
+    uint16_t key_index = 0;
     /* Used to revoke keys, persisted by the enforcer. */
-    uint16_t min_key_index;
-    uint32_t exponent;      // little-endian
+    uint16_t min_key_index = 0;
+    uint32_t exponent = 0;  // little-endian
     uint8_t modulus[384];   // big-endian
     uint8_t signature[384]; // big-endian
 } __attribute__((__packed__));
 
 struct signature_rsa4096_pkcs15
 {
-    uint32_t signature_magic; // #define SIGNATURE_MAGIC
+    uint32_t signature_magic = 0; // #define SIGNATURE_MAGIC
     /* Monotonic index of the key used to sign the image (starts at 1). */
-    uint16_t key_index;
+    uint16_t key_index = 0;
     /* Used to revoke keys, persisted by the enforcer. */
-    uint16_t min_key_index;
-    uint32_t exponent;      // little-endian
+    uint16_t min_key_index = 0;
+    uint32_t exponent = 0;  // little-endian
     uint8_t modulus[512];   // big-endian
     uint8_t signature[512]; // big-endian
 } __attribute__((__packed__));
 
 struct sha256_only_no_signature
 {
-    uint32_t signature_magic; // #define SIGNATURE_MAGIC
+    uint32_t signature_magic = 0; // #define SIGNATURE_MAGIC
     uint8_t digest[32];
 } __attribute__((__packed__));
 
