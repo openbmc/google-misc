@@ -409,14 +409,24 @@ static bmcmetrics_metricproto_BmcDiskSpaceMetric
     getStorageMetric(bool& use) noexcept
 {
     bmcmetrics_metricproto_BmcDiskSpaceMetric ret = {};
-    struct statvfs fiData;
-    if (statvfs("/", &fiData) < 0)
+    struct statvfs rwFiData, tmpFiData;
+    if (statvfs("/", &rwFiData) < 0)
     {
         log<level::ERR>("Could not call statvfs");
     }
     else
     {
-        ret.rwfs_kib_available = (fiData.f_bsize * fiData.f_bfree) / 1024;
+        ret.rwfs_kib_available = (rwFiData.f_bsize * rwFiData.f_bfree) / 1024;
+        use = true;
+    }
+    if (statvfs("/tmp", &tmpFiData) < 0)
+    {
+        log<level::ERR>("Could not call statvfs");
+    }
+    else
+    {
+        ret.tmpfs_kib_available =
+            (tmpFiData.f_bsize * tmpFiData.f_bfree) / 1024;
         use = true;
     }
     return ret;
