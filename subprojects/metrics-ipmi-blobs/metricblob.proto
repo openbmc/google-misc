@@ -34,6 +34,7 @@ message BmcUptimeMetric {
 
 message BmcDiskSpaceMetric {
   int32 rwfs_kib_available = 1;  // Free space in RWFS in KiB
+  int32 tmpfs_kib_available = 2;  // Free space in TMPFS in KiB
 }
 
 // The following messages use string tables to save space
