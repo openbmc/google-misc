@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dbf408a_0ace9d86",
+        "filename": "subprojects/metrics-ipmi-blobs/metric.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2024-10-21T23:39:43Z",
+      "side": 1,
+      "message": "need to reformat this line.",
+      "range": {
+        "startLine": 428,
+        "startChar": 2,
+        "endLine": 428,
+        "endChar": 81
+      },
+      "revId": "e8ce54444e93a62d779824f6e1c277aeacbd2e0b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
