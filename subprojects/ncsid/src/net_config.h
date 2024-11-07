@@ -28,6 +28,7 @@
 #include <optional>
 #include <string>
 #include <vector>
+#include <regex>
 
 // The API for configuring and querying network.
 
