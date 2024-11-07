@@ -14,6 +14,9 @@
 
 #include "net_config.h"
 
+#include <linux/if.h>
+#include <net/if_arp.h>
+#include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -49,15 +52,6 @@ constexpr auto MAC_INTERFACE = "xyz.openbmc_project.Network.MACAddress";
 constexpr auto NETWORK_SERVICE = "xyz.openbmc_project.Network";
 constexpr auto PROP_INTERFACE = "org.freedesktop.DBus.Properties";
 
-int parse_mac(const std::string& mac_addr, mac_addr_t* mac)
-{
-    int ret = sscanf(mac_addr.c_str(), MAC_FORMAT, mac->octet, mac->octet + 1,
-                     mac->octet + 2, mac->octet + 3, mac->octet + 4,
-                     mac->octet + 5);
-
-    return ret < 6 ? -1 : 0;
-}
-
 std::string format_mac(const mac_addr_t& mac)
 {
     // 2 chars for every byte + 5 colons + Null byte
@@ -76,18 +70,6 @@ PhosphorConfig::PhosphorConfig(const std::string& iface_name) :
     bus(sdbusplus::bus::new_default())
 {}
 
-sdbusplus::message_t
-    PhosphorConfig::new_networkd_call(sdbusplus::bus_t* dbus, bool get) const
-{
-    auto networkd_call =
-        dbus->new_method_call(NETWORK_SERVICE, iface_path_.c_str(),
-                              PROP_INTERFACE, get ? "Get" : "Set");
-
-    networkd_call.append(MAC_INTERFACE, "MACAddress");
-
-    return networkd_call;
-}
-
 int PhosphorConfig::get_mac_addr(mac_addr_t* mac)
 {
     if (mac == nullptr)
@@ -101,41 +83,36 @@ int PhosphorConfig::get_mac_addr(mac_addr_t* mac)
     {
         *mac = shared_host_mac_.value();
     }
-    else // Cache miss: read MAC over DBus, and store in cache.
+    else // Cache miss: read from interface, cache it for future requests.
     {
-        std::string mac_string;
+        struct ifreq s;
+        strcpy(s.ifr_name, iface_name_.c_str());
         try
         {
-            auto networkd_call = new_networkd_call(&bus, true);
-            auto reply = bus.call(networkd_call);
-            std::variant<std::string> result;
-            reply.read(result);
-            mac_string = std::get<std::string>(result);
+            auto fd = stdplus::fd::socket(stdplus::fd::SocketDomain::INet6,
+                                          stdplus::fd::SocketType::Datagram,
+                                          stdplus::fd::SocketProto::IP);
+            fd.ioctl(SIOCGIFHWADDR, &s);
         }
-        catch (const sdbusplus::exception::SdBusError& ex)
+        catch (const std::exception& ex)
         {
-            stdplus::println(stderr, "Failed to get MACAddress: {}", ex.what());
+            stdplus::println(
+                stderr,
+                "Failed to get MAC Addr for Interface {} writing file: {}",
+                iface_name_, ex.what());
             return -1;
         }
-
-        if (parse_mac(mac_string, mac) < 0)
-        {
-            stdplus::println(stderr, "Failed to parse MAC Address `{}`",
-                             mac_string);
-            return -1;
-        }
-
+        std::copy_n(s.ifr_addr.sa_data, sizeof(*mac), mac->octet);
         shared_host_mac_ = *mac;
     }
-
     return 0;
 }
 
 int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
 {
-    auto networkd_call = new_networkd_call(&bus, false);
     std::variant<std::string> mac_value(format_mac(mac));
-    networkd_call.append(mac_value);
+    struct ifreq ifr;
+    short flags_copy;
 
     try
     {
@@ -158,18 +135,72 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
                          std::get<std::string>(mac_value), ex.what());
         return -1;
     }
-
+    // configure request
+    ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
+    strcpy(ifr.ifr_name, iface_name_.c_str());
     try
     {
-        auto reply = bus.call(networkd_call);
+        auto fd = stdplus::fd::socket(stdplus::fd::SocketDomain::INet6,
+                                      stdplus::fd::SocketType::Datagram,
+                                      stdplus::fd::SocketProto::IP);
+        // Try setting MAC Address directly without bringing interface down
+        try
+        {
+          // Setting mac address on the interface struct
+          strcpy(ifr.ifr_name, iface_name_.c_str());
+          ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
+          std::copy_n(mac.octet, 6, ifr.ifr_hwaddr.sa_data);
+          fd.ioctl(SIOCSIFHWADDR, &ifr);
+        }
+        catch (const std::exception& e)
+        {
+            // Regardless of error attempt to set MAC Address again after
+            // bringing interface down
+            stdplus::println(
+                stderr,
+                "Could not set MAC Address directly, retrying after bringing interface down, error = {}",
+                e.what());
+            try
+            {
+                // Read interface flags configuration and store (once interface
+                // is brought down, existing state is lost)
+                ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
+                strcpy(ifr.ifr_name, iface_name_.c_str());
+                fd.ioctl(SIOCGIFFLAGS, &ifr);
+                flags_copy = ifr.ifr_flags;
+                // set interface down
+                ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
+                strcpy(ifr.ifr_name, iface_name_.c_str());
+                ifr.ifr_flags &= ~IFF_UP;
+                fd.ioctl(SIOCSIFFLAGS, &ifr);
+                // set MAC Address
+                ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
+                strcpy(ifr.ifr_name, iface_name_.c_str());
+                std::copy_n(mac.octet, 6, ifr.ifr_hwaddr.sa_data);
+                fd.ioctl(SIOCSIFHWADDR, &ifr);
+                // set interface up with the flags state prior to bringing
+       		// it down
+                ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;
+                strcpy(ifr.ifr_name, iface_name_.c_str());
+                ifr.ifr_flags = flags_copy;
+                fd.ioctl(SIOCSIFFLAGS, &ifr);
+            }
+            catch (const std::exception& e)
+            {
+                stdplus::println(
+                    stderr, "Failed to set MAC Address {} writing file: {}",
+                    std::get<std::string>(mac_value), e.what());
+                return -1;
+            }
+        }
     }
-    catch (const sdbusplus::exception::SdBusError& ex)
+    catch (const std::exception& e)
     {
-        stdplus::println(stderr, "Failed to set MAC Addr `{}`: {}",
-                         std::get<std::string>(mac_value), ex.what());
+        stdplus::println(stderr, "Error creating socket: {}", e.what());
         return -1;
     }
-
+    stdplus::println(stderr, "Success setting Mac address for {}: {}",
+                     iface_name_, std::get<std::string>(mac_value));
     shared_host_mac_ = std::experimental::nullopt;
     return 0;
 }
