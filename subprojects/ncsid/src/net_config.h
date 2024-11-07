@@ -18,7 +18,10 @@
 
 #include "platforms/nemora/portable/net_types.h"
 
+#include <linux/if.h>
+#include <net/if_arp.h>
 #include <net_iface.h>
+#include <sys/ioctl.h>
 
 #include <sdbusplus/bus.hpp>
 
@@ -53,22 +56,22 @@ class ConfigBase
     virtual int set_nic_hostless(bool is_nic_hostless) = 0;
 };
 
-// Calls phosphord-networkd
+// Calls Socket Ioctl to obtain information about NIC (previously
+// phosphor-networkd)
 class PhosphorConfig : public ConfigBase
 {
   public:
     explicit PhosphorConfig(const std::string& iface_name);
 
-    // Reads the MAC address from phosphor-networkd interface or internal
+    // Reads the MAC address from socket interface or internal
     // cache, and store in the mac pointer.
     // Returns -1 if failed, 0 if succeeded.
     int get_mac_addr(mac_addr_t* mac) override;
 
-    // Sets the MAC address over phosphor-networkd, and update internal
+    // Sets the MAC address over socket, and update internal
     // cache.
     // Returns -1 if failed, 0 if succeeded.
     int set_mac_addr(const mac_addr_t& mac) override;
-
     virtual int set_nic_hostless(bool is_nic_hostless) override;
 
   private:
@@ -80,6 +83,10 @@ class PhosphorConfig : public ConfigBase
 
     // Stores the currently configured nic state, if previously set
     std::optional<bool> was_nic_hostless_;
+
+    // Function helper allows get_mac_addr and set_mac_addr to do
+    // ioctl calls to get and set different states of NIC.
+    void call_nic(auto fd, struct ifreq& ifr, int op);
 
     // The MAC address obtained from NIC.
     // ncsid will commit this MAC address over DBus to phosphor-networkd
