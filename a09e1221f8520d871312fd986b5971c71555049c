@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16d4861e_cb00754d",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "couldn\u0027t drop socket because we need the flags.",
+      "parentUuid": "575e2d11_e5897aa3",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f6c3f3f_a5af2818",
         "filename": "subprojects/ncsid/src/net_config.cpp",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2024-11-07T22:09:52Z",
       "side": 1,
       "message": "You can drop this if using stdplus/fd",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac0bfbb9_fd20561b",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8f6c3f3f_a5af2818",
       "revId": "a09e1221f8520d871312fd986b5971c71555049c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f78f19f_81a4606e",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "Adjusted",
+      "parentUuid": "2308ed61_0b1a462e",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc7142d5_69106c79",
         "filename": "subprojects/ncsid/src/net_config.cpp",
         "patchSetId": 1
@@ -65,6 +119,24 @@
       "writtenOn": "2024-11-07T22:09:52Z",
       "side": 1,
       "message": "You shouldn\u0027t need to check the return, it uses exceptions. Probably we should wrap all of this code in a try catch block, and print the failure and return -1 if there is an exception.",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a6556ab_c084276f",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cc7142d5_69106c79",
       "revId": "a09e1221f8520d871312fd986b5971c71555049c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -86,6 +158,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8128d15_5464d497",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dd4a5746_dfe4e5c9",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0cf19ba_9f1b4cbf",
@@ -103,6 +193,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39d3379f_f0d6dd20",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d0cf19ba_9f1b4cbf",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5de2d4a1_1c3de2e0",
@@ -116,6 +224,24 @@
       "writtenOn": "2024-11-07T22:09:52Z",
       "side": 1,
       "message": "Wrap this all in a try catch block because stdplus::Fd uses exceptions.",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c36b5502_a3d2bb09",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5de2d4a1_1c3de2e0",
       "revId": "a09e1221f8520d871312fd986b5971c71555049c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -139,6 +265,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c57f6bc3_7c9604f5",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "Adjusted, thank you.",
+      "parentUuid": "6e9ff70f_0554e478",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27552a6c_89392060",
         "filename": "subprojects/ncsid/src/net_config.cpp",
         "patchSetId": 1
@@ -150,6 +294,24 @@
       "writtenOn": "2024-11-07T22:09:52Z",
       "side": 1,
       "message": "Same thing with using `fd.ioctl()`. We should also be precise with the error, I need to look up what is expected here.",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "749ae6bf_0dbc30cb",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-08T19:19:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "27552a6c_89392060",
       "revId": "a09e1221f8520d871312fd986b5971c71555049c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
