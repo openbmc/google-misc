@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54be5b80_ecdb93a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "449222ab_6691c5d8",
+      "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b50f5afb_c73123e5",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-11-08T22:07:57Z",
       "side": 1,
       "message": "just use `sizeof(mac_addr_t) or sizeof(*mac)` where this value would be used",
+      "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a7435a0_30420944",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b50f5afb_c73123e5",
       "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -52,6 +88,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12e5e2ec_1a20b8c2",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "609d065c_72481bd3",
+      "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d899a4a_1879fc20",
@@ -65,6 +119,24 @@
       "writtenOn": "2024-11-08T22:07:57Z",
       "side": 1,
       "message": "nit: std::copy or std::copy_n",
+      "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "412886c5_12ff7cab",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4d899a4a_1879fc20",
       "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -88,6 +160,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9ea0864_af203112",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "Fixed, it was changed in my last patch by accident - tested now, thank you so much for noticing.",
+      "parentUuid": "cd306d6c_d0e43b3d",
+      "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7ce35a44_0ce1c91c",
         "filename": "subprojects/ncsid/src/net_config.cpp",
         "patchSetId": 7
@@ -99,6 +189,24 @@
       "writtenOn": "2024-11-08T22:07:57Z",
       "side": 1,
       "message": "Print the error at the end too",
+      "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "276ec65b_93e3f163",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7ce35a44_0ce1c91c",
       "revId": "f3122e243bbdf9e56d64ee49b92da34ed45c674c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }

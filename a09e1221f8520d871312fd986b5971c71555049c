@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22bd8b6c_ffeae892",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "It was the flags SIOCSIFHWADDR - I went back to patch and checked the file, attempting to remove it now.",
+      "parentUuid": "d5b90356_65495219",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f6c3f3f_a5af2818",
         "filename": "subprojects/ncsid/src/net_config.cpp",
         "patchSetId": 1
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "Adjusted",
       "parentUuid": "2308ed61_0b1a462e",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3792fe4_55a17fe0",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3f78f19f_81a4606e",
       "revId": "a09e1221f8520d871312fd986b5971c71555049c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -295,6 +331,24 @@
       "side": 1,
       "message": "Adjusted, thank you.",
       "parentUuid": "6e9ff70f_0554e478",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36b71cad_0f1e5a39",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-09T02:12:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c57f6bc3_7c9604f5",
       "revId": "a09e1221f8520d871312fd986b5971c71555049c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
