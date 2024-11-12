@@ -10,6 +10,16 @@ project(
   ],
 )
 
+absls = [
+  'flags',
+  'flags_internal',
+  'flags_parse',
+]
+libabsl_deps = []
+foreach absl : absls
+  libabsl_deps += dependency('absl_' + absl)
+endforeach
+
 executable(
   'host_gpio_monitor',
   'host_gpio_monitor.cpp',
@@ -18,6 +28,7 @@ executable(
   [
     dependency('stdplus'),
     dependency('phosphor-logging'),
+    libabsl_deps,
   ],
   install: true,
   install_dir: get_option('libexecdir'),
@@ -30,7 +41,7 @@ libexecdir = get_option('prefix') / get_option('libexecdir')
 
 configure_file(
   configuration: {'BIN': libexecdir / 'host_gpio_monitor'},
-  input: 'host-gpio-monitor.service.in',
-  output: 'host-gpio-monitor.service',
+  input: 'host-gpio-monitor@.service.in',
+  output: 'host-gpio-monitor@.service',
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
