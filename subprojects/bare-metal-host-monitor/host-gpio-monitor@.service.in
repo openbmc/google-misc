@@ -1,11 +1,11 @@
 [Unit]
-Description=gBMC bare-metal GPIO  monitoring
+Description=gBMC bare-metal GPIO  monitoring for host %i
 ConditionPathExists=/var/google/config-package/enable-bm.flag
 After=phosphor-ipmi-host.service
 
 [Service]
 Restart=always
-ExecStart=@@BIN@ host_gpio_monitor
+ExecStart=@@BIN@ --host_number %i
 
 [Install]
 WantedBy=multi-user.target
