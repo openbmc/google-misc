@@ -16,6 +16,24 @@
       "message": "Note, we need to configure request for each ioctl as I noticed it depends per driver sometimes they wipe the request struct and that can lead to flakiness.",
       "revId": "2b84a770c8e268b6d76197a042f24f8e8c766c30",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41c82af5_2c6f4ec1",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-11-13T06:33:43Z",
+      "side": 1,
+      "message": "maybe having a function of setNicState(string ifname, bool up) can make this cleaner? Also you should not need to set the family in interface up/down? ifname+flag should be good enough",
+      "parentUuid": "912b5341_8d30ace4",
+      "revId": "2b84a770c8e268b6d76197a042f24f8e8c766c30",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
