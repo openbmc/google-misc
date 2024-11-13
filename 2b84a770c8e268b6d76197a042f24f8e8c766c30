@@ -34,6 +34,24 @@
       "parentUuid": "912b5341_8d30ace4",
       "revId": "2b84a770c8e268b6d76197a042f24f8e8c766c30",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d24e1ac7_75394e09",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-13T18:43:43Z",
+      "side": 1,
+      "message": "Thanks Yuxiao, I\u0027ve adjusted the code accordingly. you\u0027ll also notice a delay added. This was based on running a 500 iteration loop and noticing some flakiness, after the delay flakiness is gone.",
+      "parentUuid": "41c82af5_2c6f4ec1",
+      "revId": "2b84a770c8e268b6d76197a042f24f8e8c766c30",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
