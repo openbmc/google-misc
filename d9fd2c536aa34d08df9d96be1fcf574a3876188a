@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b674fc1_69ae9b9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-15T20:13:07Z",
+      "side": 1,
+      "message": "re",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebabe6a5_5a733ff5",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-15T20:13:07Z",
+      "side": 1,
+      "message": "nit: strlen + strncpy is equivalent to strcpy, it doesn\u0027t provide anything because you are still finding the length.\n\nDo you actually need to rewrite the interface name each time? Some calls overwrite the flags, but AFAIK nothing should touch the ifname",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75608a69_2feada75",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-15T20:13:07Z",
+      "side": 1,
+      "message": "nit: comment not needed",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ad07ff4_8e4812da",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-15T20:13:07Z",
+      "side": 1,
+      "message": "std::this_thread::sleep_for(std::chrono::milliseconds(1))",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "449e88fa_3fa11ddc",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-15T20:13:07Z",
+      "side": 1,
+      "message": "Don\u0027t you need to set this above too?",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "810c5de6_1d216206",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-15T20:13:07Z",
+      "side": 1,
+      "message": "I would be careful assuming the old flags didn\u0027t have the interface down already (the bug we had in the driver). You should add the IFF_UP flag explicitly to the copy or here.",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82c29c37_9bfce730",
+        "filename": "subprojects/ncsid/src/net_config.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-15T20:13:07Z",
+      "side": 1,
+      "message": "IWYU, I believe `struct ifreq` is `#include \u003cnet/if.h\u003e` only. We don\u0027t do the ioctl or arp things in the header.",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
