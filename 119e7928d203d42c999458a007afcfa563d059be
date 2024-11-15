@@ -1,0 +1,9 @@
+Code-Review+2: Willy Tu <wltu@google.com>
+Code-Review+2: William A. Kennington III <wak@google.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Abigail Buchman <buchmana@google.com>
+Submitted-at: Fri, 15 Nov 2024 20:53:49 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/google-misc/+/75421
+Comments-Total: 5
+Project: openbmc/google-misc
+Branch: refs/heads/master
