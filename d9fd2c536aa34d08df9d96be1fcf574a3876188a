@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30992c7b_30927f11",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-20T19:58:58Z",
+      "side": 1,
+      "message": "Then don\u0027t use `strlen()`, just use the length of the string.\n\nHeck, don\u0027t use strncpy, just use `std::copy_n(iface_name.c_str(), iface_name_.size()+1, ifr.ifr_name)` since you don\u0027t need any of the checks.",
+      "parentUuid": "1e3f9b7a_aeeb6d43",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "75608a69_2feada75",
         "filename": "subprojects/ncsid/src/net_config.cpp",
         "patchSetId": 15
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "Just tried, \n\nwithout sys/ioctl.h we get an error for SIOCGIFHWADDR\n\nwithout if_arp we get an error for ARPHRD_ETHER",
       "parentUuid": "82c29c37_9bfce730",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e7a57e5_0f2433e9",
+        "filename": "subprojects/ncsid/src/net_config.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2024-11-20T19:58:58Z",
+      "side": 1,
+      "message": "Yeah, but you only need it in the .cpp file. Not the header\n\nSame with \u003cthread\u003e below.",
+      "parentUuid": "78edeed4_63c799b1",
       "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
