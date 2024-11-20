@@ -71,6 +71,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdceef14_db3f9792",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-20T20:19:08Z",
+      "side": 1,
+      "message": "adjusted thank you.",
+      "parentUuid": "30992c7b_30927f11",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75608a69_2feada75",
@@ -242,6 +260,24 @@
       "side": 1,
       "message": "Yeah, but you only need it in the .cpp file. Not the header\n\nSame with \u003cthread\u003e below.",
       "parentUuid": "78edeed4_63c799b1",
+      "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dae2c40_e9ba7305",
+        "filename": "subprojects/ncsid/src/net_config.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-20T20:19:08Z",
+      "side": 1,
+      "message": "Agreed, adjusted. :)",
+      "parentUuid": "0e7a57e5_0f2433e9",
       "revId": "d9fd2c536aa34d08df9d96be1fcf574a3876188a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
