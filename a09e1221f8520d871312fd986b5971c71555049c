@@ -72,6 +72,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a1c73b4_f2a9d234",
+        "filename": "subprojects/ncsid/src/net_config.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-11-20T23:13:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "22bd8b6c_ffeae892",
+      "revId": "a09e1221f8520d871312fd986b5971c71555049c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f6c3f3f_a5af2818",
