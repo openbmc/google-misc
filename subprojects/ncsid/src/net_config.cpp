@@ -25,6 +25,7 @@
 #include <stdplus/fd/create.hpp>
 #include <stdplus/fd/ops.hpp>
 #include <stdplus/print.hpp>
+#include <stdplus/raw.hpp>
 #include <stdplus/util/string.hpp>
 
 #include <cstdio>
@@ -116,9 +117,20 @@ void PhosphorConfig::call_nic(auto fd, struct ifreq& ifr, int op)
 
 int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
 {
-    std::variant<std::string> mac_value(format_mac(mac));
+    std::string mac_value = format_mac(mac);
     struct ifreq ifr = {};
     short flags_copy;
+    mac_addr_t cur_mac;
+    int ret;
+    ret = get_mac_addr(&cur_mac);
+    if (ret == 0)
+    {
+        if (stdplus::raw::equal(cur_mac, mac))
+        {
+            // mac value is the same not doing anything, returning
+            return 0;
+        }
+    }
 
     try
     {
@@ -131,14 +143,13 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
             stdplus::fd::OpenFlags(stdplus::fd::OpenAccess::WriteOnly)
                 .set(stdplus::fd::OpenFlag::Create),
             0644);
-        auto contents = std::format("[Link]\nMACAddress={}\n",
-                                    std::get<std::string>(mac_value));
+        auto contents = std::format("[Link]\nMACAddress={}\n", mac_value);
         stdplus::fd::writeExact(fd, contents);
     }
     catch (const std::exception& ex)
     {
         stdplus::println(stderr, "Failed to set MAC Addr `{}` writing file: {}",
-                         std::get<std::string>(mac_value), ex.what());
+                         mac_value, ex.what());
         return -1;
     }
     try
@@ -185,7 +196,7 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
             {
                 stdplus::println(
                     stderr, "Failed to set MAC Address {} writing file: {}",
-                    std::get<std::string>(mac_value), e.what());
+                    mac_value, e.what());
                 return -1;
             }
         }
@@ -196,7 +207,7 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
         return -1;
     }
     stdplus::println(stderr, "Success setting Mac address for {}: {}",
-                     iface_name_, std::get<std::string>(mac_value));
+                     iface_name_, mac_value);
     shared_host_mac_ = std::experimental::nullopt;
     return 0;
 }
