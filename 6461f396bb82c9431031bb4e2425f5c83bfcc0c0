@@ -1,0 +1,9 @@
+Code-Review+2: William A. Kennington III <wak@google.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Mo Elbadry <elbadrym@google.com>
+Submitted-at: Tue, 03 Dec 2024 23:37:23 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/google-misc/+/76241
+Comments-Total: 4
+Comments-Unresolved: 2
+Project: openbmc/google-misc
+Branch: refs/heads/master
