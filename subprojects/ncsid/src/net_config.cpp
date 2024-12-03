@@ -119,6 +119,17 @@ int PhosphorConfig::set_mac_addr(const mac_addr_t& mac)
     std::variant<std::string> mac_value(format_mac(mac));
     struct ifreq ifr = {};
     short flags_copy;
+    mac_addr_t cur_mac;
+    int ret;
+    ret = get_mac_addr(&cur_mac);
+    if (ret == 0)
+    {
+        if (format_mac(cur_mac).compare(std::get<std::string>(mac_value)))
+        {
+            // mac value is the same not doing anything, returning
+            return 0;
+        }
+    }
 
     try
     {
