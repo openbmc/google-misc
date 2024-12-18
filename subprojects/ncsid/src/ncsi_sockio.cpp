@@ -75,10 +75,7 @@ int SockIO::filter_vlans()
 
 int SockIO::recv(void* buf, size_t maxlen)
 {
-    struct pollfd sock_pollfd
-    {
-        sockfd_, POLLIN | POLLPRI, 0
-    };
+    struct pollfd sock_pollfd{sockfd_, POLLIN | POLLPRI, 0};
 
     int ret = poll(&sock_pollfd, 1, kpoll_timeout_);
     if (ret > 0)
