@@ -57,6 +57,15 @@ executable(
   install: true,
   install_dir: bindir)
 
+executable(
+  'send-dhcp-status',
+  'send-dhcp-status.cpp',
+  implicit_include_directories: false,
+  dependencies: deps,
+  link_with : fileio_lib,
+  install: true,
+  install_dir: bindir)
+
 systemd = dependency('systemd')
 systemunitdir = systemd.get_variable('systemdsystemunitdir')
 
