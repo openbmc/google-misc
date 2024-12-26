@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6309e010_0277c3e2",
+        "filename": "subprojects/dhcp-done/meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-12-26T19:49:01Z",
+      "side": 1,
+      "message": "why can\u0027t we reuse the update-dhcp-status? It also needs to be in certain format, the first 1bytes must be status code.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "5bd9df9f984fffaa87a01d3eff8dfcedf13893b5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
