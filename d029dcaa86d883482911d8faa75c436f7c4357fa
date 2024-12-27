@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c2e7850_3b231019",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-12-27T21:28:24Z",
+      "side": 1,
+      "message": "update_dhcp_status",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "d029dcaa86d883482911d8faa75c436f7c4357fa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "270f1a20_069d345e",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-12-27T21:28:24Z",
+      "side": 1,
+      "message": "this is different from the state code before, better clarify that with this usage the status code will be 2, which is just for logging.",
+      "range": {
+        "startLine": 15,
+        "startChar": 38,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "d029dcaa86d883482911d8faa75c436f7c4357fa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2008728a_980cb82c",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2024-12-27T21:28:24Z",
+      "side": 1,
+      "message": "should be argc \u003e\u003d 6?, since retry is optional.",
+      "range": {
+        "startLine": 96,
+        "startChar": 21,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "d029dcaa86d883482911d8faa75c436f7c4357fa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
