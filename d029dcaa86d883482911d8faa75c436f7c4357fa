@@ -47,6 +47,54 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1390b3d0_426c1e03",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-12-27T21:41:11Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5c2e7850_3b231019",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "d029dcaa86d883482911d8faa75c436f7c4357fa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84b4f1a8_aed48341",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-12-27T21:41:11Z",
+      "side": 1,
+      "message": "updated let me know what you think about this text. I think later on we\u0027ll change it to support powercycle but that\u0027s near completion.",
+      "parentUuid": "270f1a20_069d345e",
+      "range": {
+        "startLine": 15,
+        "startChar": 38,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "d029dcaa86d883482911d8faa75c436f7c4357fa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2008728a_980cb82c",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-12-27T21:28:24Z",
       "side": 1,
       "message": "should be argc \u003e\u003d 6?, since retry is optional.",
+      "range": {
+        "startLine": 96,
+        "startChar": 21,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "d029dcaa86d883482911d8faa75c436f7c4357fa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "142f635f_c451266c",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-12-27T21:41:11Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2008728a_980cb82c",
       "range": {
         "startLine": 96,
         "startChar": 21,
