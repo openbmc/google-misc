@@ -22,6 +22,30 @@
       },
       "revId": "5bd9df9f984fffaa87a01d3eff8dfcedf13893b5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "003dd5ef_9f4a5ea7",
+        "filename": "subprojects/dhcp-done/meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2024-12-27T05:26:49Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6309e010_0277c3e2",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "5bd9df9f984fffaa87a01d3eff8dfcedf13893b5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
