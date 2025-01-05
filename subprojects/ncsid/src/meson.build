@@ -61,11 +61,6 @@ normalize_mac = executable(
   install: true)
 
 install_data(
-  'update_ra_gw.sh',
-  install_mode: 'rwxr-xr-x',
-  install_dir: get_option('libexecdir'))
-
-install_data(
   'ncsid_lib.sh',
   install_mode: 'rw-r--r--',
   install_dir: get_option('libexecdir'))
@@ -79,13 +74,6 @@ configure_file(
   configuration: {'BIN': libexecdir / 'ncsid'},
   input: 'ncsid@.service.in',
   output: 'ncsid@.service',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
-
-configure_file(
-  configuration: {'BIN': libexecdir / 'update_ra_gw.sh'},
-  input: 'update-ra-gw@.service.in',
-  output: 'update-ra-gw@.service',
   install_mode: 'rw-r--r--',
   install_dir: systemunitdir)
 
