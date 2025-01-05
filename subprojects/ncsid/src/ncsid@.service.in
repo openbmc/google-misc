@@ -1,7 +1,5 @@
 [Unit]
 Description=Run Ncsid daemon
-Wants=mapper-wait@-xyz-openbmc_project-network-%i.service
-After=mapper-wait@-xyz-openbmc_project-network-%i.service
 Wants=update-ra-gw@%i.service
 
 [Service]
