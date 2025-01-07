@@ -1,1 +1,38 @@
 option('tests', type: 'feature', description: 'Build tests')
+option(
+  'host_monitor_service_name',
+  type: 'string',
+  value: 'xyz.openbmc_project.State.OperatingSystem{}',
+  description: 'Dbus service to monitor. Use {} in string if host number needs to be inserted'
+)
+option(
+  'host_monitor_object_path',
+  type: 'string',
+  value: '/xyz/openbmc_project/state/os',
+  description: 'Dbus object path to monitor. Use {} in string if host number needs to be inserted'
+)
+option(
+  'host_monitor_interface',
+  type: 'string',
+  value: 'xyz.openbmc_project.State.OperatingSystem.Status',
+  description: 'Dbus interface, where the monitored property is located.',
+)
+option(
+  'host_monitor_property',
+  type: 'string',
+  value: 'OperatingSystemState',
+  description: 'Dbus property to monitor',
+)
+option(
+  'host_monitor_host_in_reset_value',
+  type: 'string',
+  value: 'xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Inactive',
+  description: 'Dbus property value that indicates the host is in reset',
+)
+option
+(
+  'host_monitor_host_running_value',
+  type: 'string',
+  value: 'xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Standby',
+  description: 'Dbus property value that indicates the host OS is running',
+)
