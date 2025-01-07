@@ -16,6 +16,7 @@ executable(
     'host_gpio_monitor',
     'host_gpio_monitor.cpp',
     implicit_include_directories: false,
+    include_directories : include_directories('.'),
     dependencies: [
         dependency('stdplus'),
         dependency('phosphor-logging'),
@@ -36,4 +37,26 @@ configure_file(
     output: 'host-gpio-monitor@.service',
     install_mode: 'rw-r--r--',
     install_dir: systemunitdir,
+)
+
+# Set up config file with the dbus information that needs to be monitored.
+conf_data = configuration_data()
+conf_data.set_quoted(
+    'DBUS_SERVICE_NAME',
+    get_option('host_monitor_service_name')
+)
+conf_data.set_quoted('DBUS_OBJECT_PATH', get_option('host_monitor_object_path'))
+conf_data.set_quoted('DBUS_INTERFACE', get_option('host_monitor_interface'))
+conf_data.set_quoted('DBUS_PROPERTY_NAME', get_option('host_monitor_property'))
+conf_data.set_quoted(
+    'DBUS_PROPERTY_HOST_IN_RESET_VALUE',
+    get_option('host_monitor_host_in_reset_value')
+)
+conf_data.set_quoted(
+    'DBUS_PROPERTY_HOST_RUNNING_VALUE',
+    get_option('host_monitor_host_running_value')
+)
+configure_file(
+    output: 'host_gpio_monitor_conf.hpp',
+    configuration: conf_data
 )
