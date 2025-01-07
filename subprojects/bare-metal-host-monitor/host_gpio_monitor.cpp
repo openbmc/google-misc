@@ -2,6 +2,8 @@
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
 
+#include "host_gpio_monitor_conf.hpp"
+
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/steady_timer.hpp>
 #include <phosphor-logging/lg2.hpp>
@@ -15,14 +17,6 @@
 ABSL_FLAG(std::string, host_label, "0",
           "Label for the host in question. Usually this is an integer.");
 
-const constexpr char* OperatingSystemService =
-    "xyz.openbmc_project.State.OperatingSystem{}";
-const constexpr char* OperatingSystemPath = "/xyz/openbmc_project/state/os";
-const constexpr char* OperatingSystemStatusInterface =
-    "xyz.openbmc_project.State.OperatingSystem.Status";
-const constexpr char* OperatingSystemStateProperty = "OperatingSystemState";
-const constexpr char* OperatingSystemStateStandby =
-    "xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Standby";
 const constexpr char* OperatingSystemStateInactive =
     "xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Inactive";
 const constexpr char* BareMetalActiveTargetTemplate =
@@ -50,9 +44,9 @@ void checkPostComplete(sdbusplus::asio::connection& bus,
                        const std::string& host_instance)
 {
     sdbusplus::asio::getProperty<std::string>(
-        bus, std::format(OperatingSystemService, host_instance),
-        OperatingSystemPath, OperatingSystemStatusInterface,
-        OperatingSystemStateProperty,
+        bus, std::format(DBUS_SERVICE_NAME, host_instance),
+        std::format(DBUS_OBJECT_PATH, host_instance), DBUS_INTERFACE,
+        DBUS_PROPERTY_NAME,
         [&, state, action](const boost::system::error_code& ec,
                            const std::string& postCompleteState) {
             if (ec)
@@ -65,9 +59,10 @@ void checkPostComplete(sdbusplus::asio::connection& bus,
                       postCompleteState);
 
             /*
-             * If state is Standby, enable the bare-metal-active systemd
-             * target.
-             * If state is Inactive, no-op cause IPMI is enabled by default.
+             * If the host OS is running (e.g. OperatingSystemState is Standby),
+             * enable the bare-metal-active systemd target.
+             * If the host CPU is in reset (e.g. OperatingSystemState is
+             * Inactive), no-op cause IPMI is enabled by default.
              */
             if (postCompleteState == state)
             {
@@ -80,14 +75,16 @@ void checkPostComplete(sdbusplus::asio::connection& bus,
 void checkPostCompleteStartup(sdbusplus::asio::connection& bus,
                               const std::string& host_instance)
 {
-    checkPostComplete(bus, OperatingSystemStateStandby, true, host_instance);
+    checkPostComplete(bus, DBUS_PROPERTY_HOST_RUNNING_VALUE, true,
+                      host_instance);
 }
 
 /* Gets called when a GPIO state change is detected. */
 void checkPostCompleteEvent(sdbusplus::asio::connection& bus,
                             const std::string& host_instance)
 {
-    checkPostComplete(bus, OperatingSystemStateInactive, false, host_instance);
+    checkPostComplete(bus, DBUS_PROPERTY_HOST_IN_RESET_VALUE, false,
+                      host_instance);
 }
 
 int main(int argc, char** argv)
@@ -113,7 +110,7 @@ int main(int argc, char** argv)
             std::format(
                 "type='signal',member='PropertiesChanged',path_namespace='"
                 "/xyz/openbmc_project/state/os',arg0namespace='{}'",
-                OperatingSystemStatusInterface),
+                DBUS_INTERFACE),
             [&](sdbusplus::message_t& message) {
                 if (message.is_method_error())
                 {
