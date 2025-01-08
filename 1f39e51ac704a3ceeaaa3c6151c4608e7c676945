@@ -16,6 +16,24 @@
       "message": "We can actually just delete this file entirely. We don\u0027t use it in the image anymore. We should look and see what scripts are actually left because I think we are at the point now where a large number of them can be dropped from this repo.",
       "revId": "1f39e51ac704a3ceeaaa3c6151c4608e7c676945",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee24a6b1_616e231d",
+        "filename": "subprojects/ncsid/src/update-ra-gw@.service.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2025-01-08T17:38:49Z",
+      "side": 1,
+      "message": "ack. Agreed, another effort will start to clean up this repo and organize things accordingly, we need this to start testing eliminating phosphor-networkd and will have another commit for cleanup.",
+      "parentUuid": "9c4f2ea3_429f5fe5",
+      "revId": "1f39e51ac704a3ceeaaa3c6151c4608e7c676945",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
