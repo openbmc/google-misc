@@ -47,4 +47,5 @@ if not meson.is_subproject()
     subproject('libcr51sign')
     subproject('dhcp-done')
     subproject('espi-control')
+    subproject('bare-metal-host-monitor')
 endif
