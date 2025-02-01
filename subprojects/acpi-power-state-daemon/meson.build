@@ -13,14 +13,10 @@
 # limitations under the License.
 
 project(
-  'acpi_power_stated',
-  'cpp',
-  version: '0.1',
-  default_options: [
-    'warning_level=3',
-    'werror=true',
-    'cpp_std=c++23',
-  ],
+    'acpi_power_stated',
+    'cpp',
+    version: '0.1',
+    default_options: ['warning_level=3', 'werror=true', 'cpp_std=c++23'],
 )
 
 headers = include_directories('.')
@@ -30,33 +26,37 @@ libsystemd = dependency('libsystemd')
 systemunitdir = systemd.get_variable('systemdsystemunitdir')
 
 deps = [
-  libsystemd,
-  dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
-  dependency(
-    'phosphor-dbus-interfaces',
-    fallback: ['phosphor-dbus-interfaces', 'phosphor_dbus_interfaces_dep']),
+    libsystemd,
+    dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
+    dependency(
+        'phosphor-dbus-interfaces',
+        fallback: ['phosphor-dbus-interfaces', 'phosphor_dbus_interfaces_dep'],
+    ),
 ]
 
 bindir = get_option('prefix') / get_option('bindir')
 
 executable(
-  'acpi_power_stated',
-  'acpi_power_state.cpp',
-  include_directories: headers,
-  implicit_include_directories: false,
-  dependencies: deps,
-  install: true,
-  install_dir: bindir)
+    'acpi_power_stated',
+    'acpi_power_state.cpp',
+    include_directories: headers,
+    implicit_include_directories: false,
+    dependencies: deps,
+    install: true,
+    install_dir: bindir,
+)
 
 configure_file(
-  configuration: {'BIN': bindir / 'acpi_power_stated'},
-  input: 'acpi-power-state.service.in',
-  output: 'acpi-power-state.service',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
+    configuration: {'BIN': bindir / 'acpi_power_stated'},
+    input: 'acpi-power-state.service.in',
+    output: 'acpi-power-state.service',
+    install_mode: 'rw-r--r--',
+    install_dir: systemunitdir,
+)
 
 install_data(
-  'host-s0-state.target',
-  'host-s5-state.target',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
+    'host-s0-state.target',
+    'host-s5-state.target',
+    install_mode: 'rw-r--r--',
+    install_dir: systemunitdir,
+)

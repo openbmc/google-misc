@@ -15,6 +15,7 @@
 libcr51sign_includes = include_directories('.')
 
 install_subdir(
-  'libcr51sign',
-  install_dir: get_option('includedir'),
-  strip_directory: false)
+    'libcr51sign',
+    install_dir: get_option('includedir'),
+    strip_directory: false,
+)

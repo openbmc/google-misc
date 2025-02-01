@@ -13,22 +13,23 @@
 # limitations under the License.
 
 project(
-  'gbmc-ncsid',
-  ['cpp', 'c'],
-  version: '0.1',
-  meson_version: '>=1.1.1',
-  default_options: [
-    'warning_level=3',
-    'werror=true',
-    'cpp_std=c++23',
-    'c_std=c18',
-    'tests=' + (meson.is_subproject() ? 'disabled' : 'auto'),
-  ])
+    'gbmc-ncsid',
+    ['cpp', 'c'],
+    version: '0.1',
+    meson_version: '>=1.1.1',
+    default_options: [
+        'warning_level=3',
+        'werror=true',
+        'cpp_std=c++23',
+        'c_std=c18',
+        'tests=' + (meson.is_subproject() ? 'disabled' : 'auto'),
+    ],
+)
 
 subdir('src')
 
 build_tests = get_option('tests')
 
 if build_tests.allowed()
-  subdir('test')
+    subdir('test')
 endif

@@ -13,15 +13,12 @@
 # limitations under the License.
 
 project(
-  'libcr51sign',
-  'c',
-  version: '0.1',
-  meson_version: '>=1.1.1',
-  default_options: [
-    'warning_level=3',
-    'werror=true',
-    'c_std=c18',
-  ])
+    'libcr51sign',
+    'c',
+    version: '0.1',
+    meson_version: '>=1.1.1',
+    default_options: ['warning_level=3', 'werror=true', 'c_std=c18'],
+)
 
 subdir('include')
 subdir('src')

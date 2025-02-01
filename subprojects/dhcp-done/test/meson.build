@@ -14,26 +14,31 @@
 #
 gtest = dependency('gtest', main: true, disabler: true, required: false)
 if not gtest.found()
-  gtest_proj = import('cmake').subproject(
-    'googletest',
-    cmake_options: [
-      '-DCMAKE_CXX_FLAGS=-Wno-pedantic',
-    ],
-    required: false)
-  if gtest_proj.found()
-    gtest = declare_dependency(
-      dependencies: [
-        dependency('threads'),
-        gtest_proj.dependency('gtest'),
-        gtest_proj.dependency('gtest_main'),
-      ])
-  else
-    assert(not build_tests.allowed(), 'Googletest is required')
-  endif
+    gtest_proj = import('cmake').subproject(
+        'googletest',
+        cmake_options: ['-DCMAKE_CXX_FLAGS=-Wno-pedantic'],
+        required: false,
+    )
+    if gtest_proj.found()
+        gtest = declare_dependency(
+            dependencies: [
+                dependency('threads'),
+                gtest_proj.dependency('gtest'),
+                gtest_proj.dependency('gtest_main'),
+            ],
+        )
+    else
+        assert(not build_tests.allowed(), 'Googletest is required')
+    endif
 endif
 
-test('fileio_test', executable('fileio_test',
-  ['fileio_test.cpp'],
-  implicit_include_directories: false,
-  dependencies: [gtest, dependency('stdplus')],
-  link_with : fileio_lib))
+test(
+    'fileio_test',
+    executable(
+        'fileio_test',
+        ['fileio_test.cpp'],
+        implicit_include_directories: false,
+        dependencies: [gtest, dependency('stdplus')],
+        link_with: fileio_lib,
+    ),
+)

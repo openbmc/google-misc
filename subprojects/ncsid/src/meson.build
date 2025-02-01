@@ -15,50 +15,55 @@
 ncsid_headers = include_directories('.')
 
 ncsid_deps = [
-  dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
-  dependency('stdplus', fallback: ['stdplus', 'stdplus_dep']),
+    dependency('sdbusplus', fallback: ['sdbusplus', 'sdbusplus_dep']),
+    dependency('stdplus', fallback: ['stdplus', 'stdplus_dep']),
 ]
 
 ncsid_lib = static_library(
-  'ncsid',
-  [
-    'net_config.cpp',
-    'net_iface.cpp',
-    'net_sockio.cpp',
-    'ncsi_sockio.cpp',
-    'ncsi_state_machine.cpp',
-    'platforms/nemora/portable/ncsi_fsm.c',
-    'platforms/nemora/portable/ncsi_client.c',
-    'platforms/nemora/portable/ncsi_server.c',
-  ],
-  include_directories: ncsid_headers,
-  implicit_include_directories: false,
-  dependencies: ncsid_deps)
+    'ncsid',
+    [
+        'net_config.cpp',
+        'net_iface.cpp',
+        'net_sockio.cpp',
+        'ncsi_sockio.cpp',
+        'ncsi_state_machine.cpp',
+        'platforms/nemora/portable/ncsi_fsm.c',
+        'platforms/nemora/portable/ncsi_client.c',
+        'platforms/nemora/portable/ncsi_server.c',
+    ],
+    include_directories: ncsid_headers,
+    implicit_include_directories: false,
+    dependencies: ncsid_deps,
+)
 
 ncsid = declare_dependency(
-  dependencies: ncsid_deps,
-  include_directories: ncsid_headers,
-  link_with: ncsid_lib)
+    dependencies: ncsid_deps,
+    include_directories: ncsid_headers,
+    link_with: ncsid_lib,
+)
 
 executable(
-  'ncsid',
-  'ncsid.cpp',
-  implicit_include_directories: false,
-  dependencies: ncsid,
-  install: true,
-  install_dir: get_option('libexecdir'))
+    'ncsid',
+    'ncsid.cpp',
+    implicit_include_directories: false,
+    dependencies: ncsid,
+    install: true,
+    install_dir: get_option('libexecdir'),
+)
 
 normalize_ip = executable(
-  'normalize_ip',
-  'normalize_ip.c',
-  implicit_include_directories: false,
-  install: true)
+    'normalize_ip',
+    'normalize_ip.c',
+    implicit_include_directories: false,
+    install: true,
+)
 
 normalize_mac = executable(
-  'normalize_mac',
-  'normalize_mac.c',
-  implicit_include_directories: false,
-  install: true)
+    'normalize_mac',
+    'normalize_mac.c',
+    implicit_include_directories: false,
+    install: true,
+)
 
 systemd = dependency('systemd')
 systemunitdir = systemd.get_variable('systemdsystemunitdir')
@@ -66,14 +71,16 @@ systemunitdir = systemd.get_variable('systemdsystemunitdir')
 libexecdir = get_option('prefix') / get_option('libexecdir')
 
 configure_file(
-  configuration: {'BIN': libexecdir / 'ncsid'},
-  input: 'ncsid@.service.in',
-  output: 'ncsid@.service',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
+    configuration: {'BIN': libexecdir / 'ncsid'},
+    input: 'ncsid@.service.in',
+    output: 'ncsid@.service',
+    install_mode: 'rw-r--r--',
+    install_dir: systemunitdir,
+)
 
 install_data(
-  'nic-hostful@.target',
-  'nic-hostless@.target',
-  install_mode: 'rw-r--r--',
-  install_dir: systemunitdir)
+    'nic-hostful@.target',
+    'nic-hostless@.target',
+    install_mode: 'rw-r--r--',
+    install_dir: systemunitdir,
+)
