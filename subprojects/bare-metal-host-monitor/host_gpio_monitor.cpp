@@ -13,6 +13,7 @@
 #include <sdbusplus/bus/match.hpp>
 
 #include <format>
+#include <systemd/sd-daemon.h>
 
 ABSL_FLAG(std::string, host_label, "0",
           "Label for the host in question. Usually this is an integer.");
@@ -100,6 +101,10 @@ int main(int argc, char** argv)
 
         /* check IPMI status at startup */
         checkPostCompleteStartup(conn, host_label);
+
+        /* Notify that the service is done starting up. */
+        sd_notify(0, "READY=1");
+
         /*
          * Set up an event handler to process Post Complete GPIO state changes.
          */
