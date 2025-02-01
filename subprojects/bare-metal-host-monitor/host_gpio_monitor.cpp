@@ -4,6 +4,8 @@
 
 #include "host_gpio_monitor_conf.hpp"
 
+#include <systemd/sd-daemon.h>
+
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/steady_timer.hpp>
 #include <phosphor-logging/lg2.hpp>
@@ -100,6 +102,10 @@ int main(int argc, char** argv)
 
         /* check IPMI status at startup */
         checkPostCompleteStartup(conn, host_label);
+
+        /* Notify that the service is done starting up. */
+        sd_notify(0, "READY=1");
+
         /*
          * Set up an event handler to process Post Complete GPIO state changes.
          */
