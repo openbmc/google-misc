@@ -5,6 +5,7 @@ After=phosphor-ipmi-host.service
 After=xyz.openbmc_project.Chassis.Control.Power@%i.service
 
 [Service]
+Type=notify
 Restart=always
 ExecStart=@@BIN@ host_gpio_monitor --host_label %i
 
