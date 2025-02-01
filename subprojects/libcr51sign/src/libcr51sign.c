@@ -478,8 +478,8 @@ static failure_reason validate_payload_regions_helper(
 // Check if the given signature_scheme is supported.
 // Returns nonzero on error, zero on success
 
-static failure_reason
-    is_signature_scheme_supported(enum signature_scheme scheme)
+static failure_reason is_signature_scheme_supported(
+    enum signature_scheme scheme)
 {
     switch (scheme)
     {
@@ -496,8 +496,8 @@ static failure_reason
 // Returns size of signature struct size in |size|
 // Returns nonzero on error, zero on success
 
-static failure_reason
-    get_signature_struct_size(enum signature_scheme scheme, uint32_t* size)
+static failure_reason get_signature_struct_size(enum signature_scheme scheme,
+                                                uint32_t* size)
 {
     switch (scheme)
     {
@@ -516,8 +516,8 @@ static failure_reason
     }
 }
 
-static failure_reason
-    get_signature_field_offset(enum signature_scheme scheme, uint32_t* offset)
+static failure_reason get_signature_field_offset(enum signature_scheme scheme,
+                                                 uint32_t* offset)
 {
     switch (scheme)
     {

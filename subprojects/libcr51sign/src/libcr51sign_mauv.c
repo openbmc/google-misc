@@ -40,10 +40,10 @@ struct full_mauv
 //                                 payload's image descriptor
 //
 // @return `failure_reason`
-static failure_reason
-    verify_payload_blob_magic(const struct libcr51sign_ctx* const ctx,
-                              const struct libcr51sign_intf* const intf,
-                              const uint32_t payload_blob_offset)
+static failure_reason verify_payload_blob_magic(
+    const struct libcr51sign_ctx* const ctx,
+    const struct libcr51sign_intf* const intf,
+    const uint32_t payload_blob_offset)
 {
     int irv = 0;
     struct blob payload_blob = {0};
