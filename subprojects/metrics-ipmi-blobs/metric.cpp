@@ -350,8 +350,8 @@ static bmcmetrics_metricproto_BmcMemoryMetric getMemMetric() noexcept
     return ret;
 }
 
-static bmcmetrics_metricproto_BmcUptimeMetric
-    getUptimeMetric(bool& use) noexcept
+static bmcmetrics_metricproto_BmcUptimeMetric getUptimeMetric(
+    bool& use) noexcept
 {
     bmcmetrics_metricproto_BmcUptimeMetric ret = {};
 
@@ -405,8 +405,8 @@ static bmcmetrics_metricproto_BmcUptimeMetric
     return ret;
 }
 
-static bmcmetrics_metricproto_BmcDiskSpaceMetric
-    getStorageMetric(bool& use) noexcept
+static bmcmetrics_metricproto_BmcDiskSpaceMetric getStorageMetric(
+    bool& use) noexcept
 {
     bmcmetrics_metricproto_BmcDiskSpaceMetric ret = {};
     struct statvfs rwFiData, tmpFiData;
