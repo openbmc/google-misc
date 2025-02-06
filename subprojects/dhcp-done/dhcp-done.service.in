@@ -3,6 +3,7 @@ Description=gBMC DHCP Status Daemon
 
 [Service]
 Restart=on-failure
+ExecStartPre=update-dhcp-status 'ONGOING' 'Waiting on dhcp process'
 ExecStart=@@BIN@ dhcp-done
 
 [Install]
