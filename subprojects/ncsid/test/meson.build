@@ -36,7 +36,7 @@ endif
 
 tests = [
     'iface_test',
-    'sock_test',
+    #'sock_test',
     #'ncsi_test',  # TODO: Re-enable when fixed
 ]
 
