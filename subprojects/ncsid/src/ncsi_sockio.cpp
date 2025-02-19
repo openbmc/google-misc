@@ -39,7 +39,13 @@ int SockIO::init()
 
 int SockIO::bind_to_iface(const net::IFaceBase& iface)
 {
-    iface.set_sock_flags(sockfd_, IFF_PROMISC);
+    struct packet_mreq mreq = {};
+    RETURN_IF_ERROR(mreq.mr_ifindex = iface.get_index(),
+                    "ncsi::SockIO::bind_to_iface get_index");
+    mreq.mr_type = PACKET_MR_PROMISC;
+    RETURN_IF_ERROR(setsockopt(sockfd_, SOL_PACKET, PACKET_ADD_MEMBERSHIP,
+                               &mreq, sizeof(mreq)),
+                    "ncsi::SockIO::bind_to_iface setsockopt failed");
 
     RETURN_IF_ERROR(iface.bind_sock(sockfd_),
                     "ncsi::SockIO::bind_to_iface failed");
