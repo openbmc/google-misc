@@ -69,6 +69,30 @@
       },
       "revId": "7c15db6f4dcd1da68967ca2a463ef890d4521f56",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d0cd815_bad243cd",
+        "filename": "subprojects/ncsid/test/meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000188
+      },
+      "writtenOn": "2025-02-20T20:22:36Z",
+      "side": 1,
+      "message": "Honestly it\u0027s not really worth updating, the test just checks to see if it sets the flags on the interface. It would have been better to test this at integration time with the system than as a unit test.",
+      "parentUuid": "2066589c_c9276485",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "7c15db6f4dcd1da68967ca2a463ef890d4521f56",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
