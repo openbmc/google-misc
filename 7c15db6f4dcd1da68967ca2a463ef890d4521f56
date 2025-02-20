@@ -46,6 +46,29 @@
       },
       "revId": "7c15db6f4dcd1da68967ca2a463ef890d4521f56",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2066589c_c9276485",
+        "filename": "subprojects/ncsid/test/meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2025-02-20T18:04:27Z",
+      "side": 1,
+      "message": "I guess this needs to be updated in the future as well?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "7c15db6f4dcd1da68967ca2a463ef890d4521f56",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
