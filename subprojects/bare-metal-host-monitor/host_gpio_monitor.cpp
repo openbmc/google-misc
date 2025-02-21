@@ -130,7 +130,7 @@ int main(int argc, char** argv)
                  * to handle them all at once. So, we will wait this long for no
                  * more events to occur, before processing them.
                  */
-                filterTimer.expires_from_now(std::chrono::seconds(1));
+                filterTimer.expires_from_now(std::chrono::milliseconds(100));
 
                 filterTimer.async_wait(
                     [&](const boost::system::error_code& ec) {
