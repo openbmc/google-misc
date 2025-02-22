@@ -2,6 +2,7 @@
 Description=gBMC bare-metal GPIO  monitoring for host %i
 ConditionPathExists=/var/google/config-package/enable-bm.flag
 After=phosphor-ipmi-host.service
+After=xyz.openbmc_project.Chassis.Control.Power@%i.service
 
 [Service]
 Restart=always
