@@ -22,6 +22,30 @@
       },
       "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6b77931_97993b50",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2025-03-07T22:45:14Z",
+      "side": 1,
+      "message": "We could do that, reason I wanted to do that is because I intentionally wanted structured messages to appear as `gbmc_netboot` so we can easily filter it for later on analysis on cloud, if it doesn\u0027t have a tag and just tied with \"udhcpc6\" we\u0027ll have to figure out some sort of filtering and will slow down database analysis on scale. What do you think?\n\nMy only concern about adding filtering mechanism on backend instead of here where clear tag enables us to extract messages is scalability.",
+      "parentUuid": "fe7233fb_9ce85d98",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
