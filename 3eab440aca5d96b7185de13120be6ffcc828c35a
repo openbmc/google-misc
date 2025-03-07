@@ -46,6 +46,30 @@
       },
       "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f1cddfb_986a4471",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2025-03-07T23:14:43Z",
+      "side": 1,
+      "message": "If you are talking about the identifier of the journal, and want to keep some logs in udhcpc6 as it is, and the formatted log as a different identifier like \"gbmc-netboot\", you can just do ```systemd-cat -t gbmc-netboot echo $formatted_log_msg ```",
+      "parentUuid": "f6b77931_97993b50",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
