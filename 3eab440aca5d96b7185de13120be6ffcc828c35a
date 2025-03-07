@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe7233fb_9ce85d98",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2025-03-07T22:05:53Z",
+      "side": 1,
+      "message": "Looks like the whole purpose of this separate usage is to log this formatted message into the syslog? If that is the case then I suggest:\n1. in the gbmc-br-dhcp script have a function, take \"State\" \"Time\" \"Message\" \"Code\" \"Retries\" as input, output is a string e.g. \"formatted_log_msg\"\n2. Just call \"update-dhcp-status \u0027ONGOING\u0027 formatted_log_msg\", and output it into syslog just with echo.\n\nThis way we don\u0027t have to change this file at all, avoiding having two weird usage, and also we can avoid a different syslog entry name \"gbmc_netboot\" other than \"udhcpc6\", easy for us to corelated with the original log/error message in the process.\n\nLet me know if this simplify things a bit.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
