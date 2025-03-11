@@ -70,6 +70,30 @@
       },
       "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "402f26c3_210ea3ea",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2025-03-11T15:56:07Z",
+      "side": 1,
+      "message": "I thought more about it, we could do it that way. However, the main reason of writing the message in this code file is not just syslog (I misread the first comment). \n\nThe main usage of this function comes in two folds:\n- writing structured message to rsyslog\n- writing structured message to statusFile\n\nI had originally made a new file (update-install-status) but per your recommendation was to combine the two since inherently it\u0027s the same function and it makes sense that way. \n\nI can also have both operations done in bash if you\u0027d prefer that and we can deprecate this completely once we move to the new workflow, I just thought this is nicely done and adding the extension to it of supporting syslog and structured data along with its function. Let me know what you\u0027d rather and I can adjust the code. :)",
+      "parentUuid": "0f1cddfb_986a4471",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
