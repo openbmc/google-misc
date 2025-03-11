@@ -94,6 +94,30 @@
       },
       "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fdef1c2_4e0f6085",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2025-03-11T18:09:59Z",
+      "side": 1,
+      "message": "Right functional-wise this looks good. I am just suggesting keeping this util simple and not having multiple usage.\n\nBy doing that you can either keep the original usage, update_dhcp_status \u003cstate\u003e \u003cmessage\u003e, and format the message in bash, or you can completely remove the original usage, and change every logging point in the firmware to your new usage: \"update_dhcp_status \u003cState\u003e \u003cTime\u003e \u003cMessage\u003e \u003cCode\u003e \u003cRetries\u003e\", I am fine with either way.",
+      "parentUuid": "402f26c3_210ea3ea",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
