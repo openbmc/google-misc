@@ -118,6 +118,30 @@
       },
       "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06c7e2a5_b77e46cb",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002184
+      },
+      "writtenOn": "2025-03-13T11:50:09Z",
+      "side": 1,
+      "message": "I tried creating a binary update_dhcp_status, it was kind of odd to see update_dhcp_status in the script sometimes and then (v1) calling update-dhcp-status, I\u0027d rather have it all in one place. There\u0027s also some potential racing condition when multiple scripts calling this going out of order. I did some stress tests and it went our of order (unless I make it hold for bash script execution based on return value). \n\nIf you\u0027re truly fine either way, let\u0027s keep it this way as it has been stress-tested and has been reliable across weeks of testing.",
+      "parentUuid": "6fdef1c2_4e0f6085",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
