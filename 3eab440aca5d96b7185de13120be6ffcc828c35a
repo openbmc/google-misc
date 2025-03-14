@@ -142,6 +142,30 @@
       },
       "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85a85040_12285fca",
+        "filename": "subprojects/dhcp-done/update-dhcp-status.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001693
+      },
+      "writtenOn": "2025-03-14T17:12:08Z",
+      "side": 1,
+      "message": "oh I never meant to create 2 binaries (sry if there is ambigious about \"_\" and \"-\"). I just mean change the usage to \"update-dhcp-status \u003cstatus code\u003e \u003cState\u003e \u003cTime\u003e \u003cMessage\u003e \u003cCode\u003e \u003cRetries\u003e\", and change all existing log point to this as well.",
+      "parentUuid": "06c7e2a5_b77e46cb",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "3eab440aca5d96b7185de13120be6ffcc828c35a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
