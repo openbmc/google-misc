@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "182a41dc_763b48fa",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2025-03-17T23:14:55Z",
+      "side": 1,
+      "message": "nit: Hmmm, this seems somewhat arbitrary, is there a way we can tune it - what if this isn\u0027t a short enough / too long and what happens if we miss it?",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "3aed6961e67d9e336cc6c9e5236fbb14bbcbb2cb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
