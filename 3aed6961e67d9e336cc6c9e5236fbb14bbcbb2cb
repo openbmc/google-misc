@@ -22,6 +22,30 @@
       },
       "revId": "3aed6961e67d9e336cc6c9e5236fbb14bbcbb2cb",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6287b526_b7c40311",
+        "filename": "subprojects/bare-metal-host-monitor/host_gpio_monitor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001202
+      },
+      "writtenOn": "2025-03-18T19:37:08Z",
+      "side": 1,
+      "message": "If it\u0027s too short, that will just result in some unnecessary dbus traffic, where we query the property more often than necessary. Probably not a big deal, since there\u0027s only a few dbus properties that trigger this matcher.\n\nIf it\u0027s too long, that would cause us to miss the CPU reset event, and we wouldn\u0027t re-enable the connection with the host. It would be bad, but any problems like that should become obvious in our bare metal testing. So far, from my testing, this seems to work fine. I guess the good news is that it would fail closed, rather than leaving the connection open when it shouldn\u0027t.\n\nLet me know if you want anything changed here.",
+      "parentUuid": "182a41dc_763b48fa",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "3aed6961e67d9e336cc6c9e5236fbb14bbcbb2cb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
