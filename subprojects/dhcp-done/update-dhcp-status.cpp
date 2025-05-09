@@ -9,7 +9,7 @@ static void printUsage()
 {
     stdplus::println(stderr, "Usage: update_dhcp_status <state> <message>");
     stdplus::println(stderr,
-                     "<state> is one of 'DONE', 'POWERCYCLE' or 'ONGOING'");
+                     "<state> is one of 'DONE', 'POWERCYCLE', 'REBOOT' or 'ONGOING'");
 }
 
 static int genStatusCode(char* state)
@@ -25,6 +25,10 @@ static int genStatusCode(char* state)
     else if (std::strcmp(state, "ONGOING") == 0)
     {
         return 2;
+    }
+    else if (std::strcmp(state, "REBOOT") == 0)
+    {
+        return 3;
     }
 
     return -1;
