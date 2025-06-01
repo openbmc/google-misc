@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#include "stddef.h"
-
 #include <assert.h>
 #include <libcr51sign/cr51_image_descriptor.h>
 #include <libcr51sign/libcr51sign.h>
 #include <libcr51sign/libcr51sign_internal.h>
 #include <libcr51sign/libcr51sign_mauv.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,7 +47,7 @@ extern "C"
 #define ARRAY_SIZE(t) (sizeof(t) / sizeof(t[0]))
 #endif
 
-// Values of SIGNATURE_OFFSET shuold be same for all sig types (2048,3072,4096)
+// Values of SIGNATURE_OFFSET should be same for all sig types (2048,3072,4096)
 #define SIGNATURE_OFFSET offsetof(struct signature_rsa3072_pkcs15, modulus)
 
 #ifndef BUILD_ASSERT
@@ -180,15 +178,15 @@ static failure_reason validate_transition(const struct libcr51sign_ctx* ctx,
     {
         read_len = SIGNATURE_OFFSET
     };
-    uint8_t buffer[read_len];
+    uint32_t buffer[read_len / sizeof(uint32_t)];
     int rv;
-    rv = intf->read(ctx, signature_struct_offset, read_len, buffer);
+    rv = intf->read(ctx, signature_struct_offset, read_len, (uint8_t*)buffer);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
         CPRINTS(ctx, "%s: failed to read signature struct\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
-    if (*(uint32_t*)buffer != SIGNATURE_MAGIC)
+    if (*buffer != SIGNATURE_MAGIC)
     {
         CPRINTS(ctx, "%s: bad signature magic\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR;
@@ -232,7 +230,7 @@ static failure_reason read_and_hash_update(const struct libcr51sign_ctx* ctx,
 {
     uint8_t read_buffer[MAX_READ_SIZE];
     int rv;
-    int read_size;
+    uint32_t read_size;
 
     if (intf->read_and_hash_update)
     {
@@ -276,13 +274,13 @@ static failure_reason validate_payload_regions(
     const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
     uint32_t d_offset, struct libcr51sign_validated_regions* image_regions)
 {
-    // Allocate buffer to accomodate largest supported hash-type(SHA512)
+    // Allocate buffer to accommodate largest supported hash-type(SHA512)
     uint8_t magic_and_digest[MEMBER_SIZE(struct hash_sha512, hash_magic) +
                              LIBCR51SIGN_SHA512_DIGEST_SIZE];
     uint8_t dcrypto_digest[LIBCR51SIGN_SHA512_DIGEST_SIZE];
     uint32_t byte_count, region_count, image_size, hash_offset, digest_size;
     uint32_t i;
-    uint8_t d_region_num = 0;
+    uint32_t d_region_num = 0;
     int rv;
     struct image_region const* region;
 
@@ -438,7 +436,7 @@ static failure_reason validate_payload_regions(
     }
 
     if (memcmp(magic_and_digest + MEMBER_SIZE(struct hash_sha256, hash_magic),
-               dcrypto_digest, digest_size))
+               dcrypto_digest, digest_size) != 0)
     {
         CPRINTS(ctx, "%s: invalid hash\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_HASH;
@@ -536,6 +534,118 @@ static failure_reason get_signature_field_offset(enum signature_scheme scheme,
     }
 }
 
+__attribute__((nonnull)) static bool is_key_in_signature_struct_trusted(
+    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    enum signature_scheme scheme, uint32_t raw_signature_offset,
+    void* signature_struct, uint32_t* signature_struct_size)
+{
+    if (!intf->trust_key_in_signature_structure)
+    {
+        CPRINTS(ctx, "%s: trust_key_in_signature_structure is not supported\n",
+                __FUNCTION__);
+        return false;
+    }
+
+    uint32_t signature_field_offset;
+    int rv = get_signature_field_offset(scheme, &signature_field_offset);
+    if (rv != LIBCR51SIGN_SUCCESS)
+    {
+        return false;
+    }
+
+    if (signature_field_offset > raw_signature_offset)
+    {
+        CPRINTS(ctx,
+                "%s: signature_field_offset (%d) is larger than "
+                "raw_signature_offset (%d)\n",
+                __FUNCTION__, signature_field_offset, raw_signature_offset);
+        return false;
+    }
+    uint32_t signature_offset = raw_signature_offset - signature_field_offset;
+
+    rv = get_signature_struct_size(scheme, signature_struct_size);
+    if (rv != LIBCR51SIGN_SUCCESS)
+    {
+        return false;
+    }
+
+    rv = intf->read(ctx, signature_offset, *signature_struct_size,
+                    signature_struct);
+    if (rv != LIBCR51SIGN_SUCCESS)
+    {
+        CPRINTS(ctx, "%s: failed to read signature (status = %d)\n",
+                __FUNCTION__, rv);
+        return false;
+    }
+
+    return intf->trust_key_in_signature_structure(ctx, scheme, signature_struct,
+                                                  *signature_struct_size);
+}
+// Validates the signature with verification key provided along with the
+// signature if the key is trusted.
+
+static bool validate_signature_with_key_in_signature_struct(
+    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    enum signature_scheme scheme, uint32_t raw_signature_offset,
+    const uint8_t* digest, uint32_t digest_size)
+{
+    // pick the biggest signature struct size.
+    uint8_t signature_struct[sizeof(struct signature_rsa4096_pkcs15)];
+    uint32_t signature_struct_size = sizeof(signature_struct);
+    if (!is_key_in_signature_struct_trusted(
+            ctx, intf, scheme, raw_signature_offset, &signature_struct,
+            &signature_struct_size))
+    {
+        CPRINTS(ctx, "%s: key in signature struct is not trusted\n",
+                __FUNCTION__);
+        return false;
+    }
+    if (!intf->verify_rsa_signature_with_modulus_and_exponent)
+    {
+        CPRINTS(
+            ctx,
+            "%s: verify_rsa_signature_with_modulus_and_exponent is not supported\n",
+            __FUNCTION__);
+        return false;
+    }
+
+    switch (scheme)
+    {
+        case SIGNATURE_RSA2048_PKCS15:
+        {
+            struct signature_rsa2048_pkcs15* sig =
+                (struct signature_rsa2048_pkcs15*)signature_struct;
+            return intf->verify_rsa_signature_with_modulus_and_exponent(
+                ctx, scheme, sig->modulus, sizeof(sig->modulus), sig->exponent,
+                sig->signature, sizeof(sig->signature), digest, digest_size);
+        }
+        break;
+        case SIGNATURE_RSA3072_PKCS15:
+        {
+            struct signature_rsa3072_pkcs15* sig =
+                (struct signature_rsa3072_pkcs15*)signature_struct;
+            return intf->verify_rsa_signature_with_modulus_and_exponent(
+                ctx, scheme, sig->modulus, sizeof(sig->modulus), sig->exponent,
+                sig->signature, sizeof(sig->signature), digest, digest_size);
+        }
+        break;
+        case SIGNATURE_RSA4096_PKCS15:
+        case SIGNATURE_RSA4096_PKCS15_SHA512:
+        {
+            struct signature_rsa4096_pkcs15* sig =
+                (struct signature_rsa4096_pkcs15*)signature_struct;
+            return intf->verify_rsa_signature_with_modulus_and_exponent(
+                ctx, scheme, sig->modulus, sizeof(sig->modulus), sig->exponent,
+                sig->signature, sizeof(sig->signature), digest, digest_size);
+        }
+        break;
+        default:
+            CPRINTS(ctx, "%s: unsupported signature scheme %d\n", __FUNCTION__,
+                    scheme);
+            return false;
+    }
+}
+
 // Validates the signature (of type scheme) read from "device" at
 //"raw_signature_offset" with "public_key" over a SHA256/SHA512 digest of
 // EEPROM area "data_offset:data_size".
@@ -586,6 +696,22 @@ static failure_reason validate_signature(
         CPRINTS(ctx, "%s: hash_final failed (status = %d)\n", __FUNCTION__, rv);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
+
+    rv = get_hash_digest_size(hash_type, &digest_size);
+    if (rv != LIBCR51SIGN_SUCCESS)
+    {
+        return rv;
+    }
+
+    if (intf->trust_descriptor_hash)
+    {
+        if (intf->trust_descriptor_hash(ctx, dcrypto_digest, digest_size))
+        {
+            CPRINTS(ctx, "%s: descriptor hash trusted\n", __FUNCTION__);
+            return LIBCR51SIGN_SUCCESS;
+        }
+    }
+
     rv = get_key_size(scheme, &key_size);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
@@ -599,16 +725,22 @@ static failure_reason validate_signature(
                 __FUNCTION__, rv);
         return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
     }
+
+    if (validate_signature_with_key_in_signature_struct(
+            ctx, intf, scheme, raw_signature_offset, dcrypto_digest,
+            digest_size))
+    {
+        CPRINTS(ctx, "%s: verification with external key succeeded\n",
+                __FUNCTION__);
+        return LIBCR51SIGN_SUCCESS;
+    }
+
     if (!intf->verify_signature)
     {
         CPRINTS(ctx, "%s: missing verify_signature\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
-    rv = get_hash_digest_size(hash_type, &digest_size);
-    if (rv != LIBCR51SIGN_SUCCESS)
-    {
-        return rv;
-    }
+
     rv = intf->verify_signature(ctx, scheme, signature, key_size,
                                 dcrypto_digest, digest_size);
     if (rv != LIBCR51SIGN_SUCCESS)
@@ -791,10 +923,10 @@ static failure_reason validate_descriptor(
 //@param header_offset   Location to place the new header offset.
 //@return LIBCR51SIGN_SUCCESS (or non-zero on error).
 
-int scan_for_magic_8(const struct libcr51sign_ctx* ctx,
-                     const struct libcr51sign_intf* intf, uint64_t magic,
-                     uint32_t start_offset, uint32_t limit, uint32_t alignment,
-                     uint32_t* header_offset)
+static int scan_for_magic_8(const struct libcr51sign_ctx* ctx,
+                            const struct libcr51sign_intf* intf, uint64_t magic,
+                            uint32_t start_offset, uint32_t limit,
+                            uint32_t alignment, uint32_t* header_offset)
 {
     uint64_t read_data;
     uint32_t offset;
@@ -846,12 +978,10 @@ int scan_for_magic_8(const struct libcr51sign_ctx* ctx,
 //                  and environment
 // @param[out] image_regions - image_region pointer to an array for the output
 //
-// TODO(aranika) return valid key
-//
 // @return nonzero on error, zero on success
 
 failure_reason libcr51sign_validate(
-    const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
     struct libcr51sign_validated_regions* image_regions)
 {
     int rv, rv_first_desc = LIBCR51SIGN_SUCCESS;
@@ -863,11 +993,13 @@ failure_reason libcr51sign_validate(
         CPRINTS(ctx, "%s: Missing context\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_CONTEXT;
     }
-    else if (!intf)
+    if (!intf)
     {
         CPRINTS(ctx, "%s: Missing interface\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
+
+    ctx->validation_state = LIBCR51SIGN_IMAGE_INVALID;
 
     rv = scan_for_magic_8(ctx, intf, DESCRIPTOR_MAGIC, ctx->start_offset,
                           ctx->end_offset, DESCRIPTOR_ALIGNMENT,
@@ -897,6 +1029,7 @@ failure_reason libcr51sign_validate(
             }
             else if (ctx->descriptor.image_type == IMAGE_PROD)
             {
+                ctx->validation_state = LIBCR51SIGN_IMAGE_VALID;
                 // Lookup and validate payload Image MAUV against Image MAUV
                 // stored in the system after checking signature to ensure
                 // offsets and sizes are not tampered with. Also, do this after
@@ -931,6 +1064,7 @@ failure_reason libcr51sign_validate(
             }
             else
             {
+                ctx->validation_state = LIBCR51SIGN_IMAGE_VALID;
                 return rv;
             }
         }
@@ -949,8 +1083,8 @@ failure_reason libcr51sign_validate(
     // If desc validation failed for some reason then return that reason
     if (rv_first_desc != LIBCR51SIGN_SUCCESS)
         return rv_first_desc;
-    else
-        return rv;
+
+    return rv;
 }
 
 // @func to returns the libcr51sign error code as a string
@@ -1014,6 +1148,8 @@ const char* libcr51sign_errorcode_to_string(failure_reason ec)
                    "Image MAUV is present in the system";
         case LIBCR51SIGN_NO_STORED_MAUV_FOUND:
             return "Client did not find any MAUV data stored in the system";
+        case LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR_BLOBS:
+            return "Invalid descriptor blobs";
         default:
             return "Unknown error";
     }
