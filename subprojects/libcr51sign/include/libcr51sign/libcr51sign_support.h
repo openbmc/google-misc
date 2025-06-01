@@ -19,6 +19,9 @@
 
 #include <libcr51sign/libcr51sign.h>
 #include <openssl/sha.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -77,6 +80,25 @@ int hash_final(void* ctx, uint8_t* hash);
 int verify_signature(const void* ctx, enum signature_scheme sig_scheme,
                      const uint8_t* sig, size_t sig_len, const uint8_t* data,
                      size_t data_len);
+
+// @func verify the rsa signature with provided modulus and exponent.
+//
+// @param[in] ctx - context struct
+// @param[in] scheme - type of signature, hash, etc.
+// @param[in] modulus - modulus of the RSA key
+// @param[in] modulus_len - length of modulus in bytes
+// @param[in] exponent - exponent of the RSA key
+// @param[in] sig - signature blob
+// @param[in] sig_len - length of signature in bytes
+// @param[in] digest - digest to verify
+// @param[in] digest_len - digest size
+//
+// @return true if verified, otherwise false.
+
+__attribute__((nonnull)) bool verify_rsa_signature_with_modulus_and_exponent(
+    const void* ctx, enum signature_scheme sig_scheme, const uint8_t* modulus,
+    int modulus_len, uint32_t exponent, const uint8_t* sig, int sig_len,
+    const uint8_t* digest, int digest_len);
 
 #ifdef __cplusplus
 } //  extern "C"
