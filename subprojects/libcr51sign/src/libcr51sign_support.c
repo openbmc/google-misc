@@ -15,10 +15,14 @@
  */
 
 #include <libcr51sign/libcr51sign_support.h>
+#include <openssl/bio.h>
+#include <openssl/bn.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
+#include <openssl/sha.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -43,12 +47,18 @@ int hash_init(const void* ctx, enum hash_type type)
     struct libcr51sign_ctx* context = (struct libcr51sign_ctx*)ctx;
     struct hash_ctx* hash_context = (struct hash_ctx*)context->priv;
     hash_context->hash_type = type;
-    if (type == HASH_SHA2_256) // SHA256_Init returns 1
+    if (type == HASH_SHA2_256)
+    { // SHA256_Init returns 1
         SHA256_Init(&hash_context->sha256_ctx);
+    }
     else if (type == HASH_SHA2_512)
+    {
         SHA512_Init(&hash_context->sha512_ctx);
+    }
     else
+    {
         return LIBCR51SIGN_ERROR_INVALID_HASH_TYPE;
+    }
 
     return LIBCR51SIGN_SUCCESS;
 }
@@ -68,12 +78,18 @@ int hash_update(void* ctx, const uint8_t* data, size_t size)
     struct libcr51sign_ctx* context = (struct libcr51sign_ctx*)ctx;
     struct hash_ctx* hash_context = (struct hash_ctx*)context->priv;
 
-    if (hash_context->hash_type == HASH_SHA2_256) // SHA256_Update returns 1
+    if (hash_context->hash_type == HASH_SHA2_256)
+    { // SHA256_Update returns 1
         SHA256_Update(&hash_context->sha256_ctx, data, size);
+    }
     else if (hash_context->hash_type == HASH_SHA2_512)
+    {
         SHA512_Update(&hash_context->sha512_ctx, data, size);
+    }
     else
+    {
         return LIBCR51SIGN_ERROR_INVALID_HASH_TYPE;
+    }
 
     return LIBCR51SIGN_SUCCESS;
 }
@@ -92,16 +108,24 @@ int hash_final(void* ctx, uint8_t* hash)
     struct hash_ctx* hash_context = (struct hash_ctx*)context->priv;
 
     if (hash_context->hash_type == HASH_SHA2_256)
+    {
         rv = SHA256_Final(hash, &hash_context->sha256_ctx);
+    }
     else if (hash_context->hash_type == HASH_SHA2_512)
+    {
         rv = SHA512_Final(hash, &hash_context->sha512_ctx);
+    }
     else
+    {
         return LIBCR51SIGN_ERROR_INVALID_HASH_TYPE;
+    }
 
     if (rv)
+    {
         return LIBCR51SIGN_SUCCESS;
-    else
-        return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
+    }
+
+    return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
 }
 
 // @func verify check that the signature is valid for given hashed data
@@ -228,6 +252,172 @@ clean_up:
     RSA_free(pub_rsa);
     BIO_free(bio);
     return rv;
+}
+
+// @func Verify RSA signature with modulus and exponent
+// @param[in]  ctx - context struct
+// @param[in]  sig_scheme - signature scheme
+// @param[in]  modulus - modulus of the RSA key, MSB (big-endian)
+// @param[in]  modulus_len - length of modulus in bytes
+// @param[in]  exponent - exponent of the RSA key
+// @param[in]  sig - signature blob
+// @param[in]  sig_len - length of signature in bytes
+// @param[in]  digest - digest to verify
+// @param[in]  digest_len - digest size
+//
+// @return true: if the signature is verified
+//         false: otherwise
+__attribute__((nonnull)) bool verify_rsa_signature_with_modulus_and_exponent(
+    const void* ctx, enum signature_scheme sig_scheme, const uint8_t* modulus,
+    int modulus_len, uint32_t exponent, const uint8_t* sig, int sig_len,
+    const uint8_t* digest, int digest_len)
+{
+    RSA* rsa = NULL;
+    BIGNUM* n = NULL;
+    BIGNUM* e = NULL;
+    int ret = 0;
+    int hash_nid = NID_undef;
+    int expected_modulus_bits = 0;
+    int expected_digest_len = 0;
+
+    CPRINTS(ctx, "%s: sig_scheme = %d\n", __FUNCTION__, sig_scheme);
+    // Determine hash NID and expected modulus size based on signature_scheme
+    switch (sig_scheme)
+    {
+        case SIGNATURE_RSA2048_PKCS15:
+            expected_modulus_bits = 2048;
+            hash_nid = NID_sha256;
+            expected_digest_len = SHA256_DIGEST_LENGTH;
+            break;
+        case SIGNATURE_RSA3072_PKCS15:
+            expected_modulus_bits = 3072;
+            hash_nid = NID_sha256;
+            expected_digest_len = SHA256_DIGEST_LENGTH;
+            break;
+        case SIGNATURE_RSA4096_PKCS15:
+            expected_modulus_bits = 4096;
+            hash_nid = NID_sha256;
+            expected_digest_len = SHA256_DIGEST_LENGTH;
+            break;
+        case SIGNATURE_RSA4096_PKCS15_SHA512:
+            expected_modulus_bits = 4096;
+            hash_nid = NID_sha512;
+            expected_digest_len = SHA512_DIGEST_LENGTH;
+            break;
+        default:
+            CPRINTS(ctx, "%s: Unsupported signature scheme.\n", __FUNCTION__);
+            return false;
+    }
+
+    // Input validation: Check digest length
+    if (digest_len != expected_digest_len)
+    {
+        CPRINTS(
+            ctx,
+            "%s: Mismatch in expected digest length (%d) and actual (%d).\n",
+            __FUNCTION__, expected_digest_len, digest_len);
+        return false;
+    }
+
+    // 1. Create a new RSA object
+    rsa = RSA_new();
+    if (rsa == NULL)
+    {
+        CPRINTS(ctx, "%s:Error creating RSA object: %s\n", __FUNCTION__,
+                ERR_error_string(ERR_get_error(), NULL));
+        goto err;
+    }
+
+    // 2. Convert raw modulus and exponent to BIGNUMs
+    n = BN_bin2bn(modulus, modulus_len, NULL);
+    if (n == NULL)
+    {
+        CPRINTS(ctx, "%s:Error converting modulus to BIGNUM: %s\n",
+                __FUNCTION__, ERR_error_string(ERR_get_error(), NULL));
+        goto err;
+    }
+
+    e = BN_new();
+    if (e == NULL)
+    {
+        CPRINTS(ctx, "%s: Error creating BIGNUM for exponent: %s\n",
+                __FUNCTION__, ERR_error_string(ERR_get_error(), NULL));
+        goto err;
+    }
+    if (!BN_set_word(e, exponent))
+    {
+        CPRINTS(ctx, "%s: Error setting exponent word: %s\n", __FUNCTION__,
+                ERR_error_string(ERR_get_error(), NULL));
+        goto err;
+    }
+
+    // Set the public key components. RSA_set0_key takes ownership of n and e.
+    if (!RSA_set0_key(rsa, n, e, NULL))
+    { // For public key, d is NULL
+        CPRINTS(ctx, "%s: Error setting RSA key components: %s\n", __FUNCTION__,
+                ERR_error_string(ERR_get_error(), NULL));
+        goto err;
+    }
+    n = NULL; // Clear pointers to prevent double-free
+    e = NULL;
+
+    if (RSA_bits(rsa) != expected_modulus_bits)
+    {
+        CPRINTS(
+            ctx,
+            "%s: Error: RSA key size (%d bits) does not match expected size for "
+            "scheme (%d bits).\n",
+            __FUNCTION__, RSA_bits(rsa), expected_modulus_bits);
+        goto err;
+    }
+
+    // Input validation: Signature length must match modulus length
+    if (sig_len != RSA_size(rsa))
+    {
+        CPRINTS(
+            ctx,
+            "%s: Error: Signature length (%d) does not match RSA key size (%d).\n",
+            __FUNCTION__, sig_len, RSA_size(rsa));
+        goto err;
+    }
+
+    // 3. Verify the signature
+    // RSA_verify handles the decryption, PKCS#1 v1.5 padding check, and hash
+    // comparison internally.
+    CPRINTS(ctx, "%s: RSA_verify\n", __FUNCTION__);
+    CPRINTS(ctx, "%s: hash_nid %d\n", __FUNCTION__, hash_nid);
+    CPRINTS(ctx, "%s: digest_len  %d, digest: \n", __FUNCTION__, digest_len);
+    for (int i = 0; i < digest_len; i++)
+    {
+        CPRINTS(ctx, "%x", digest[i]);
+    }
+    CPRINTS(ctx, "\n");
+
+    CPRINTS(ctx, "%s: sig_len %d, sig: \n", __FUNCTION__, sig_len);
+    for (int i = 0; i < sig_len; i++)
+    {
+        CPRINTS(ctx, "%x", sig[i]);
+    }
+    CPRINTS(ctx, "\n");
+
+    ret = RSA_verify(hash_nid, digest, digest_len, sig, sig_len, rsa);
+
+    if (ret == 1)
+    {
+        CPRINTS(ctx, "%s: Signature verification successful!\n", __FUNCTION__);
+    }
+    else
+    {
+        CPRINTS(ctx, "%s: Signature verification failed: %s\n", __FUNCTION__,
+                ERR_error_string(ERR_get_error(), NULL));
+    }
+
+err:
+    RSA_free(rsa); // Frees n and e if RSA_set0_key successfully took ownership
+    BN_free(n);    // Only if RSA_set0_key failed or was not called
+    BN_free(e);    // Only if RSA_set0_key failed or was not called
+    return (ret == 1);
+    (void)ctx;     // make compiler happy when CPRINTS is null statemenet
 }
 
 #ifdef __cplusplus

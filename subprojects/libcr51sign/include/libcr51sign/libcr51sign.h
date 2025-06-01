@@ -19,6 +19,7 @@
 #include <libcr51sign/cr51_image_descriptor.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -33,7 +34,21 @@ extern "C"
 // Currently RSA4096 (in bytes).
 #define LIBCR51SIGN_MAX_SIGNATURE_SIZE 512
 
+// LINT.IfChange(image_mauv_max_size_def)
 #define IMAGE_MAUV_DATA_MAX_SIZE (128)
+// LINT.ThenChange()
+
+// State of the image.
+enum libcr51sign_validation_state
+{
+    LIBCR51SIGN_IMAGE_UNSPECIFIED = 0,
+    // The image fails at least one descriptor or region check.
+    LIBCR51SIGN_IMAGE_INVALID = 1,
+    // The image passes all descriptor and region checks. Note that this does
+    // not mean that the image is valid for update. For example, the image may
+    // not pass MAUV checks.
+    LIBCR51SIGN_IMAGE_VALID = 2,
+};
 
 // List of common error codes that can be returned
 enum libcr51sign_validation_failure_reason
@@ -72,26 +87,29 @@ enum libcr51sign_validation_failure_reason
     LIBCR51SIGN_ERROR_STORED_IMAGE_MAUV_EXPECTS_PAYLOAD_IMAGE_MAUV = 23,
     // Client did not find any stored MAUV in system
     LIBCR51SIGN_NO_STORED_MAUV_FOUND = 24,
-    LIBCR51SIGN_ERROR_MAX = 25,
+    LIBCR51SIGN_ERROR_INVALID_DESCRIPTOR_BLOBS = 25,
+    LIBCR51SIGN_ERROR_MAX = 26,
 };
 
 struct libcr51sign_ctx
 {
-    // Absolute image start offset
-    uint32_t start_offset;
-    // Absolute image end offset
-    uint32_t end_offset;
-    size_t block_size;
-    enum image_family current_image_family;
-    enum image_type current_image_type;
-    // keyring_len - number of keys in @a keyring
-    int keyring_len;
-    // valid_key - index of valid key on success
-    size_t* valid_key;
-    // keyring - array of pointers to public keys
-    const void* keyring;
-    void* priv;
-    struct image_descriptor descriptor;
+    // Expectations needed to validate an image. Users must set these fields
+    // before calling libcr51sign_validate().
+    uint32_t start_offset;                  // Absolute image start offset
+    uint32_t end_offset;                    // Absolute image end offset
+    enum image_family current_image_family; // Expected image family
+    enum image_type current_image_type;     // Expected image type
+    int keyring_len;     // keyring_len - number of keys in @a keyring
+    const void* keyring; // keyring - array of pointers to public keys
+    void* priv;          // opaque context data (used for hash state)
+
+    // Data that is accessible if the image is valid after calling
+    // libcr51sign_validate().
+    enum libcr51sign_validation_state validation_state;
+    size_t* valid_key; // valid_key - index of valid key
+    // Note: `descriptor` needs to be the last member of this struct due to the
+    // flexible array member in struct image_descriptor.
+    struct image_descriptor descriptor; // Cr51 image descriptor.
 };
 
 struct libcr51sign_intf
@@ -210,6 +228,45 @@ struct libcr51sign_intf
     //                              Non-zero value otherwise
     int (*store_new_image_mauv_data)(const void*, const uint8_t* const,
                                      const uint32_t);
+
+    // @func trust descriptor hash
+    // @param[in]  ctx - context struct
+    // @param[in]  descriptor_hash - Buffer containing descriptor hash
+    // @param[in]  descriptor_hash_size - Size of descriptor hash
+    //
+    // @return true: if the external key is trusted
+    //         false: if the external key is not trusted
+    bool (*trust_descriptor_hash)(const void*, const uint8_t*, size_t);
+
+    // @func Trust key in the signature structure
+    // @param[in]  ctx - context struct
+    // @param[in]  scheme - signature scheme
+    // @param[in]  signature_structure - signature structure
+    // @param[in]  signature_structure_size - Size of signature structure in
+    // bytes
+    //
+    // @return true: if the key in signature structure is trusted
+    //         false: if the key in signature structure is not trusted
+    bool (*trust_key_in_signature_structure)(
+        const void*, enum signature_scheme scheme, const void*, size_t);
+
+    // @func Verify RSA signature with modulus and exponent
+    // @param[in]  ctx - context struct
+    // @param[in]  sig_scheme - signature scheme
+    // @param[in]  modulus - modulus of the RSA key, MSB (big-endian)
+    // @param[in]  modulus_len - length of modulus in bytes
+    // @param[in]  exponent - exponent of the RSA key
+    // @param[in]  sig - signature blob
+    // @param[in]  sig_len - length of signature in bytes
+    // @param[in]  digest - digest to verify
+    // @param[in]  digest_len - digest size
+    //
+    // @return true: if the signature is verified
+    //         false: otherwise
+    bool (*verify_rsa_signature_with_modulus_and_exponent)(
+        const void* ctx, enum signature_scheme scheme, const uint8_t* modulus,
+        int modulus_len, uint32_t exponent, const uint8_t* sig, int sig_len,
+        const uint8_t* digest, int digest_len);
 };
 
 struct libcr51sign_validated_regions
@@ -232,7 +289,7 @@ struct libcr51sign_validated_regions
 // @return nonzero on error, zero on success
 
 enum libcr51sign_validation_failure_reason libcr51sign_validate(
-    const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
     struct libcr51sign_validated_regions* image_regions);
 
 // Function to convert error code to string format
