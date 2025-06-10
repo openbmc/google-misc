@@ -248,7 +248,7 @@ struct libcr51sign_intf
     // @return true: if the key in signature structure is trusted
     //         false: if the key in signature structure is not trusted
     bool (*trust_key_in_signature_structure)(
-        const void*, enum signature_scheme scheme, const void*, size_t);
+        void*, enum signature_scheme scheme, const void*, size_t);
 
     // @func Verify RSA signature with modulus and exponent
     // @param[in]  ctx - context struct

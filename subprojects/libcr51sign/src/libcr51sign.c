@@ -224,7 +224,7 @@ static failure_reason validate_transition(const struct libcr51sign_ctx* ctx,
 // If caller had provided read_and_hash_update call that, otherwise call read
 // and then update.
 
-static failure_reason read_and_hash_update(const struct libcr51sign_ctx* ctx,
+static failure_reason read_and_hash_update(struct libcr51sign_ctx* ctx,
                                            const struct libcr51sign_intf* intf,
                                            uint32_t offset, uint32_t size)
 {
@@ -234,7 +234,7 @@ static failure_reason read_and_hash_update(const struct libcr51sign_ctx* ctx,
 
     if (intf->read_and_hash_update)
     {
-        rv = intf->read_and_hash_update((void*)ctx, offset, size);
+        rv = intf->read_and_hash_update(ctx, offset, size);
     }
     else
     {
@@ -246,12 +246,12 @@ static failure_reason read_and_hash_update(const struct libcr51sign_ctx* ctx,
         do
         {
             read_size = size < MAX_READ_SIZE ? size : MAX_READ_SIZE;
-            rv = intf->read((void*)ctx, offset, read_size, read_buffer);
+            rv = intf->read(ctx, offset, read_size, read_buffer);
             if (rv != LIBCR51SIGN_SUCCESS)
             {
                 return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
             }
-            rv = intf->hash_update((void*)ctx, read_buffer, read_size);
+            rv = intf->hash_update(ctx, read_buffer, read_size);
             if (rv != LIBCR51SIGN_SUCCESS)
             {
                 return LIBCR51SIGN_ERROR_RUNTIME_FAILURE;
@@ -271,7 +271,7 @@ static failure_reason read_and_hash_update(const struct libcr51sign_ctx* ctx,
 // validates the hash. d_offset is the absolute image descriptor offset
 
 static failure_reason validate_payload_regions(
-    const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
     uint32_t d_offset, struct libcr51sign_validated_regions* image_regions)
 {
     // Allocate buffer to accommodate largest supported hash-type(SHA512)
@@ -428,7 +428,7 @@ static failure_reason validate_payload_regions(
             hash_start += hash_size;
         } while (hash_start != region->region_offset + region->region_size);
     }
-    rv = intf->hash_final((void*)ctx, (uint8_t*)dcrypto_digest);
+    rv = intf->hash_final(ctx, (uint8_t*)dcrypto_digest);
 
     if (rv != LIBCR51SIGN_SUCCESS)
     {
@@ -450,7 +450,7 @@ static failure_reason validate_payload_regions(
 // input.
 
 static failure_reason allocate_and_validate_payload_regions(
-    const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
     uint32_t d_offset)
 {
     struct libcr51sign_validated_regions image_regions;
@@ -462,7 +462,7 @@ static failure_reason allocate_and_validate_payload_regions(
 // create placer holder image_regions.
 
 static failure_reason validate_payload_regions_helper(
-    const struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, struct libcr51sign_intf* intf,
     uint32_t d_offset, struct libcr51sign_validated_regions* image_regions)
 {
     if (image_regions)
@@ -535,7 +535,7 @@ static failure_reason get_signature_field_offset(enum signature_scheme scheme,
 }
 
 __attribute__((nonnull)) static bool is_key_in_signature_struct_trusted(
-    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
     enum signature_scheme scheme, uint32_t raw_signature_offset,
     void* signature_struct, uint32_t* signature_struct_size)
 {
@@ -585,7 +585,7 @@ __attribute__((nonnull)) static bool is_key_in_signature_struct_trusted(
 // signature if the key is trusted.
 
 static bool validate_signature_with_key_in_signature_struct(
-    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
     enum signature_scheme scheme, uint32_t raw_signature_offset,
     const uint8_t* digest, uint32_t digest_size)
 {
@@ -651,7 +651,7 @@ static bool validate_signature_with_key_in_signature_struct(
 // EEPROM area "data_offset:data_size".
 
 static failure_reason validate_signature(
-    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
     uint32_t data_offset, uint32_t data_size, enum signature_scheme scheme,
     uint32_t raw_signature_offset)
 {
@@ -690,7 +690,7 @@ static failure_reason validate_signature(
         CPRINTS(ctx, "%s: missing hash_final\n", __FUNCTION__);
         return LIBCR51SIGN_ERROR_INVALID_INTERFACE;
     }
-    rv = intf->hash_final((void*)ctx, dcrypto_digest);
+    rv = intf->hash_final(ctx, dcrypto_digest);
     if (rv != LIBCR51SIGN_SUCCESS)
     {
         CPRINTS(ctx, "%s: hash_final failed (status = %d)\n", __FUNCTION__, rv);
@@ -766,7 +766,7 @@ static failure_reason validate_signature(
 //@param[out] payload_blob_offset  Absolute offset of BLOB data in image
 //                                 descriptor (if BLOB data is present)
 static failure_reason validate_descriptor(
-    const struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
+    struct libcr51sign_ctx* ctx, const struct libcr51sign_intf* intf,
     uint32_t offset, uint32_t relative_offset, uint32_t max_size,
     uint32_t* const restrict payload_blob_offset)
 {
@@ -923,7 +923,7 @@ static failure_reason validate_descriptor(
 //@param header_offset   Location to place the new header offset.
 //@return LIBCR51SIGN_SUCCESS (or non-zero on error).
 
-static int scan_for_magic_8(const struct libcr51sign_ctx* ctx,
+static int scan_for_magic_8(struct libcr51sign_ctx* ctx,
                             const struct libcr51sign_intf* intf, uint64_t magic,
                             uint32_t start_offset, uint32_t limit,
                             uint32_t alignment, uint32_t* header_offset)
@@ -948,8 +948,7 @@ static int scan_for_magic_8(const struct libcr51sign_ctx* ctx,
     for (offset = start_offset; offset < limit - sizeof(magic);
          offset += alignment)
     {
-        rv = intf->read((void*)ctx, offset, sizeof(read_data),
-                        (uint8_t*)&read_data);
+        rv = intf->read(ctx, offset, sizeof(read_data), (uint8_t*)&read_data);
         if (rv != LIBCR51SIGN_SUCCESS)
         {
             return rv;
