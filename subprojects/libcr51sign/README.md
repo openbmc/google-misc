@@ -1,6 +1,6 @@
-## Cr51 Image Signature Library
+# Cr51 Image Signature Library
 
-### Package `libcr51sign`
+## Package `libcr51sign`
 
 - Status: **Ready**
 
@@ -15,20 +15,20 @@ implement each piece of platform-specific functionality will be passed to the
 library’s functions. Interface struct should typically be static data (could put
 in rodata) while the data in context is mutable.
 
-### Debug
+## Debug
 
 Print will be handled via Macros. The user can define USER_PRINT or the library
 would use its default. The library will not assert on any error conditions,but
 will return error codes and expects the client to handle as deemed fit.
 
-```
+```c
 
 #ifndef USER_PRINT
 #define CPRINTS(ctx, format, args...)printf(format, ##args)
 #endif
 ```
 
-### Prod/Dev transitions
+## Prod/Dev transitions
 
 Prod --> Prod: Allowed \
 Prod --> Dev: Only if allowlisted/prod_to_dev_downgrade_allowed \

@@ -1,3 +1,5 @@
+# metrics-ipmi-blobs
+
 IPMI BLOBs handler to export BMC metrics snapshot
 
 This BLOB handler registers one blob with the name "/metric/snapshot".
