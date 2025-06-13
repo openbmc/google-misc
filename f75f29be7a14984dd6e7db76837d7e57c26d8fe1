@@ -1,0 +1,7 @@
+Code-Review+2: Brandon Kim <brandonkim@google.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Patrick Williams <patrick@stwcx.xyz>
+Submitted-at: Fri, 13 Jun 2025 17:31:05 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/google-misc/+/81074
+Project: openbmc/google-misc
+Branch: refs/heads/master
