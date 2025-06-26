@@ -1,0 +1,10 @@
+Code-Review+1: Dan Zhang <dz4list@gmail.com>
+Code-Review+2: Willy Tu <wltu@google.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+2: William A. Kennington III <wak@google.com>
+Submitted-by: Dan Zhang <dz4list@gmail.com>
+Submitted-at: Thu, 26 Jun 2025 21:29:25 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/google-misc/+/80959
+Comments-Total: 3
+Project: openbmc/google-misc
+Branch: refs/heads/master
