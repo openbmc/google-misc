@@ -52,7 +52,7 @@ executable(
 )
 
 systemd = dependency('systemd')
-systemunitdir = systemd.get_variable('systemdsystemunitdir')
+systemunitdir = systemd.get_variable('systemd_system_unit_dir')
 
 configure_file(
     configuration: {'BIN': libexecdir / 'dhcp-done'},
