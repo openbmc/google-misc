@@ -23,7 +23,7 @@ headers = include_directories('.')
 
 systemd = dependency('systemd')
 libsystemd = dependency('libsystemd')
-systemunitdir = systemd.get_variable('systemdsystemunitdir')
+systemunitdir = systemd.get_variable('systemd_system_unit_dir')
 
 deps = [
     libsystemd,
