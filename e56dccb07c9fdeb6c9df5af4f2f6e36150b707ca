@@ -22,6 +22,30 @@
       },
       "revId": "e56dccb07c9fdeb6c9df5af4f2f6e36150b707ca",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88eec7b3_46d71868",
+        "filename": "subprojects/bare-metal-host-monitor/host-gpio-monitor@.service.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002652
+      },
+      "writtenOn": "2025-09-18T01:58:45Z",
+      "side": 1,
+      "message": "It is needed for only one platform. As per your suggestion, I tried drop-in file and it works well for our purpose. I will abandon this commit.",
+      "parentUuid": "898d8217_8fdddb8e",
+      "range": {
+        "startLine": 6,
+        "startChar": 5,
+        "endLine": 6,
+        "endChar": 47
+      },
+      "revId": "e56dccb07c9fdeb6c9df5af4f2f6e36150b707ca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
