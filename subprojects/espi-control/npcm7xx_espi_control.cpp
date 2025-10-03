@@ -125,8 +125,8 @@ static void modifyESPIRegisters(bool disable)
     if (*pdidReg != NPCM7XX_PDID)
     {
         throw std::runtime_error(
-            std::format("Unexpected product ID {:#x} != {:#x}", *pdidReg,
-                        NPCM7XX_PDID)
+            std::format("Unexpected product ID {:#x} != {:#x}",
+                        static_cast<unsigned int>(*pdidReg), NPCM7XX_PDID)
                 .data());
     }
 
