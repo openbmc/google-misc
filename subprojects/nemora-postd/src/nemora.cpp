@@ -71,8 +71,8 @@ bool Nemora::GetMacAddr(MacAddr* mac, const std::string& iface_path)
         return false;
     }
 
-    std::variant<std::string> result;
-    reply.read(result);
+    auto result = reply.unpack<std::variant<std::string>>();
+
     auto mac_addr = std::get<std::string>(result);
     if (!ParseMac(mac_addr, mac))
     {

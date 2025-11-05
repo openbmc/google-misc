@@ -296,8 +296,8 @@ bool getBootTimesMonotonic(BootTimesMonotonic& btm)
                                "org.freedesktop.DBus.Properties", "GetAll");
     m.append("");
     auto reply = b.call(m);
-    std::vector<std::pair<std::string, std::variant<uint64_t>>> timestamps;
-    reply.read(timestamps);
+    auto timestamps = reply.unpack<
+        std::vector<std::pair<std::string, std::variant<uint64_t>>>>();
 
     // Parse timestamps from dbus result.
     auto btmPtr = reinterpret_cast<char*>(&btm);
