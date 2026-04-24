@@ -30,7 +30,7 @@
 
 using phosphor::logging::level;
 using phosphor::logging::log;
-using sdbusplus::exception::SdBusError;
+using sdbusplus::exception::internal_exception;
 
 constexpr auto MAC_FORMAT = "%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx";
 constexpr auto MAC_INTERFACE = "xyz.openbmc_project.Network.MACAddress";
@@ -64,7 +64,7 @@ bool Nemora::GetMacAddr(MacAddr* mac, const std::string& iface_path)
 
         reply = dbus.call(networkd_call);
     }
-    catch (const SdBusError& e)
+    catch (const internal_exception& e)
     {
         log<level::ERR>(
             "Nemora::GetMacAddr failed to call Network D-Bus interface");
