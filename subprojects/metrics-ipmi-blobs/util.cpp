@@ -364,7 +364,7 @@ bool getECCErrorCounts(EccCounts& eccCounts)
         auto reply = bus.call(m);
         reply.read(values);
     }
-    catch (const sdbusplus::exception::SdBusError& ex)
+    catch (const sdbusplus::exception::internal_exception& ex)
     {
         return false;
     }
