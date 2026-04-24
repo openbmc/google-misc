@@ -64,7 +64,7 @@ bool Nemora::GetMacAddr(MacAddr* mac, const std::string& iface_path)
 
         reply = dbus.call(networkd_call);
     }
-    catch (const SdBusError& e)
+    catch (const internal_exception& e)
     {
         log<level::ERR>(
             "Nemora::GetMacAddr failed to call Network D-Bus interface");
