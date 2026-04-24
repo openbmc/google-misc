@@ -251,7 +251,7 @@ int PhosphorConfig::set_nic_hostless(bool is_nic_hostless)
         was_nic_hostless_ = is_nic_hostless;
         return 0;
     }
-    catch (const sdbusplus::exception::SdBusError& ex)
+    catch (const sdbusplus::exception::internal_exception& ex)
     {
         stdplus::println(stderr, "Failed to set systemd nic status: {}",
                          ex.what());
