@@ -117,7 +117,7 @@ int main(int argc, char** argv)
          */
         std::string objectPath = std::format(DBUS_OBJECT_PATH, host_label);
 
-        auto match = std::make_unique<sdbusplus::bus::match_t>(
+        auto match = std::make_unique<sdbusplus::match>(
             static_cast<sdbusplus::bus_t&>(conn),
             std::format(
                 "type='signal',member='PropertiesChanged',path_namespace='"
