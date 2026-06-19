@@ -73,7 +73,7 @@ class HostManager
     std::mutex postcodes_lock_;
 
     sdbusplus::bus_t bus_;
-    sdbusplus::bus::match_t signal_;
+    sdbusplus::match signal_;
     std::unique_ptr<std::thread> post_poller_;
     bool post_poller_enabled_;
 };
